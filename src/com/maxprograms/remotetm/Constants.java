@@ -32,4 +32,7 @@ public class Constants {
     public static final String ERROR = "Error";
     public static final String REASON = "reason";
 
+    public static final String TRANSLATOR = "TR";
+	public static final String PROJECT_MANAGER = "PM";
+	public static final String SYSTEM_ADMINISTRATOR = "SA";
 }
