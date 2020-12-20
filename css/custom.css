@@ -1,0 +1,701 @@
+:root {
+	--darker-background: #002050;
+	--dark-background: #124078;
+	--dark-color: #fefefe;
+	--light-background: #3c65a4;
+	--lighter-background: #7da3c6;
+	--soft-background: #666666;
+	--title-background: #cfe0f8;
+
+	--normal-background: #f0f2f5;
+	--normal-color: #111111;
+
+	--even-row-background: #efefef;
+	--odd-row-background: #fefefe;
+	--highlight-color: #ecf01b;
+	--shadow-color: #eeeeee;
+	--input-background: #ffffff;
+
+	--toolbar-background: #ffffff;
+	--toolbar-text: #0D5281;
+
+	--red-color: rgb(177, 6, 6);
+}
+
+body {
+	background: white;
+	color: var(--normal-color)
+}
+
+.bg {
+	background: url(../images/background.jpg) no-repeat top left;
+}
+
+.dark_background {
+	background: var(--dark-background);
+	color: var(--dark-color);
+}
+
+.hdivider {
+	background: var(--darker-background);
+	width: 2px;
+	height: 100%;
+	position: relative;
+	cursor: col-resize;
+	display: block;
+}
+
+.vdivider {
+	background: var(--darker-background);
+	width: 100%;
+	height: 2px;
+	position: relative;
+	cursor: row-resize;
+	display: block;
+}
+
+.resizable {
+	transition: width 0.3s ease-out;
+	transition: height 0.3s ease-out;
+}
+
+.titleBar {
+	width: 100%;
+	background: var(--title-background);
+	margin: 0px;
+	padding: 2px 2px 2px 4px;
+	border-bottom: 1px solid var(--lighter-background);
+	white-space: nowrap;
+	overflow-x: hidden;
+}
+
+.move {
+	cursor: move !important;
+}
+
+header {
+	background: var(--toolbar-text);
+	color: var(---toolbar-background);
+	padding: 0px;
+	margin: 0px;
+}
+
+header a {
+	background: var(--toolbar-text);
+	color: var(--toolbar-background);
+	fill: var(--toolbar-background);
+	text-decoration: none;
+	margin-top: 20px;
+	padding-right: 5px;
+}
+
+header a:hover {
+	text-decoration: underline;
+	color: var(--toolbar-background);
+	fill: var(--toolbar-background);
+	background: var(--toolbar-text) !important;
+}
+
+footer {
+	vertical-align: bottom;
+	text-align: center;
+	background: var(--toolbar-text);
+	color: var(--toolbar-background);
+	font-size: 0.8em;
+	font-weight: lighter;
+}
+
+footer a {
+	background: var(--toolbar-text);
+	color: var(--toolbar-background);
+	text-decoration: none;
+}
+
+footer a:hover {
+	background: var(--toolbar-text);
+	color: var(--toolbar-background);
+	text-decoration: underline;
+}
+
+.status {
+	position: absolute;
+	top: 200px;
+	left: calc(40% - 100px);
+	width: 200px;
+	margin: auto;
+	background-color: var(--dark-background);
+	color: var(--dark-color);
+	padding: 20px;
+	border: 1px solid var(--dark-color);
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+a {
+	color: var(--light-background);
+}
+
+a img {
+	padding-right: 4px;
+	padding-left: 4px;
+}
+
+a:hover {
+	background: #cccccc;
+}
+
+thead {
+	height: 24px;
+	background: var(--normal-background);
+}
+
+tbody {
+	overflow-y: scroll;
+	overflow-x: scroll;
+}
+
+.discover:hover {
+	background: #dddddd;
+}
+
+.discover td {
+	white-space: nowrap;
+}
+
+.onTime {
+	width: 8px;
+	border-right: 4px solid transparent;
+}
+
+.overdue {
+	width: 8px;
+	border-right: 4px solid var(--red-color);
+}
+
+.selectedRow {
+	background: #b9d9f7;
+}
+
+td {
+	padding: 4px;
+	vertical-align: top;
+	font-size: medium;
+}
+
+td.fixed {
+	text-align: center;
+	vertical-align: middle;
+	background: var(--lighter-background);
+	color: var(--normal-color);
+	cursor: default !important;
+}
+
+th {
+	position: sticky;
+	top: 0;
+	z-index: 5;
+	font-weight: lighter;
+	background: var(--normal-background);
+	color: var(--dark-background);
+	white-space: nowrap;
+}
+
+.stripes tr:nth-child(odd) {
+	background-color: var(--odd-row-background) !important;
+}
+
+.stripes tr:nth-child(even) {
+	background-color: var(--even-row-background) !important;
+}
+
+.stripes th {
+	padding-right: 10px;
+	border-right: 1px solid var(--title-background);
+}
+
+.editTable th {
+	border-right: 1px solid var(--title-background);
+}
+
+.editTable td {
+	padding: 10px;
+	border-right: 1px solid var(--title-background);
+}
+
+.editTable tr:hover {
+	background-color: var(--lighter-background) !important;
+}
+
+textarea {
+	padding: 10px;
+	font-size: medium;
+	background-color: var(--input-background);
+	border: 1px solid var(--dark-background);
+	color: var(--darker-background);
+}
+
+.fixed {
+	width: 1px;
+	text-align: center;
+}
+
+.highlighted {
+	color: var(--highlight-color);
+	background: var(--soft-background);
+}
+
+.right {
+	float: right;
+}
+
+.hidden {
+	display: none;
+}
+
+.center {
+	text-align: center;
+}
+
+input[type=text] {
+	margin-top: 3px;
+	height: 1.4rem;
+	font-size: 1rem;
+	border: 1px solid var(--dark-background);
+	background-color: var(--input-background);
+	color: var(--normal-color);
+}
+
+input[type=password] {
+	margin-top: 3px;
+	height: 1.4rem;
+	font-size: 1rem;
+	border: 1px solid var(--dark-background);
+	background-color: var(--input-background);
+	color: var(--normal-color);
+}
+
+input[type=number] {
+	font-size: 0.8em;
+	width: 40px;
+	height: 18px;
+	margin: 0px;
+	padding: 0px;
+	padding-left: 2px;
+	background-color: var(--input-background);
+	border: 1px solid var(--dark-background);
+	color: var(--normal-color);
+}
+
+input[type=checkbox] {
+	margin-top: 0.5em;
+	background-color: var(--input-background);
+	border: 1px solid var(--dark-background);
+}
+
+.card {
+	padding: 10px;
+	background: var(--normal-background);
+	color: var(--normal-color);
+	border: 1px solid var(--dark-background);
+}
+
+button {
+	color: var(--dark-color);
+	fill: var(--dark-color);
+	background: var(--dark-background);
+	border: 1px solid var(--dark-background);
+	border-radius: 2px;
+	font-size: 1em;
+	text-align: center;
+	margin: 3px;
+	padding-left: 4px;
+	padding-right: 4px;
+	box-shadow: 2px 2px 1px 2px var(--shadow-color);
+	white-space: nowrap;
+}
+
+button:hover {
+	background: var(--darker-background);
+	border: 1px solid var(--darker-background);
+}
+
+.row {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	padding: 3px;
+	padding-bottom: 0px;
+}
+
+select {
+	font-size: 1em;
+	height: 1.6em;
+	color: var(--normal-color);
+	border: 1px solid var(--dark-background);
+	background-color: var(--input-background);
+}
+
+option {
+	font-size: 1em;
+	background-color: var(--normal-background) !important;
+	color: var(--normal-color);
+}
+
+label {
+	padding-left: 4px;
+	padding-right: 4px;
+}
+
+.buttonLabel {
+	color: var(--dark-color);
+	background: var(--dark-background);
+	border: 1px solid var(--dark-background);
+	border-radius: 2px;
+	font-size: 1em;
+	text-align: center;
+	margin: 3px;
+	padding-left: 4px;
+	padding-right: 4px;
+	box-shadow: 2px 2px 1px 2px var(--shadow-color);
+	white-space: nowrap;
+}
+
+.column {
+	display: flex;
+	flex-direction: column;
+}
+
+.fill_width {
+	width: 100%;
+}
+
+.noWrap {
+	white-space: nowrap;
+}
+
+.paddedArea {
+	padding: 4px;
+	margin: 4px;
+}
+
+.optionBox {
+	border: 1px solid grey;
+	border-radius: 4px;
+}
+
+.buttonArea {
+	display: flex;
+	flex-direction: row;
+	padding: 10px;
+	padding-left: 16px;
+	padding-right: 16px;
+	justify-content: flex-end;
+}
+
+.toolbar {
+	display: flex;
+	flex-direction: row;
+	background: var(--toolbar-background);
+	color: var(--toolbar-text);
+	fill: var(--toolbar-text);
+	border-top: 1px solid var(--toolbar-text);
+	border-bottom: 1px solid var(--toolbar-text);
+	justify-content: flex-start;
+	vertical-align: middle;
+	white-space: nowrap;
+}
+
+.toolbar button {
+	padding: 4px;
+	background: inherit;
+	border: none;
+	text-decoration: none;
+	outline: none;
+	color: inherit;
+	fill: inherit;
+	text-align: left;
+	font-size: 0.8em;
+	vertical-align: middle;
+	box-shadow: none;
+	cursor: pointer;
+}
+
+.pressed {
+	background: var(--lighter-background) !important;
+	color: var(--dark-color) !important;
+	fill: var(--dark-color) !important;
+}
+
+button:disabled {
+	color: var(--soft-background);
+	fill: var(--soft-background);
+}
+
+.toolbar input[type=text] {
+	margin-top: 0.5em;
+	height: 1.2rem;
+	color: inherit;
+}
+
+.toolbar input[type=checkbox] {
+	position: relative;
+	top: 8px;
+	margin-left: 0.5em;
+	color: inherit;
+}
+
+.toolbar label {
+	padding-top: 0.5em;
+	height: 1.2rem;
+}
+
+.toolbar span {
+	padding-top: 0.5em;
+	padding-left: 0.2em;
+	padding-right: 0.2em;
+	height: 1.2rem;
+}
+
+.toolbar button img {
+	padding: 4px;
+}
+
+.toolbar button:hover {
+	background: var(--lighter-background);
+	color: var(--dark-color);
+	fill: var(--dark-color);
+}
+
+.separator {
+	width: 1px;
+	margin-left: 1em;
+	margin-right: 1em;
+	border-left: 1px solid var(--toolbar-text);
+}
+
+.tabHolder {
+	display: flex;
+	flex-flow: row;
+	color: var(--normal-color);
+	background: var(--lighter-background);
+	padding: 0px 0px 0px 8px;
+}
+
+.tab {
+	overflow: hidden;
+	color: var(--dark-background);
+	background: var(--dark-color);
+	padding-left: 10px;
+	padding-right: 10px;
+	margin-right: 2px;
+	border-bottom: 2px solid var(--dark-color);
+	vertical-align: middle;
+}
+
+.noClose {
+	padding-top: 1px;
+}
+
+.selectedTab {
+	border-bottom: 2px solid var(--dark-background);
+}
+
+.tab:hover {
+	border-bottom: 2px solid var(--darker-background);
+}
+
+.selectedTab:hover {
+	background: var(--normal-background);
+	color: var(--darker-background);
+}
+
+.tab a {
+	color: var(--dark-background);
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.tab a:hover {
+	background: var(--normal-background);
+	color: var(--darker-background);
+}
+
+.selected {
+	background: var(--light-background);
+	color: var(--dark-color);
+}
+
+.selected a {
+	color: var(--dark-color) !important;
+}
+
+.tabContent {
+	display: block;
+}
+
+.hiddenTab {
+	display: none;
+}
+
+.panel {
+	z-index: 5;
+	display: block;
+	overflow-y: scroll;
+}
+
+.titlepanel {
+	padding-top: 0px;
+	display: flex;
+	width: 100%;
+	background: var(--dark-background);
+	color: var(--dark-color);
+	white-space: nowrap;
+}
+
+.titlepanel a:hover {
+	background: var(--darker-background);
+}
+
+.panelcontent {
+	z-index: -20;
+	display: block;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+}
+
+.panelcontent table {
+	z-index: -30;
+}
+
+.tooltip {
+	position: relative;
+	display: inline-block;
+}
+
+.tooltip .tooltiptext {
+	background-color: var(--light-background);
+	border-color: var(--lighter-background);
+	color: var(--dark-color);
+
+	visibility: hidden;
+	padding: 4px;
+	border-radius: 2px;
+	white-space: nowrap;
+
+	/* Position the tooltip */
+	position: absolute;
+	z-index: 100;
+}
+
+.topTooltip {
+	bottom: 120%;
+	left: 20px;
+}
+
+.bottomTooltip {
+	top: 120%;
+	left: 20px;
+}
+
+.bottomRightTooltip {
+	top: 120%;
+	right: 20px;
+}
+
+.tooltip:hover .tooltiptext {
+	visibility: visible;
+}
+
+.highlight {
+	color: var(--highlight-color);
+}
+
+.active {
+	background: var(--highlight-color);
+}
+
+.bordered {
+	border: 1px solid var(--normal-color) !important;
+}
+
+.dialog {
+	position: absolute;
+	top: 20%;
+	right: 45%;
+	padding: 0px;
+	background: var(--normal-background);
+	color: var(--normal-color);
+	border: 1px solid var(--dark-background);
+	z-index: 10;
+}
+
+.shadow {
+	box-shadow: 2px 2px 4px var(--soft-background);
+}
+
+.dialog_width {
+	width: calc(100% -20px);
+}
+
+.dialogTitle {
+	background: var(--dark-background);
+	color: var(--dark-color);
+	fill: var(--dark-color);
+	padding: 2px;
+	margin: 0px;
+}
+
+.dialogTitle a:hover {
+	background: var(--darker-background);
+}
+
+.dialog table th {
+	z-index: 20;
+}
+
+.dialogBar {
+	display: flex;
+	flex-direction: row;
+	width: calc(100% - 20px);
+	justify-content: flex-start;
+	vertical-align: middle;
+	white-space: nowrap;
+	margin-top: 3px;
+	margin-bottom: 3px;
+}
+
+.dialogBar button {
+	padding: 4px;
+	background: inherit;
+	border: 1px solid var(--lighter-background);
+	text-decoration: none;
+	outline: none;
+	color: inherit;
+	fill: inherit;
+	text-align: left;
+	font-size: 0.8em;
+	vertical-align: middle;
+	box-shadow: none;
+	cursor: pointer;
+}
+
+.dialogBar button:hover {
+	background: var(--lighter-background);
+	color: var(--dark-color);
+	fill: var(--dark-color);
+}
+
+.dialogRow {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	vertical-align: middle;
+}
+
+.dialog::backdrop {
+	background: rgba(200, 200, 200, .25);
+}
