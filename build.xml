@@ -2,7 +2,7 @@
 	<description>Build file for RemoteTM</description>
 
 	<path id="RemoteTM.classpath">		
-		<pathelement location="WebContent/WEB-INF/lib/javax.servlet-api.jar"/>
+		<pathelement location="lib/javax.servlet-api.jar"/>
 		<pathelement location="WebContent/WEB-INF/lib/json.jar"/>
 		<pathelement location="WebContent/WEB-INF/lib/openxliff.jar"/>
 		<pathelement location="WebContent/WEB-INF/lib/commons-fileupload-1.4.jar"/>
