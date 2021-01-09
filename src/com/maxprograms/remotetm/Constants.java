@@ -1,5 +1,5 @@
 /*******************************************************************************
-Copyright (c) 2008-2020 - Maxprograms,  http://www.maxprograms.com/
+Copyright (c) 2008-2021 - Maxprograms,  http://www.maxprograms.com/
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of 
 this software and associated documentation files (the "Software"), to compile, 
@@ -25,7 +25,7 @@ public class Constants {
     }
 
     public static final String VERSION = "5.0.0";
-    public static final String BUILD = "20201220_0912";
+    public static final String BUILD = "20210108_0912";
 
     public static final String STATUS = "status";
     public static final String OK = "OK";

@@ -1,5 +1,5 @@
 /*******************************************************************************
-Copyright (c) 2008-2020 - Maxprograms,  http://www.maxprograms.com/
+Copyright (c) 2008-2021 - Maxprograms,  http://www.maxprograms.com/
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of 
 this software and associated documentation files (the "Software"), to compile, 
@@ -16,56 +16,100 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
 SOFTWARE.
 *******************************************************************************/
+import { Dialog } from "./dialog";
 import { RemoteTM } from "./remotetm";
+import {View} from "./view";
 
-export class LoginForm {
+export class LoginForm implements View {
+
+    dialog: Dialog;
+    userName: HTMLInputElement;
+    passwd: HTMLInputElement;
 
     constructor() {
-        document.getElementById('header').innerHTML = '';
-        document.getElementById('header').classList.add('hidden');
 
-        document.getElementById('body').className = 'bg';
+        this.dialog = new Dialog(400);
+        this.dialog.setTitle('User Authentication');
+        this.dialog.canClose(false);
 
-        document.getElementById('mainContent').innerHTML =
-            '<div class="card" style="margin: auto; margin-top: 250px; width: 400px">' +
-            '<table class="fill_width">' +
-            '<tr>' +
-            '<td style="vertical-align: middle;"><label class="noWrap" for="userName">User Name</label></td>' +
-            '<td style="vertical-align: middle;" class="fill_width"><input class="fill_width" type="text" id="userName"></td>' +
-            '</tr>' +
-            '<tr>' +
-            '<td style="vertical-align: middle;"><label class="noWrap" for="passwd">Password</label></td>' +
-            '<td style="vertical-align: middle;" class="fill_width"><input class="fill_width"  type="password" id="passwd"></td>' +
-            '</tr>' +
-            '</table>' +
-            '<div class="buttonArea">' +
-            '<button id="signIn" >Sign In</button>' +
-            '<button id="resetPassword" >Reset Password</button>' +
-            '</div>' +
-            '</div>';
-        document.getElementById('signIn').addEventListener('click', () => {
+        let table: HTMLTableElement = document.createElement('table');
+        table.classList.add('fill_width')
+        let row: HTMLTableRowElement = document.createElement('tr');
+        table.appendChild(row);
+
+        let td: HTMLTableCellElement = document.createElement('td');
+        td.classList.add('middle');
+        let userLabel: HTMLLabelElement = document.createElement('label');
+        userLabel.innerText = 'User Name';
+        td.appendChild(userLabel);
+        row.appendChild(td);
+
+        td = document.createElement('td');
+        td.classList.add('fill_width');
+        td.classList.add('middle');
+        this.userName = document.createElement('input');
+        this.userName.type = 'text';
+        this.userName.classList.add('fill_width');
+        td.appendChild(this.userName);
+        row.appendChild(td);
+
+        row = document.createElement('tr');
+        table.appendChild(row);
+
+        td = document.createElement('td');
+        td.classList.add('middle');
+        let passwdLabel: HTMLLabelElement = document.createElement('label');
+        passwdLabel.innerText = 'Password';
+        td.appendChild(passwdLabel);
+        row.appendChild(td);
+
+        td = document.createElement('td');
+        td.classList.add('fill_width');
+        td.classList.add('middle');
+        this.passwd = document.createElement('input');
+        this.passwd.type = 'password';
+        this.passwd.classList.add('fill_width');
+        td.appendChild(this.passwd);
+        row.appendChild(td);
+
+        this.dialog.addChild(table);
+
+        let signIn: HTMLButtonElement = document.createElement('button');
+        signIn.innerText = 'Sign In';
+        signIn.addEventListener('click', () => {
             this.signIn()
         });
-        document.getElementById('resetPassword').addEventListener('click', () => {
+        this.dialog.addButton(signIn);
+
+        let reset: HTMLButtonElement = document.createElement('button');
+        reset.innerText = 'Reset Password';
+        reset.addEventListener('click', () => {
             RemoteTM.resetPassword();
         });
+        this.dialog.addButton(reset);
     }
 
-    signIn() {
-        var userName = (document.getElementById('userName') as HTMLInputElement).value;
-        var passwd = (document.getElementById('passwd') as HTMLInputElement).value;
-        if (userName === '' && passwd === '') {
+    show(): void {
+        this.dialog.open();
+    }
+
+    close(): void {
+        this.dialog.close();
+    }
+
+    signIn(): void {
+        if (this.userName.value === '' && this.passwd.value === '') {
             return;
         }
-        if (userName === '') {
+        if (this.userName.value === '') {
             RemoteTM.alert('Enter user name');
             return;
         }
-        if (passwd === '') {
+        if (this.passwd.value === '') {
             RemoteTM.alert('Enter password');
             return;
         }
-        var auth = btoa(userName + ':' + passwd);
-        RemoteTM.requestTicket(userName, auth);
+        var auth = btoa(this.userName.value + ':' + this.passwd.value);
+        RemoteTM.requestTicket(this.userName.value, auth);
     }
 }

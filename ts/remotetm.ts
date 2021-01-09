@@ -1,5 +1,5 @@
 /*******************************************************************************
-Copyright (c) 2008-2020 - Maxprograms,  http://www.maxprograms.com/
+Copyright (c) 2008-2021 - Maxprograms,  http://www.maxprograms.com/
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of 
 this software and associated documentation files (the "Software"), to compile, 
@@ -18,22 +18,23 @@ SOFTWARE.
 *******************************************************************************/
 import { Dashboard } from "./dashboard";
 import { LoginForm } from "./loginForm";
-import { ResetPassword } from "./resetPasswordForm";
+import { ResetPasswordForm } from "./resetPasswordForm";
 import { Dialog } from "./dialog";
+import { View } from "./view";
 
 export class RemoteTM {
     private static waitingCount: number;
     private static session: string = '';
     private static who: string = '';
     private static mainURL: string = '';
-    private sso: boolean;
+
+    private static currentView: View;
 
     constructor() {
-        var host: string = location.host;
-        var protocol: string = location.protocol;
-        var path: string = location.pathname;
-
-        var n = path.lastIndexOf('/');
+        let host: string = location.host;
+        let protocol: string = location.protocol;
+        let path: string = location.pathname;
+        let n = path.lastIndexOf('/');
         if (n !== -1) {
             path = path.substring(0, n);
         }
@@ -46,14 +47,15 @@ export class RemoteTM {
         let mainContent: HTMLDivElement = document.getElementById('mainContent') as HTMLDivElement;
 
         const config: MutationObserverInit = { attributes: false, childList: true, subtree: false };
-        const callback = function (mutationsList: MutationRecord[], observer: MutationObserver): void {
+        const callback = (mutationsList: MutationRecord[], observer: MutationObserver): void => {
             for (let mutation of mutationsList) {
                 if (mutation.type === 'childList') {
                     let added: NodeList = mutation.addedNodes;
                     if (added.length > 0) {
-                        let main: HTMLDivElement = document.getElementById('mainContent') as HTMLDivElement;
-                        main.style.height = (document.body.clientHeight - 75) + 'px';
-                        main.style.width = document.body.clientWidth + 'px';
+                        let header: HTMLHeadElement = document.getElementById('header');
+                        let footer: HTMLElement = document.getElementById('footer');
+                        mainContent.style.height = (document.body.clientHeight - header.clientHeight - footer.clientHeight) + 'px';
+                        mainContent.style.width = document.body.clientWidth + 'px';
                     }
                 }
             }
@@ -62,21 +64,13 @@ export class RemoteTM {
         observer.observe(mainContent, config);
 
         window.addEventListener('resize', () => {
-            mainContent.style.height = (document.body.clientHeight - 75) + 'px';
+            let header: HTMLHeadElement = document.getElementById('header');
+            let footer: HTMLElement = document.getElementById('footer');
+            mainContent.style.height = (document.body.clientHeight - header.clientHeight - footer.clientHeight) + 'px';
             mainContent.style.width = document.body.clientWidth + 'px';
         });
 
-        let id = document.getElementById('appHead').getAttribute("data-id");
-        let session = document.getElementById('appHead').getAttribute("data-session");
-        if (id !== null && session !== null) {
-            this.sso = true;
-            RemoteTM.session = session;
-            RemoteTM.who = id;
-            new Dashboard();
-            return;
-        }
-        this.sso = false;
-        new LoginForm();
+        RemoteTM.showLogin();
     }
 
     public static getSession(): string {
@@ -96,7 +90,7 @@ export class RemoteTM {
         req.open('GET', RemoteTM.mainURL + '/version', true);
         req.setRequestHeader('Content-Type', 'application/json');
         req.setRequestHeader('Accept', 'application/json');
-        req.onreadystatechange = function () {
+        req.onreadystatechange = () => {
             if (req.readyState == 4) {
                 if (req.status == 200) {
                     var json = JSON.parse(req.responseText);
@@ -120,7 +114,7 @@ export class RemoteTM {
         req.setRequestHeader('Authorization', 'BASIC ' + auth);
         req.setRequestHeader('Content-Type', 'application/json');
         req.setRequestHeader('Accept', 'application/json');
-        req.onreadystatechange = function () {
+        req.onreadystatechange = () => {
             if (req.readyState == 4) {
                 if (req.status == 200) {
                     var json = JSON.parse(req.responseText);
@@ -142,8 +136,22 @@ export class RemoteTM {
         req.send(null);
     }
 
+    public static showLogin() {
+        if (this.currentView) {
+            this.currentView.close();
+        }
+        document.body.className = 'bg';
+        this.currentView = new LoginForm();
+        this.currentView.show();
+    }
+
     public static resetPassword() {
-        new ResetPassword();
+        if (this.currentView) {
+            this.currentView.close();
+        }
+        document.body.className = 'bg';
+        this.currentView = new ResetPasswordForm();
+        this.currentView.show();
     }
 
     public static signOut() {
@@ -154,7 +162,7 @@ export class RemoteTM {
         req.setRequestHeader('hostURL', RemoteTM.getMainURL());
         req.setRequestHeader('timeOut', 'false'); // TODO implement automatic timeout
 
-        req.onreadystatechange = function () {
+        req.onreadystatechange = () => {
             if (req.readyState == 4) {
                 if (req.status == 200) {
                     var json = JSON.parse(req.responseText);
@@ -216,6 +224,7 @@ export class RemoteTM {
         let top = (screenHeight - 130) / 2;
         dialog.setTop(top);
         dialog.open();
+        button.focus();
     }
 
 }

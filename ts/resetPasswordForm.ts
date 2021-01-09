@@ -1,5 +1,5 @@
 /*******************************************************************************
-Copyright (c) 2008-2020 - Maxprograms,  http://www.maxprograms.com/
+Copyright (c) 2008-2021 - Maxprograms,  http://www.maxprograms.com/
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of 
 this software and associated documentation files (the "Software"), to compile, 
@@ -16,64 +16,104 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
 SOFTWARE.
 *******************************************************************************/
+import { Dialog } from "./dialog";
 import { RemoteTM } from "./remotetm";
-import { LoginForm } from "./loginForm";
+import { View } from "./view";
 
-export class ResetPassword {
+export class ResetPasswordForm implements View {
+
+    dialog: Dialog;
+    userName: HTMLInputElement;
+    email: HTMLInputElement;
 
     constructor() {
-        document.getElementById('header').innerHTML = '';
-        document.getElementById('header').classList.add('hidden');
 
-        document.body.className = 'bg';
+        this.dialog = new Dialog(400);
+        this.dialog.setTitle('Password Reset');
+        this.dialog.canClose(false);
 
-        document.getElementById('mainContent').innerHTML =
-            '<div class="card" style="margin: auto; margin-top: 250px; width: 400px">' +
-            '<table class="fill_width">' +
-            '<tr>' +
-            '<td style="vertical-align: middle;"><label class="noWrap" for="userName">User Name</label></td>' +
-            '<td style="vertical-align: middle;" class="fill_width"><input class="fill_width" type="text" id="userName"></td>' +
-            '</tr>' +
-            '<tr>' +
-            '<td style="vertical-align: middle;"><label class="noWrap" for="email">Email Address</label></td>' +
-            '<td style="vertical-align: middle;" class="fill_width"><input class="fill_width"  type="text" id="email"></td>' +
-            '</tr>' +
-            '</table>' +
-            '<div class="buttonArea">' +
-            '<button id="reset">Reset Password</button>'
-        '</div>' +
-            '</div>';
-        document.getElementById('reset').addEventListener('click', () => {
+        let table: HTMLTableElement = document.createElement('table');
+        table.classList.add('fill_width')
+        let row: HTMLTableRowElement = document.createElement('tr');
+        table.appendChild(row);
+
+        let td: HTMLTableCellElement = document.createElement('td');
+        td.classList.add('middle');
+        let userLabel: HTMLLabelElement = document.createElement('label');
+        userLabel.innerText = 'User Name';
+        td.appendChild(userLabel);
+        row.appendChild(td);
+
+        td = document.createElement('td');
+        td.classList.add('fill_width');
+        td.classList.add('middle');
+        this.userName = document.createElement('input');
+        this.userName.type = 'text';
+        this.userName.classList.add('fill_width');
+        td.appendChild(this.userName);
+        row.appendChild(td);
+
+        row = document.createElement('tr');
+        table.appendChild(row);
+
+        td = document.createElement('td');
+        td.classList.add('middle');
+        let emailLabel: HTMLLabelElement = document.createElement('label');
+        emailLabel.innerText = 'Email';
+        td.appendChild(emailLabel);
+        row.appendChild(td);
+
+        td = document.createElement('td');
+        td.classList.add('fill_width');
+        td.classList.add('middle');
+        this.email = document.createElement('input');
+        this.email.type = 'text';
+        this.email.classList.add('fill_width');
+        td.appendChild(this.email);
+        row.appendChild(td);
+
+        this.dialog.addChild(table);
+
+        let reset: HTMLButtonElement = document.createElement('button');
+        reset.innerText = 'Reset Password';
+        reset.addEventListener('click', () => {
             this.resetPassword();
         });
+        this.dialog.addButton(reset);
+    }
+
+    show(): void {
+        this.dialog.open();
+    }
+
+    close(): void {
+        this.dialog.close();
     }
 
     resetPassword(): void {
-        var userName = (document.getElementById('userName') as HTMLInputElement).value;
-        var email = (document.getElementById('email') as HTMLInputElement).value;
-        if (userName === '' && email === '') {
+        if (this.userName.value === '' && this.email.value === '') {
             return;
         }
-        if (userName === '') {
+        if (this.userName.value === '') {
             RemoteTM.alert('Enter user name');
             return;
         }
-        if (email === '') {
+        if (this.email.value === '') {
             RemoteTM.alert('Enter email address');
             return;
         }
-        var json: any = { username: userName, email: email };
+        var json: any = { username: this.userName.value, email: this.email.value };
 
         var req = new XMLHttpRequest();
         req.open('POST', RemoteTM.getMainURL() + '/login/sendReminder', true);
         req.setRequestHeader('Content-Type', 'application/json');
         req.setRequestHeader('Accept', 'application/json');
-        req.onreadystatechange = function () {
+        req.onreadystatechange = () => {
             if (req.readyState == 4) {
                 if (req.status == 200) {
                     var json = JSON.parse(req.responseText);
                     if (json.status === 'OK') {
-                        new LoginForm();
+                        RemoteTM.showLogin();
                         RemoteTM.alert('If entered data matches our records, an email with password change information will be sent.');
                     } else {
                         RemoteTM.alert(json.reason);

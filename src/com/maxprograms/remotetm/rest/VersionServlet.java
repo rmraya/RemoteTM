@@ -1,5 +1,5 @@
 /*******************************************************************************
-Copyright (c) 2008-2020 - Maxprograms,  http://www.maxprograms.com/
+Copyright (c) 2008-2021 - Maxprograms,  http://www.maxprograms.com/
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of 
 this software and associated documentation files (the "Software"), to compile, 
@@ -55,7 +55,7 @@ public class VersionServlet extends HttpServlet {
         JSONObject result = new JSONObject();
         result.put(Constants.STATUS, Constants.OK);
         result.put("version", Constants.VERSION + "_" + Constants.BUILD);
-        String res = result.toString(2);
+        String res = result.toString();
         response.setContentLength(res.getBytes(StandardCharsets.UTF_8).length);
         try (ServletOutputStream output = response.getOutputStream()) {
             output.write(res.getBytes(StandardCharsets.UTF_8));

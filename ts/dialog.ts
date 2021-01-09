@@ -1,5 +1,5 @@
 /*******************************************************************************
-Copyright (c) 2008-2020 - Maxprograms,  http://www.maxprograms.com/
+Copyright (c) 2008-2021 - Maxprograms,  http://www.maxprograms.com/
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of 
 this software and associated documentation files (the "Software"), to compile, 
@@ -29,6 +29,7 @@ export class Dialog {
     moving: boolean;
     mouseX: number;
     mouseY: number;
+    closeLink: HTMLAnchorElement;
     closeAction: Function;
 
     constructor(width: number) {
@@ -44,8 +45,8 @@ export class Dialog {
         this.titleArea.addEventListener('mousedown', (ev: MouseEvent) => {
             this.mouseDown(ev);
         });
-        this.titleArea.addEventListener('mouseup', () => {
-            this.mouseUp();
+        this.titleArea.addEventListener('mouseup', (ev: MouseEvent) => {
+            this.mouseUp(ev);
         });
         this.titleArea.addEventListener('mousemove', (ev: MouseEvent) => {
             this.mouseMove(ev);
@@ -53,21 +54,21 @@ export class Dialog {
 
         this.titleSpan = document.createElement('span');
         this.titleSpan.id = 'title';
-        this.titleSpan.style.width = 'calc(100% -24px) !important';
+        this.titleSpan.style.width = 'calc(100% - 24px) !important';
 
         this.titleArea.appendChild(this.titleSpan);
 
-        let closeLink: HTMLAnchorElement = document.createElement('a');
-        closeLink.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">' +
+        this.closeLink = document.createElement('a');
+        this.closeLink.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">' +
             '<path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />' +
             '<path d="M0 0h24v24H0z" fill="none" />' +
             '</svg>';
-        closeLink.classList.add('right');
-        closeLink.style.marginRight = '4px';
-        closeLink.addEventListener('click', () => {
+        this.closeLink.classList.add('right');
+        this.closeLink.style.marginRight = '4px';
+        this.closeLink.addEventListener('click', () => {
             this.close();
         });
-        this.titleArea.appendChild(closeLink);
+        this.titleArea.appendChild(this.closeLink);
         this.dialog.appendChild(this.titleArea);
 
         this.contentArea = document.createElement('div');
@@ -86,9 +87,11 @@ export class Dialog {
         this.moving = true;
         this.mouseX = ev.offsetX;
         this.mouseY = ev.offsetY;
+        ev.preventDefault();
+        ev.stopPropagation();
     }
 
-    mouseUp(): void {
+    mouseUp(ev: MouseEvent): void {
         this.titleArea.classList.remove('move');
         this.moving = false;
     }
@@ -98,6 +101,8 @@ export class Dialog {
             this.dialog.style.left = (this.dialog.offsetLeft - this.mouseX + ev.offsetX) + 'px';
             this.dialog.style.top = (this.dialog.offsetTop - this.mouseY + ev.offsetY) + 'px';
         }
+        ev.preventDefault();
+        ev.stopPropagation();
     }
 
     setTitle(title: string) {
@@ -150,5 +155,9 @@ export class Dialog {
 
     onClose(closeAction: Function) {
         this.closeAction = closeAction;
+    }
+
+    canClose(value: boolean): void {
+        value ? this.closeLink.classList.remove('hidden') : this.closeLink.classList.add('hidden');
     }
 }
