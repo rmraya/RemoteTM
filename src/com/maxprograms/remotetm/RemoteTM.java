@@ -16,65 +16,30 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
 SOFTWARE.
 *******************************************************************************/
-package com.maxprograms.remotetm.models;
+package com.maxprograms.remotetm;
 
-public class User {
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 
-	private String id;
-	private String name;
-	private String email;
-	private String role;
-	private boolean active;
-	private boolean updated;
-	private String password;
+public class RemoteTM {
+    
+    private static File workDir;
 
-	public User(String id, String password, String name, String email, String role, boolean active, boolean updated) {
-		this.id = id;
-		this.password = password;
-		this.name = name;
-		this.email = email;
-		this.role = role;
-		this.active = active;
-		this.updated = updated;
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public String getRole() {
-		return role;
-	}
-
-	public void setPassword(String value) {
-		password = value;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public boolean isActive() {
-		return active;
-	}
-
-	public void setActive(boolean value) {
-		active = value;
-	}
-
-	public boolean isUpdated() {
-		return updated;
-	}
-
-	public void setUpdated(boolean value) {
-		updated = value;
+    public static File getWorkFolder() throws IOException {
+		if (workDir == null) {
+			String os = System.getProperty("os.name").toLowerCase();
+			if (os.startsWith("mac")) {
+				workDir = new File(System.getProperty("user.home") + "/Library/Application Support/RemoteTM/");
+			} else if (os.startsWith("windows")) {
+				workDir = new File(System.getenv("AppData") + "\\RemoteTM\\");
+			} else {
+				workDir = new File(System.getProperty("user.home") + "/.config/RemoteTM/");
+			}
+			if (!workDir.exists()) {
+				Files.createDirectories(workDir.toPath());
+			}
+		}
+		return workDir;
 	}
 }

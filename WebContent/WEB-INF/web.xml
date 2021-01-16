@@ -10,6 +10,11 @@
     <servlet-class>com.maxprograms.remotetm.rest.VersionServlet</servlet-class>
   </servlet>
 
+  <servlet>
+    <servlet-name>Remote</servlet-name>
+    <servlet-class>com.maxprograms.remotetm.rest.AuthorizeServlet</servlet-class>
+  </servlet>
+
   <filter>
     <filter-name>SecurityFilter</filter-name>
     <filter-class>com.maxprograms.remotetm.utils.SecurityFilter</filter-class>
@@ -26,7 +31,10 @@
     <url-pattern>/version</url-pattern>
   </servlet-mapping>
 
-  
+  <servlet-mapping>
+    <servlet-name>Remote</servlet-name>
+    <url-pattern>/remote</url-pattern>
+  </servlet-mapping>
 
   <!-- Default page to serve -->
   <welcome-file-list>
