@@ -49,5 +49,7 @@
 	</target>
 
 	<target name="build" depends="compile, bundle, war"/>
+
+	<target name="ui" depends="bundle, war"/>
 	
 </project>

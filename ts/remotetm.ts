@@ -44,33 +44,18 @@ export class RemoteTM {
 
         this.getVersion();
 
-        let mainContent: HTMLDivElement = document.getElementById('mainContent') as HTMLDivElement;
-
-        const config: MutationObserverInit = { attributes: false, childList: true, subtree: false };
-        const callback = (mutationsList: MutationRecord[], observer: MutationObserver): void => {
-            for (let mutation of mutationsList) {
-                if (mutation.type === 'childList') {
-                    let added: NodeList = mutation.addedNodes;
-                    if (added.length > 0) {
-                        let header: HTMLHeadElement = document.getElementById('header');
-                        let footer: HTMLElement = document.getElementById('footer');
-                        mainContent.style.height = (document.body.clientHeight - header.clientHeight - footer.clientHeight) + 'px';
-                        mainContent.style.width = document.body.clientWidth + 'px';
-                    }
-                }
-            }
-        };
-        let observer: MutationObserver = new MutationObserver(callback);
-        observer.observe(mainContent, config);
-
         window.addEventListener('resize', () => {
-            let header: HTMLHeadElement = document.getElementById('header');
-            let footer: HTMLElement = document.getElementById('footer');
-            mainContent.style.height = (document.body.clientHeight - header.clientHeight - footer.clientHeight) + 'px';
-            mainContent.style.width = document.body.clientWidth + 'px';
+           this.resize();
         });
 
         RemoteTM.showLogin();
+    }
+
+    resize(): void {
+        let footer: HTMLElement = document.getElementById('footer');
+        let mainContent: HTMLDivElement = document.getElementById('mainContent') as HTMLDivElement;
+        mainContent.style.height = (document.body.clientHeight - footer.clientHeight) + 'px';
+        mainContent.style.width = document.body.clientWidth + 'px';
     }
 
     public static getSession(): string {

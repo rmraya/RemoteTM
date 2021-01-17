@@ -25,6 +25,22 @@ export class Dashboard implements View {
 
     constructor() {
         // TODO
+
+        let mainContent: HTMLDivElement = document.getElementById('mainContent') as HTMLDivElement;
+
+        const config: MutationObserverInit = { attributes: false, childList: true, subtree: false };
+        const callback = (mutationsList: MutationRecord[], observer: MutationObserver): void => {
+            for (let mutation of mutationsList) {
+                if (mutation.type === 'childList') {
+                    let added: NodeList = mutation.addedNodes;
+                    if (added.length > 0) {
+                        this.resize();
+                    }
+                }
+            }
+        };
+        let observer: MutationObserver = new MutationObserver(callback);
+        observer.observe(mainContent, config);
     }
 
     show(): void {
@@ -32,6 +48,10 @@ export class Dashboard implements View {
     }
 
     close(): void {
+        // TODO
+    }
+
+    resize(): void {
         // TODO
     }
 
