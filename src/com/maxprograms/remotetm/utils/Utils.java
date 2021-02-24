@@ -16,37 +16,28 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
 SOFTWARE.
 *******************************************************************************/
-package com.maxprograms.remotetm.rest;
+package com.maxprograms.remotetm.utils;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
-
-import com.maxprograms.remotetm.Constants;
-import com.maxprograms.remotetm.utils.Utils;
 
 import org.json.JSONObject;
 
-public class VersionServlet extends HttpServlet {
+public class Utils {
 
-    private static final long serialVersionUID = 9160810294370561297L;
+    private Utils() {
+        // private for security
+    }
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setContentType("application/json");
-        JSONObject result = new JSONObject();
-        StringBuffer from = request.getRequestURL();
-        int status = 200;
-        if (!from.toString().toLowerCase().startsWith("https://")) {
-            status = 400;
-            result.put(Constants.STATUS, Constants.ERROR);
-            result.put(Constants.REASON, "https protocol required");
-        } else {
-            result.put(Constants.STATUS, Constants.OK);
-            result.put("version", Constants.VERSION + "_" + Constants.BUILD);
+    public static void writeResponse(JSONObject result, HttpServletResponse response, int status) throws IOException {
+        byte[] bytes = result.toString().getBytes(StandardCharsets.UTF_8);
+        response.setContentLength(bytes.length);
+        response.setStatus(status);
+        try (ServletOutputStream output = response.getOutputStream()) {
+            output.write(bytes);
         }
-        Utils.writeResponse(result, response, status);
     }
 }

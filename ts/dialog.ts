@@ -33,7 +33,7 @@ export class Dialog {
     closeAction: Function;
 
     constructor(width: number) {
-        this.id = '' + (Math.random() * 10000000);
+        this.id = 'dia' + (Math.random() * 10000000);
         this.moving = false;
         this.dialog = document.createElement('div');
         this.dialog.classList.add('dialog');

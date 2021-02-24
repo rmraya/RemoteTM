@@ -39,7 +39,16 @@ public class DbManager {
     private Connection conn;
     private static PreparedStatement getUserStmt;
 
-    public DbManager() throws IOException, SQLException, NoSuchAlgorithmException {
+    private static DbManager instance;
+
+    public static DbManager getInstance() throws NoSuchAlgorithmException, IOException, SQLException {
+        if (instance == null) {
+            instance = new DbManager();
+        }
+        return instance;
+    }
+
+    private DbManager() throws IOException, SQLException, NoSuchAlgorithmException {
         File database = new File(RemoteTM.getWorkFolder(), "h2data");
         boolean needsLoading = !database.exists();
         if (!database.exists()) {

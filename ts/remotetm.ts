@@ -45,7 +45,7 @@ export class RemoteTM {
         this.getVersion();
 
         window.addEventListener('resize', () => {
-           this.resize();
+            this.resize();
         });
 
         RemoteTM.showLogin();
@@ -106,7 +106,7 @@ export class RemoteTM {
                     if (json.status === 'OK') {
                         RemoteTM.session = json.session;
                         RemoteTM.who = userName;
-                        new Dashboard();
+                        RemoteTM.showDashboard();
                     } else {
                         RemoteTM.alert(json.reason);
                     }
@@ -139,6 +139,15 @@ export class RemoteTM {
         this.currentView.show();
     }
 
+    public static showDashboard(): void {
+        if (this.currentView) {
+            this.currentView.close();
+        }
+        document.body.classList.remove('bg');
+        this.currentView = new Dashboard();
+        this.currentView.show();
+    }
+
     public static signOut() {
         var req = new XMLHttpRequest();
         req.open('GET', RemoteTM.mainURL + '/logout/clean', true);
@@ -155,8 +164,8 @@ export class RemoteTM {
                         RemoteTM.who = '';
                         RemoteTM.session = '';
                         let logoutUrl = json.logoutUrl;
-                        if (logoutUrl === '') {
-                            new LoginForm();
+                        if (!logoutUrl) {
+                            this.showLogin();
                             return;
                         }
                         window.location.replace(logoutUrl);
