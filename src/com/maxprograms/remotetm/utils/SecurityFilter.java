@@ -54,7 +54,6 @@ public class SecurityFilter implements Filter {
 		res.addHeader("Feature-Policy", "microphone 'none'; camera 'none'");
 
 		res.setCharacterEncoding(StandardCharsets.UTF_8.name());
-		res.setContentType("text/html;charset=utf-8");
 		try {
 			chain.doFilter(request, response);
 		} catch (IOException e) {

@@ -16,9 +16,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
 SOFTWARE.
 *******************************************************************************/
+
 import { Dialog } from "./dialog";
 import { RemoteTM } from "./remotetm";
-import {View} from "./view";
+import { View } from "./view";
 
 export class LoginForm implements View {
 
@@ -41,6 +42,7 @@ export class LoginForm implements View {
         td.classList.add('middle');
         let userLabel: HTMLLabelElement = document.createElement('label');
         userLabel.innerText = 'User Name';
+        userLabel.htmlFor = 'userName';
         td.appendChild(userLabel);
         row.appendChild(td);
 
@@ -50,6 +52,7 @@ export class LoginForm implements View {
         this.userName = document.createElement('input');
         this.userName.type = 'text';
         this.userName.classList.add('fill_width');
+        this.userName.id = 'userName';
         td.appendChild(this.userName);
         row.appendChild(td);
 
@@ -60,6 +63,7 @@ export class LoginForm implements View {
         td.classList.add('middle');
         let passwdLabel: HTMLLabelElement = document.createElement('label');
         passwdLabel.innerText = 'Password';
+        passwdLabel.htmlFor = 'password';
         td.appendChild(passwdLabel);
         row.appendChild(td);
 
@@ -68,6 +72,7 @@ export class LoginForm implements View {
         td.classList.add('middle');
         this.passwd = document.createElement('input');
         this.passwd.type = 'password';
+        this.passwd.id = 'password';
         this.passwd.classList.add('fill_width');
         td.appendChild(this.passwd);
         row.appendChild(td);

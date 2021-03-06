@@ -5,17 +5,9 @@ body {
     padding: 0px;
 }
 
-header {
-	position: absolute;
-	top: 0px;
-	height: 57px;
-	left: 0px;
-	right: 0px;
-}
-
 .mainContent { /* Main application window ony */
 	position: absolute;
-	top: 57px;
+	top: 0px;
 	bottom: 19px;
 	left: 0px;
     right: 0px;

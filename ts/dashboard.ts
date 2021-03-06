@@ -16,17 +16,116 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
 SOFTWARE.
 *******************************************************************************/
+
 import { Dialog } from './dialog';
+import { DropDown } from './dropdown';
+import { RemoteTM } from './remotetm';
 import { View } from './view';
 
 export class Dashboard implements View {
 
     private static openDialogs: Map<string, Dialog>;
 
+    container: HTMLDivElement;
+
     constructor() {
-        // TODO
 
         let mainContent: HTMLDivElement = document.getElementById('mainContent') as HTMLDivElement;
+
+        this.container  = document.createElement('div');
+        this.container.classList.add('mainContent');
+        mainContent.appendChild(this.container);
+
+        let topbar: HTMLDivElement = document.createElement('div');
+        topbar.classList.add('topbar');
+        this.container.appendChild(topbar);
+
+        let title: HTMLSpanElement = document.createElement('span');
+        title.classList.add('fill_width');
+        title.classList.add("larger");
+        title.innerText = 'RemoteTM';
+        topbar.appendChild(title);
+
+        let settingsMenu: DropDown = new DropDown(topbar);
+        settingsMenu.setHeaderText('Settings');
+
+        let changePassword: HTMLAnchorElement = document.createElement('a');
+        changePassword.innerText = 'Change Password';
+        settingsMenu.addOption(changePassword);
+
+        let manageUsers: HTMLAnchorElement = document.createElement('a');
+        manageUsers.innerText = 'Manage Users';
+        settingsMenu.addOption(manageUsers);
+
+        let sendEmail: HTMLAnchorElement = document.createElement('a');
+        sendEmail.innerText = 'Send Email';
+        settingsMenu.addOption(sendEmail);
+
+        let emailServer: HTMLAnchorElement = document.createElement('a');
+        emailServer.innerText = 'Email Server';
+        settingsMenu.addOption(emailServer);
+
+        let helpMenu: DropDown = new DropDown(topbar);
+        helpMenu.setHeaderText('Help');
+
+        let help: HTMLAnchorElement = document.createElement('a');
+        help.innerText = 'RemoteTM User Guide';
+        helpMenu.addOption(help);
+
+        let checkUpdates: HTMLAnchorElement = document.createElement('a');
+        checkUpdates.innerText = 'Check for Updates';
+        helpMenu.addOption(checkUpdates);
+
+        let registerLicense: HTMLAnchorElement = document.createElement('a');
+        registerLicense.innerText = 'Register Subscription';
+        helpMenu.addOption(registerLicense);
+
+        let supportGroup: HTMLAnchorElement = document.createElement('a');
+        supportGroup.innerText = 'Support Group';
+        helpMenu.addOption(supportGroup);
+
+        let signOut: HTMLAnchorElement = document.createElement('a');
+        signOut.innerText = 'Sign Out';
+        signOut.addEventListener('click', () => { this.close(); });
+        topbar.appendChild(signOut);
+
+        let toolbar: HTMLDivElement = document.createElement('div');
+        toolbar.classList.add('toolbar');
+        this.container .appendChild(toolbar);
+
+        let addMemory: HTMLAnchorElement = document.createElement('a');
+        addMemory.innerText = 'Add Memory';
+        toolbar.appendChild(addMemory);
+
+        let removeMemory: HTMLAnchorElement = document.createElement('a');
+        removeMemory.innerText = 'Remove Memory';
+        toolbar.appendChild(removeMemory);
+
+        let setAccess: HTMLAnchorElement = document.createElement('a');
+        setAccess.innerText = 'Set Access';
+        toolbar.appendChild(setAccess);
+
+        let importMemory: HTMLAnchorElement = document.createElement('a');
+        importMemory.innerText = 'Import TMX';
+        toolbar.appendChild(importMemory);
+
+        let exportMemory: HTMLAnchorElement = document.createElement('a');
+        exportMemory.innerText = 'Export TMX';
+        toolbar.appendChild(exportMemory);
+
+        let closeMemory: HTMLAnchorElement = document.createElement('a');
+        closeMemory.innerText = 'Close Memory';
+        toolbar.appendChild(closeMemory);
+
+        let closeAllMemories: HTMLAnchorElement = document.createElement('a');
+        closeAllMemories.innerText = 'Close All Memories';
+        toolbar.appendChild(closeAllMemories);
+
+        let refreshList: HTMLAnchorElement = document.createElement('a');
+        refreshList.innerText = 'Refresh';
+        toolbar.appendChild(refreshList);
+
+
 
         const config: MutationObserverInit = { attributes: false, childList: true, subtree: false };
         const callback = (mutationsList: MutationRecord[], observer: MutationObserver): void => {
@@ -48,7 +147,7 @@ export class Dashboard implements View {
     }
 
     close(): void {
-        // TODO
+        RemoteTM.showLogin();
     }
 
     resize(): void {
