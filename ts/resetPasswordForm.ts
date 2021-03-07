@@ -16,14 +16,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
 SOFTWARE.
 *******************************************************************************/
-import { Dialog } from "./dialog";
 import { RemoteTM } from "./remotetm";
 import { View } from "./view";
 
 export class ResetPasswordForm implements View {
 
     container: HTMLDivElement;
-    dialog: Dialog;
+    dialog: HTMLDivElement;
     userName: HTMLInputElement;
     email: HTMLInputElement;
 
@@ -31,18 +30,27 @@ export class ResetPasswordForm implements View {
 
         let mainContent: HTMLDivElement = document.getElementById('mainContent') as HTMLDivElement;
 
-        this.container  = document.createElement('div');
+        this.container = document.createElement('div');
         this.container.classList.add('fullWidth');
         this.container.classList.add('fullHeight');
         this.container.classList.add('bg');
         mainContent.appendChild(this.container);
 
-        this.dialog = new Dialog(400);
-        this.dialog.setTitle('Password Reset');
-        this.dialog.canClose(false);
+        this.dialog = document.createElement('div');
+        this.dialog.classList.add('dialog');
+        this.dialog.style.width = '400px';
+        this.dialog.style.left = (document.body.clientWidth - 400) / 2 + 'px';
+        this.container.appendChild(this.dialog);
+
+        let titleArea: HTMLDivElement = document.createElement('div');
+        titleArea.classList.add('dialogTitle');
+        titleArea.innerHTML = '<span>Reset Password</span>';
+        this.dialog.appendChild(titleArea);
 
         let table: HTMLTableElement = document.createElement('table');
         table.classList.add('fullWidth');
+        this.dialog.appendChild(table);
+
         let row: HTMLTableRowElement = document.createElement('tr');
         table.appendChild(row);
 
@@ -58,7 +66,7 @@ export class ResetPasswordForm implements View {
         td.classList.add('middle');
         this.userName = document.createElement('input');
         this.userName.type = 'text';
-        this.userName.classList.add('fullWidth');
+        this.userName.classList.add('dialog_width');
         td.appendChild(this.userName);
         row.appendChild(td);
 
@@ -77,34 +85,39 @@ export class ResetPasswordForm implements View {
         td.classList.add('middle');
         this.email = document.createElement('input');
         this.email.type = 'text';
-        this.email.classList.add('fullWidth');
+        this.email.classList.add('dialog_width');
         td.appendChild(this.email);
         row.appendChild(td);
 
-        this.dialog.addChild(table);
+        let buttonArea: HTMLDivElement = document.createElement('div');
+        buttonArea.classList.add('buttonArea');
+        this.dialog.appendChild(buttonArea);
 
         let reset: HTMLButtonElement = document.createElement('button');
         reset.innerText = 'Reset Password';
         reset.addEventListener('click', () => {
             this.resetPassword();
         });
-        this.dialog.addButton(reset);
+        buttonArea.appendChild(reset);
+
+        setTimeout(() => {
+            this.resize();
+            window.addEventListener('resize', () => { this.resize() });
+        }, 200);
     }
 
     show(): void {
         this.container.classList.remove('hidden');
         this.container.classList.add('block');
-        this.dialog.open();
     }
 
     close(): void {
         this.container.classList.remove('block');
         this.container.classList.add('hidden');
-        this.dialog.close();
     }
 
     resize(): void {
-        // TODO
+        this.dialog.style.left = (document.body.clientWidth - 400) / 2 + 'px';
     }
 
     resetPassword(): void {

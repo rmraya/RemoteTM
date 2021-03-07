@@ -140,6 +140,11 @@ th {
 	text-align: center;
 }
 
+input {
+	margin: 4px;
+	padding: 4px;
+}
+
 input[type=text] {
 	height: 1.2rem;
 	font-size: 1rem;
@@ -161,7 +166,7 @@ input[type=password] {
 input[type=number] {
 	height: 1.2rem;
 	font-size: 1rem;
-	width: 40px;
+	margin: 4px;
 	background: var(--secondaryColor);
 	color: var(--secondaryTextColor);
 	border: 1px solid var(--primaryColor);
@@ -223,6 +228,7 @@ a.secondary:hover {
 select {
 	height: 1.2rem;
 	font-size: 1rem;
+	margin: 4px;
 	background: var(--secondaryColor);
 	color: var(--secondaryTextColor);
 	border: 1px solid var(--primaryColor);

@@ -17,7 +17,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 
-import { Dialog } from "./dialog";
 import { RemoteTM } from "./remotetm";
 import { View } from "./view";
 
@@ -109,9 +108,7 @@ export class LoginForm implements View {
             this.signIn()
         });
         buttonArea.appendChild(signIn);
-
-
-
+        
         setTimeout(() => {
             this.resize();
             window.addEventListener('resize', () => { this.resize() });
