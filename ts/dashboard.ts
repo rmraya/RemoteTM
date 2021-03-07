@@ -17,14 +17,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 
-import { Dialog } from './dialog';
 import { DropDown } from './dropdown';
 import { RemoteTM } from './remotetm';
 import { View } from './view';
 
 export class Dashboard implements View {
-
-    private static openDialogs: Map<string, Dialog>;
 
     container: HTMLDivElement;
 
@@ -32,8 +29,10 @@ export class Dashboard implements View {
 
         let mainContent: HTMLDivElement = document.getElementById('mainContent') as HTMLDivElement;
 
-        this.container  = document.createElement('div');
-        this.container.classList.add('mainContent');
+        this.container = document.createElement('div');
+        this.container.classList.add('fullWidth');
+        this.container.classList.add('fullHeight');
+        this.container.style.background = 'var(--SECONDARY-50)';
         mainContent.appendChild(this.container);
 
         let topbar: HTMLDivElement = document.createElement('div');
@@ -41,7 +40,7 @@ export class Dashboard implements View {
         this.container.appendChild(topbar);
 
         let title: HTMLSpanElement = document.createElement('span');
-        title.classList.add('fill_width');
+        title.classList.add('fullWidth');
         title.classList.add("larger");
         title.innerText = 'RemoteTM';
         topbar.appendChild(title);
@@ -86,12 +85,12 @@ export class Dashboard implements View {
 
         let signOut: HTMLAnchorElement = document.createElement('a');
         signOut.innerText = 'Sign Out';
-        signOut.addEventListener('click', () => { this.close(); });
+        signOut.addEventListener('click', () => { RemoteTM.showLogin(); });
         topbar.appendChild(signOut);
 
         let toolbar: HTMLDivElement = document.createElement('div');
         toolbar.classList.add('toolbar');
-        this.container .appendChild(toolbar);
+        this.container.appendChild(toolbar);
 
         let addMemory: HTMLAnchorElement = document.createElement('a');
         addMemory.innerText = 'Add Memory';
@@ -125,7 +124,11 @@ export class Dashboard implements View {
         refreshList.innerText = 'Refresh';
         toolbar.appendChild(refreshList);
 
-
+        let tableContainer: HTMLDivElement = document.createElement('table');
+        tableContainer.classList.add('fullWidth');
+        tableContainer.classList.add('fullHeight');
+        tableContainer.classList.add('divContainer');
+        this.container.appendChild(tableContainer);
 
         const config: MutationObserverInit = { attributes: false, childList: true, subtree: false };
         const callback = (mutationsList: MutationRecord[], observer: MutationObserver): void => {
@@ -143,25 +146,18 @@ export class Dashboard implements View {
     }
 
     show(): void {
-        // TODO
+        this.container.classList.remove('hidden');
+        this.container.classList.add('block');
     }
 
     close(): void {
-        RemoteTM.showLogin();
+        this.container.classList.remove('block');
+        this.container.classList.add('hidden');
     }
 
     resize(): void {
         // TODO
     }
 
-    static registerDialog(dialog: Dialog): void {
-        if (!Dashboard.openDialogs) {
-            Dashboard.openDialogs = new Map<string, Dialog>();
-        }
-        Dashboard.openDialogs.set(dialog.getId(), dialog);
-    }
 
-    static removeDialog(dialog: Dialog): void {
-        Dashboard.openDialogs.delete(dialog.getId());
-    }
 }

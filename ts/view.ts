@@ -20,4 +20,5 @@ SOFTWARE.
 export interface View {
     show(): void;
     close(): void;
+    resize(): void;
 }

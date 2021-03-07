@@ -197,6 +197,21 @@ button:hover {
 	border-color: (--primaryDarkColor);
 }
 
+a.secondary {
+	color: var(--primaryColor);
+	background: var(--SECONDARY-300);
+	margin: 4px;
+	padding: 4px 8px;
+	white-space: nowrap;
+	cursor: pointer;
+}
+
+a.secondary:hover {
+	color: var(--primaryDarkColor);
+	background: var(--SECONDARY-400);
+	border-radius: 2px;
+}
+
 .row {
 	display: flex;
 	flex-direction: row;
@@ -231,8 +246,12 @@ label {
 	flex-direction: column;
 }
 
-.fill_width {
+.fullWidth {
 	width: 100%;
+}
+
+.fullHeight {
+	height: 100%;
 }
 
 .middle {
@@ -392,6 +411,8 @@ label {
 	border-radius: 0;
 	z-index: 10;
 	box-shadow: 0px 2px 4px var(--SECONDARY-700);
+	transition: left 0.6s;
+	transition-timing-function: ease;
 }
 
 .shadow {

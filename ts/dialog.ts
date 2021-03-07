@@ -16,7 +16,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
 SOFTWARE.
 *******************************************************************************/
-import { Dashboard } from "./dashboard";
+import { RemoteTM } from "./remotetm";
 
 export class Dialog {
 
@@ -79,7 +79,7 @@ export class Dialog {
         this.buttonArea = document.createElement('div');
         this.buttonArea.classList.add('buttonArea');
         this.dialog.appendChild(this.buttonArea);
-        Dashboard.registerDialog(this);
+        RemoteTM.registerDialog(this);
     }
 
     mouseDown(ev: MouseEvent): void {
@@ -122,7 +122,7 @@ export class Dialog {
         if (this.closeAction) {
             this.closeAction();
         }
-        Dashboard.removeDialog(this);
+        RemoteTM.removeDialog(this);
         document.body.removeChild(this.dialog);
     }
 

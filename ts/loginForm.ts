@@ -23,18 +23,36 @@ import { View } from "./view";
 
 export class LoginForm implements View {
 
-    dialog: Dialog;
+    container: HTMLDivElement;
+    dialog: HTMLDivElement;
     userName: HTMLInputElement;
     passwd: HTMLInputElement;
 
     constructor() {
 
-        this.dialog = new Dialog(400);
-        this.dialog.setTitle('User Authentication');
-        this.dialog.canClose(false);
+        let mainContent: HTMLDivElement = document.getElementById('mainContent') as HTMLDivElement;
+
+        this.container = document.createElement('div');
+        this.container.classList.add('fullWidth');
+        this.container.classList.add('fullHeight');
+        this.container.classList.add('bg');
+        mainContent.appendChild(this.container);
+
+        this.dialog = document.createElement('div');
+        this.dialog.classList.add('dialog');
+        this.dialog.style.width = '400px';
+        this.dialog.style.left = (document.body.clientWidth - 400) / 2 + 'px';
+        this.container.appendChild(this.dialog);
+
+        let titleArea: HTMLDivElement = document.createElement('div');
+        titleArea.classList.add('dialogTitle');
+        titleArea.innerHTML = '<span>User Authentication</span>';
+        this.dialog.appendChild(titleArea);
 
         let table: HTMLTableElement = document.createElement('table');
-        table.classList.add('fill_width')
+        table.classList.add('fullWidth');
+        this.dialog.appendChild(table);
+
         let row: HTMLTableRowElement = document.createElement('tr');
         table.appendChild(row);
 
@@ -42,17 +60,15 @@ export class LoginForm implements View {
         td.classList.add('middle');
         let userLabel: HTMLLabelElement = document.createElement('label');
         userLabel.innerText = 'User Name';
-        userLabel.htmlFor = 'userName';
         td.appendChild(userLabel);
         row.appendChild(td);
 
         td = document.createElement('td');
-        td.classList.add('fill_width');
+        td.classList.add('fullWidth');
         td.classList.add('middle');
         this.userName = document.createElement('input');
         this.userName.type = 'text';
-        this.userName.classList.add('fill_width');
-        this.userName.id = 'userName';
+        this.userName.classList.add('dialog_width');
         td.appendChild(this.userName);
         row.appendChild(td);
 
@@ -63,43 +79,57 @@ export class LoginForm implements View {
         td.classList.add('middle');
         let passwdLabel: HTMLLabelElement = document.createElement('label');
         passwdLabel.innerText = 'Password';
-        passwdLabel.htmlFor = 'password';
         td.appendChild(passwdLabel);
         row.appendChild(td);
 
         td = document.createElement('td');
-        td.classList.add('fill_width');
+        td.classList.add('fullWidth');
         td.classList.add('middle');
         this.passwd = document.createElement('input');
         this.passwd.type = 'password';
-        this.passwd.id = 'password';
-        this.passwd.classList.add('fill_width');
+        this.passwd.classList.add('dialog_width');
         td.appendChild(this.passwd);
         row.appendChild(td);
 
-        this.dialog.addChild(table);
+        let buttonArea: HTMLDivElement = document.createElement('div');
+        buttonArea.classList.add('buttonArea');
+        this.dialog.appendChild(buttonArea);
+
+        let reset: HTMLAnchorElement = document.createElement('a');
+        reset.classList.add('secondary');
+        reset.innerText = 'Reset Password';
+        reset.addEventListener('click', () => {
+            RemoteTM.resetPassword();
+        });
+        buttonArea.appendChild(reset);
 
         let signIn: HTMLButtonElement = document.createElement('button');
         signIn.innerText = 'Sign In';
         signIn.addEventListener('click', () => {
             this.signIn()
         });
-        this.dialog.addButton(signIn);
+        buttonArea.appendChild(signIn);
 
-        let reset: HTMLButtonElement = document.createElement('button');
-        reset.innerText = 'Reset Password';
-        reset.addEventListener('click', () => {
-            RemoteTM.resetPassword();
-        });
-        this.dialog.addButton(reset);
+
+
+        setTimeout(() => {
+            this.resize();
+            window.addEventListener('resize', () => { this.resize() });
+        }, 200);
     }
 
     show(): void {
-        this.dialog.open();
+        this.container.classList.remove('hidden');
+        this.container.classList.add('block');
     }
 
     close(): void {
-        this.dialog.close();
+        this.container.classList.remove('block');
+        this.container.classList.add('hidden');
+    }
+
+    resize(): void {
+        this.dialog.style.left = (document.body.clientWidth - 400) / 2 + 'px';
     }
 
     signIn(): void {

@@ -22,18 +22,27 @@ import { View } from "./view";
 
 export class ResetPasswordForm implements View {
 
+    container: HTMLDivElement;
     dialog: Dialog;
     userName: HTMLInputElement;
     email: HTMLInputElement;
 
     constructor() {
 
+        let mainContent: HTMLDivElement = document.getElementById('mainContent') as HTMLDivElement;
+
+        this.container  = document.createElement('div');
+        this.container.classList.add('fullWidth');
+        this.container.classList.add('fullHeight');
+        this.container.classList.add('bg');
+        mainContent.appendChild(this.container);
+
         this.dialog = new Dialog(400);
         this.dialog.setTitle('Password Reset');
         this.dialog.canClose(false);
 
         let table: HTMLTableElement = document.createElement('table');
-        table.classList.add('fill_width')
+        table.classList.add('fullWidth');
         let row: HTMLTableRowElement = document.createElement('tr');
         table.appendChild(row);
 
@@ -45,11 +54,11 @@ export class ResetPasswordForm implements View {
         row.appendChild(td);
 
         td = document.createElement('td');
-        td.classList.add('fill_width');
+        td.classList.add('fullWidth');
         td.classList.add('middle');
         this.userName = document.createElement('input');
         this.userName.type = 'text';
-        this.userName.classList.add('fill_width');
+        this.userName.classList.add('fullWidth');
         td.appendChild(this.userName);
         row.appendChild(td);
 
@@ -64,11 +73,11 @@ export class ResetPasswordForm implements View {
         row.appendChild(td);
 
         td = document.createElement('td');
-        td.classList.add('fill_width');
+        td.classList.add('fullWidth');
         td.classList.add('middle');
         this.email = document.createElement('input');
         this.email.type = 'text';
-        this.email.classList.add('fill_width');
+        this.email.classList.add('fullWidth');
         td.appendChild(this.email);
         row.appendChild(td);
 
@@ -83,11 +92,19 @@ export class ResetPasswordForm implements View {
     }
 
     show(): void {
+        this.container.classList.remove('hidden');
+        this.container.classList.add('block');
         this.dialog.open();
     }
 
     close(): void {
+        this.container.classList.remove('block');
+        this.container.classList.add('hidden');
         this.dialog.close();
+    }
+
+    resize(): void {
+        // TODO
     }
 
     resetPassword(): void {

@@ -28,7 +28,12 @@ export class RemoteTM {
     private static who: string = '';
     private static mainURL: string = '';
 
+    private static openDialogs: Map<string, Dialog>;
+
     private static currentView: View;
+    private static dashboard: Dashboard;
+    private static loginForm: LoginForm;
+    private static resetForm: ResetPasswordForm;
 
     constructor() {
         let host: string = location.host;
@@ -125,8 +130,10 @@ export class RemoteTM {
         if (this.currentView) {
             this.currentView.close();
         }
-        document.body.className = 'bg';
-        this.currentView = new LoginForm();
+        if (!this.loginForm) {
+            this.loginForm = new LoginForm();
+        }
+        this.currentView = this.loginForm;
         this.currentView.show();
     }
 
@@ -134,8 +141,10 @@ export class RemoteTM {
         if (this.currentView) {
             this.currentView.close();
         }
-        document.body.className = 'bg';
-        this.currentView = new ResetPasswordForm();
+        if (!this.resetForm) {
+            this.resetForm = new ResetPasswordForm();
+        }
+        this.currentView = this.resetForm;
         this.currentView.show();
     }
 
@@ -143,8 +152,10 @@ export class RemoteTM {
         if (this.currentView) {
             this.currentView.close();
         }
-        document.body.classList.remove('bg');
-        this.currentView = new Dashboard();
+        if (!this.dashboard) {
+            this.dashboard = new Dashboard();
+        }
+        this.currentView = this.dashboard;
         this.currentView.show();
     }
 
@@ -221,6 +232,16 @@ export class RemoteTM {
         button.focus();
     }
 
+    static registerDialog(dialog: Dialog): void {
+        if (!RemoteTM.openDialogs) {
+            RemoteTM.openDialogs = new Map<string, Dialog>();
+        }
+        RemoteTM.openDialogs.set(dialog.getId(), dialog);
+    }
+
+    static removeDialog(dialog: Dialog): void {
+        RemoteTM.openDialogs.delete(dialog.getId());
+    }
 }
 
 new RemoteTM();
