@@ -16,10 +16,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
 SOFTWARE.
 *******************************************************************************/
+
 import { Dashboard } from "./dashboard";
+import { Dialog } from "./dialog";
 import { LoginForm } from "./loginForm";
 import { ResetPasswordForm } from "./resetPasswordForm";
-import { Dialog } from "./dialog";
 import { View } from "./view";
 
 export class RemoteTM {

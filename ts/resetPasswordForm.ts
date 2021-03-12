@@ -16,6 +16,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
 SOFTWARE.
 *******************************************************************************/
+
 import { RemoteTM } from "./remotetm";
 import { View } from "./view";
 
@@ -67,6 +68,7 @@ export class ResetPasswordForm implements View {
         this.userName = document.createElement('input');
         this.userName.type = 'text';
         this.userName.classList.add('dialog_width');
+        this.userName.addEventListener('keydown', (ev: KeyboardEvent) => { this.keyListener(ev); })
         td.appendChild(this.userName);
         row.appendChild(td);
 
@@ -86,6 +88,7 @@ export class ResetPasswordForm implements View {
         this.email = document.createElement('input');
         this.email.type = 'text';
         this.email.classList.add('dialog_width');
+        this.email.addEventListener('keydown', (ev: KeyboardEvent) => { this.keyListener(ev); })
         td.appendChild(this.email);
         row.appendChild(td);
 
@@ -110,8 +113,14 @@ export class ResetPasswordForm implements View {
 
         setTimeout(() => {
             this.resize();
-            window.addEventListener('resize', () => { this.resize() });
+            window.addEventListener('resize', () => { this.resize(); });
         }, 200);
+    }
+
+    keyListener(event: KeyboardEvent): void {
+        if (event.key === 'Enter' || event.key === 'NumpadEnter') {
+            this.resetPassword();
+        }
     }
 
     show(): void {

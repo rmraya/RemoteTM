@@ -68,6 +68,7 @@ export class LoginForm implements View {
         this.userName = document.createElement('input');
         this.userName.type = 'text';
         this.userName.classList.add('dialog_width');
+        this.userName.addEventListener('keydown', (ev: KeyboardEvent) => { this.keyListener(ev); })
         td.appendChild(this.userName);
         row.appendChild(td);
 
@@ -87,6 +88,7 @@ export class LoginForm implements View {
         this.passwd = document.createElement('input');
         this.passwd.type = 'password';
         this.passwd.classList.add('dialog_width');
+        this.passwd.addEventListener('keydown', (ev: KeyboardEvent) => { this.keyListener(ev); })
         td.appendChild(this.passwd);
         row.appendChild(td);
 
@@ -105,16 +107,22 @@ export class LoginForm implements View {
         let signIn: HTMLButtonElement = document.createElement('button');
         signIn.innerText = 'Sign In';
         signIn.addEventListener('click', () => {
-            this.signIn()
+            this.signIn();
         });
         buttonArea.appendChild(signIn);
 
         setTimeout(() => {
             this.resize();
-            window.addEventListener('resize', () => { this.resize() });
+            window.addEventListener('resize', () => { this.resize(); });
         }, 200);
     }
 
+    keyListener(event: KeyboardEvent): void {
+        if (event.key === 'Enter' || event.key === 'NumpadEnter') {
+            this.signIn();
+        }
+    }
+    
     show(): void {
         this.container.classList.remove('hidden');
         this.container.classList.add('block');
