@@ -93,6 +93,14 @@ export class ResetPasswordForm implements View {
         buttonArea.classList.add('buttonArea');
         this.dialog.appendChild(buttonArea);
 
+        let signIn: HTMLAnchorElement = document.createElement('a');
+        signIn.classList.add('secondary');
+        signIn.innerText = 'Sign In';
+        signIn.addEventListener('click', () => {
+            RemoteTM.showLogin();
+        });
+        buttonArea.appendChild(signIn);
+
         let reset: HTMLButtonElement = document.createElement('button');
         reset.innerText = 'Reset Password';
         reset.addEventListener('click', () => {
@@ -109,6 +117,7 @@ export class ResetPasswordForm implements View {
     show(): void {
         this.container.classList.remove('hidden');
         this.container.classList.add('block');
+        this.userName.focus();
     }
 
     close(): void {
@@ -125,11 +134,11 @@ export class ResetPasswordForm implements View {
             return;
         }
         if (this.userName.value === '') {
-            RemoteTM.alert('Enter user name');
+            window.alert('Enter user name');
             return;
         }
         if (this.email.value === '') {
-            RemoteTM.alert('Enter email address');
+            window.alert('Enter email address');
             return;
         }
         var json: any = { username: this.userName.value, email: this.email.value };
@@ -144,14 +153,14 @@ export class ResetPasswordForm implements View {
                     var json = JSON.parse(req.responseText);
                     if (json.status === 'OK') {
                         RemoteTM.showLogin();
-                        RemoteTM.alert('If entered data matches our records, an email with password change information will be sent.');
+                        window.alert('If entered data matches our records, an email with password change information will be sent.');
                     } else {
-                        RemoteTM.alert(json.reason);
+                        window.alert(json.reason);
                     }
                 } else if (req.status == 401) {
-                    RemoteTM.alert('Access denied');
+                    window.alert('Access denied');
                 } else {
-                    RemoteTM.alert('Server status: ' + req.status
+                    window.alert('Server status: ' + req.status
                         + '. Try again later.');
                 }
             }

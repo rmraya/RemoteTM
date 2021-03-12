@@ -76,54 +76,46 @@ export class RemoteTM {
     }
 
     getVersion(): void {
-        var req = new XMLHttpRequest();
-        req.open('GET', RemoteTM.mainURL + '/version', true);
-        req.setRequestHeader('Content-Type', 'application/json');
-        req.setRequestHeader('Accept', 'application/json');
-        req.onreadystatechange = () => {
-            if (req.readyState == 4) {
-                if (req.status == 200) {
-                    var json = JSON.parse(req.responseText);
-                    if (json.status === 'OK') {
-                        document.getElementById('version').innerHTML = json.version;
-                    } else {
-                        RemoteTM.alert(json.reason);
+        fetch(RemoteTM.mainURL + '/version', {
+            method: 'GET',
+            headers: [
+                ['Accept', 'application/json']
+            ]
+        }).then((response: Response) => response.json())
+            .then((json: any) => {
+                if (json.status === 'OK') {
+                    let versionSpan: HTMLSpanElement = document.getElementById('version') as HTMLSpanElement;
+                    if (versionSpan) {
+                        versionSpan.innerHTML = json.version;
                     }
                 } else {
-                    RemoteTM.alert('Server status: ' + req.status
-                        + '. Try again later.');
+                    window.alert(json.reason);
                 }
-            }
-        };
-        req.send(null);
+            }).catch((reason: any) => {
+                console.error('Error:', reason);
+            });
     }
 
     public static requestTicket(userName: string, auth: string) {
-        var req = new XMLHttpRequest();
-        req.open('GET', RemoteTM.mainURL + '/remote', true);
-        req.setRequestHeader('Authorization', 'BASIC ' + auth);
-        req.setRequestHeader('Content-Type', 'application/json');
-        req.setRequestHeader('Accept', 'application/json');
-        req.onreadystatechange = () => {
-            if (req.readyState == 4) {
-                if (req.status == 200) {
-                    var json = JSON.parse(req.responseText);
-                    if (json.status === 'OK') {
-                        RemoteTM.session = json.session;
-                        RemoteTM.who = userName;
-                        RemoteTM.showDashboard();
-                    } else {
-                        RemoteTM.alert(json.reason);
-                    }
-                } else if (req.status == 401) {
-                    RemoteTM.alert('Access denied');
-                } else {
-                    RemoteTM.alert('Server status: ' + req.status
-                        + '. Try again later.');
-                }
+        fetch(RemoteTM.mainURL + '/remote', {
+            method: 'GET',
+            headers: [
+                ['Authorization', 'BASIC ' + auth],
+                ['Content-Type', 'application/json'],
+                ['Accept', 'application/json']
+            ]
+        }).then(async (response: Response) => {
+            let json: any = await response.json();
+            if (json.status === 'OK') {
+                RemoteTM.session = json.session;
+                RemoteTM.who = userName;
+                RemoteTM.showDashboard();
+            } else {
+                window.alert(json.reason);
             }
-        };
-        req.send(null);
+        }).catch((reason: any) => {
+            console.error('Error:', reason);
+        });
     }
 
     public static showLogin() {
@@ -133,6 +125,7 @@ export class RemoteTM {
         if (!this.loginForm) {
             this.loginForm = new LoginForm();
         }
+        this.loginForm.clearForm();
         this.currentView = this.loginForm;
         this.currentView.show();
     }
@@ -181,12 +174,12 @@ export class RemoteTM {
                         }
                         window.location.replace(logoutUrl);
                     } else {
-                        RemoteTM.alert(json.reason);
+                        window.alert(json.reason);
                     }
                 } else if (req.status == 401) {
-                    RemoteTM.alert('Access denied');
+                    window.alert('Access denied');
                 } else {
-                    RemoteTM.alert('Server status: ' + req.status
+                    window.alert('Server status: ' + req.status
                         + '. Try again later.');
                 }
             }
@@ -206,30 +199,6 @@ export class RemoteTM {
         if (RemoteTM.waitingCount === 0) {
             document.body.classList.remove("wait");
         }
-    }
-
-    public static alert(message: string): void {
-        let dialog: Dialog = new Dialog(300);
-
-        dialog.setTitle('Attention');
-
-        let div: HTMLDivElement = document.createElement('div');
-        div.innerText = message;
-        div.classList.add('center');
-        dialog.addChild(div);
-
-        let button: HTMLButtonElement = document.createElement('button');
-        button.innerText = 'Close';
-        button.addEventListener('click', () => {
-            dialog.close();
-        });
-        dialog.addButton(button);
-
-        let screenHeight = document.body.clientHeight;
-        let top = (screenHeight - 130) / 2;
-        dialog.setTop(top);
-        dialog.open();
-        button.focus();
     }
 
     static registerDialog(dialog: Dialog): void {

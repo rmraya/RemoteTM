@@ -69,6 +69,8 @@ export class Dashboard implements View {
 
         let help: HTMLAnchorElement = document.createElement('a');
         help.innerText = 'RemoteTM User Guide';
+        help.href = RemoteTM.getMainURL() + '/docs/index.html';
+        help.target = '_blank';
         helpMenu.addOption(help);
 
         let checkUpdates: HTMLAnchorElement = document.createElement('a');
@@ -81,6 +83,8 @@ export class Dashboard implements View {
 
         let supportGroup: HTMLAnchorElement = document.createElement('a');
         supportGroup.innerText = 'Support Group';
+        supportGroup.href = 'https://groups.io/g/maxprograms/';
+        supportGroup.target = '_blank';
         helpMenu.addOption(supportGroup);
 
         let signOut: HTMLAnchorElement = document.createElement('a');
@@ -129,6 +133,44 @@ export class Dashboard implements View {
         tableContainer.classList.add('fullHeight');
         tableContainer.classList.add('divContainer');
         this.container.appendChild(tableContainer);
+
+        let mainTable: HTMLTableElement = document.createElement('table');
+        mainTable.classList.add('fullWidth');
+        tableContainer.appendChild(mainTable);
+
+        let tableHeader: HTMLTableSectionElement = document.createElement('thead');
+        mainTable.appendChild(tableHeader);
+
+        let headerRow: HTMLTableRowElement = document.createElement('tr');
+        tableHeader.appendChild(headerRow);
+
+        let memoryTh: HTMLTableHeaderCellElement = document.createElement('th');
+        memoryTh.innerText = 'Memory';
+        headerRow.appendChild(memoryTh);
+
+        let ownerTh: HTMLTableHeaderCellElement = document.createElement('th');
+        ownerTh.innerText = 'Owner';
+        headerRow.appendChild(ownerTh);
+
+        let creationTh: HTMLTableHeaderCellElement = document.createElement('th');
+        creationTh.innerText = 'Creation Date';
+        headerRow.appendChild(creationTh);
+
+        let openTh: HTMLTableHeaderCellElement = document.createElement('th');
+        openTh.innerText = 'Open';
+        headerRow.appendChild(openTh);
+
+        let projectTh: HTMLTableHeaderCellElement = document.createElement('th');
+        projectTh.innerText = 'Project';
+        headerRow.appendChild(projectTh);
+
+        let subjectTh: HTMLTableHeaderCellElement = document.createElement('th');
+        subjectTh.innerText = 'Subject';
+        headerRow.appendChild(subjectTh);
+
+        let ClientTh: HTMLTableHeaderCellElement = document.createElement('th');
+        ClientTh.innerText = 'Client';
+        headerRow.appendChild(ClientTh);
 
         const config: MutationObserverInit = { attributes: false, childList: true, subtree: false };
         const callback = (mutationsList: MutationRecord[], observer: MutationObserver): void => {

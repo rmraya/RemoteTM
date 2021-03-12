@@ -117,7 +117,7 @@ th {
 	position: sticky;
 	top: 0;
 	z-index: 5;
-	font-weight: lighter;
+	font-weight: normal;
 	background: var(--primaryColor);
 	color: var(--primaryTextColor);
 	white-space: nowrap;
@@ -143,6 +143,10 @@ th {
 input {
 	margin: 4px;
 	padding: 4px;
+}
+
+input:focus {
+	outline: none !important;
 }
 
 input[type=text] {

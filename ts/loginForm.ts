@@ -45,7 +45,7 @@ export class LoginForm implements View {
 
         let titleArea: HTMLDivElement = document.createElement('div');
         titleArea.classList.add('dialogTitle');
-        titleArea.innerHTML = '<span>User Authentication</span>';
+        titleArea.innerHTML = '<span>Sign In</span>';
         this.dialog.appendChild(titleArea);
 
         let table: HTMLTableElement = document.createElement('table');
@@ -108,7 +108,7 @@ export class LoginForm implements View {
             this.signIn()
         });
         buttonArea.appendChild(signIn);
-        
+
         setTimeout(() => {
             this.resize();
             window.addEventListener('resize', () => { this.resize() });
@@ -118,6 +118,7 @@ export class LoginForm implements View {
     show(): void {
         this.container.classList.remove('hidden');
         this.container.classList.add('block');
+        this.userName.focus();
     }
 
     close(): void {
@@ -134,14 +135,19 @@ export class LoginForm implements View {
             return;
         }
         if (this.userName.value === '') {
-            RemoteTM.alert('Enter user name');
+            window.alert('Enter user name');
             return;
         }
         if (this.passwd.value === '') {
-            RemoteTM.alert('Enter password');
+            window.alert('Enter password');
             return;
         }
         var auth = btoa(this.userName.value + ':' + this.passwd.value);
         RemoteTM.requestTicket(this.userName.value, auth);
+    }
+
+    clearForm(): void {
+        this.userName.value = '';
+        this.passwd.value = '';
     }
 }
