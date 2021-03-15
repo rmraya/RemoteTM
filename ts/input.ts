@@ -37,13 +37,13 @@ export class Input {
         this.input.classList.add('inputBox');
         this.input.placeholder = label;
         this.input.type = type;
-        this.input.addEventListener('input', (ev: InputEvent) => { this.handleChanges(ev); });
+        this.input.addEventListener('input', () => { this.handleChanges(); });
         this.input.addEventListener('focus', () => { this.focusIn(); });
         this.input.addEventListener('blur', () => { this.focusOut(); });
         container.appendChild(this.input);
     }
 
-    handleChanges(event: InputEvent): void {
+    handleChanges(): void {
         this.label.className = this.input.value ? 'inputLabel' : 'inputLabel hiddenLabel';
     }
 
