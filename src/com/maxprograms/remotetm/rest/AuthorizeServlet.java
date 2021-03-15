@@ -21,6 +21,7 @@ package com.maxprograms.remotetm.rest;
 import java.io.IOException;
 import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
+import java.net.URL;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.Base64;
@@ -54,7 +55,8 @@ public class AuthorizeServlet extends HttpServlet {
             response.setContentType("application/json");
             JSONObject result = new JSONObject();
             StringBuffer from = request.getRequestURL();
-            if (!from.toString().toLowerCase().startsWith("https://")) {
+            URL url = new URL(from.toString());
+            if (!"https".equals(url.getProtocol())) {
                 result.put(Constants.STATUS, Constants.ERROR);
                 result.put(Constants.REASON, "https protocol required");
                 Utils.writeResponse(result, response, 400);
@@ -92,5 +94,13 @@ public class AuthorizeServlet extends HttpServlet {
         } catch (IOException | SQLException | NoSuchAlgorithmException e) {
             logger.log(Level.ERROR, e);
         }
+    }
+
+    public static boolean logout(String session) {
+        if (tickets != null && tickets.containsKey(session)) {
+            tickets.remove(session);
+            return true;
+        }
+        return false;
     }
 }

@@ -140,33 +140,6 @@ th {
 	text-align: center;
 }
 
-input {
-	margin: 4px;
-	padding: 4px;
-}
-
-input:focus {
-	outline: none !important;
-}
-
-input[type=text] {
-	height: 1.2rem;
-	font-size: 1rem;
-	background: var(--secondaryColor);
-	color: var(--secondaryTextColor);
-	border: 1px solid var(--primaryColor);
-	border-radius: 2px;
-}
-
-input[type=password] {
-	height: 1.2rem;
-	font-size: 1rem;
-	background: var(--secondaryColor);
-	color: var(--secondaryTextColor);
-	border: 1px solid var(--primaryColor);
-	border-radius: 2px;
-}
-
 input[type=number] {
 	height: 1.2rem;
 	font-size: 1rem;
@@ -208,7 +181,7 @@ button:hover {
 
 a.secondary {
 	color: var(--primaryColor);
-	background: var(--SECONDARY-300);
+	background: var(--SECONDARY-50);
 	margin: 4px;
 	padding: 4px 8px;
 	white-space: nowrap;
@@ -416,7 +389,7 @@ label {
 	position: absolute;
 	top: 20%;
 	padding: 0;
-	background: var(--SECONDARY-300);
+	background: var(--SECONDARY-50);
 	border: 1px solid var(--primaryColor);
 	border-radius: 0;
 	z-index: 10;
@@ -565,4 +538,48 @@ label {
 .dropdownOptions a:hover {
 	background: var(--SECONDARY-400);
 	color: var(--primaryDarkColor);
+}
+
+.inputContainer {
+	margin: 8px 4px;
+	width: calc(100% - 8px);
+	display: flex;
+	flex-direction: column;
+}
+
+.inputLabel {
+	color: var(--primaryColor);
+	font-size: 0.8em;
+	margin-left: 8px;
+	margin-bottom: 2px;
+	transition: color .2s ease-in;
+}
+
+.hiddenLabel {
+	color: var(--SECONDARY-50) !important;
+}
+
+.inputBox {
+	margin-left: 8px;
+	padding: 4px;
+	width: calc(100% - 24px);
+	font-size: 1em;
+	background: var(--secondaryColor);
+	color: var(--secondaryTextColor);
+	border-top: none;
+	border-left: none;
+	border-right: none;
+	border-bottom: 1px solid var(--SECONDARY-600);
+	border-radius: 2px;
+	transition: border .2s ease-in;
+}
+
+.inputBox::placeholder {
+	color: var(--SECONDARY-600);
+	font-weight: lighter;
+}
+
+.inputBox:focus {
+	outline: none !important;
+	border-bottom: 1px solid var(--PRIMARY-600);
 }

@@ -47,45 +47,11 @@ export class Dashboard implements View {
 
         let settingsMenu: DropDown = new DropDown(topbar);
         settingsMenu.setHeaderText('Settings');
-
-        let changePassword: HTMLAnchorElement = document.createElement('a');
-        changePassword.innerText = 'Change Password';
-        settingsMenu.addOption(changePassword);
-
-        let manageUsers: HTMLAnchorElement = document.createElement('a');
-        manageUsers.innerText = 'Manage Users';
-        settingsMenu.addOption(manageUsers);
-
-        let sendEmail: HTMLAnchorElement = document.createElement('a');
-        sendEmail.innerText = 'Send Email';
-        settingsMenu.addOption(sendEmail);
-
-        let emailServer: HTMLAnchorElement = document.createElement('a');
-        emailServer.innerText = 'Email Server';
-        settingsMenu.addOption(emailServer);
+        this.createSettingsMenu(settingsMenu);
 
         let helpMenu: DropDown = new DropDown(topbar);
         helpMenu.setHeaderText('Help');
-
-        let help: HTMLAnchorElement = document.createElement('a');
-        help.innerText = 'RemoteTM User Guide';
-        help.href = RemoteTM.getMainURL() + '/docs/index.html';
-        help.target = '_blank';
-        helpMenu.addOption(help);
-
-        let checkUpdates: HTMLAnchorElement = document.createElement('a');
-        checkUpdates.innerText = 'Check for Updates';
-        helpMenu.addOption(checkUpdates);
-
-        let registerLicense: HTMLAnchorElement = document.createElement('a');
-        registerLicense.innerText = 'Register Subscription';
-        helpMenu.addOption(registerLicense);
-
-        let supportGroup: HTMLAnchorElement = document.createElement('a');
-        supportGroup.innerText = 'Support Group';
-        supportGroup.href = 'https://groups.io/g/maxprograms/';
-        supportGroup.target = '_blank';
-        helpMenu.addOption(supportGroup);
+        this.createHelpMenu(helpMenu);
 
         let signOut: HTMLAnchorElement = document.createElement('a');
         signOut.innerText = 'Sign Out';
@@ -201,5 +167,43 @@ export class Dashboard implements View {
         // TODO
     }
 
+    createSettingsMenu(settingsMenu: DropDown): void {
+        let changePassword: HTMLAnchorElement = document.createElement('a');
+        changePassword.innerText = 'Change Password';
+        settingsMenu.addOption(changePassword);
 
+        let manageUsers: HTMLAnchorElement = document.createElement('a');
+        manageUsers.innerText = 'Manage Users';
+        settingsMenu.addOption(manageUsers);
+
+        let sendEmail: HTMLAnchorElement = document.createElement('a');
+        sendEmail.innerText = 'Send Email';
+        settingsMenu.addOption(sendEmail);
+
+        let emailServer: HTMLAnchorElement = document.createElement('a');
+        emailServer.innerText = 'Email Server';
+        settingsMenu.addOption(emailServer);
+    }
+
+    createHelpMenu(helpMenu:DropDown): void {
+        let help: HTMLAnchorElement = document.createElement('a');
+        help.innerText = 'RemoteTM User Guide';
+        help.href = RemoteTM.getMainURL() + '/docs/index.html';
+        help.target = '_blank';
+        helpMenu.addOption(help);
+
+        let checkUpdates: HTMLAnchorElement = document.createElement('a');
+        checkUpdates.innerText = 'Check for Updates';
+        helpMenu.addOption(checkUpdates);
+
+        let registerLicense: HTMLAnchorElement = document.createElement('a');
+        registerLicense.innerText = 'Register Subscription';
+        helpMenu.addOption(registerLicense);
+
+        let supportGroup: HTMLAnchorElement = document.createElement('a');
+        supportGroup.innerText = 'Support Group';
+        supportGroup.href = 'https://groups.io/g/maxprograms/';
+        supportGroup.target = '_blank';
+        helpMenu.addOption(supportGroup);
+    }
 }

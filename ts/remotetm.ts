@@ -154,38 +154,22 @@ export class RemoteTM {
     }
 
     public static signOut() {
-        var req = new XMLHttpRequest();
-        req.open('GET', RemoteTM.mainURL + '/logout/clean', true);
-        req.setRequestHeader('Accept', 'application/json');
-        req.setRequestHeader('user', RemoteTM.who);
-        req.setRequestHeader('hostURL', RemoteTM.getMainURL());
-        req.setRequestHeader('timeOut', 'false'); // TODO implement automatic timeout
-
-        req.onreadystatechange = () => {
-            if (req.readyState == 4) {
-                if (req.status == 200) {
-                    var json = JSON.parse(req.responseText);
-                    if (json.status === 'OK') {
-                        RemoteTM.who = '';
-                        RemoteTM.session = '';
-                        let logoutUrl = json.logoutUrl;
-                        if (!logoutUrl) {
-                            this.showLogin();
-                            return;
-                        }
-                        window.location.replace(logoutUrl);
-                    } else {
-                        window.alert(json.reason);
-                    }
-                } else if (req.status == 401) {
-                    window.alert('Access denied');
-                } else {
-                    window.alert('Server status: ' + req.status
-                        + '. Try again later.');
-                }
+        fetch(RemoteTM.mainURL + '/logout', {
+            method: 'GET',
+            headers: [
+                ['Content-Type', 'application/json'],
+                ['Accept', 'application/json'],
+                ['Session', RemoteTM.session]
+            ]
+        }).then(async (response: Response) => {
+            let json: any = await response.json();
+            if (json.status !== 'OK') {
+                window.alert(json.reason);
             }
-        };
-        req.send(null);
+            RemoteTM.showLogin();
+        }).catch((reason: any) => {
+            console.error('Error:', reason);
+        });
     }
 
     public static startWaiting(): void {

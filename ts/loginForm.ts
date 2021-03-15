@@ -17,6 +17,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 
+import { Input } from "./input";
 import { RemoteTM } from "./remotetm";
 import { View } from "./view";
 
@@ -24,8 +25,8 @@ export class LoginForm implements View {
 
     container: HTMLDivElement;
     dialog: HTMLDivElement;
-    userName: HTMLInputElement;
-    passwd: HTMLInputElement;
+    userName: Input;
+    passwd: Input;
 
     constructor() {
 
@@ -48,49 +49,10 @@ export class LoginForm implements View {
         titleArea.innerHTML = '<span>Sign In</span>';
         this.dialog.appendChild(titleArea);
 
-        let table: HTMLTableElement = document.createElement('table');
-        table.classList.add('fullWidth');
-        this.dialog.appendChild(table);
-
-        let row: HTMLTableRowElement = document.createElement('tr');
-        table.appendChild(row);
-
-        let td: HTMLTableCellElement = document.createElement('td');
-        td.classList.add('middle');
-        let userLabel: HTMLLabelElement = document.createElement('label');
-        userLabel.innerText = 'User Name';
-        td.appendChild(userLabel);
-        row.appendChild(td);
-
-        td = document.createElement('td');
-        td.classList.add('fullWidth');
-        td.classList.add('middle');
-        this.userName = document.createElement('input');
-        this.userName.type = 'text';
-        this.userName.classList.add('dialog_width');
-        this.userName.addEventListener('keydown', (ev: KeyboardEvent) => { this.keyListener(ev); })
-        td.appendChild(this.userName);
-        row.appendChild(td);
-
-        row = document.createElement('tr');
-        table.appendChild(row);
-
-        td = document.createElement('td');
-        td.classList.add('middle');
-        let passwdLabel: HTMLLabelElement = document.createElement('label');
-        passwdLabel.innerText = 'Password';
-        td.appendChild(passwdLabel);
-        row.appendChild(td);
-
-        td = document.createElement('td');
-        td.classList.add('fullWidth');
-        td.classList.add('middle');
-        this.passwd = document.createElement('input');
-        this.passwd.type = 'password';
-        this.passwd.classList.add('dialog_width');
-        this.passwd.addEventListener('keydown', (ev: KeyboardEvent) => { this.keyListener(ev); })
-        td.appendChild(this.passwd);
-        row.appendChild(td);
+        this.userName = new Input(this.dialog, 'User Name', 'text');
+        this.userName.addEventListener('keydown', (ev: KeyboardEvent) => { this.keyListener(ev); });
+        this.passwd = new Input(this.dialog, 'Password', 'password');
+        this.passwd.addEventListener('keydown', (ev: KeyboardEvent) => { this.keyListener(ev); });
 
         let buttonArea: HTMLDivElement = document.createElement('div');
         buttonArea.classList.add('buttonArea');
@@ -122,7 +84,7 @@ export class LoginForm implements View {
             this.signIn();
         }
     }
-    
+
     show(): void {
         this.container.classList.remove('hidden');
         this.container.classList.add('block');
@@ -139,23 +101,23 @@ export class LoginForm implements View {
     }
 
     signIn(): void {
-        if (this.userName.value === '' && this.passwd.value === '') {
+        if (this.userName.getValue() === '' && this.passwd.getValue() === '') {
             return;
         }
-        if (this.userName.value === '') {
+        if (this.userName.getValue() === '') {
             window.alert('Enter user name');
             return;
         }
-        if (this.passwd.value === '') {
+        if (this.passwd.getValue() === '') {
             window.alert('Enter password');
             return;
         }
-        var auth = btoa(this.userName.value + ':' + this.passwd.value);
-        RemoteTM.requestTicket(this.userName.value, auth);
+        var auth = btoa(this.userName.getValue() + ':' + this.passwd.getValue());
+        RemoteTM.requestTicket(this.userName.getValue(), auth);
     }
 
     clearForm(): void {
-        this.userName.value = '';
-        this.passwd.value = '';
+        this.userName.setValue('');
+        this.passwd.setValue('');
     }
 }

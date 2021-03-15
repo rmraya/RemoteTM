@@ -41,17 +41,12 @@ public class SecurityFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		HttpServletResponse res = (HttpServletResponse) response;
 		
-		res.addHeader("X-FRAME-OPTIONS", "sameorigin");
-		res.addHeader("X-XSS-Protection", "1; mode=block");
 		res.addHeader("X-Content-Type-Options", "nosniff");
-		res.addHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-		res.addHeader("Pragma", "no-cache");
-		res.addHeader("Expires", "-1");
+		res.addHeader("Cache-Control", "no-cache");
 		res.addHeader("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
 		res.addHeader("X-Permitted-Cross-Domain-Policies", "master-only");
-		res.addHeader("Content-Security-Policy", "report-uri https://dev.maxprograms.com");
+		res.addHeader("Content-Security-Policy", "default-src https: 'self' 'unsafe-inline'");
 		res.addHeader("Referrer-Policy", "no-referrer-when-downgrade");
-		res.addHeader("Feature-Policy", "microphone 'none'; camera 'none'");
 
 		res.setCharacterEncoding(StandardCharsets.UTF_8.name());
 		try {

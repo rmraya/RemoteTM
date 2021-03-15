@@ -19,13 +19,14 @@ SOFTWARE.
 
 import { RemoteTM } from "./remotetm";
 import { View } from "./view";
+import { Input } from "./input";
 
 export class ResetPasswordForm implements View {
 
     container: HTMLDivElement;
     dialog: HTMLDivElement;
-    userName: HTMLInputElement;
-    email: HTMLInputElement;
+    userName: Input;
+    email: Input;
 
     constructor() {
 
@@ -48,49 +49,10 @@ export class ResetPasswordForm implements View {
         titleArea.innerHTML = '<span>Reset Password</span>';
         this.dialog.appendChild(titleArea);
 
-        let table: HTMLTableElement = document.createElement('table');
-        table.classList.add('fullWidth');
-        this.dialog.appendChild(table);
-
-        let row: HTMLTableRowElement = document.createElement('tr');
-        table.appendChild(row);
-
-        let td: HTMLTableCellElement = document.createElement('td');
-        td.classList.add('middle');
-        let userLabel: HTMLLabelElement = document.createElement('label');
-        userLabel.innerText = 'User Name';
-        td.appendChild(userLabel);
-        row.appendChild(td);
-
-        td = document.createElement('td');
-        td.classList.add('fullWidth');
-        td.classList.add('middle');
-        this.userName = document.createElement('input');
-        this.userName.type = 'text';
-        this.userName.classList.add('dialog_width');
-        this.userName.addEventListener('keydown', (ev: KeyboardEvent) => { this.keyListener(ev); })
-        td.appendChild(this.userName);
-        row.appendChild(td);
-
-        row = document.createElement('tr');
-        table.appendChild(row);
-
-        td = document.createElement('td');
-        td.classList.add('middle');
-        let emailLabel: HTMLLabelElement = document.createElement('label');
-        emailLabel.innerText = 'Email';
-        td.appendChild(emailLabel);
-        row.appendChild(td);
-
-        td = document.createElement('td');
-        td.classList.add('fullWidth');
-        td.classList.add('middle');
-        this.email = document.createElement('input');
-        this.email.type = 'text';
-        this.email.classList.add('dialog_width');
-        this.email.addEventListener('keydown', (ev: KeyboardEvent) => { this.keyListener(ev); })
-        td.appendChild(this.email);
-        row.appendChild(td);
+        this.userName = new Input(this.dialog, 'User Name', 'text');
+        this.userName.addEventListener('keydown', (ev: KeyboardEvent) => { this.keyListener(ev); });
+        this.email = new Input(this.dialog, 'Email', 'text');
+        this.email.addEventListener('keydown', (ev: KeyboardEvent) => { this.keyListener(ev); });
 
         let buttonArea: HTMLDivElement = document.createElement('div');
         buttonArea.classList.add('buttonArea');
@@ -139,18 +101,18 @@ export class ResetPasswordForm implements View {
     }
 
     resetPassword(): void {
-        if (this.userName.value === '' && this.email.value === '') {
+        if (this.userName.getValue() === '' && this.email.getValue() === '') {
             return;
         }
-        if (this.userName.value === '') {
+        if (this.userName.getValue() === '') {
             window.alert('Enter user name');
             return;
         }
-        if (this.email.value === '') {
+        if (this.email.getValue() === '') {
             window.alert('Enter email address');
             return;
         }
-        var json: any = { username: this.userName.value, email: this.email.value };
+        var json: any = { username: this.userName.getValue(), email: this.email.getValue() };
 
         var req = new XMLHttpRequest();
         req.open('POST', RemoteTM.getMainURL() + '/login/sendReminder', true);

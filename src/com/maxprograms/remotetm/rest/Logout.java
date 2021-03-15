@@ -30,25 +30,29 @@ import com.maxprograms.remotetm.utils.Utils;
 
 import org.json.JSONObject;
 
-public class VersionServlet extends HttpServlet {
+public class Logout extends HttpServlet {
 
-    private static final long serialVersionUID = 9160810294370561297L;
+    private static final long serialVersionUID = 1L;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setContentType("application/json");
         JSONObject result = new JSONObject();
-        int status = 200;
+        response.setContentType("application/json");
         StringBuffer from = request.getRequestURL();
         URL url = new URL(from.toString());
         if (!"https".equals(url.getProtocol())) {
-            status = 400;
             result.put(Constants.STATUS, Constants.ERROR);
             result.put(Constants.REASON, "https protocol required");
-        } else {
-            result.put(Constants.STATUS, Constants.OK);
-            result.put("version", Constants.VERSION + "_" + Constants.BUILD);
+            Utils.writeResponse(result, response, 400);
+            return;
         }
-        Utils.writeResponse(result, response, status);
+        String session = request.getHeader("Session");
+        if (AuthorizeServlet.logout(session)) {
+            result.put(Constants.STATUS, Constants.OK);
+            Utils.writeResponse(result, response, 200);
+            return;
+        }
+        result.put(Constants.STATUS, Constants.ERROR);
+        Utils.writeResponse(result, response, 500);
     }
 }
