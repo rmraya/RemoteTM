@@ -24,7 +24,7 @@ export class DropDown {
 
     header: HTMLAnchorElement;
     headerText: string;
-    optionsArray: HTMLAnchorElement[];
+    optionsArray: HTMLElement[];
     backdrop: HTMLDivElement;
     showing: boolean;
 
@@ -47,7 +47,7 @@ export class DropDown {
         this.header.innerHTML = header + '&nbsp;' + DropDown.DOWN;
     }
 
-    addOption(option: HTMLAnchorElement): void {
+    addOption(option: HTMLElement): void {
         this.optionsArray.push(option);
     }
 

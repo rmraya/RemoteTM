@@ -511,6 +511,15 @@ label {
 	display: flex !important;
 }
 
+hr {
+	background: var(--PRIMARY-600);
+	border: none;
+	height: 1px;
+	width: 100%;
+	margin: 0px;
+	padding: 0px;
+}
+
 .dropdown {
 	margin: 0px;
 	padding: 0px;

@@ -205,5 +205,12 @@ export class Dashboard implements View {
         supportGroup.href = 'https://groups.io/g/maxprograms/';
         supportGroup.target = '_blank';
         helpMenu.addOption(supportGroup);
+
+        let separator : HTMLHRElement = document.createElement('hr');
+        helpMenu.addOption(separator);
+
+        let about: HTMLAnchorElement = document.createElement('a');
+        about.innerText = 'About...';
+        helpMenu.addOption(about);
     }
 }
