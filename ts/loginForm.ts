@@ -49,9 +49,17 @@ export class LoginForm implements View {
         titleArea.innerHTML = '<span>Sign In</span>';
         this.dialog.appendChild(titleArea);
 
-        this.userName = new Input(this.dialog, 'User Name', 'text');
+
+        let holder: HTMLDivElement = document.createElement('div');
+        holder.classList.add('fullWidth');
+        holder.style.paddingTop = '20px';
+        holder.style.paddingBottom = '20px';
+        this.dialog.appendChild(holder);
+
+
+        this.userName = new Input(holder, 'User Name', 'text');
         this.userName.addEventListener('keydown', (ev: KeyboardEvent) => { this.keyListener(ev); });
-        this.passwd = new Input(this.dialog, 'Password', 'password');
+        this.passwd = new Input(holder, 'Password', 'password');
         this.passwd.addEventListener('keydown', (ev: KeyboardEvent) => { this.keyListener(ev); });
 
         let buttonArea: HTMLDivElement = document.createElement('div');

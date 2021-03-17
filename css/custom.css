@@ -87,6 +87,7 @@ table {
 a {
 	color: var(--primaryColor);
 	text-decoration: none;
+	cursor: pointer;
 }
 
 thead {

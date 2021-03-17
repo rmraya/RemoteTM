@@ -49,9 +49,15 @@ export class ResetPasswordForm implements View {
         titleArea.innerHTML = '<span>Reset Password</span>';
         this.dialog.appendChild(titleArea);
 
-        this.userName = new Input(this.dialog, 'User Name', 'text');
+        let holder: HTMLDivElement = document.createElement('div');
+        holder.classList.add('fullWidth');
+        holder.style.paddingTop = '20px';
+        holder.style.paddingBottom = '20px';
+        this.dialog.appendChild(holder);
+
+        this.userName = new Input(holder, 'User Name', 'text');
         this.userName.addEventListener('keydown', (ev: KeyboardEvent) => { this.keyListener(ev); });
-        this.email = new Input(this.dialog, 'Email', 'text');
+        this.email = new Input(holder, 'Email', 'text');
         this.email.addEventListener('keydown', (ev: KeyboardEvent) => { this.keyListener(ev); });
 
         let buttonArea: HTMLDivElement = document.createElement('div');

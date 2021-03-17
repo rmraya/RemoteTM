@@ -24,6 +24,9 @@ import { ResetPasswordForm } from "./resetPasswordForm";
 import { View } from "./view";
 
 export class RemoteTM {
+
+    public static VERSION: string = '5.0.0';
+
     private static waitingCount: number;
     private static session: string = '';
     private static who: string = '';
@@ -82,19 +85,19 @@ export class RemoteTM {
             headers: [
                 ['Accept', 'application/json']
             ]
-        }).then((response: Response) => response.json())
-            .then((json: any) => {
-                if (json.status === 'OK') {
-                    let versionSpan: HTMLSpanElement = document.getElementById('version') as HTMLSpanElement;
-                    if (versionSpan) {
-                        versionSpan.innerHTML = json.version;
-                    }
-                } else {
-                    window.alert(json.reason);
+        }).then(async (response: Response) => {
+            let json: any = await response.json();
+            if (json.status === 'OK') {
+                let versionSpan: HTMLSpanElement = document.getElementById('version') as HTMLSpanElement;
+                if (versionSpan) {
+                    versionSpan.innerHTML = json.version;
                 }
-            }).catch((reason: any) => {
-                console.error('Error:', reason);
-            });
+            } else {
+                window.alert(json.reason);
+            }
+        }).catch((reason: any) => {
+            console.error('Error:', reason);
+        });
     }
 
     public static requestTicket(userName: string, auth: string) {

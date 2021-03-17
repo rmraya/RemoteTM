@@ -17,8 +17,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 
+import { AboutDialog } from './about';
 import { DropDown } from './dropdown';
+import { LicensesDialog } from './licenses';
 import { RemoteTM } from './remotetm';
+import { UsersManager } from './usersManager';
 import { View } from './view';
 
 export class Dashboard implements View {
@@ -174,6 +177,7 @@ export class Dashboard implements View {
 
         let manageUsers: HTMLAnchorElement = document.createElement('a');
         manageUsers.innerText = 'Manage Users';
+        manageUsers.addEventListener('click', () => { this.manageUsers(); })
         settingsMenu.addOption(manageUsers);
 
         let sendEmail: HTMLAnchorElement = document.createElement('a');
@@ -185,20 +189,25 @@ export class Dashboard implements View {
         settingsMenu.addOption(emailServer);
     }
 
-    createHelpMenu(helpMenu:DropDown): void {
+    createHelpMenu(helpMenu: DropDown): void {
         let help: HTMLAnchorElement = document.createElement('a');
         help.innerText = 'RemoteTM User Guide';
         help.href = RemoteTM.getMainURL() + '/docs/index.html';
         help.target = '_blank';
         helpMenu.addOption(help);
 
+        helpMenu.addOption(document.createElement('hr'));
+
         let checkUpdates: HTMLAnchorElement = document.createElement('a');
         checkUpdates.innerText = 'Check for Updates';
         helpMenu.addOption(checkUpdates);
 
-        let registerLicense: HTMLAnchorElement = document.createElement('a');
-        registerLicense.innerText = 'Register Subscription';
-        helpMenu.addOption(registerLicense);
+        let licenses: HTMLAnchorElement = document.createElement('a');
+        licenses.innerText = 'View Licenses';
+        licenses.addEventListener('click', () => { this.viewLicenses(); });
+        helpMenu.addOption(licenses);
+
+        helpMenu.addOption(document.createElement('hr'));
 
         let supportGroup: HTMLAnchorElement = document.createElement('a');
         supportGroup.innerText = 'Support Group';
@@ -206,11 +215,26 @@ export class Dashboard implements View {
         supportGroup.target = '_blank';
         helpMenu.addOption(supportGroup);
 
-        let separator : HTMLHRElement = document.createElement('hr');
-        helpMenu.addOption(separator);
+        helpMenu.addOption(document.createElement('hr'));
 
         let about: HTMLAnchorElement = document.createElement('a');
         about.innerText = 'About...';
+        about.addEventListener('click', () => { this.showAbout(); });
         helpMenu.addOption(about);
+    }
+
+    manageUsers(): void {
+        let dialog: UsersManager = new UsersManager();
+        dialog.open();
+    }
+
+    showAbout(): void {
+        let about: AboutDialog = new AboutDialog();
+        about.open();
+    }
+
+    viewLicenses(): void {
+        let licenses = new LicensesDialog();
+        licenses.open();
     }
 }

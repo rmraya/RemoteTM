@@ -27,7 +27,6 @@ export class Dialog {
     titleSpan: HTMLSpanElement;
     contentArea: HTMLDivElement;
     buttonArea: HTMLDivElement;
-    moving: boolean;
     mouseX: number;
     mouseY: number;
     closeLink: HTMLAnchorElement;
@@ -35,7 +34,6 @@ export class Dialog {
 
     constructor(width: number) {
         this.id = 'dia' + (Math.random() * 10000000);
-        this.moving = false;
         this.dialog = document.createElement('div');
         this.dialog.classList.add('dialog');
         this.dialog.classList.add('hidden');
@@ -43,15 +41,6 @@ export class Dialog {
         document.body.appendChild(this.dialog);
         this.titleArea = document.createElement('div');
         this.titleArea.classList.add('dialogTitle');
-        this.titleArea.addEventListener('mousedown', (ev: MouseEvent) => {
-            this.mouseDown(ev);
-        });
-        this.titleArea.addEventListener('mouseup', (ev: MouseEvent) => {
-            this.mouseUp(ev);
-        });
-        this.titleArea.addEventListener('mousemove', (ev: MouseEvent) => {
-            this.mouseMove(ev);
-        });
 
         this.titleSpan = document.createElement('span');
         this.titleSpan.id = 'title';
@@ -73,37 +62,12 @@ export class Dialog {
         this.dialog.appendChild(this.titleArea);
 
         this.contentArea = document.createElement('div');
-        this.contentArea.classList.add('dialog_width');
-        this.contentArea.style.padding = '10px';
         this.dialog.appendChild(this.contentArea);
 
         this.buttonArea = document.createElement('div');
         this.buttonArea.classList.add('buttonArea');
         this.dialog.appendChild(this.buttonArea);
         RemoteTM.registerDialog(this);
-    }
-
-    mouseDown(ev: MouseEvent): void {
-        this.titleArea.classList.add('move');
-        this.moving = true;
-        this.mouseX = ev.offsetX;
-        this.mouseY = ev.offsetY;
-        ev.preventDefault();
-        ev.stopPropagation();
-    }
-
-    mouseUp(ev: MouseEvent): void {
-        this.titleArea.classList.remove('move');
-        this.moving = false;
-    }
-
-    mouseMove(ev: MouseEvent): void {
-        if (this.moving) {
-            this.dialog.style.left = (this.dialog.offsetLeft - this.mouseX + ev.offsetX) + 'px';
-            this.dialog.style.top = (this.dialog.offsetTop - this.mouseY + ev.offsetY) + 'px';
-        }
-        ev.preventDefault();
-        ev.stopPropagation();
     }
 
     setTitle(title: string) {
@@ -127,7 +91,7 @@ export class Dialog {
         document.body.removeChild(this.dialog);
     }
 
-    addChild(child: HTMLElement): void {
+    appendChild(child: HTMLElement): void {
         this.contentArea.appendChild(child);
     }
 
