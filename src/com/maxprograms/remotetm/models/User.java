@@ -18,6 +18,8 @@ SOFTWARE.
 *******************************************************************************/
 package com.maxprograms.remotetm.models;
 
+import org.json.JSONObject;
+
 public class User {
 
 	private String id;
@@ -36,6 +38,17 @@ public class User {
 		this.role = role;
 		this.active = active;
 		this.updated = updated;
+	}
+
+	public JSONObject toJSON() {
+		JSONObject json = new JSONObject();
+		json.put("id", id);
+		json.put("name", name);
+		json.put("email", email);
+		json.put("role", role);
+		json.put("active", active);
+		json.put("updated", updated);
+		return json;
 	}
 
 	public String getId() {

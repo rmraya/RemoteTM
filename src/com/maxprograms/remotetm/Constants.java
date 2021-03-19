@@ -32,6 +32,8 @@ public class Constants {
     public static final String ERROR = "Error";
     public static final String REASON = "reason";
     public static final String TICKET = "ticket";
+    public static final String DENIED = "Access denied";
+    public static final String HTTPS = "https";
 
     public static final String TRANSLATOR = "TR";
 	public static final String PROJECT_MANAGER = "PM";

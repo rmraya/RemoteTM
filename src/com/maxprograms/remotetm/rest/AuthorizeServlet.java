@@ -56,10 +56,10 @@ public class AuthorizeServlet extends HttpServlet {
             JSONObject result = new JSONObject();
             StringBuffer from = request.getRequestURL();
             URL url = new URL(from.toString());
-            if (!"https".equals(url.getProtocol())) {
+            if (!Constants.HTTPS.equals(url.getProtocol())) {
                 result.put(Constants.STATUS, Constants.ERROR);
-                result.put(Constants.REASON, "https protocol required");
-                Utils.writeResponse(result, response, 400);
+                result.put(Constants.REASON, Constants.DENIED);
+                Utils.writeResponse(result, response, 401);
                 return;
             }
             String header = request.getHeader("Authorization");
@@ -97,10 +97,25 @@ public class AuthorizeServlet extends HttpServlet {
     }
 
     public static boolean logout(String session) {
-        if (tickets != null && tickets.containsKey(session)) {
+        if (tickets != null && session != null && tickets.containsKey(session)) {
             tickets.remove(session);
             return true;
         }
         return false;
+    }
+
+    public static boolean sessionActive(String session) {
+        if (tickets != null && session != null && tickets.containsKey(session)) {
+            tickets.get(session).setLastAccess(System.currentTimeMillis());
+            return true;
+        }
+        return false;
+    }
+
+    public static String getUser(String session) {
+        if (tickets != null && session != null && tickets.containsKey(session)) {
+            return tickets.get(session).getUser();
+        }
+        return null;
     }
 }

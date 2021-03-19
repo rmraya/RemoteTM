@@ -20,6 +20,11 @@
     <servlet-class>com.maxprograms.remotetm.rest.Logout</servlet-class>
   </servlet>
 
+  <servlet>
+    <servlet-name>Users</servlet-name>
+    <servlet-class>com.maxprograms.remotetm.rest.UsersServlet</servlet-class>
+  </servlet>
+
   <filter>
     <filter-name>SecurityFilter</filter-name>
     <filter-class>com.maxprograms.remotetm.utils.SecurityFilter</filter-class>
@@ -44,6 +49,11 @@
   <servlet-mapping>
     <servlet-name>Logout</servlet-name>
     <url-pattern>/logout</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>Users</servlet-name>
+    <url-pattern>/users</url-pattern>
   </servlet-mapping>
 
   <!-- Default page to serve -->

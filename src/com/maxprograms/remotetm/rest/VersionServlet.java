@@ -41,10 +41,10 @@ public class VersionServlet extends HttpServlet {
         int status = 200;
         StringBuffer from = request.getRequestURL();
         URL url = new URL(from.toString());
-        if (!"https".equals(url.getProtocol())) {
-            status = 400;
+        if (!Constants.HTTPS.equals(url.getProtocol())) {
+            status = 401;
             result.put(Constants.STATUS, Constants.ERROR);
-            result.put(Constants.REASON, "https protocol required");
+            result.put(Constants.REASON, Constants.DENIED);
         } else {
             result.put(Constants.STATUS, Constants.OK);
             result.put("version", Constants.VERSION + "_" + Constants.BUILD);

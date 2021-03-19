@@ -29,6 +29,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.maxprograms.remotetm.models.User;
 import com.maxprograms.remotetm.utils.Crypto;
@@ -113,6 +115,26 @@ public class DbManager {
                 boolean updated = rs.getString(5).equals("Y");
                 String password = rs.getString(6);
                 result = new User(userId, password, name, email, role, active, updated);
+            }
+        }
+        return result;
+    }
+
+    public List<User> getUsers() throws SQLException {
+        List<User> result = new ArrayList<>();
+        try (Statement stmt = conn.createStatement()) {
+            String sql = "SELECT id, name, email, role, active, updated, password FROM users ORDER BY name";
+            try (ResultSet rs = stmt.executeQuery(sql)) {
+                while (rs.next()) {
+                    String id = rs.getString(1);
+                    String name = rs.getNString(2);
+                    String email = rs.getString(3);
+                    String role = rs.getString(4);
+                    boolean active = rs.getString(5).equals("Y");
+                    boolean updated = rs.getString(6).equals("Y");
+                    String password = rs.getString(7);
+                    result.add(new User(id, password, name, email, role, active, updated));
+                }
             }
         }
         return result;

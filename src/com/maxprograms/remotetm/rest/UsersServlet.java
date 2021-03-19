@@ -20,22 +20,31 @@ package com.maxprograms.remotetm.rest;
 
 import java.io.IOException;
 import java.net.URL;
+import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
+import java.util.Iterator;
+import java.util.List;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.maxprograms.remotetm.Constants;
+import com.maxprograms.remotetm.DbManager;
+import com.maxprograms.remotetm.models.User;
 import com.maxprograms.remotetm.utils.Utils;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class Logout extends HttpServlet {
+public class UsersServlet extends HttpServlet {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1274203013996176701L;
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         JSONObject result = new JSONObject();
         response.setContentType("application/json");
         StringBuffer from = request.getRequestURL();
@@ -47,12 +56,30 @@ public class Logout extends HttpServlet {
             return;
         }
         String session = request.getHeader("Session");
-        if (AuthorizeServlet.logout(session)) {
-            result.put(Constants.STATUS, Constants.OK);
-            Utils.writeResponse(result, response, 200);
-            return;
+        if (AuthorizeServlet.sessionActive(session)) {
+            try {
+                DbManager manager = DbManager.getInstance();
+                User who = manager.getUser(AuthorizeServlet.getUser(session));
+                if (who != null && who.isActive() && Constants.SYSTEM_ADMINISTRATOR.equals(who.getRole())) {
+                    JSONArray array = new JSONArray();
+                    List<User> users = manager.getUsers();
+                    Iterator<User> it = users.iterator();
+                    while (it.hasNext()) {
+                        array.put(it.next().toJSON());
+                    }
+                    result.put(Constants.STATUS, Constants.OK);
+                    result.put("users", array);
+                    Utils.writeResponse(result, response, 200);
+                    return;
+                }
+            } catch (NoSuchAlgorithmException | SQLException e) {
+                result.put(Constants.STATUS, Constants.ERROR);
+                result.put(Constants.REASON, e.getMessage());
+                Utils.writeResponse(result, response, 500);
+            }
         }
         result.put(Constants.STATUS, Constants.ERROR);
-        Utils.writeResponse(result, response, 500);
+        result.put(Constants.REASON, Constants.DENIED);
+        Utils.writeResponse(result, response, 401);
     }
 }

@@ -27,6 +27,7 @@ import { View } from './view';
 export class Dashboard implements View {
 
     container: HTMLDivElement;
+    tbody: HTMLTableSectionElement;
 
     constructor() {
 
@@ -97,7 +98,7 @@ export class Dashboard implements View {
         refreshList.innerText = 'Refresh';
         toolbar.appendChild(refreshList);
 
-        let tableContainer: HTMLDivElement = document.createElement('table');
+        let tableContainer: HTMLDivElement = document.createElement('div');
         tableContainer.classList.add('fullWidth');
         tableContainer.classList.add('fullHeight');
         tableContainer.classList.add('divContainer');
@@ -140,6 +141,9 @@ export class Dashboard implements View {
         let ClientTh: HTMLTableHeaderCellElement = document.createElement('th');
         ClientTh.innerText = 'Client';
         headerRow.appendChild(ClientTh);
+
+        this.tbody = document.createElement('tbody');
+        mainTable.appendChild(this.tbody);
 
         const config: MutationObserverInit = { attributes: false, childList: true, subtree: false };
         const callback = (mutationsList: MutationRecord[], observer: MutationObserver): void => {
