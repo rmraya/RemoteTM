@@ -25,6 +25,10 @@ import java.util.Base64;
 
 public class Crypto {
 
+    private Crypto() {
+        // private for security
+    }
+
     public static String sha256(String string) throws NoSuchAlgorithmException {
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
         byte[] hash = digest.digest(string.getBytes(StandardCharsets.UTF_8));

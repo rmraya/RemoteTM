@@ -26,6 +26,10 @@ public class RemoteTM {
     
     private static File workDir;
 
+	private RemoteTM() {
+		// private for security
+	}
+
     public static File getWorkFolder() throws IOException {
 		if (workDir == null) {
 			String os = System.getProperty("os.name").toLowerCase();

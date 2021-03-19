@@ -73,18 +73,16 @@ public class AuthorizeServlet extends HttpServlet {
 
                 DbManager dbManager = DbManager.getInstance();
                 User user = dbManager.getUser(userId);
-                if (user != null) {
-                    if (user.isActive() && Crypto.sha256(pass).equals(user.getPassword())) {
-                        String session = UUID.randomUUID().toString();
-                        result.put(Constants.STATUS, Constants.OK);
-                        result.put(Constants.TICKET, session);
-                        if (tickets == null) {
-                            tickets = new ConcurrentHashMap<>();
-                        }
-                        tickets.put(session, new Ticket(userId));
-                        Utils.writeResponse(result, response, 200);
-                        return;
+                if (user != null && user.isActive() && Crypto.sha256(pass).equals(user.getPassword())) {
+                    String session = UUID.randomUUID().toString();
+                    result.put(Constants.STATUS, Constants.OK);
+                    result.put(Constants.TICKET, session);
+                    if (tickets == null) {
+                        tickets = new ConcurrentHashMap<>();
                     }
+                    tickets.put(session, new Ticket(userId));
+                    Utils.writeResponse(result, response, 200);
+                    return;
                 }
             }
             response.setStatus(401);

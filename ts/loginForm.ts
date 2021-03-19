@@ -120,7 +120,7 @@ export class LoginForm implements View {
             window.alert('Enter password');
             return;
         }
-        var auth = btoa(this.userName.getValue() + ':' + this.passwd.getValue());
+        let auth = btoa(this.userName.getValue() + ':' + this.passwd.getValue());
         RemoteTM.requestTicket(this.userName.getValue(), auth);
     }
 

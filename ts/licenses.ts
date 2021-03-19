@@ -19,7 +19,6 @@ SOFTWARE.
 
 import { Dialog } from "./dialog";
 import { LicenseViewer } from "./licenseViewer";
-import { RemoteTM } from "./remotetm";
 
 export class LicensesDialog {
 

@@ -17,9 +17,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 
+import { Input } from "./input";
 import { RemoteTM } from "./remotetm";
 import { View } from "./view";
-import { Input } from "./input";
 
 export class ResetPasswordForm implements View {
 
@@ -118,30 +118,25 @@ export class ResetPasswordForm implements View {
             window.alert('Enter email address');
             return;
         }
-        var json: any = { username: this.userName.getValue(), email: this.email.getValue() };
+        let params: any = { username: this.userName.getValue(), email: this.email.getValue() };
 
-        var req = new XMLHttpRequest();
-        req.open('POST', RemoteTM.getMainURL() + '/login/sendReminder', true);
-        req.setRequestHeader('Content-Type', 'application/json');
-        req.setRequestHeader('Accept', 'application/json');
-        req.onreadystatechange = () => {
-            if (req.readyState == 4) {
-                if (req.status == 200) {
-                    var json = JSON.parse(req.responseText);
-                    if (json.status === 'OK') {
-                        RemoteTM.showLogin();
-                        window.alert('If entered data matches our records, an email with password change information will be sent.');
-                    } else {
-                        window.alert(json.reason);
-                    }
-                } else if (req.status == 401) {
-                    window.alert('Access denied');
-                } else {
-                    window.alert('Server status: ' + req.status
-                        + '. Try again later.');
-                }
+        fetch(RemoteTM.getMainURL() + '/login/sendReminder', {
+            method: 'POST',
+            headers: [
+                ['Content-Type', 'application/json'],
+                ['Accept', 'application/json']
+            ],
+            body: JSON.stringify(params)
+        }).then(async (response: Response) => {
+            let json: any = await response.json();
+            if (json.status === 'OK') {
+                window.alert('If entered data matches our records, an email with password change information will be sent.');
+                RemoteTM.showLogin();
+            } else {
+                window.alert(json.reason);
             }
-        };
-        req.send(JSON.stringify(json));
+        }).catch((reason: any) => {
+            console.error('Error:', reason);
+        });
     }
 }

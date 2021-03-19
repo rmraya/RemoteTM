@@ -35,23 +35,22 @@ import com.maxprograms.remotetm.Constants;
 
 public class SecurityFilter implements Filter {
 
-	private static Logger logger = System.getLogger(SecurityFilter.class.getName());
-	
 	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+			throws IOException, ServletException {
 		HttpServletResponse res = (HttpServletResponse) response;
-		
+
 		res.addHeader("X-Content-Type-Options", "nosniff");
 		res.addHeader("Cache-Control", "no-cache");
 		res.addHeader("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
 		res.addHeader("X-Permitted-Cross-Domain-Policies", "master-only");
 		res.addHeader("Content-Security-Policy", "default-src https: 'self' 'unsafe-inline'");
 		res.addHeader("Referrer-Policy", "no-referrer-when-downgrade");
-
 		res.setCharacterEncoding(StandardCharsets.UTF_8.name());
 		try {
 			chain.doFilter(request, response);
 		} catch (IOException e) {
+			Logger logger = System.getLogger(SecurityFilter.class.getName());
 			logger.log(Level.ERROR, Constants.ERROR, e);
 		}
 	}
@@ -62,7 +61,7 @@ public class SecurityFilter implements Filter {
 	}
 
 	@Override
-	public void init(FilterConfig filterConfig) {		
+	public void init(FilterConfig filterConfig) {
 		// do nothing
 	}
 }
