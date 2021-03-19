@@ -111,7 +111,7 @@ export class RemoteTM {
         }).then(async (response: Response) => {
             let json: any = await response.json();
             if (json.status === 'OK') {
-                RemoteTM.session = json.session;
+                RemoteTM.session = json.ticket;
                 RemoteTM.who = userName;
                 RemoteTM.showDashboard();
             } else {
@@ -157,6 +157,9 @@ export class RemoteTM {
     }
 
     public static signOut() {
+        RemoteTM.openDialogs.forEach((dialog) => {
+            dialog.close();
+        });
         fetch(RemoteTM.mainURL + '/logout', {
             method: 'GET',
             headers: [
@@ -198,6 +201,20 @@ export class RemoteTM {
 
     static removeDialog(dialog: Dialog): void {
         RemoteTM.openDialogs.delete(dialog.getId());
+    }
+
+    static dialogCount(): number {
+        if (!RemoteTM.openDialogs) {
+            RemoteTM.openDialogs = new Map<string, Dialog>();
+        }
+        return RemoteTM.openDialogs.size;
+    }
+
+    static htmlToElement(html: string) {
+        let template = document.createElement('template');
+        html = html.trim();
+        template.innerHTML = html;
+        return template.content.firstChild;
     }
 }
 

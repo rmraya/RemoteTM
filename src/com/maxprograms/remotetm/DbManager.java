@@ -39,7 +39,6 @@ public class DbManager {
 
     private static Logger logger = System.getLogger(DbManager.class.getName());
     private Connection conn;
-    private static PreparedStatement getUserStmt;
 
     private static DbManager instance;
 
@@ -63,8 +62,6 @@ public class DbManager {
         if (needsLoading) {
             createTables();
         }
-        getUserStmt = conn
-                .prepareStatement("SELECT name, email, role, active, updated, password FROM users WHERE id=?");
     }
 
     private void createTables() throws SQLException, NoSuchAlgorithmException {
@@ -88,9 +85,9 @@ public class DbManager {
         addUser(sysadmin);
     }
 
-    private void addUser(User user) throws SQLException, NoSuchAlgorithmException {
-        try (PreparedStatement stmt = conn.prepareStatement(
-                "INSERT INTO users (id, password, name, email, role, active, updated) VALUES(?,?,?,?,?,?,?)")) {
+    public void addUser(User user) throws SQLException, NoSuchAlgorithmException {
+        String sql = "INSERT INTO users (id, password, name, email, role, active, updated) VALUES(?,?,?,?,?,?,?)";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, user.getId());
             stmt.setString(2, Crypto.sha256(user.getPassword()));
             stmt.setNString(3, user.getName());
@@ -105,16 +102,19 @@ public class DbManager {
 
     public User getUser(String userId) throws SQLException {
         User result = null;
-        getUserStmt.setString(1, userId);
-        try (ResultSet rs = getUserStmt.executeQuery()) {
-            while (rs.next()) {
-                String name = rs.getNString(1);
-                String email = rs.getString(2);
-                String role = rs.getString(3);
-                boolean active = rs.getString(4).equals("Y");
-                boolean updated = rs.getString(5).equals("Y");
-                String password = rs.getString(6);
-                result = new User(userId, password, name, email, role, active, updated);
+        String sql = "SELECT name, email, role, active, updated, password FROM users WHERE id=?";
+        try (PreparedStatement getUserStmt = conn.prepareStatement(sql)) {
+            getUserStmt.setString(1, userId);
+            try (ResultSet rs = getUserStmt.executeQuery()) {
+                while (rs.next()) {
+                    String name = rs.getNString(1);
+                    String email = rs.getString(2);
+                    String role = rs.getString(3);
+                    boolean active = rs.getString(4).equals("Y");
+                    boolean updated = rs.getString(5).equals("Y");
+                    String password = rs.getString(6);
+                    result = new User(userId, password, name, email, role, active, updated);
+                }
             }
         }
         return result;
@@ -139,5 +139,4 @@ public class DbManager {
         }
         return result;
     }
-
 }

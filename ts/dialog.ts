@@ -37,6 +37,7 @@ export class Dialog {
         this.dialog = document.createElement('div');
         this.dialog.classList.add('dialog');
         this.dialog.classList.add('hidden');
+        this.dialog.style.zIndex = (10 + (2 * RemoteTM.dialogCount())) + '';
         this.center(width);
         document.body.appendChild(this.dialog);
         this.titleArea = document.createElement('div');
@@ -99,6 +100,7 @@ export class Dialog {
         this.dialog.style.width = width + 'px';
         let screenWidth = document.body.clientWidth;
         this.dialog.style.left = ((screenWidth - width) / 2) + 'px';
+        this.dialog.style.top = 'calc(15% + ' + (RemoteTM.dialogCount() * 28) + 'px)';
     }
 
     setLeft(left: number): void {

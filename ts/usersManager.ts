@@ -17,7 +17,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 
+import { AddUser } from "./adduser";
 import { Dialog } from "./dialog";
+import { RemoteTM } from "./remotetm";
 
 export class UsersManager {
 
@@ -25,7 +27,7 @@ export class UsersManager {
     tbody: HTMLTableSectionElement;
 
     constructor() {
-        this.dialog = new Dialog(700);
+        this.dialog = new Dialog(850);
         this.dialog.setTitle('Manage Users');
 
         let toolbar: HTMLDivElement = document.createElement('div');
@@ -34,6 +36,7 @@ export class UsersManager {
 
         let addUser: HTMLAnchorElement = document.createElement('a');
         addUser.innerText = 'Add User';
+        addUser.addEventListener('click', () => { this.addUser(); });
         toolbar.appendChild(addUser);
 
         let editUser: HTMLAnchorElement = document.createElement('a');
@@ -86,9 +89,73 @@ export class UsersManager {
 
         this.tbody = document.createElement('tbody');
         mainTable.appendChild(this.tbody);
+
+        this.loadUsers();
     }
 
     open(): void {
         this.dialog.open();
+    }
+
+    loadUsers(): void {
+        fetch(RemoteTM.getMainURL() + '/users', {
+            method: 'get',
+            headers: [
+                ['Session', RemoteTM.getSession()],
+                ['Content-Type', 'application/json'],
+                ['Accept', 'application/json']
+            ]
+        }).then(async (response: Response) => {
+            let json: any = await response.json();
+            if (json.status === 'OK') {
+                this.tbody.innerHTML = '';
+                let array: any[] = json.users;
+                let length: number = array.length;
+                for (let i = 0; i < length; i++) {
+                    let user: any = array[i];
+                    let tr: HTMLTableRowElement = document.createElement('tr');
+                    this.tbody.appendChild(tr);
+
+                    let td: HTMLTableCellElement = document.createElement('td');
+                    td.innerText = user.id;
+                    tr.appendChild(td);
+
+                    td = document.createElement('td');
+                    td.innerText = user.name;
+                    tr.appendChild(td);
+
+                    td = document.createElement('td');
+                    td.innerText = user.email;
+                    tr.appendChild(td);
+
+                    td = document.createElement('td');
+                    td.innerText = this.getRole(user.role);
+                    tr.appendChild(td);
+
+                    td = document.createElement('td');
+                    td.classList.add('center');
+                    td.innerText = user.active ? 'Yes' : 'No';
+                    tr.appendChild(td);
+                }
+            } else {
+                window.alert(json.reason);
+            }
+        }).catch((reason: any) => {
+            console.error('Error:', reason);
+        });
+    }
+
+    getRole(role: string): string {
+        switch (role) {
+            case 'SA': return 'System Administrator';
+            case 'PM': return 'Project Manager';
+            case 'TR': return 'Translator';
+            default: return undefined;
+        }
+    }
+
+    addUser(): void {
+        let addDialog: AddUser = new AddUser(this);
+        addDialog.open();
     }
 }

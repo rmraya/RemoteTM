@@ -36,6 +36,10 @@ export class Input {
         this.input = document.createElement('input');
         this.input.classList.add('inputBox');
         this.input.placeholder = label;
+        if ('number' === type) {
+            this.input.addEventListener('keydown', (ev: KeyboardEvent) => { this.onlyNumbers(ev) });
+            type = 'text';
+        }
         this.input.type = type;
         this.input.addEventListener('input', () => { this.handleChanges(); });
         this.input.addEventListener('focus', () => { this.focusIn(); });
@@ -70,7 +74,15 @@ export class Input {
         this.input.focus();
     }
 
-    addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: EventListenerOptions) : void {
+    addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: EventListenerOptions): void {
         this.input.addEventListener(type, listener, options);
+    }
+
+    onlyNumbers(event: KeyboardEvent): void {
+        let code: string = event.code;
+        if (!(code.startsWith('Digit') || code.startsWith('Numpad') || code === 'Delete' || code === 'Backspace')) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
     }
 }

@@ -18,7 +18,10 @@ SOFTWARE.
 *******************************************************************************/
 package com.maxprograms.remotetm.utils;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
 import javax.servlet.ServletOutputStream;
@@ -39,5 +42,27 @@ public class Utils {
         try (ServletOutputStream output = response.getOutputStream()) {
             output.write(bytes);
         }
+    }
+
+    public static JSONObject readBody(InputStream is) throws IOException {
+        StringBuilder sb = new StringBuilder();
+        String line = "";
+        try (InputStreamReader reader = new InputStreamReader(is)) {
+            try (BufferedReader buffer = new BufferedReader(reader)) {
+                while ((line = buffer.readLine()) != null) {
+                    sb.append(line);
+                }
+            }
+        }
+        return new JSONObject(sb.toString());
+    }
+
+    public static String generatePassword() {
+        String tokens = "ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvxyz0123456789#$%!@";
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < 12; i++) {
+            sb.append(tokens.charAt((int) (Math.random() * tokens.length())));
+        }
+        return sb.toString();
     }
 }

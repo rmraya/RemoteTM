@@ -19,6 +19,7 @@ SOFTWARE.
 
 import { AboutDialog } from './about';
 import { DropDown } from './dropdown';
+import { EmailServerDialog } from './emailServerDialog';
 import { LicensesDialog } from './licenses';
 import { RemoteTM } from './remotetm';
 import { UsersManager } from './usersManager';
@@ -59,7 +60,7 @@ export class Dashboard implements View {
 
         let signOut: HTMLAnchorElement = document.createElement('a');
         signOut.innerText = 'Sign Out';
-        signOut.addEventListener('click', () => { RemoteTM.showLogin(); });
+        signOut.addEventListener('click', () => { RemoteTM.signOut(); });
         topbar.appendChild(signOut);
 
         let toolbar: HTMLDivElement = document.createElement('div');
@@ -156,8 +157,7 @@ export class Dashboard implements View {
                 }
             }
         };
-        let observer: MutationObserver = new MutationObserver(callback);
-        observer.observe(mainContent, config);
+        new MutationObserver(callback).observe(mainContent, config);
     }
 
     show(): void {
@@ -190,6 +190,7 @@ export class Dashboard implements View {
 
         let emailServer: HTMLAnchorElement = document.createElement('a');
         emailServer.innerText = 'Email Server';
+        emailServer.addEventListener('click', () => { this.setEmailServer(); });
         settingsMenu.addOption(emailServer);
     }
 
@@ -225,6 +226,11 @@ export class Dashboard implements View {
         about.innerText = 'About...';
         about.addEventListener('click', () => { this.showAbout(); });
         helpMenu.addOption(about);
+    }
+
+    setEmailServer() {
+        let dialog: EmailServerDialog = new EmailServerDialog();
+        dialog.open();
     }
 
     manageUsers(): void {

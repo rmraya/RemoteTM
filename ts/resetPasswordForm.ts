@@ -42,6 +42,7 @@ export class ResetPasswordForm implements View {
         this.dialog.classList.add('dialog');
         this.dialog.style.width = '400px';
         this.dialog.style.left = (document.body.clientWidth - 400) / 2 + 'px';
+        this.dialog.style.top = (document.body.clientHeight * 0.2) + 'px';
         this.container.appendChild(this.dialog);
 
         let titleArea: HTMLDivElement = document.createElement('div');
@@ -118,7 +119,10 @@ export class ResetPasswordForm implements View {
             window.alert('Enter email address');
             return;
         }
-        let params: any = { username: this.userName.getValue(), email: this.email.getValue() };
+        let params: any = {
+            username: this.userName.getValue(),
+            email: this.email.getValue()
+        };
 
         fetch(RemoteTM.getMainURL() + '/login/sendReminder', {
             method: 'POST',

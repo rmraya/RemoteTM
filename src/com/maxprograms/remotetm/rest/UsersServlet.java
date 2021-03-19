@@ -82,4 +82,50 @@ public class UsersServlet extends HttpServlet {
         result.put(Constants.REASON, Constants.DENIED);
         Utils.writeResponse(result, response, 401);
     }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        JSONObject result = new JSONObject();
+        response.setContentType("application/json");
+        StringBuffer from = request.getRequestURL();
+        URL url = new URL(from.toString());
+        if (!Constants.HTTPS.equals(url.getProtocol())) {
+            result.put(Constants.STATUS, Constants.ERROR);
+            result.put(Constants.REASON, Constants.DENIED);
+            Utils.writeResponse(result, response, 401);
+            return;
+        }
+        String session = request.getHeader("Session");
+        if (AuthorizeServlet.sessionActive(session)) {
+            try {
+                JSONObject body = Utils.readBody(request.getInputStream());
+                String command = body.getString("command");
+                if ("addUser".equals(command)) {
+                    addUser(body, response);
+                }
+                result.put(Constants.STATUS, Constants.OK);
+                Utils.writeResponse(result, response, 200);
+            } catch (IOException | NoSuchAlgorithmException | SQLException e) {
+                result.put(Constants.STATUS, Constants.ERROR);
+                result.put(Constants.REASON, e.getMessage());
+                Utils.writeResponse(result, response, 500);
+            }
+            return;
+        }
+        result.put(Constants.STATUS, Constants.ERROR);
+        result.put(Constants.REASON, Constants.DENIED);
+        Utils.writeResponse(result, response, 401);
+    }
+
+    private void addUser(JSONObject body, HttpServletResponse response)
+            throws NoSuchAlgorithmException, IOException, SQLException {
+        String password = Utils.generatePassword();
+        System.out.println(password);
+        User user = new User(body.getString("id"), password, body.getString("name"), body.getString("email"),
+                body.getString("role"), true, false);
+        DbManager manager = DbManager.getInstance();
+        manager.addUser(user);
+        return;
+    }
 }

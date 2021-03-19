@@ -42,6 +42,7 @@ export class LoginForm implements View {
         this.dialog.classList.add('dialog');
         this.dialog.style.width = '400px';
         this.dialog.style.left = (document.body.clientWidth - 400) / 2 + 'px';
+        this.dialog.style.top = (document.body.clientHeight * 0.2) + 'px';
         this.container.appendChild(this.dialog);
 
         let titleArea: HTMLDivElement = document.createElement('div');

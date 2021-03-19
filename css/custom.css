@@ -4,7 +4,7 @@
 }
 
 body {
-	background: var (--secondaryColor);
+	background: var(--secondaryColor);
 	color: var(--secondaryTextColor)
 }
 
@@ -119,9 +119,10 @@ th {
 	top: 0;
 	z-index: 5;
 	font-weight: normal;
-	background: var(--primaryColor);
+	background: var(--primaryDarkColor);
 	color: var(--primaryTextColor);
 	white-space: nowrap;
+	padding: 4px 0px;
 }
 
 .fixed {
@@ -203,14 +204,38 @@ a.secondary:hover {
 	padding-bottom: 0px;
 }
 
-select {
-	height: 1.2rem;
-	font-size: 1rem;
-	margin: 4px;
+select:required:invalid {
+	font-weight: lighter;
+	color: var(--SECONDARY-600) !important;
+}
+
+.placeholder {
+	font-weight: lighter;
+	color: var(--SECONDARY-600) !important;
+}
+
+option[value=""][disabled] {
+	display: none;
+}
+
+.selectBox {
+	margin-left: 8px;
+	padding: 4px;
+	width: calc(100% - 16px);
+	font-size: 1em;
 	background: var(--secondaryColor);
 	color: var(--secondaryTextColor);
-	border: 1px solid var(--primaryColor);
+	border-top: none;
+	border-left: none;
+	border-right: none;
+	border-bottom: 1px solid var(--SECONDARY-600);
 	border-radius: 2px;
+	transition: border .2s ease-in;
+}
+
+.selectBox:focus {
+	outline: none !important;
+	border-bottom: 1px solid var(--PRIMARY-600);
 }
 
 option {
@@ -388,12 +413,10 @@ label {
 
 .dialog {
 	position: absolute;
-	top: 20%;
 	padding: 0;
 	background: var(--SECONDARY-50);
 	border: 1px solid var(--primaryColor);
 	border-radius: 0;
-	z-index: 10;
 	box-shadow: 0px 2px 4px var(--SECONDARY-700);
 	transition: left 0.6s;
 	transition-timing-function: ease;
@@ -409,7 +432,7 @@ label {
 	left: 0;
 	width: 100%;
 	height: 100%;
-	z-index: 5;
+	z-index: 20;
 	background-color: #eeeeee04;
 }
 
@@ -534,7 +557,7 @@ hr {
 	display: flex;
 	flex-direction: column;
 	position: fixed;
-	z-index: 10;
+	z-index: 30;
 }
 
 .dropdownOptions a {
@@ -592,4 +615,32 @@ hr {
 .inputBox:focus {
 	outline: none !important;
 	border-bottom: 1px solid var(--PRIMARY-600);
+}
+
+.inputBox svg {
+	margin-top: 8px;
+}
+
+.checkBox {
+	display: flex;
+	flex-direction: row;
+	-ms-flex-align: center;
+	width: calc(100% - 24px);
+	padding: 8px;
+	margin-left: 4px;
+}
+
+.checkBox span {
+	margin-top: 4px;
+	margin-left: 4px;
+	color: var(--secondaryTextColor);
+	width: calc(100% - 8px);
+}
+
+.checkBox svg {
+	fill: var(--primaryColor);
+}
+
+.unchecked {
+	color: var(--SECONDARY-600) !important;
 }
