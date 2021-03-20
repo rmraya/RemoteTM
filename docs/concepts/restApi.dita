@@ -4,6 +4,25 @@
     <title>REST API</title>
     <shortdesc></shortdesc>
     <conbody>
-        <p></p>
+        <p>The REST methods exposed by RemotTM are:</p>
+        <ul>
+            <li>User Access
+                <ul>
+                   <li><xref href="../rest/authorizationRequest.dita">Authorization Request</xref></li>
+                    <li>Logout</li>
+                </ul>
+            </li>
+            <li>Memories
+                
+            </li>
+            <li>Access Permissions
+                
+            </li>
+            <li>Users
+                <ul>
+                    <li><xref href="../rest/addUser.dita">Add User</xref></li>
+                </ul>
+            </li>
+        </ul>
     </conbody>
 </concept>

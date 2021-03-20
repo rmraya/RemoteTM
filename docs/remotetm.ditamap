@@ -32,6 +32,7 @@
     
     <chapter href="concepts/restApi.dita">
         <topicref href="rest/authorizationRequest.dita"/>
+        <topicref href="rest/addUser.dita"/>
     </chapter>
     
     <backmatter>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="addUser">
+    <title>Add User</title>
+    <body>
+        <p>End point: <tt>[RemoteTM URL]/users</tt><tt> </tt></p>
+        <p>Send a <tt>POST</tt> request with these headers:</p>
+        <table>
+            <tgroup cols="2">
+                <colspec colname="c1" colwidth="32*"/>
+                <colspec colname="c2" colwidth="68*"/>
+                <tbody valign="top">
+                    <row>
+                        <entry><tt>Session</tt> </entry>
+                        <entry>The ticket received from <xref href="authorizationRequest.dita"
+                                >Authorization Request</xref></entry>
+                    </row>
+                    <row>
+                        <entry><tt>Accept</tt></entry>
+                        <entry><tt>application/json</tt></entry>
+                    </row>
+                    <row>
+                        <entry><tt>Content-Type</tt></entry>
+                        <entry><tt>application/json</tt></entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </table>
+        <p>Include these parameters in a JSON body:</p>
+        <table>
+            <tgroup cols="2">
+                <colspec colname="c1" colwidth="32*"/>
+                <colspec colname="c2" colwidth="68*"/>
+                <tbody valign="top">
+                    <row>
+                        <entry><tt>command</tt> </entry>
+                        <entry><tt>addUser</tt></entry>
+                    </row>
+                    <row>
+                        <entry><tt>id</tt></entry>
+                        <entry>The <i>user name</i> of the new user</entry>
+                    </row>
+                    <row>
+                        <entry><tt>name</tt></entry>
+                        <entry>The name of the new user</entry>
+                    </row>
+                    <row>
+                        <entry><tt>role</tt></entry>
+                        <entry><tt>'SA'</tt>, <tt>'PM'</tt> or <tt>'TR'</tt></entry>
+                    </row>
+                    <row>
+                        <entry><tt>email</tt></entry>
+                        <entry>The email address of the new user</entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </table>
+        <p>Example:</p>
+        <codeblock translate="no">{
+    "command": "addUser",
+    "id": "manager",
+    "name": "Manager User",
+    "role": "PM",
+    "email": "pm@mydomain.com"
+}</codeblock>
+        <p>RemoteTM responds with a JSON object.</p>
+        <p>On success, field 'status' is set to 'OK'. Example:</p>
+        <codeblock translate="no">{
+    "status": "OK"
+}        </codeblock>
+        <p>On error, field 'status' is set to 'Error' and field 'reason' contains the error cause.
+            Example:</p>
+        <codeblock translate="no">{
+    "status": "Error",
+    "reason": "Duplicated ID"
+}        </codeblock>        
+    </body>
+</topic>

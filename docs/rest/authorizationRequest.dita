@@ -42,12 +42,12 @@
         <codeblock translate="no">{
     "status": "OK",
     "ticket": "7HrT4cvf346k8"
-}</codeblock>
+}        </codeblock>
         <p>On error, field <tt>"status"</tt> is set to <tt>"Error"</tt> and failure reason is
             indicated in the <tt>"reason"</tt> field. Example:</p>
         <codeblock translate="no">{
     "status": "Error",
     "reason": "Access Denied"
-}</codeblock>
+}        </codeblock>
     </body>
 </topic>
