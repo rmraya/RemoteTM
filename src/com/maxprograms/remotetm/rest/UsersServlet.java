@@ -19,13 +19,13 @@ SOFTWARE.
 package com.maxprograms.remotetm.rest;
 
 import java.io.IOException;
-import java.net.URL;
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -41,91 +41,83 @@ import org.json.JSONObject;
 public class UsersServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1274203013996176701L;
+    private static Logger logger = System.getLogger(UsersServlet.class.getName());
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        JSONObject result = new JSONObject();
-        response.setContentType("application/json");
-        StringBuffer from = request.getRequestURL();
-        URL url = new URL(from.toString());
-        if (!Constants.HTTPS.equals(url.getProtocol())) {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            if (!Utils.isSafe(request, response)) {
+                return;
+            }
+            JSONObject result = new JSONObject();
+            String session = request.getHeader("Session");
+            if (AuthorizeServlet.sessionActive(session)) {
+                try {
+                    DbManager manager = DbManager.getInstance();
+                    User who = manager.getUser(AuthorizeServlet.getUser(session));
+                    if (who != null && who.isActive() && Constants.SYSTEM_ADMINISTRATOR.equals(who.getRole())) {
+                        JSONArray array = new JSONArray();
+                        List<User> users = manager.getUsers();
+                        Iterator<User> it = users.iterator();
+                        while (it.hasNext()) {
+                            array.put(it.next().toJSON());
+                        }
+                        result.put(Constants.STATUS, Constants.OK);
+                        result.put("users", array);
+                        Utils.writeResponse(result, response, 200);
+                        return;
+                    }
+                } catch (NoSuchAlgorithmException | SQLException e) {
+                    result.put(Constants.STATUS, Constants.ERROR);
+                    result.put(Constants.REASON, e.getMessage());
+                    Utils.writeResponse(result, response, 500);
+                }
+            }
             result.put(Constants.STATUS, Constants.ERROR);
             result.put(Constants.REASON, Constants.DENIED);
             Utils.writeResponse(result, response, 401);
-            return;
+        } catch (IOException e) {
+            logger.log(Level.ERROR, e);
         }
-        String session = request.getHeader("Session");
-        if (AuthorizeServlet.sessionActive(session)) {
-            try {
-                DbManager manager = DbManager.getInstance();
-                User who = manager.getUser(AuthorizeServlet.getUser(session));
-                if (who != null && who.isActive() && Constants.SYSTEM_ADMINISTRATOR.equals(who.getRole())) {
-                    JSONArray array = new JSONArray();
-                    List<User> users = manager.getUsers();
-                    Iterator<User> it = users.iterator();
-                    while (it.hasNext()) {
-                        array.put(it.next().toJSON());
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            if (!Utils.isSafe(request, response)) {
+                return;
+            }
+            JSONObject result = new JSONObject();
+            String session = request.getHeader("Session");
+            if (AuthorizeServlet.sessionActive(session)) {
+                try {
+                    JSONObject body = Utils.readBody(request.getInputStream());
+                    String command = body.getString("command");
+                    if ("addUser".equals(command)) {
+                        addUser(body);
                     }
                     result.put(Constants.STATUS, Constants.OK);
-                    result.put("users", array);
                     Utils.writeResponse(result, response, 200);
-                    return;
+                } catch (IOException | NoSuchAlgorithmException | SQLException e) {
+                    result.put(Constants.STATUS, Constants.ERROR);
+                    result.put(Constants.REASON, e.getMessage());
+                    Utils.writeResponse(result, response, 500);
                 }
-            } catch (NoSuchAlgorithmException | SQLException e) {
-                result.put(Constants.STATUS, Constants.ERROR);
-                result.put(Constants.REASON, e.getMessage());
-                Utils.writeResponse(result, response, 500);
+                return;
             }
-        }
-        result.put(Constants.STATUS, Constants.ERROR);
-        result.put(Constants.REASON, Constants.DENIED);
-        Utils.writeResponse(result, response, 401);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        JSONObject result = new JSONObject();
-        response.setContentType("application/json");
-        StringBuffer from = request.getRequestURL();
-        URL url = new URL(from.toString());
-        if (!Constants.HTTPS.equals(url.getProtocol())) {
             result.put(Constants.STATUS, Constants.ERROR);
             result.put(Constants.REASON, Constants.DENIED);
             Utils.writeResponse(result, response, 401);
-            return;
+        } catch (IOException e) {
+            logger.log(Level.ERROR, e);
         }
-        String session = request.getHeader("Session");
-        if (AuthorizeServlet.sessionActive(session)) {
-            try {
-                JSONObject body = Utils.readBody(request.getInputStream());
-                String command = body.getString("command");
-                if ("addUser".equals(command)) {
-                    addUser(body, response);
-                }
-                result.put(Constants.STATUS, Constants.OK);
-                Utils.writeResponse(result, response, 200);
-            } catch (IOException | NoSuchAlgorithmException | SQLException e) {
-                result.put(Constants.STATUS, Constants.ERROR);
-                result.put(Constants.REASON, e.getMessage());
-                Utils.writeResponse(result, response, 500);
-            }
-            return;
-        }
-        result.put(Constants.STATUS, Constants.ERROR);
-        result.put(Constants.REASON, Constants.DENIED);
-        Utils.writeResponse(result, response, 401);
     }
 
-    private void addUser(JSONObject body, HttpServletResponse response)
-            throws NoSuchAlgorithmException, IOException, SQLException {
+    private void addUser(JSONObject body) throws NoSuchAlgorithmException, IOException, SQLException {
         String password = Utils.generatePassword();
-        System.out.println(password);
         User user = new User(body.getString("id"), password, body.getString("name"), body.getString("email"),
                 body.getString("role"), true, false);
         DbManager manager = DbManager.getInstance();
         manager.addUser(user);
-        return;
     }
 }

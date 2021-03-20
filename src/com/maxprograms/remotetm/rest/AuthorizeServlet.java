@@ -52,6 +52,9 @@ public class AuthorizeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         try {
+            if (!Utils.isSafe(request, response)) {
+                return;
+            }
             response.setContentType("application/json");
             JSONObject result = new JSONObject();
             StringBuffer from = request.getRequestURL();

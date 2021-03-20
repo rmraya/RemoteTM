@@ -22,10 +22,15 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.Random;
 
 import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.maxprograms.remotetm.Constants;
 
 import org.json.JSONObject;
 
@@ -60,9 +65,24 @@ public class Utils {
     public static String generatePassword() {
         String tokens = "ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvxyz0123456789#$%!@";
         StringBuilder sb = new StringBuilder();
+        Random r = new Random();
         for (int i = 0; i < 12; i++) {
-            sb.append(tokens.charAt((int) (Math.random() * tokens.length())));
+            sb.append(tokens.charAt(r.nextInt(tokens.length())));
         }
         return sb.toString();
+    }
+
+    public static boolean isSafe(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        StringBuffer from = request.getRequestURL();
+        URL url = new URL(from.toString());
+        if (!Constants.HTTPS.equals(url.getProtocol())) {
+            JSONObject result = new JSONObject();
+            response.setContentType("application/json");
+            result.put(Constants.STATUS, Constants.ERROR);
+            result.put(Constants.REASON, Constants.DENIED);
+            writeResponse(result, response, 401);
+            return false;
+        }
+        return true;
     }
 }

@@ -19,7 +19,8 @@ SOFTWARE.
 package com.maxprograms.remotetm.rest;
 
 import java.io.IOException;
-import java.net.URL;
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -35,20 +36,19 @@ public class VersionServlet extends HttpServlet {
     private static final long serialVersionUID = 9160810294370561297L;
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setContentType("application/json");
-        JSONObject result = new JSONObject();
-        int status = 200;
-        StringBuffer from = request.getRequestURL();
-        URL url = new URL(from.toString());
-        if (!Constants.HTTPS.equals(url.getProtocol())) {
-            status = 401;
-            result.put(Constants.STATUS, Constants.ERROR);
-            result.put(Constants.REASON, Constants.DENIED);
-        } else {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            if (!Utils.isSafe(request, response)) {
+                return;
+            }
+            response.setContentType("application/json");
+            JSONObject result = new JSONObject();
             result.put(Constants.STATUS, Constants.OK);
             result.put("version", Constants.VERSION + "_" + Constants.BUILD);
+            Utils.writeResponse(result, response, 200);
+        } catch (IOException e) {
+            Logger logger = System.getLogger(VersionServlet.class.getName());
+            logger.log(Level.ERROR, e);
         }
-        Utils.writeResponse(result, response, status);
     }
 }

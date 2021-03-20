@@ -19,7 +19,8 @@ SOFTWARE.
 package com.maxprograms.remotetm.rest;
 
 import java.io.IOException;
-import java.net.URL;
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -35,24 +36,23 @@ public class Logout extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        JSONObject result = new JSONObject();
-        response.setContentType("application/json");
-        StringBuffer from = request.getRequestURL();
-        URL url = new URL(from.toString());
-        if (!Constants.HTTPS.equals(url.getProtocol())) {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            if (!Utils.isSafe(request, response)) {
+                return;
+            }
+            JSONObject result = new JSONObject();
+            String session = request.getHeader("Session");
+            if (AuthorizeServlet.logout(session)) {
+                result.put(Constants.STATUS, Constants.OK);
+                Utils.writeResponse(result, response, 200);
+                return;
+            }
             result.put(Constants.STATUS, Constants.ERROR);
-            result.put(Constants.REASON, Constants.DENIED);
-            Utils.writeResponse(result, response, 401);
-            return;
+            Utils.writeResponse(result, response, 500);
+        } catch (IOException e) {
+            Logger logger = System.getLogger(Logout.class.getName());
+            logger.log(Level.ERROR, e);
         }
-        String session = request.getHeader("Session");
-        if (AuthorizeServlet.logout(session)) {
-            result.put(Constants.STATUS, Constants.OK);
-            Utils.writeResponse(result, response, 200);
-            return;
-        }
-        result.put(Constants.STATUS, Constants.ERROR);
-        Utils.writeResponse(result, response, 500);
     }
 }
