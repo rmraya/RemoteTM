@@ -43,6 +43,7 @@ public class SendMail {
         if (server.isUseTLS()) {
             props.put("mail.smtp.socketFactory.port", server.getPort());
             props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+            props.put("mail.smtp.ssl.checkserveridentity", "true");
             props.put("mail.smtp.socketFactory.fallback", "false");
             props.put("mail.smtp.starttls.enable", "true");
             props.put("mail.smtp.ssl", "true");
@@ -99,6 +100,7 @@ public class SendMail {
             this.password = password;
         }
 
+        @Override
         public PasswordAuthentication getPasswordAuthentication() {
             return new PasswordAuthentication(username, password);
         }

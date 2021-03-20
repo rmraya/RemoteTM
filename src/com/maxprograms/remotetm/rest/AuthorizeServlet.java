@@ -21,7 +21,6 @@ package com.maxprograms.remotetm.rest;
 import java.io.IOException;
 import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
-import java.net.URL;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.Base64;
@@ -57,14 +56,6 @@ public class AuthorizeServlet extends HttpServlet {
             }
             response.setContentType("application/json");
             JSONObject result = new JSONObject();
-            StringBuffer from = request.getRequestURL();
-            URL url = new URL(from.toString());
-            if (!Constants.HTTPS.equals(url.getProtocol())) {
-                result.put(Constants.STATUS, Constants.ERROR);
-                result.put(Constants.REASON, Constants.DENIED);
-                Utils.writeResponse(result, response, 401);
-                return;
-            }
             String header = request.getHeader("Authorization");
             if (header != null && !header.isEmpty()) {
                 String encoded = header.substring("BASIC ".length()).trim();
