@@ -24,6 +24,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.Random;
 
 import javax.servlet.ServletOutputStream;
@@ -39,6 +41,8 @@ public class Utils {
     private Utils() {
         // private for security
     }
+
+    private static Random random;
 
     public static void writeResponse(JSONObject result, HttpServletResponse response, int status) throws IOException {
         byte[] bytes = result.toString().getBytes(StandardCharsets.UTF_8);
@@ -62,12 +66,14 @@ public class Utils {
         return new JSONObject(sb.toString());
     }
 
-    public static String generatePassword() {
+    public static String generatePassword() throws NoSuchAlgorithmException {
         String tokens = "ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvxyz0123456789#$%!@";
         StringBuilder sb = new StringBuilder();
-        Random r = new Random();
+        if (random == null) {
+            random = SecureRandom.getInstanceStrong();
+        }
         for (int i = 0; i < 12; i++) {
-            sb.append(tokens.charAt(r.nextInt(tokens.length())));
+            sb.append(tokens.charAt(random.nextInt(tokens.length())));
         }
         return sb.toString();
     }
