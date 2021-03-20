@@ -197,7 +197,7 @@ export class Dashboard implements View {
     createHelpMenu(helpMenu: DropDown): void {
         let help: HTMLAnchorElement = document.createElement('a');
         help.innerText = 'RemoteTM User Guide';
-        help.href = RemoteTM.getMainURL() + '/docs/index.html';
+        help.href = RemoteTM.getMainURL() + '/docs/remotetm.html';
         help.target = '_blank';
         helpMenu.addOption(help);
 

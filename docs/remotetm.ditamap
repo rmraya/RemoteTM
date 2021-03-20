@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE bookmap PUBLIC "-//OASIS//DTD DITA BookMap//EN" "bookmap.dtd">
+<bookmap>
+    <booktitle>
+        <mainbooktitle>RemoteTM <image href="images/remotetm.png" placement="break" height="256px"/>
+        </mainbooktitle>
+        <booktitlealt>
+            <ph>Copyright © 2008 - 2021 Maxprograms</ph>
+        </booktitlealt>
+    </booktitle>
+    
+    <frontmatter>
+        <booklists>
+            <toc/>
+        </booklists>
+    </frontmatter>
+    
+    <chapter href="concepts/introduction.dita">
+        
+    </chapter>
+    
+    <chapter>
+        <topicmeta>
+            <navtitle>Installation and Configuration</navtitle>
+        </topicmeta>
+        <topicref href="concepts/requirements.dita"/>
+        <topicref href="concepts/preparation.dita"/>
+        <topicref href="tasks/installation.dita"/>
+        <topicref href="tasks/emailserver_config.dita"/>
+        
+    </chapter>
+    
+    <chapter href="concepts/restApi.dita">
+        <topicref href="rest/authorizationRequest.dita"/>
+    </chapter>
+    
+    <backmatter>
+        <booklists>
+            <glossarylist chunk="to-content">
+                <topicref keys="tomcat" href="glossaries/Tomcat.dita" type="glossentry"/>
+                <topicref keys="jetty" href="glossaries/Jetty.dita" type="glossentry"/>
+                <topicref keys="swordfish" href="glossaries/Swordfish.dita" type="glossentry"/>
+                <topicref keys="tmx" href="glossaries/TMX.dita" type="glossentry"/>
+                <topicref keys="tm" href="glossaries/translation_memory.dita" type="glossentry"/>
+            </glossarylist>
+        </booklists>
+    </backmatter>
+</bookmap>

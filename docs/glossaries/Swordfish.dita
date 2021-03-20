@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE glossentry PUBLIC "-//OASIS//DTD DITA Glossary//EN" "http://docs.oasis-open.org/dita/v1.1/OS/dtd/glossary.dtd">
+<glossentry id="Swordfish">
+    <glossterm>Swordfish Translation Editor</glossterm>
+    <glossdef>Swordfish is an advanced XLIFF-based CAT (Computer Aided Translation) tool published
+        by <xref format="html" href="http://www.maxprograms.com">Maxprograms</xref>.</glossdef>
+</glossentry>

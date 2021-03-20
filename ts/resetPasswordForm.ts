@@ -18,6 +18,7 @@ SOFTWARE.
 *******************************************************************************/
 
 import { Input } from "./input";
+import { Message } from "./message";
 import { RemoteTM } from "./remotetm";
 import { View } from "./view";
 
@@ -112,11 +113,11 @@ export class ResetPasswordForm implements View {
             return;
         }
         if (this.userName.getValue() === '') {
-            window.alert('Enter user name');
+            new Message('Enter user name');
             return;
         }
         if (this.email.getValue() === '') {
-            window.alert('Enter email address');
+            new Message('Enter email address');
             return;
         }
         let params: any = {
@@ -134,10 +135,10 @@ export class ResetPasswordForm implements View {
         }).then(async (response: Response) => {
             let json: any = await response.json();
             if (json.status === 'OK') {
-                window.alert('If entered data matches our records, an email with password change information will be sent.');
+                new Message('If entered data matches our records, an email with password change information will be sent.');
                 RemoteTM.showLogin();
             } else {
-                window.alert(json.reason);
+                new Message(json.reason);
             }
         }).catch((reason: any) => {
             console.error('Error:', reason);

@@ -19,6 +19,7 @@ SOFTWARE.
 
 import { AddUser } from "./adduser";
 import { Dialog } from "./dialog";
+import { Message } from "./message";
 import { RemoteTM } from "./remotetm";
 
 export class UsersManager {
@@ -138,7 +139,7 @@ export class UsersManager {
                     tr.appendChild(td);
                 }
             } else {
-                window.alert(json.reason);
+                new Message(json.reason);
             }
         }).catch((reason: any) => {
             console.error('Error:', reason);

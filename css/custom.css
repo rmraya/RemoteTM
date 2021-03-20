@@ -644,3 +644,17 @@ hr {
 .unchecked {
 	color: var(--SECONDARY-600) !important;
 }
+
+.message {
+	position: fixed;
+	top: 5%;
+	right: calc(50% - 150px);
+	width: 300px;
+	border-radius: 2px;
+	background: var(--PRIMARY-800);
+	color: var(--primaryTextColor);
+	box-shadow: 0px 2px 4px var(--SECONDARY-600);
+	transition: all .2s ease-in;
+	padding: 16px;
+	text-align: center;
+}

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE task PUBLIC "-//OASIS//DTD DITA Task//EN" "task.dtd">
+<task id="emailserver_config">
+    <title>Email Server Configuration</title>
+    <shortdesc></shortdesc>
+    <taskbody>
+        <context>
+            <p>An SMTP server account is required for sending notifications to RemoteTM users.
+                Follow these steps to configure the email server to use.</p>
+        </context>
+        <steps>
+            <step>
+                <cmd>Login as a user with "System Administrator" privileges.</cmd>
+            </step>
+            <step>
+                <cmd>Click the <uicontrol>Settings</uicontrol> drop-down in main tool bar.</cmd>
+            </step>
+            <step>
+                <cmd>Select the <uicontrol>Email Server</uicontrol> option.</cmd>
+                <stepresult>The following dialog appears: 
+                    <image href="../images/emailserver.png" placement="break" />
+                </stepresult>
+            </step>
+            <step>
+                <cmd>In the <uicontrol>SMTP Server</uicontrol> text box enter the name or IP of the
+                    SMTP server.</cmd>
+            </step>
+            <step>
+                <cmd>In the <uicontrol>Port</uicontrol> text box enter the port number in which the SMTP
+                    server accepts requests.</cmd>
+            </step>
+            <step>
+                <cmd>In the <uicontrol>SMTP User</uicontrol> text box enter the user name for the
+                    SMTP server.</cmd>
+            </step>
+            <step>
+                <cmd>In the <uicontrol>SMTP Password</uicontrol> text box enter the password for the
+                    user selected in previous step.</cmd>
+            </step>
+            <step>
+                <cmd>In the <uicontrol>Send From</uicontrol> text box enter the email address used
+                    for sending notifications.</cmd>
+            </step>
+            <step>
+                <cmd>In the <uicontrol>RemoteTM Server</uicontrol> text box enter the URL of the
+                    RemoteTM server.</cmd>
+            </step>
+            <step>
+                <cmd>Check the <uicontrol>Authentication Required</uicontrol> check box if your SMTP
+                    server requires authentication.</cmd>
+            </step>
+            <step>
+                <cmd>Check the <uicontrol>Use TLS</uicontrol> check box if your SMTP server requires
+                    TLS/SSL protocols.</cmd>
+            </step>
+            <step>
+                <cmd>Click the <uicontrol>SAVE</uicontrol> button.</cmd>
+            </step>
+        </steps>
+        <result>The updated email server configuration is stored in RemoteTM server.</result>
+    </taskbody>
+</task>

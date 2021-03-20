@@ -20,6 +20,7 @@ SOFTWARE.
 import { Dashboard } from "./dashboard";
 import { Dialog } from "./dialog";
 import { LoginForm } from "./loginForm";
+import { Message } from "./message";
 import { ResetPasswordForm } from "./resetPasswordForm";
 import { View } from "./view";
 
@@ -93,7 +94,7 @@ export class RemoteTM {
                     versionSpan.innerHTML = json.version;
                 }
             } else {
-                window.alert(json.reason);
+                new Message(json.reason);
             }
         }).catch((reason: any) => {
             console.error('Error:', reason);
@@ -115,7 +116,7 @@ export class RemoteTM {
                 RemoteTM.who = userName;
                 RemoteTM.showDashboard();
             } else {
-                window.alert(json.reason);
+                new Message(json.reason);
             }
         }).catch((reason: any) => {
             console.error('Error:', reason);
@@ -170,7 +171,7 @@ export class RemoteTM {
         }).then(async (response: Response) => {
             let json: any = await response.json();
             if (json.status !== 'OK') {
-                window.alert(json.reason);
+                new Message(json.reason);
             }
             RemoteTM.showLogin();
         }).catch((reason: any) => {

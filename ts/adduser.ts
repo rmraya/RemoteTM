@@ -19,6 +19,7 @@ SOFTWARE.
 
 import { Dialog } from "./dialog";
 import { Input } from "./input";
+import { Message } from "./message";
 import { RemoteTM } from "./remotetm";
 import { Select } from "./select";
 import { UsersManager } from "./usersManager";
@@ -56,22 +57,22 @@ export class AddUser {
     addUser(): void {
         let id: string = this.userIdInput.getValue();
         if (!id) {
-            window.alert('Enter user ID');
+            new Message('Enter user ID');
             return;
         }
         let name: string = this.userNameInput.getValue();
         if (!name) {
-            window.alert('Enter name');
+            new Message('Enter name');
             return;
         }
         let role: string = this.roleSelect.getValue();
         if (!role) {
-            window.alert('Select role');
+            new Message('Select role');
             return;
         }
         let email: string = this.emailInput.getValue();
         if (!email) {
-            window.alert('Enter email');
+            new Message('Enter email');
             return;
         }
         let params: any = {
@@ -95,7 +96,7 @@ export class AddUser {
                 this.parent.loadUsers();
                 this.dialog.close();
             } else {
-                window.alert(json.reason);
+                new Message(json.reason);
             }
         }).catch((reason: any) => {
             console.error('Error:', reason);

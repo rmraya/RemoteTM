@@ -1,0 +1,1303 @@
+/*
+ * Copyright (c) 2017-2019 XMLmind Software. All rights reserved.
+ *
+ * Author: Hussein Shafie
+ *
+ * This file is part of the XMLmind DITA Converter project.
+ * For conditions of distribution and use, see the accompanying LEGAL.txt file.
+ *
+ * Same as basic.css except:
+ * - Removed rules related to toc, booklist and index.
+ * - Added a rule for webhelp-<role>-entry.
+ */
+
+body {
+    font-family: apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.50;
+    color: #212529;
+    background-color: #FFFFFF;
+    margin-left: 1em;
+    margin-right: 1em;
+}
+
+dt {
+    margin-top: 1em;
+    margin-bottom: 0;
+}
+
+dt + dt {
+    margin-top: 0;
+}
+
+dt > *:last-child {
+    margin-bottom: 0;
+}
+
+dd {
+    margin-top: 0;
+    margin-bottom: 1em;
+}
+
+dd  > *:first-child {
+    margin-top: 0;
+}
+
+table,
+th,
+td {
+    font-size: 1em; /* In "quirks mode", tables do not inherit font size. */
+    line-height: 1.5;
+}
+
+a:link:hover,
+a:visited:hover {
+    text-decoration: underline;
+}
+
+a:link {
+    text-decoration: none;
+    color: #404080;
+}
+
+a:visited {
+    text-decoration: none;
+    color: #204080;
+}
+
+/* ------------------------------------------------------------------------
+ | Topic elements
+ +------------------------------------------------------------------------- */
+
+.part-title,
+.chapter-title,
+.appendices-title,
+.appendix-title,
+.section1-title,
+.section2-title,
+.section3-title,
+.section4-title,
+.section5-title,
+.section6-title,
+.section7-title,
+.section8-title,
+.section9-title,
+.frontmattersection-title,
+.backmattersection-title,
+.amendments-title,
+.bookabstract-title,
+.colophon-title,
+.dedication-title,
+.draftintro-title,
+.preface-title,
+.notices-title,
+.abbrevlist-title,
+.bibliolist-title,
+.glossarylist-title,
+.trademarklist-title,
+.topic-title,
+.section-title,
+.example-title,
+.refsyn-title,
+.related-links-title,
+.linklist-title,
+.linkpool-title,
+.prereq-title,
+.context-title,
+.steps-informal-title,
+.steps-title,
+.result-title,
+.postreq-title {
+    font-weight: bold;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.part-title,
+.chapter-title,
+.appendices-title,
+.appendix-title,
+.section1-title,
+.section2-title,
+.section3-title,
+.section4-title,
+.section5-title,
+.section6-title,
+.section7-title,
+.section8-title,
+.section9-title,
+.topic-title {
+    border-bottom: 1px solid #212529;
+    padding-bottom: 0.125em;
+}
+
+.frontmattersection-title,
+.backmattersection-title,
+.amendments-title,
+.bookabstract-title,
+.colophon-title,
+.dedication-title,
+.draftintro-title,
+.preface-title,
+.notices-title,
+.abbrevlist-title,
+.bibliolist-title,
+.glossarylist-title,
+.trademarklist-title,
+.part-title,
+.chapter-title,
+.appendices-title,
+.appendix-title {
+    font-size: 1.8em;
+    line-height: 1;
+    margin-top: 0.56em;
+    margin-bottom: 0.56em;
+}
+
+.section1-title,
+.topic-title {
+    font-size: 1.6em;
+    line-height: 1;
+    margin-top: 0.62em;
+    margin-bottom: 0.62em;
+}
+
+.section2-title {
+    font-size: 1.4em;
+    line-height: 1.07;
+    margin-top: 0.71em;
+    margin-bottom: 0.71em;
+}
+
+.section3-title,
+.section4-title,
+.section5-title,
+.section6-title,
+.section7-title,
+.section8-title,
+.section9-title {
+    font-size: 1.2em;
+    line-height: 1.25;
+    margin-top: 0.83em;
+    margin-bottom: 0.83em;
+}
+
+.section-title,
+.example-title,
+.refsyn-title,
+.prereq-title,
+.context-title,
+.steps-informal-title,
+.steps-title,
+.result-title,
+.postreq-title {
+    font-size: 1.2em;
+    line-height: 1.25;
+    margin-top: 0.83em;
+    margin-bottom: 0.83em;
+}
+
+.remedy .steps-informal-title,
+.remedy .steps-title {
+    font-size: 1em;
+    line-height: 1.50;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.equation-figure-title,
+.fig-title,
+.table-title {
+    font-size: 1em;
+    line-height: 1.50;
+    font-weight: normal;
+    font-style: italic;
+    margin-top: 0.25em;
+    margin-bottom: 0.25em;
+}
+
+.related-links-title,
+.linklist-title,
+.linkpool-title {
+    margin-top: 0.25em;
+    margin-bottom: 0.25em;
+}
+
+.abstract {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.shortdesc {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.body,
+.conbody,
+.refbody,
+.taskbody {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.related-links {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.section,
+.example {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+/* ------------------------------------------------------------------------
+ | Reference elements
+ +------------------------------------------------------------------------- */
+
+.refsyn {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+/* ------------------------------------------------------------------------
+ | Task elements
+ +------------------------------------------------------------------------- */
+
+.info {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.steps-informal,
+.step-list,
+.compact-step-list,
+.unordered-step-list,
+.compact-unordered-step-list,
+.substeps,
+.compact-substeps {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.substeps,
+.compact-substeps {
+    list-style-type: lower-alpha;
+}
+
+.compact-step-list > li,
+.compact-unordered-step-list > li,
+.compact-substeps > li {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.choices {
+    list-style-type: circle;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.stepsection {
+    list-style-type: none;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.tutorialinfo {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.stepxmp {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.stepresult {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+/* ------------------------------------------------------------------------
+ | Glossary elements
+ +------------------------------------------------------------------------- */
+
+.glossentry {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.glossterm {
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+.glossdef {
+    margin-left: 4em;
+    margin-top: 0;
+}
+
+.glossdef > *:first-child {
+    margin-top: 0;
+}
+
+.glossdef > *:last-child {
+    margin-bottom: 0;
+}
+
+.glossBody {
+    margin-left: 4em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.glossBody-properties {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.glossSurfaceForm,
+.glossUsage,
+.glossScopeNote,
+.glossSymbol {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.glossAlt {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.glossAlt-properties,
+.glossAlt-variants {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.glossAbbreviation-container,
+.glossAcronym-container,
+.glossShortForm-container,
+.glossSynonym-container {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.glossAbbreviation,
+.glossAcronym,
+.glossShortForm,
+.glossSynonym {
+    font-weight: bold;
+}
+
+.glossentry > .related-links {
+    margin-left: 4em;
+}
+
+.glossentry > .related-links > .related-links-title {
+    font-size: 1em;
+    line-height: 1.50;
+}
+
+/* ------------------------------------------------------------------------
+ | Body elements
+ +------------------------------------------------------------------------- */
+
+.p {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+td > *:first-child,
+th > *:first-child {
+    margin-top: 0;
+}
+
+td > *:last-child,
+th > *:last-child {
+    margin-bottom: 0;
+}
+
+.note {
+    font-size: 0.917em;
+    line-height: 1.63;
+    border-top: 2px solid #C0C0C0;
+    border-bottom: 2px solid #C0C0C0;
+    padding: 1em 0;
+    margin: 2.2em 4em;
+}
+
+.note-head {
+    font-size: 1.1em;
+    line-height: 1.36;
+    font-weight: bold;
+    margin-top: 0;
+    margin-bottom: 0.83em;
+}
+
+/* 
+ * When the note icon is displayed.
+ */
+.note-layout {
+    border-collapse: collapse; 
+    border-spacing: 0;
+    margin: 0;
+}
+
+.note-icon {
+    vertical-align: top;
+    padding-right: 1em;
+}
+
+.note-text {
+    vertical-align: baseline;
+}
+
+/*
+ * Multi-level ordered lists.
+ */
+ol.inheritnum {
+    list-style-type: none;
+    padding-left: 5ex;
+}
+
+ol.inheritnum ol.inheritnum {
+    padding-left: 6ex;
+}
+
+ol.inheritnum ol.inheritnum ol.inheritnum {
+    padding-left: 7ex;
+}
+
+ol.inheritnum ol.inheritnum ol.inheritnum ol.inheritnum {
+    padding-left: 8ex;
+}
+
+ol.inheritnum ol.inheritnum ol.inheritnum ol.inheritnum ol.inheritnum {
+    padding-left: 9ex;
+}
+
+ol.inheritnum ol.inheritnum ol.inheritnum ol.inheritnum ol.inheritnum ol.inheritnum {
+    padding-left: 10ex;
+}
+
+ol.inheritnum ol.inheritnum ol.inheritnum ol.inheritnum ol.inheritnum ol.inheritnum ol.inheritnum {
+    padding-left: 11ex;
+}
+
+ol.inheritnum ol.inheritnum ol.inheritnum ol.inheritnum ol.inheritnum ol.inheritnum ol.inheritnum ol.inheritnum {
+    padding-left: 12ex;
+}
+
+ol.inheritnum ol.inheritnum ol.inheritnum ol.inheritnum ol.inheritnum ol.inheritnum ol.inheritnum ol.inheritnum ol.inheritnum {
+    padding-left: 13ex;
+}
+
+ol.inheritnum > li {
+    position: relative;
+}
+
+ol.inheritnum > li::before {
+    position: absolute;
+    margin-right: 100%;
+    right: 1ex;
+}
+
+/*
+ * Lists.
+ */
+.ol,
+.compact-ol,
+.ul,
+.compact-ul,
+.sl,
+.compact-sl {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.sl,
+.compact-sl {
+    list-style-type: none;
+}
+
+/*
+ * Web browsers seem to always display lists as compact.
+ */
+li {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.compact-ol > li,
+.compact-ul > li,
+.compact-sl > li {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.tabular-dl  {
+    border-collapse: collapse; 
+    border-spacing: 0;
+    border-top: 1px solid #808080; 
+    border-bottom: 1px solid #808080; 
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.tabular-dl-head-row  {
+    font-weight: bold;
+    text-align: left;
+    background-color: #E0E0E0;
+    border-bottom: 1px solid #808080; 
+}
+
+.tabular-dthd,
+.tabular-ddhd,
+.tabular-dt,
+.tabular-dd {
+    vertical-align: baseline;
+    padding: 0.25em 0.5em;
+}
+
+.tabular-dthd,
+.tabular-dt {
+    padding-right: 1em;
+}
+
+.dl,
+.compact-dl,
+.parml,
+.compact-parml {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.dt,
+.pt {
+    font-weight: bold;
+}
+
+.compact-dl > dt,
+.compact-dl > dd,
+.compact-parml > dt,
+.compact-parml > dd {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.compact-dl > dt > *:first-child,
+.compact-parml > dt > *:first-child {
+    margin-top: 0;
+}
+
+.compact-dl > dd > *:last-child,
+.compact-parml > dd > *:last-child {
+    margin-bottom: 0;
+}
+
+.equation-figure,
+.fig {
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
+
+.equation-figure-contents > *:first-child,
+.fig-contents > *:first-child {
+    margin-top: 0;
+}
+
+.equation-figure-contents > *:last-child,
+.fig-contents > *:last-child {
+    margin-bottom: 0;
+}
+
+.pre,
+.codeblock {
+    white-space: pre;
+    font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 0.917em;
+    line-height: 1.63;
+    background-color: #F0F0F0;
+    /* Add actual border using the frame attribute. */
+    border-color: #D0D0D0;
+    padding: 0.25em 0.5em;
+    margin-top: 1.11em;
+    margin-bottom: 1.11em;
+}
+
+.lines {
+    white-space: pre;
+    font-family: inherit;
+    font-size: 0.917em;
+    line-height: 1.63;
+    padding: 0.25em 0.5em;
+    margin-top: 1.11em;
+    margin-bottom: 1.11em;
+}
+
+.lq {
+    margin: 2em 4em;
+}
+
+.lq-reftitle {
+    font-style: italic;
+    text-align: right;
+    margin-top: 0.25em;
+    margin-bottom: 0.25em;
+}
+
+a.object-download-link,
+.object-no-download-link {
+    text-decoration: underline;
+    font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 0.917em;
+    /*line-height: 1.63;*/
+}
+
+.object-no-download-link {
+    color: gray;
+}
+
+/* ------------------------------------------------------------------------
+ | Simpletable, properties, choicetable elements
+ +------------------------------------------------------------------------- */
+
+.simpletable-container {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.simpletable,
+.properties,
+.choicetable {
+    border-collapse: collapse; 
+    border-spacing: 0;
+    border: 1px solid #808080;
+}
+
+.table-header-style {
+    font-weight: bold;
+    background-color: #E0E0E0;
+}
+
+.stentry,
+.proptype,
+.propvalue,
+.propdesc,
+.proptypehd,
+.propvaluehd,
+.propdeschd,
+.choption,
+.chdesc,
+.choptionhd,
+.chdeschd {
+    vertical-align: baseline;
+    border: 1px solid #808080;
+    padding: 0.25em 0.5em;
+}
+
+/* ------------------------------------------------------------------------
+ | Table elements
+ +------------------------------------------------------------------------- */
+
+.table {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.tgroup {
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-color: #808080;
+}
+
+.entry {
+    border-color: #808080;
+    padding: 0.25em 0.5em;
+}
+
+/* ------------------------------------------------------------------------
+ | Related links elements
+ +------------------------------------------------------------------------- */
+
+.sequence-parent-linkpool,
+.sequence-members-linkpool,
+.family-parent-linkpool,
+.family-members-linkpool,
+.unordered-parent-linkpool,
+.unordered-members-linkpool,
+.choice-parent-linkpool,
+.choice-members-linkpool {
+    border: 1px solid #F0F0F4;
+    -moz-border-radius: 1ex;
+    -webkit-border-radius: 1ex;
+    border-radius: 1ex;
+    background-color: #F8F8FC;
+    padding: 1em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.parent-topic-link-item,
+.previous-topic-link-item,
+.next-topic-link-item,
+.sibling-topic-link-item {
+    font-weight: bold;
+    font-size: 0.917em;
+    /*line-height: 1.63;*/
+}
+
+.linkpool-title {
+    font-size: 0.917em;
+    line-height: 1.63;
+    margin-top: 0;
+}
+
+.link {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.linklist {
+    margin-left: 2.66em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.linkinfo {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+/* ------------------------------------------------------------------------
+ | Miscellaneous elements
+ +------------------------------------------------------------------------- */
+
+.draft-comment {
+    color: red;
+    font-size: 0.917em;
+    line-height: 1.63;
+    /*no margins*/
+}
+
+.draft-comment-info {
+    font-weight: bold;
+}
+
+.fn-link {
+    text-decoration: none;
+}
+
+.footnote-separator {
+    width: 4em;
+    height: 1px;
+    border-style: none;
+    background-color: #808080;
+    text-align: left;
+    margin-left: 0;
+    margin-right: auto;
+    margin-top: 2em;
+    margin-bottom: 0.25em;
+}
+
+.fn-layout {
+    border-collapse: collapse; 
+    font-size: 0.917em;
+    line-height: 1.63;
+    margin: 0;
+}
+
+/* ------------------------------------------------------------------------
+ | Typographics elements
+ +------------------------------------------------------------------------- */
+
+.u {
+    text-decoration: underline;
+}
+
+.line-through {
+    text-decoration: line-through;
+}
+
+.overline {
+    text-decoration: overline;
+}
+
+.tt {
+    font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 0.917em;
+    /*line-height: 1.63;*/
+}
+
+/* ------------------------------------------------------------------------
+ | Programming elements
+ +------------------------------------------------------------------------- */
+
+.apiname,
+.codeph,
+.option,
+.parmname,
+.kwd,
+.var,
+.oper,
+.delim, 
+.sep {
+    font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 0.917em;
+    /*line-height: 1.63;*/
+}
+
+.option {
+    font-weight: bold;
+}
+
+.parmname {
+    font-style: italic;
+}
+
+.kwd {
+    font-weight: bold;
+}
+
+.var {
+    font-style: italic;
+}
+
+/* ------------------------------------------------------------------------
+ | Software elements
+ +------------------------------------------------------------------------- */
+
+.msgblock,
+.msgph,
+.msgnum,
+.cmdname,
+.varname,
+.filepath,
+.userinput,
+.systemoutput {
+    font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 0.917em;
+    /*line-height: 1.63;*/
+}
+
+.msgblock {
+    line-height: 1.63;
+    background-color: #E8F0F8;
+    padding: 0.25em 0.5em;
+    border-color: #C8D0E8;
+    /* Add actual border using the frame attribute. */
+    margin-top: 1.11em;
+    margin-bottom: 1.11em;
+}
+
+.cmdname {
+    font-weight: bold;
+}
+
+.varname {
+    font-style: italic;
+}
+
+.userinput {
+    background-color: #F0F0F0;
+}
+
+.systemoutput {
+    background-color: #F0F8F0;
+}
+
+/* ------------------------------------------------------------------------
+ | User interface elements
+ +------------------------------------------------------------------------- */
+
+.shortcut {
+    text-decoration: underline;
+}
+
+.screen {
+    font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 0.917em;
+    line-height: 1.63;
+    background-color: #F0F8F0;
+    padding: 0.25em 0.5em;
+    border-color: #D0EED0;
+    /* Add actual border using the frame attribute. */
+    margin-top: 1.11em;
+    margin-bottom: 1.11em;
+}
+
+/* ------------------------------------------------------------------------
+ | Utilities elements
+ +------------------------------------------------------------------------- */
+
+.imagemap {
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
+
+.imagemap > object {
+    border-style: none;
+}
+
+/* ------------------------------------------------------------------------
+ | Hazard statement elements
+ +------------------------------------------------------------------------- */
+
+.hazardstatement {
+    border: 2px solid black;
+    border-collapse: collapse; 
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
+
+.hazardstatement td {
+    padding: 0.5em;
+}
+
+.hazardStatement-danger-head,
+.hazardStatement-warning-head,
+.hazardStatement-caution-head,
+.hazardStatement-notice-head,
+.hazardStatement-note-head,
+.hazardStatement-tip-head,
+.hazardStatement-fastpath-head,
+.hazardStatement-restriction-head,
+.hazardStatement-important-head,
+.hazardStatement-remember-head,
+.hazardStatement-attention-head,
+.hazardStatement-other-head {
+    text-align: center;
+    font-size: 1.6em;
+    line-height: 1;
+    font-weight: bold;
+    color: white;
+    background-color: green;
+}
+
+.hazardStatement-danger-head {
+    color: black;
+    background-color: red;
+}
+
+.hazardStatement-warning-head {
+    color: black;
+    background-color: #FFA500; /*orange*/
+}
+
+.hazardStatement-caution-head {
+    color: black;
+    background-color: yellow;
+}
+
+.hazardStatement-notice-head {
+    color: white;
+    background-color: blue;
+}
+
+.hazardStatement-head-icon {
+    vertical-align: middle;
+    padding-right: 0.5em;
+}
+
+.messagepanel {
+    text-align: center;
+    font-size: 1.2em;
+    line-height: 1.25;
+    color: white;
+    background-color: blue;
+}
+
+.typeofhazard {
+    font-size: 1.4em;
+    line-height: 1.07;
+    font-weight: bold;
+}
+
+/* ------------------------------------------------------------------------
+ | Equation elements
+ +------------------------------------------------------------------------- */
+
+.equation-block {
+    text-align: center;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.equation-block-layout {
+    width: 90%;
+    border-collapse: collapse; 
+    border-spacing: 0;
+    margin: 0;
+}
+
+.equation-block-equation {
+    width: 90%;
+    text-align: center;
+}
+
+.equation-block-number {
+    width: 10%;
+    text-align: right;
+}
+
+/* ------------------------------------------------------------------------
+ | titlePage
+ +------------------------------------------------------------------------- */
+
+.title-page {
+    text-align: center;
+    border: 1px solid #F0F4F8;
+    -moz-border-radius: 1ex;
+    -webkit-border-radius: 1ex;
+    border-radius: 1ex;
+    background-color: #F4F8FC;
+    padding: 1em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.document-title {
+    font-weight: bold;
+    font-size: 2em;
+    line-height: 1;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.booklibrary {
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
+
+.booktitlealt {
+    font-style: italic;
+    font-size: 1.2em;
+    line-height: 1.25;
+    margin-top: 1.67em;
+    margin-bottom: 1.67em;
+}
+
+.document-author,
+.personinfo, 
+.organizationinfo {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.addressdetails {
+    font-family: inherit;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.emailaddress,
+.url {
+    font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 0.917em;
+    line-height: 1.63;
+}
+
+.last-critdate,
+.document-publisher {
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
+
+/* ------------------------------------------------------------------------
+ | Page navigation
+ +------------------------------------------------------------------------- */
+
+.page-navigation-header,
+.page-navigation-footer {
+    font-size: 0.8em;
+    line-height: 1.73;
+    color: #808080;
+    padding: 0;
+    margin: 0;
+}
+
+.page-navigation-layout {
+    border-collapse: collapse; 
+    border-spacing: 0;
+    padding: 0;
+    margin: 0;
+}
+
+.page-navigation-header > .page-navigation-layout {
+    border-bottom: 1px solid #C0C0C0;
+    margin-bottom: 1.25em;
+}
+
+.page-navigation-footer > .page-navigation-layout {
+    border-top: 1px solid #C0C0C0;
+    margin-top: 1.25em;
+}
+
+.page-navigation-layout td {
+    vertical-align: baseline;
+    padding: 0.125em;
+}
+
+.navigation-icon,
+.navigation-icon-disabled {
+    border-style: none;
+    vertical-align: middle;
+}
+
+.page-navigation-current {
+    font-weight: bold;
+}
+
+/* ------------------------------------------------------------------------
+ | Ditac:flags elements
+ +------------------------------------------------------------------------- */
+
+.ditac-flags-div {
+    border-right-color: gray;
+}
+
+.ditac-flags-div-start-p,
+.ditac-flags-div-end-p {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.ditac-flags-div-start-text,
+.ditac-flags-div-end-text,
+.ditac-flags-span-start-text,
+.ditac-flags-span-end-text {
+    font-size: 0.917em;
+    /*line-height: 1.63;*/
+    color: gray;
+}
+
+.ditac-flags-div-start-image,
+.ditac-flags-div-end-image,
+.ditac-flags-span-start-image,
+.ditac-flags-span-end-image {
+    vertical-align: middle;
+}
+
+/* ------------------------------------------------------------------------
+ | Listing having numbered lines (see above .codeblock styles)
+ +------------------------------------------------------------------------- */
+
+div.listing-layout {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+table.listing-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #F0F0F0;
+    border: 1px dotted #D0D0D0;
+    margin: 0;
+}
+
+colgroup.listing-numbers-column {
+    border-right: 1px solid #808080;
+}
+
+tbody.listing-table-body {
+    vertical-align: baseline;
+}
+
+tr.listing-row {}
+
+td.listing-numbers-cell {
+    color: #808080;
+    padding: 0.25em;
+}
+
+td.listing-lines-cell {
+    padding: 0.25em 0.5em;
+}
+
+pre.listing-numbers,
+pre.listing-lines {
+    background-color: transparent;
+    border-style: none; 
+    padding: 0; 
+    margin: 0;
+}
+
+pre.listing-numbers {
+    text-align: right; 
+}
+
+pre.listing-lines {
+    text-align: left; 
+}
+
+/* ------------------------------------------------------------------------
+ | Syntax highlighting
+ +------------------------------------------------------------------------- */
+
+.hl-keyword {
+    font-weight: bold;
+    color: #602060;
+}
+
+.hl-string {
+    color: #A00000;
+}
+
+.hl-number {
+    color: #B08000;
+}
+
+.hl-comment {
+    font-style: italic;
+    color: #808080;
+}
+
+.hl-doccomment {
+    color: #008080;
+}
+
+.hl-directive {
+    color: #00A000;
+}
+
+.hl-annotation {
+    font-weight: bold;
+    color: #808080;
+}
+
+/*
+ * XML
+ */
+
+.hl-tag {
+    font-weight: bold;
+    color: #602060;
+}
+
+.hl-attribute {
+    color: #0050A0;
+}
+
+.hl-value {
+    color: #A00000;
+}
+
+.hl-doctype {
+    color: #008080;
+}
+
+/* ------------------------------------------------------------------------
+ | Web Help TOC
+ +------------------------------------------------------------------------- */
+
+.webhelp-toc-part-entry,
+.webhelp-toc-chapter-entry,
+.webhelp-toc-appendices-entry,
+.webhelp-toc-appendix-entry {
+    font-weight: bold;
+}
+

@@ -18,6 +18,7 @@ SOFTWARE.
 *******************************************************************************/
 
 import { Input } from "./input";
+import { Message } from "./message";
 import { RemoteTM } from "./remotetm";
 import { View } from "./view";
 
@@ -114,11 +115,11 @@ export class LoginForm implements View {
             return;
         }
         if (this.userName.getValue() === '') {
-            window.alert('Enter user name');
+            new Message('Enter user name');
             return;
         }
         if (this.passwd.getValue() === '') {
-            window.alert('Enter password');
+            new Message('Enter password');
             return;
         }
         let auth = btoa(this.userName.getValue() + ':' + this.passwd.getValue());

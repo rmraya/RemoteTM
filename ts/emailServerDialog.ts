@@ -20,6 +20,7 @@ SOFTWARE.
 import { CheckBox } from "./checkBox";
 import { Dialog } from "./dialog";
 import { Input } from "./input";
+import { Message } from "./message";
 import { RemoteTM } from "./remotetm";
 
 export class EmailServerDialog {
@@ -76,7 +77,7 @@ export class EmailServerDialog {
             ]
         }).then(async (response: Response) => {
             let json: any = await response.json();
-            json.status === 'OK' ? this.populateFields(json) : window.alert(json.reason);
+            json.status === 'OK' ? this.populateFields(json) : new Message(json.reason);
         }).catch((reason: any) => {
             console.error('Error:', reason);
         });
@@ -100,22 +101,22 @@ export class EmailServerDialog {
     save(): void {
         let server: string = this.serverInput.getValue();
         if (!server) {
-            window.alert('Enter SMTP server');
+            new Message('Enter SMTP server');
             return;
         }
         let port: string = this.portInput.getValue();
         if (!port) {
-            window.alert('Enter port');
+            new Message('Enter port');
             return;
         }
         let user: string = this.userInput.getValue();
         if (!user) {
-            window.alert('Enter SMTP user');
+            new Message('Enter SMTP user');
             return;
         }
         let password: string = this.passwordInput.getValue();
         if (!password) {
-            window.alert('Enter SMTP password');
+            new Message('Enter SMTP password');
             return;
         }
         let sendFrom: string = this.fromInput.getValue();
@@ -148,7 +149,7 @@ export class EmailServerDialog {
             body: JSON.stringify(params)
         }).then(async (response: Response) => {
             let json: any = await response.json();
-            json.status === 'OK' ? this.dialog.close() : window.alert(json.reason);
+            json.status === 'OK' ? this.dialog.close() : new Message(json.reason);
         }).catch((reason: any) => {
             console.error('Error:', reason);
         });
