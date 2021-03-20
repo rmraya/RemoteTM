@@ -53,7 +53,7 @@ public class Utils {
         }
     }
 
-    public static JSONObject readBody(InputStream is) throws IOException {
+    public static JSONObject readJSON(InputStream is) throws IOException {
         StringBuilder sb = new StringBuilder();
         String line = "";
         try (InputStreamReader reader = new InputStreamReader(is)) {

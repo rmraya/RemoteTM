@@ -20,19 +20,20 @@ SOFTWARE.
 import { CheckBox } from "./checkBox";
 import { Dialog } from "./dialog";
 import { Input } from "./input";
+import { RemoteTM } from "./remotetm";
 
 export class EmailServerDialog {
 
     dialog: Dialog;
 
-    server: Input;
-    port: Input;
-    user: Input;
-    passwd: Input;
-    from: Input;
-    instance: Input;
-    authentication: CheckBox;
-    tls: CheckBox;
+    serverInput: Input;
+    portInput: Input;
+    userInput: Input;
+    passwordInput: Input;
+    fromInput: Input;
+    instanceInput: Input;
+    authenticationBox: CheckBox;
+    tlsBox: CheckBox;
 
     constructor() {
         this.dialog = new Dialog(700);
@@ -51,15 +52,15 @@ export class EmailServerDialog {
         right.style.width = '50%';
         container.appendChild(right);
 
-        this.server = new Input(left, 'SMTP Server', 'text');
-        this.port = new Input(left, 'Port', 'number');
-        this.user = new Input(left, 'User', 'text');
-        this.user = new Input(left, 'Password', 'password');
+        this.serverInput = new Input(left, 'SMTP Server', 'text');
+        this.portInput = new Input(left, 'Port', 'number');
+        this.userInput = new Input(left, 'SMTP User', 'text');
+        this.passwordInput = new Input(left, 'SMTP Password', 'password');
 
-        this.from = new Input(right, 'Sent From', 'text');
-        this.instance = new Input(right, 'RemoteTM Server', 'text');
-        this.authentication = new CheckBox(right, 'Authentication Required');
-        this.tls = new CheckBox(right, 'Use TLS');
+        this.fromInput = new Input(right, 'Send From', 'text');
+        this.instanceInput = new Input(right, 'RemoteTM Server', 'text');
+        this.authenticationBox = new CheckBox(right, 'Authentication Required');
+        this.tlsBox = new CheckBox(right, 'Use TLS');
 
         let button: HTMLButtonElement = document.createElement('button');
         button.innerText = 'Save';
@@ -72,6 +73,45 @@ export class EmailServerDialog {
     }
 
     save(): void {
-
+        let server: string = this.serverInput.getValue();
+        if (!server) {
+            window.alert('Enter SMTP server');
+            return;
+        }
+        let port: string = this.portInput.getValue();
+        if (!port) {
+            window.alert('Enter port');
+            return;
+        }
+        let user: string = this.userInput.getValue();
+        if (!user) {
+            window.alert('Enter SMTP user');
+            return;
+        }
+        let password: string = this.passwordInput.getValue();
+        if (!password) {
+            window.alert('Enter SMTP password');
+            return;
+        }
+        let sendFrom: string = this.fromInput.getValue();
+        if (!sendFrom) {
+            sendFrom = user;
+        }
+        let instance: string = this.instanceInput.getValue();
+        if (!instance) {
+            instance = RemoteTM.getMainURL();
+        }
+        let authenticate: boolean = this.authenticationBox.getValue();
+        let tls: boolean = this.tlsBox.getValue();
+        let params: any = {
+            server: server,
+            port: port,
+            user: user,
+            password: password,
+            sendFrom: sendFrom,
+            instance: instance,
+            authenticate: authenticate,
+            tls: tls
+        }
     }
 }

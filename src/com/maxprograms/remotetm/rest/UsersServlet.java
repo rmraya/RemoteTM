@@ -91,7 +91,7 @@ public class UsersServlet extends HttpServlet {
             String session = request.getHeader("Session");
             if (AuthorizeServlet.sessionActive(session)) {
                 try {
-                    JSONObject body = Utils.readBody(request.getInputStream());
+                    JSONObject body = Utils.readJSON(request.getInputStream());
                     String command = body.getString("command");
                     if ("addUser".equals(command)) {
                         addUser(body);
