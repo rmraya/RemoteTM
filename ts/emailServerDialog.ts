@@ -66,10 +66,35 @@ export class EmailServerDialog {
         button.innerText = 'Save';
         button.addEventListener('click', () => { this.save(); })
         this.dialog.addButton(button);
+
+        fetch(RemoteTM.getMainURL() + '/email', {
+            method: 'GET',
+            headers: [
+                ['Session', RemoteTM.getSession()],
+                ['Content-Type', 'application/json'],
+                ['Accept', 'application/json']
+            ]
+        }).then(async (response: Response) => {
+            let json: any = await response.json();
+            json.status === 'OK' ? this.populateFields(json) : window.alert(json.reason);
+        }).catch((reason: any) => {
+            console.error('Error:', reason);
+        });
     }
 
     open(): void {
         this.dialog.open();
+    }
+
+    populateFields(json: any): void {
+        this.serverInput.setValue(json.server);
+        this.portInput.setValue(json.port);
+        this.userInput.setValue(json.user);
+        this.passwordInput.setValue(json.password);
+        this.fromInput.setValue(json.from);
+        this.instanceInput.setValue(json.instance ? json.instance : RemoteTM.getMainURL());
+        this.authenticationBox.setValue(json.authenticate);
+        this.tlsBox.setValue(json.tls);
     }
 
     save(): void {
@@ -108,10 +133,24 @@ export class EmailServerDialog {
             port: port,
             user: user,
             password: password,
-            sendFrom: sendFrom,
+            from: sendFrom,
             instance: instance,
             authenticate: authenticate,
             tls: tls
         }
+        fetch(RemoteTM.getMainURL() + '/email', {
+            method: 'POST',
+            headers: [
+                ['Session', RemoteTM.getSession()],
+                ['Content-Type', 'application/json'],
+                ['Accept', 'application/json']
+            ],
+            body: JSON.stringify(params)
+        }).then(async (response: Response) => {
+            let json: any = await response.json();
+            json.status === 'OK' ? this.dialog.close() : window.alert(json.reason);
+        }).catch((reason: any) => {
+            console.error('Error:', reason);
+        });
     }
 }

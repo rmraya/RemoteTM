@@ -103,9 +103,9 @@ public class DbManager {
     public User getUser(String userId) throws SQLException {
         User result = null;
         String sql = "SELECT name, email, role, active, updated, password FROM users WHERE id=?";
-        try (PreparedStatement getUserStmt = conn.prepareStatement(sql)) {
-            getUserStmt.setString(1, userId);
-            try (ResultSet rs = getUserStmt.executeQuery()) {
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, userId);
+            try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     String name = rs.getNString(1);
                     String email = rs.getString(2);
@@ -118,6 +118,14 @@ public class DbManager {
             }
         }
         return result;
+    }
+
+    public void removeUser(String id) throws SQLException {
+        String sql = "DELETE FROM users WHERE id=?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, id);
+            stmt.execute();
+        }
     }
 
     public List<User> getUsers() throws SQLException {

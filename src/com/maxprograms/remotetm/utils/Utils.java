@@ -19,6 +19,8 @@ SOFTWARE.
 package com.maxprograms.remotetm.utils;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -33,6 +35,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.maxprograms.remotetm.Constants;
+import com.maxprograms.remotetm.RemoteTM;
+import com.maxprograms.remotetm.models.EmailServer;
 
 import org.json.JSONObject;
 
@@ -90,5 +94,16 @@ public class Utils {
             return false;
         }
         return true;
+    }
+
+    public static EmailServer getEmailServer() throws IOException {
+        JSONObject json;
+        File emailServer = new File(RemoteTM.getWorkFolder(), "mailserver.json");
+        try (FileInputStream input = new FileInputStream(emailServer)) {
+            json = Utils.readJSON(input);
+        }
+        return new EmailServer(json.getString("server"), json.getString("port"), json.getString("user"),
+                json.getString("password"), json.getString("from"), json.getString("instance"),
+                json.getBoolean("authenticate"), json.getBoolean("tls"));
     }
 }

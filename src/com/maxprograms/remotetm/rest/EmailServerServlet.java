@@ -37,7 +37,7 @@ public class EmailServerServlet extends HttpServlet {
                 if (!emailServer.exists()) {
                     JSONObject json = new JSONObject();
                     json.put("server", "");
-                    json.put("port", 465);
+                    json.put("port", "");
                     json.put("user", "");
                     json.put("password", "");
                     json.put("from", "");

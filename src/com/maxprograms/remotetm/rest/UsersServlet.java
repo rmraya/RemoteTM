@@ -26,13 +26,16 @@ import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.maxprograms.remotetm.Constants;
 import com.maxprograms.remotetm.DbManager;
+import com.maxprograms.remotetm.models.EmailServer;
 import com.maxprograms.remotetm.models.User;
+import com.maxprograms.remotetm.utils.SendMail;
 import com.maxprograms.remotetm.utils.Utils;
 
 import org.json.JSONArray;
@@ -98,7 +101,8 @@ public class UsersServlet extends HttpServlet {
                     }
                     result.put(Constants.STATUS, Constants.OK);
                     Utils.writeResponse(result, response, 200);
-                } catch (IOException | NoSuchAlgorithmException | SQLException e) {
+                } catch (IOException | NoSuchAlgorithmException | SQLException | MessagingException e) {
+                    logger.log(Level.ERROR, e);
                     result.put(Constants.STATUS, Constants.ERROR);
                     result.put(Constants.REASON, e.getMessage());
                     Utils.writeResponse(result, response, 500);
@@ -113,11 +117,26 @@ public class UsersServlet extends HttpServlet {
         }
     }
 
-    private void addUser(JSONObject body) throws NoSuchAlgorithmException, IOException, SQLException {
+    private void addUser(JSONObject body) throws NoSuchAlgorithmException, IOException, SQLException, MessagingException {
         String password = Utils.generatePassword();
         User user = new User(body.getString("id"), password, body.getString("name"), body.getString("email"),
                 body.getString("role"), true, false);
+        EmailServer server = Utils.getEmailServer();
+        SendMail sender = new SendMail(server);
         DbManager manager = DbManager.getInstance();
         manager.addUser(user);
+        String text = "\nDear " + user.getName() + ",\n\nA new account has been created for you in RemoteTM. "
+                + "Please login to the server and update your personal information.\n\n"
+                + "The following credentials will be valid for one login only:\n\n  RemoteTM Server: "
+                + server.getInstanceUrl() + "\n  User Name: " + user.getId() + "\n  Password: " + password
+                + " \n\nThanks for using RemoteTM.\n\n";
+        String html = "<pre>" + text + "</pre>";
+        try {
+        sender.sendMail(new String[] { user.getEmail() }, new String[] {}, new String[] {}, "[RemoteTM] New Account", text,
+                html);
+        } catch (MessagingException e ) {
+            manager.removeUser(user.getId());
+            throw e;
+        }
     }
 }
