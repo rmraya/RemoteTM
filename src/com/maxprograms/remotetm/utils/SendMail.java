@@ -21,6 +21,10 @@ public class SendMail {
 
     private EmailServer server;
 
+    private static final String HEADER = "<div style='width:100%; background:#0073B5; color:#ffffff; font-size:1.4em; padding:8px; margin-bottom: 1em;'>RemoteTM</div>";
+    private static final String FOOTER = "<div style='width:100%; background:#0073B5; color:#ffffff; font-size:0.8em; padding:4px; text-align:center; margin-top: 1em;'>"
+            + "Copyright &copy; 2008-2021 <a href='https://maxprograms.com' style='color:#ffffff;'>Maxprograms</a></div>";
+
     public SendMail(EmailServer server) {
         this.server = server;
     }
@@ -66,7 +70,7 @@ public class SendMail {
         textPart.setText(text, "utf-8");
 
         MimeBodyPart htmlPart = new MimeBodyPart();
-        htmlPart.setContent(html, "text/html; charset=utf-8");
+        htmlPart.setContent(HEADER + html + FOOTER, "text/html; charset=utf-8");
 
         multiPart.addBodyPart(textPart);
         multiPart.addBodyPart(htmlPart);

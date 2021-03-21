@@ -44,6 +44,12 @@ export class RemoteTM {
         let host: string = location.host;
         let protocol: string = location.protocol;
         let path: string = location.pathname;
+        let search: string = location.search;
+        let code: string = '';
+        if (search) {
+            let params = new URLSearchParams(search);
+            code = params.get('key');
+        }
         let n = path.lastIndexOf('/');
         if (n !== -1) {
             path = path.substring(0, n);
@@ -57,7 +63,10 @@ export class RemoteTM {
         window.addEventListener('resize', () => {
             this.resize();
         });
-
+        if (code) {
+            // TODO
+            console.log('show new password dialog for code ', code);
+        }
         RemoteTM.showLogin();
     }
 

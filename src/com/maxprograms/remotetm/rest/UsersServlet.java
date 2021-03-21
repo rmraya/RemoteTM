@@ -179,19 +179,25 @@ public class UsersServlet extends HttpServlet {
         EmailServer server = Utils.getEmailServer();
         SendMail sender = new SendMail(server);
         manager.addUser(user);
-        String text = "\nDear " + user.getName() + ",\n\nA new account has been created for you in RemoteTM. "
-                + "Please login to the server and update your personal information.\n\n"
-                + "The following credentials will be valid for one login only:\n\n  RemoteTM Server: "
-                + server.getInstanceUrl() + "\n  User Name: " + user.getId() + "\n  Password: " + password
-                + " \n\nThanks for using RemoteTM.\n\n";
-        String html = "<pre>" + text + "</pre>";
+
+        String text = "\nDear " + user.getName() + ",\n\nA new account has been created for you in RemoteTM."
+                + "\n\nPlease login to the server using the credentials provided below.\n\n"
+                + "  RemoteTM Server: " + server.getInstanceUrl() + "\n  User Name: " + user.getId() + "\n  Code: "
+                + password + " \n\nThanks for using RemoteTM.\n\n";
+
+        String html = "<p>Dear " + user.getName() + ",</p>"
+                + "<p>A new account has been created for you in RemoteTM.</p>"
+                + "<p>Please login to the server using the credentials provided below.</p>"
+                + "<pre>  RemoteTM Server: " + server.getInstanceUrl() + "\n  User Name: " + user.getId() + "\n  Code: "
+                + password + "</pre>" + "<p>Thanks for using RemoteTM.</p>";
         try {
             sender.sendMail(new String[] { user.getEmail() }, new String[] {}, new String[] {},
                     "[RemoteTM] New Account", text, html);
         } catch (MessagingException e) {
-            manager.removeUser(user.getId());
+            manager.rollback();
             throw e;
         }
+        manager.commit();
     }
 
     private void removeUser(String session, JSONObject body)

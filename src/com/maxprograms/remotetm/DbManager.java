@@ -168,7 +168,7 @@ public class DbManager {
         return result;
     }
 
-    public void updateUser(User user) throws SQLException, NoSuchAlgorithmException {
+    public void updateUser(User user) throws SQLException {
         String sql = "UPDATE users SET name=?, email=?, role=?, active=?, updated=? WHERE id=?";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setNString(1, user.getName());
@@ -180,5 +180,13 @@ public class DbManager {
             stmt.execute();
         }
         conn.commit();
+    }
+
+    public void commit() throws SQLException {
+        conn.commit();
+    }
+
+    public void rollback() throws SQLException {
+        conn.rollback();
     }
 }

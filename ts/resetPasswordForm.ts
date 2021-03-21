@@ -121,11 +121,11 @@ export class ResetPasswordForm implements View {
             return;
         }
         let params: any = {
-            username: this.userName.getValue(),
+            id: this.userName.getValue(),
             email: this.email.getValue()
         };
 
-        fetch(RemoteTM.getMainURL() + '/login/sendReminder', {
+        fetch(RemoteTM.getMainURL() + '/reset', {
             method: 'POST',
             headers: [
                 ['Content-Type', 'application/json'],

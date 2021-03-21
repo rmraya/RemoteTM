@@ -29,7 +29,10 @@
     </chapter>
 
     <chapter href="rest/restApi.dita">
-        <topicref href="rest/authorizationRequest.dita"/>
+        <topicref href="rest/accessManagement.dita">
+            <topicref href="rest/authorizationRequest.dita"/>
+            <topicref href="rest/logout.dita"/>
+        </topicref>        
         <topicref href="rest/usersManagement.dita">
             <topicref href="rest/addUser.dita"/>
             <topicref href="rest/getUser.dita"/>

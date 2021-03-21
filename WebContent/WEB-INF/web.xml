@@ -29,6 +29,11 @@
     <servlet-class>com.maxprograms.remotetm.rest.EmailServerServlet</servlet-class>
   </servlet>
 
+  <servlet>
+    <servlet-name>Reset</servlet-name>
+    <servlet-class>com.maxprograms.remotetm.rest.PasswordResetServlet</servlet-class>
+  </servlet>
+
   <filter>
     <filter-name>SecurityFilter</filter-name>
     <filter-class>com.maxprograms.remotetm.utils.SecurityFilter</filter-class>
@@ -63,6 +68,11 @@
   <servlet-mapping>
     <servlet-name>Email</servlet-name>
     <url-pattern>/email</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>Reset</servlet-name>
+    <url-pattern>/reset</url-pattern>
   </servlet-mapping>
 
   <!-- Default page to serve -->
