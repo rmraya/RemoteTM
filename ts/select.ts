@@ -31,6 +31,8 @@ export class Select {
     backdrop: HTMLDivElement;
     showing: boolean;
 
+    options: Map<string, HTMLOptionElement>
+
     value: string;
     selectedText: HTMLSpanElement;
     svg: SVGElement;
@@ -38,6 +40,7 @@ export class Select {
     constructor(parent: HTMLElement, label: string) {
         this.labelText = label;
         this.optionsArray = [];
+        this.options = new Map<string, HTMLOptionElement>();
         this.showing = false;
 
         let container: HTMLDivElement = document.createElement('div');
@@ -79,6 +82,7 @@ export class Select {
                 this.label.classList.remove('hiddenLabel');
             });
             this.optionsArray.push(anchor);
+            this.options.set(option.value, option);
         });
     }
 
@@ -121,7 +125,8 @@ export class Select {
         return this.value;
     }
 
-    setValue(option: HTMLOptionElement) : void {
+    setValue(value: string): void {
+        let option: HTMLOptionElement = this.options.get(value);
         this.selectedText.innerText = option.innerText;
         this.value = option.value;
         this.selectedText.classList.remove('placeholder');

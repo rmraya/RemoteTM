@@ -19,6 +19,7 @@ SOFTWARE.
 
 import { AddUser } from "./adduser";
 import { Dialog } from "./dialog";
+import { EditUser } from "./editUSer";
 import { Message } from "./message";
 import { RemoteTM } from "./remotetm";
 
@@ -26,8 +27,10 @@ export class UsersManager {
 
     dialog: Dialog;
     tbody: HTMLTableSectionElement;
+    selected: string;
 
     constructor() {
+        this.selected = '';
         this.dialog = new Dialog(850);
         this.dialog.setTitle('Manage Users');
 
@@ -42,14 +45,17 @@ export class UsersManager {
 
         let editUser: HTMLAnchorElement = document.createElement('a');
         editUser.innerText = 'Edit User';
+        editUser.addEventListener('click', () => { this.editUser(); });
         toolbar.appendChild(editUser);
 
         let removeUser: HTMLAnchorElement = document.createElement('a');
         removeUser.innerText = 'Remove User';
+        removeUser.addEventListener('click', () => { this.removeUser(); });
         toolbar.appendChild(removeUser);
 
         let lockUser: HTMLAnchorElement = document.createElement('a');
-        lockUser.innerText = 'Lock User';
+        lockUser.innerText = 'Lock/Unlock User';
+        lockUser.addEventListener('click', () => { this.lockUser(); });
         toolbar.appendChild(lockUser);
 
         let tableContainer: HTMLDivElement = document.createElement('div');
@@ -69,7 +75,7 @@ export class UsersManager {
         tableHeader.appendChild(headerRow);
 
         let userIdTh: HTMLTableHeaderCellElement = document.createElement('th');
-        userIdTh.innerText = 'User ID';
+        userIdTh.innerText = 'ID';
         headerRow.appendChild(userIdTh);
 
         let nameTh: HTMLTableHeaderCellElement = document.createElement('th');
@@ -110,11 +116,14 @@ export class UsersManager {
             let json: any = await response.json();
             if (json.status === 'OK') {
                 this.tbody.innerHTML = '';
+                this.selected = '';
                 let array: any[] = json.users;
                 let length: number = array.length;
                 for (let i = 0; i < length; i++) {
                     let user: any = array[i];
                     let tr: HTMLTableRowElement = document.createElement('tr');
+                    tr.id = 'u_' + user.id;
+                    tr.addEventListener('click', () => { this.setSelected(user.id) });
                     this.tbody.appendChild(tr);
 
                     let td: HTMLTableCellElement = document.createElement('td');
@@ -146,6 +155,20 @@ export class UsersManager {
         });
     }
 
+    setSelected(id: string): void {
+        let selectedRows: HTMLCollectionOf<Element> = this.tbody.getElementsByClassName('selected');
+        let length: number = selectedRows.length;
+        for (let i = 0; i < length; i++) {
+            selectedRows[i].classList.remove('selected');
+        }
+        if (this.selected === id) {
+            this.selected = '';
+            return;
+        }
+        document.getElementById('u_' + id).classList.add('selected');
+        this.selected = id;
+    }
+
     getRole(role: string): string {
         switch (role) {
             case 'SA': return 'System Administrator';
@@ -158,5 +181,72 @@ export class UsersManager {
     addUser(): void {
         let addDialog: AddUser = new AddUser(this);
         addDialog.open();
+    }
+
+    editUser(): void {
+        if (!this.selected) {
+            new Message('Select user');
+            return;
+        }
+        let editDialog: EditUser = new EditUser(this, this.selected);
+        editDialog.open();
+    }
+
+    removeUser(): void {
+        if (!this.selected) {
+            new Message('Select user');
+            return;
+        }
+        let params: any = {
+            command: 'removeUser',
+            id: this.selected
+        }
+        fetch(RemoteTM.getMainURL() + '/users', {
+            method: 'POST',
+            headers: [
+                ['Session', RemoteTM.getSession()],
+                ['Content-Type', 'application/json'],
+                ['Accept', 'application/json']
+            ],
+            body: JSON.stringify(params)
+        }).then(async (response: Response) => {
+            let json: any = await response.json();
+            if (json.status === 'OK') {
+                this.loadUsers();
+            } else {
+                new Message(json.reason);
+            }
+        }).catch((reason: any) => {
+            console.error('Error:', reason);
+        });
+    }
+
+    lockUser(): void {
+        if (!this.selected) {
+            new Message('Select user');
+            return;
+        }
+        let params: any = {
+            command: 'toggleLock',
+            id: this.selected
+        }
+        fetch(RemoteTM.getMainURL() + '/users', {
+            method: 'POST',
+            headers: [
+                ['Session', RemoteTM.getSession()],
+                ['Content-Type', 'application/json'],
+                ['Accept', 'application/json']
+            ],
+            body: JSON.stringify(params)
+        }).then(async (response: Response) => {
+            let json: any = await response.json();
+            if (json.status === 'OK') {
+                this.loadUsers();
+            } else {
+                new Message(json.reason);
+            }
+        }).catch((reason: any) => {
+            console.error('Error:', reason);
+        });
     }
 }

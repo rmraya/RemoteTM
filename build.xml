@@ -53,5 +53,12 @@
 	<target name="build" depends="compile, bundle, war"/>
 
 	<target name="ui" depends="bundle, war"/>
+
+	<target name="copyDocs">
+		<delete dir="WebContent/docs" failonerror="true"/>
+		<copy includeemptydirs="false" todir="WebContent/docs">
+			<fileset dir="docs/out/webhelp5" />
+		</copy>
+	</target>
 	
 </project>

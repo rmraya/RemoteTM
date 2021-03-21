@@ -121,11 +121,31 @@ public class DbManager {
     }
 
     public void removeUser(String id) throws SQLException {
-        String sql = "DELETE FROM users WHERE id=?";
+        boolean hasMemories = false;
+        String sql = "SELECT id FROM memories WHERE owner=?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, id);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    hasMemories = true;
+                    break;
+                }
+            }
+        }
+        if (hasMemories) {
+            throw new SQLException("User owns memories");
+        }
+        sql = "DELETE FROM permissions WHERE user=?";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, id);
             stmt.execute();
         }
+        sql = "DELETE FROM users WHERE id=?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, id);
+            stmt.execute();
+        }
+        conn.commit();
     }
 
     public List<User> getUsers() throws SQLException {
@@ -146,5 +166,19 @@ public class DbManager {
             }
         }
         return result;
+    }
+
+    public void updateUser(User user) throws SQLException, NoSuchAlgorithmException {
+        String sql = "UPDATE users SET name=?, email=?, role=?, active=?, updated=? WHERE id=?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setNString(1, user.getName());
+            stmt.setString(2, user.getEmail());
+            stmt.setString(3, user.getRole());
+            stmt.setString(4, user.isActive() ? "Y" : "N");
+            stmt.setString(5, user.isUpdated() ? "Y" : "N");
+            stmt.setString(6, user.getId());
+            stmt.execute();
+        }
+        conn.commit();
     }
 }

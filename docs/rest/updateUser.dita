@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
-<topic id="addUser">
-    <title>Add User</title>
+<topic id="updateUser">
+    <title>Update User</title>
     <body>
         <p>End point: <tt>[RemoteTM URL]/users</tt><tt> </tt></p>
         <p>Send a <tt>POST</tt> request with these headers:</p>
@@ -13,7 +13,7 @@
             <strow>
                 <stentry><tt>Session</tt> </stentry>
                 <stentry>The ticket received from <xref href="authorizationRequest.dita"
-                        >Authorization Request</xref></stentry>
+                    >Authorization Request</xref></stentry>
             </strow>
             <strow>
                 <stentry><tt>Accept</tt></stentry>
@@ -30,47 +30,45 @@
                 <stentry>Field</stentry>
                 <stentry>Value</stentry>
             </sthead>
-
             <strow>
                 <stentry><tt>command</tt> </stentry>
-                <stentry><tt>addUser</tt></stentry>
+                <stentry><tt>updateUser</tt></stentry>
             </strow>
             <strow>
-                <stentry><tt>id</tt></stentry>
-                <stentry>The ID of the new user</stentry>
+                <stentry><tt>id</tt> </stentry>
+                <stentry>The ID of the user to update</stentry>
             </strow>
             <strow>
-                <stentry><tt>name</tt></stentry>
-                <stentry>The name of the new user</stentry>
+                <stentry><tt>name</tt> </stentry>
+                <stentry>Updated user name</stentry>
             </strow>
             <strow>
-                <stentry><tt>role</tt></stentry>
+                <stentry><tt>role</tt> </stentry>
                 <stentry><tt>'SA'</tt>, <tt>'PM'</tt> or <tt>'TR'</tt></stentry>
             </strow>
             <strow>
-                <stentry><tt>email</tt></stentry>
-                <stentry>The email address of the new user</stentry>
+                <stentry><tt>email</tt> </stentry>
+                <stentry>Updated email</stentry>
             </strow>
-
         </simpletable>
         <p>Example:</p>
         <codeblock translate="no">{
-    "command": "addUser",
+    "command": "updateUser",
     "id": "manager",
-    "name": "Manager User",
+    "name": "Principal Manager",
     "role": "PM",
-    "email": "pm@mydomain.com"
+    "email": "pm@mydomain.com" 
 }</codeblock>
         <p>RemoteTM responds with a JSON object.</p>
         <p>On success, field 'status' is set to 'OK'. Example:</p>
         <codeblock translate="no">{
     "status": "OK"
-}        </codeblock>
+}</codeblock>
         <p>On error, field 'status' is set to 'Error' and field 'reason' contains the error cause.
             Example:</p>
         <codeblock translate="no">{
     "status": "Error",
-    "reason": "Duplicated ID"
-}        </codeblock>
+    "reason": "Unknown user"
+}</codeblock>
     </body>
 </topic>

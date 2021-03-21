@@ -8,17 +8,15 @@
             <ph>Copyright © 2008 - 2021 Maxprograms</ph>
         </booktitlealt>
     </booktitle>
-    
+
     <frontmatter>
         <booklists>
             <toc/>
         </booklists>
     </frontmatter>
-    
-    <chapter href="concepts/introduction.dita">
-        
-    </chapter>
-    
+
+    <chapter href="concepts/introduction.dita"> </chapter>
+
     <chapter>
         <topicmeta>
             <navtitle>Installation and Configuration</navtitle>
@@ -27,14 +25,20 @@
         <topicref href="concepts/preparation.dita"/>
         <topicref href="tasks/installation.dita"/>
         <topicref href="tasks/emailserver_config.dita"/>
-        
+
     </chapter>
-    
-    <chapter href="concepts/restApi.dita">
+
+    <chapter href="rest/restApi.dita">
         <topicref href="rest/authorizationRequest.dita"/>
-        <topicref href="rest/addUser.dita"/>
+        <topicref href="rest/usersManagement.dita">
+            <topicref href="rest/addUser.dita"/>
+            <topicref href="rest/getUser.dita"/>
+            <topicref href="rest/updateUser.dita"/>
+            <topicref href="rest/removeUser.dita"/>
+            <topicref href="rest/lockUser.dita"/>
+        </topicref>
     </chapter>
-    
+
     <backmatter>
         <booklists>
             <glossarylist chunk="to-content">

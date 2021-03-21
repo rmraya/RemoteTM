@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE concept PUBLIC "-//OASIS//DTD DITA Concept//EN" "concept.dtd">
+<concept id="usersManagement">
+    <title>Users Management</title>
+    <shortdesc></shortdesc>
+    <conbody>
+        <p>The REST methods for managing users exposed by RemoteTM are:</p>
+        <ul>
+            <li><xref href="addUser.dita">Add User</xref></li>
+            <li><xref href="getUser.dita">Get User</xref></li>
+            <li><xref href="updateUser.dita">Update User</xref></li>
+            <li><xref href="removeUser.dita">Remove User</xref></li>
+            <li><xref href="lockUser.dita">Lock/Unlock User</xref></li>
+        </ul>
+    </conbody>
+</concept>

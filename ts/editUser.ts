@@ -17,6 +17,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *******************************************************************************/
 
+import { AddUser } from "./adduser";
 import { Dialog } from "./dialog";
 import { Input } from "./input";
 import { Message } from "./message";
@@ -24,30 +25,56 @@ import { RemoteTM } from "./remotetm";
 import { Select } from "./select";
 import { UsersManager } from "./usersManager";
 
-export class AddUser {
+export class EditUser {
 
     parent: UsersManager
+    userId: string;
     dialog: Dialog;
-    userIdInput: Input;
     userNameInput: Input;
     roleSelect: Select;
     emailInput: Input;
 
-    constructor(parent: UsersManager) {
+    constructor(parent: UsersManager, id: string) {
         this.parent = parent;
+        this.userId = id;
         this.dialog = new Dialog(350);
-        this.dialog.setTitle('Add User');
+        this.dialog.setTitle('Edit User');
 
-        this.userIdInput = new Input(this.dialog.contentArea, 'User ID', 'text');
         this.userNameInput = new Input(this.dialog.contentArea, 'Name', 'text');
         this.roleSelect = new Select(this.dialog.contentArea, 'Role');
         this.roleSelect.setOptions(AddUser.rolesList());
         this.emailInput = new Input(this.dialog.contentArea, 'Email', 'text');
 
         let button: HTMLButtonElement = document.createElement('button');
-        button.innerText = 'Add User';
+        button.innerText = 'Save';
         button.addEventListener('click', () => { this.addUser(); });
         this.dialog.addButton(button);
+
+        let params: any = {
+            command: 'getUser',
+            id: this.userId
+        }
+        fetch(RemoteTM.getMainURL() + '/users', {
+            method: 'POST',
+            headers: [
+                ['Session', RemoteTM.getSession()],
+                ['Content-Type', 'application/json'],
+                ['Accept', 'application/json']
+            ],
+            body: JSON.stringify(params)
+        }).then(async (response: Response) => {
+            let json: any = await response.json();
+            if (json.status === 'OK') {
+               let user: any = json.user;
+               this.userNameInput.setValue(user.name);
+               this.roleSelect.setValue(user.role);
+               this.emailInput.setValue(user.email);
+            } else {
+                new Message(json.reason);
+            }
+        }).catch((reason: any) => {
+            console.error('Error:', reason);
+        });
     }
 
     open(): void {
@@ -55,11 +82,6 @@ export class AddUser {
     }
 
     addUser(): void {
-        let id: string = this.userIdInput.getValue();
-        if (!id) {
-            new Message('Enter user ID');
-            return;
-        }
         let name: string = this.userNameInput.getValue();
         if (!name) {
             new Message('Enter name');
@@ -76,8 +98,8 @@ export class AddUser {
             return;
         }
         let params: any = {
-            command: 'addUser',
-            id: id,
+            command: 'updateUser',
+            id: this.userId,
             name: name,
             role: role,
             email: email
@@ -101,26 +123,5 @@ export class AddUser {
         }).catch((reason: any) => {
             console.error('Error:', reason);
         });
-    }
-
-    static rolesList(): HTMLOptionElement[] {
-        let roles: HTMLOptionElement[] = [];
-
-        let sa: HTMLOptionElement = document.createElement('option');
-        sa.value = 'SA';
-        sa.innerText = 'System Administrator';
-        roles.push(sa);
-
-        let pm: HTMLOptionElement = document.createElement('option');
-        pm.value = 'PM';
-        pm.innerText = 'Project Manager';
-        roles.push(pm);
-
-        let tr: HTMLOptionElement = document.createElement('option');
-        tr.value = 'TR';
-        tr.innerText = 'Translator';
-        roles.push(tr);
-
-        return roles;
     }
 }

@@ -97,7 +97,19 @@ public class UsersServlet extends HttpServlet {
                     JSONObject body = Utils.readJSON(request.getInputStream());
                     String command = body.getString("command");
                     if ("addUser".equals(command)) {
-                        addUser(body);
+                        addUser(session, body);
+                    }
+                    if ("getUser".equals(command)) {
+                        result.put("user", getUser(session, body));
+                    }
+                    if ("updateUser".equals(command)) {
+                        updateUser(session, body);
+                    }
+                    if ("removeUser".equals(command)) {
+                        removeUser(session, body);
+                    }
+                    if ("toggleLock".equals(command)) {
+                        toggleLock(session, body);
                     }
                     result.put(Constants.STATUS, Constants.OK);
                     Utils.writeResponse(result, response, 200);
@@ -117,13 +129,55 @@ public class UsersServlet extends HttpServlet {
         }
     }
 
-    private void addUser(JSONObject body) throws NoSuchAlgorithmException, IOException, SQLException, MessagingException {
+    private void updateUser(String session, JSONObject body)
+            throws NoSuchAlgorithmException, SQLException, IOException {
+        DbManager manager = DbManager.getInstance();
+        User who = manager.getUser(AuthorizeServlet.getUser(session));
+        if (!Constants.SYSTEM_ADMINISTRATOR.equals(who.getRole())) {
+            throw new IOException(Constants.DENIED);
+        }
+        User user = manager.getUser(body.getString("id"));
+        user.setName(body.getString("name"));
+        user.setRole(body.getString("role"));
+        user.setEmail(body.getString("email"));
+        manager.updateUser(user);
+    }
+
+    private void toggleLock(String session, JSONObject body)
+            throws NoSuchAlgorithmException, IOException, SQLException {
+        DbManager manager = DbManager.getInstance();
+        User who = manager.getUser(AuthorizeServlet.getUser(session));
+        if (!Constants.SYSTEM_ADMINISTRATOR.equals(who.getRole())) {
+            throw new IOException(Constants.DENIED);
+        }
+        User user = manager.getUser(body.getString("id"));
+        user.setActive(!user.isActive());
+        manager.updateUser(user);
+    }
+
+    private JSONObject getUser(String session, JSONObject body)
+            throws SQLException, NoSuchAlgorithmException, IOException {
+        DbManager manager = DbManager.getInstance();
+        User who = manager.getUser(AuthorizeServlet.getUser(session));
+        if (!Constants.SYSTEM_ADMINISTRATOR.equals(who.getRole())) {
+            throw new IOException(Constants.DENIED);
+        }
+        User user = manager.getUser(body.getString("id"));
+        return user.toJSON();
+    }
+
+    private void addUser(String session, JSONObject body)
+            throws NoSuchAlgorithmException, IOException, SQLException, MessagingException {
+        DbManager manager = DbManager.getInstance();
+        User who = manager.getUser(AuthorizeServlet.getUser(session));
+        if (!Constants.SYSTEM_ADMINISTRATOR.equals(who.getRole())) {
+            throw new IOException(Constants.DENIED);
+        }
         String password = Utils.generatePassword();
         User user = new User(body.getString("id"), password, body.getString("name"), body.getString("email"),
                 body.getString("role"), true, false);
         EmailServer server = Utils.getEmailServer();
         SendMail sender = new SendMail(server);
-        DbManager manager = DbManager.getInstance();
         manager.addUser(user);
         String text = "\nDear " + user.getName() + ",\n\nA new account has been created for you in RemoteTM. "
                 + "Please login to the server and update your personal information.\n\n"
@@ -132,11 +186,21 @@ public class UsersServlet extends HttpServlet {
                 + " \n\nThanks for using RemoteTM.\n\n";
         String html = "<pre>" + text + "</pre>";
         try {
-        sender.sendMail(new String[] { user.getEmail() }, new String[] {}, new String[] {}, "[RemoteTM] New Account", text,
-                html);
-        } catch (MessagingException e ) {
+            sender.sendMail(new String[] { user.getEmail() }, new String[] {}, new String[] {},
+                    "[RemoteTM] New Account", text, html);
+        } catch (MessagingException e) {
             manager.removeUser(user.getId());
             throw e;
         }
+    }
+
+    private void removeUser(String session, JSONObject body)
+            throws NoSuchAlgorithmException, IOException, SQLException {
+        DbManager manager = DbManager.getInstance();
+        User who = manager.getUser(AuthorizeServlet.getUser(session));
+        if (!Constants.SYSTEM_ADMINISTRATOR.equals(who.getRole())) {
+            throw new IOException(Constants.DENIED);
+        }
+        manager.removeUser(body.getString("id"));
     }
 }

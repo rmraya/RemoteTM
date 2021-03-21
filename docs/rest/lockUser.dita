@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
-<topic id="addUser">
-    <title>Add User</title>
+<topic id="lockUser">
+    <title>Lock/Unlock User</title>
     <body>
         <p>End point: <tt>[RemoteTM URL]/users</tt><tt> </tt></p>
         <p>Send a <tt>POST</tt> request with these headers:</p>
@@ -30,47 +30,30 @@
                 <stentry>Field</stentry>
                 <stentry>Value</stentry>
             </sthead>
-
             <strow>
                 <stentry><tt>command</tt> </stentry>
-                <stentry><tt>addUser</tt></stentry>
+                <stentry><tt>toggleLock</tt></stentry>
             </strow>
             <strow>
-                <stentry><tt>id</tt></stentry>
-                <stentry>The ID of the new user</stentry>
+                <stentry><tt>id</tt> </stentry>
+                <stentry>The ID of the user to lock/unlock</stentry>
             </strow>
-            <strow>
-                <stentry><tt>name</tt></stentry>
-                <stentry>The name of the new user</stentry>
-            </strow>
-            <strow>
-                <stentry><tt>role</tt></stentry>
-                <stentry><tt>'SA'</tt>, <tt>'PM'</tt> or <tt>'TR'</tt></stentry>
-            </strow>
-            <strow>
-                <stentry><tt>email</tt></stentry>
-                <stentry>The email address of the new user</stentry>
-            </strow>
-
         </simpletable>
         <p>Example:</p>
         <codeblock translate="no">{
-    "command": "addUser",
-    "id": "manager",
-    "name": "Manager User",
-    "role": "PM",
-    "email": "pm@mydomain.com"
+    "command": "toggleLock",
+    "id": "manager"
 }</codeblock>
         <p>RemoteTM responds with a JSON object.</p>
         <p>On success, field 'status' is set to 'OK'. Example:</p>
         <codeblock translate="no">{
     "status": "OK"
-}        </codeblock>
+}</codeblock>
         <p>On error, field 'status' is set to 'Error' and field 'reason' contains the error cause.
             Example:</p>
         <codeblock translate="no">{
     "status": "Error",
-    "reason": "Duplicated ID"
-}        </codeblock>
+    "reason": "Unknown user"
+}</codeblock>
     </body>
 </topic>

@@ -59,14 +59,26 @@ public class User {
 		return name;
 	}
 
+	public void setName(String value ) {
+		name = value;
+	}
+
 	public String getEmail() {
 		return email;
+	}
+
+	public void setEmail(String value) {
+		email = value;
 	}
 
 	public String getRole() {
 		return role;
 	}
 
+	public void setRole(String value) {
+		role = value;
+	}
+	
 	public void setPassword(String value) {
 		password = value;
 	}
