@@ -70,6 +70,7 @@ export class ResetPassworRequest implements View {
         signIn.classList.add('secondary');
         signIn.innerText = 'Sign In';
         signIn.addEventListener('click', () => {
+            this.close();
             RemoteTM.showLogin();
         });
         buttonArea.appendChild(signIn);
@@ -135,6 +136,7 @@ export class ResetPassworRequest implements View {
             let json: any = await response.json();
             if (json.status === 'OK') {
                 new Message('If entered data matches our records, an email with password change information will be sent.');
+                this.close();
                 RemoteTM.showLogin();
             } else {
                 new Message(json.reason);

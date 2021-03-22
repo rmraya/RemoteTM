@@ -119,6 +119,7 @@ export class PasswordReset implements View {
         let userId: string = this.userName.getValue();
         if (this.id != userId) {
             new Message('Incorrect user name');
+            this.close();
             RemoteTM.showLogin();
             return;
         }

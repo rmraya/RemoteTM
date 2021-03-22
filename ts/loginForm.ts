@@ -70,6 +70,7 @@ export class LoginForm implements View {
         reset.classList.add('secondary');
         reset.innerText = 'Reset Password';
         reset.addEventListener('click', () => {
+            this.close();
             RemoteTM.resetPassword();
         });
         buttonArea.appendChild(reset);
