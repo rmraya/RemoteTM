@@ -66,6 +66,7 @@ export class UsersManager {
 
         let mainTable: HTMLTableElement = document.createElement('table');
         mainTable.classList.add('fullWidth');
+        mainTable.classList.add('stripes');
         tableContainer.appendChild(mainTable);
 
         let tableHeader: HTMLTableSectionElement = document.createElement('thead');

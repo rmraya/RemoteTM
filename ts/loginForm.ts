@@ -51,13 +51,11 @@ export class LoginForm implements View {
         titleArea.innerHTML = '<span>Sign In</span>';
         this.dialog.appendChild(titleArea);
 
-
         let holder: HTMLDivElement = document.createElement('div');
         holder.classList.add('fullWidth');
         holder.style.paddingTop = '20px';
         holder.style.paddingBottom = '20px';
         this.dialog.appendChild(holder);
-
 
         this.userName = new Input(holder, 'User Name', 'text');
         this.userName.addEventListener('keydown', (ev: KeyboardEvent) => { this.keyListener(ev); });
@@ -96,14 +94,12 @@ export class LoginForm implements View {
     }
 
     show(): void {
-        this.container.classList.remove('hidden');
-        this.container.classList.add('block');
         this.userName.focus();
     }
 
     close(): void {
-        this.container.classList.remove('block');
-        this.container.classList.add('hidden');
+        let mainContent: HTMLDivElement = document.getElementById('mainContent') as HTMLDivElement;
+        mainContent.removeChild(this.container);
     }
 
     resize(): void {
@@ -123,11 +119,7 @@ export class LoginForm implements View {
             return;
         }
         let auth = btoa(this.userName.getValue() + ':' + this.passwd.getValue());
+        this.close();
         RemoteTM.requestTicket(this.userName.getValue(), auth);
-    }
-
-    clearForm(): void {
-        this.userName.setValue('');
-        this.passwd.setValue('');
     }
 }

@@ -21,8 +21,8 @@ import { Dashboard } from "./dashboard";
 import { Dialog } from "./dialog";
 import { LoginForm } from "./loginForm";
 import { Message } from "./message";
-import { ResetPasswordForm } from "./resetPasswordForm";
-import { View } from "./view";
+import { PasswordReset } from "./passwordReset";
+import { ResetPassworRequest } from "./resetPasswordRequest";
 
 export class RemoteTM {
 
@@ -34,11 +34,6 @@ export class RemoteTM {
     private static mainURL: string = '';
 
     private static openDialogs: Map<string, Dialog>;
-
-    private static currentView: View;
-    private static dashboard: Dashboard;
-    private static loginForm: LoginForm;
-    private static resetForm: ResetPasswordForm;
 
     constructor() {
         let host: string = location.host;
@@ -57,15 +52,16 @@ export class RemoteTM {
         RemoteTM.mainURL = protocol + '//' + host + path;
 
         RemoteTM.waitingCount = 0;
-
+        RemoteTM.openDialogs = new Map<string, Dialog>();
         this.getVersion();
 
         window.addEventListener('resize', () => {
             this.resize();
         });
+
         if (code) {
-            // TODO
-            console.log('show new password dialog for code ', code);
+            this.showReset(code);
+            return;
         }
         RemoteTM.showLogin();
     }
@@ -123,47 +119,34 @@ export class RemoteTM {
             if (json.status === 'OK') {
                 RemoteTM.session = json.ticket;
                 RemoteTM.who = userName;
-                RemoteTM.showDashboard();
+                RemoteTM.showDashboard(json.role);
             } else {
                 new Message(json.reason);
+                RemoteTM.showLogin();
             }
         }).catch((reason: any) => {
             console.error('Error:', reason);
         });
     }
 
-    public static showLogin() {
-        if (this.currentView) {
-            this.currentView.close();
-        }
-        if (!this.loginForm) {
-            this.loginForm = new LoginForm();
-        }
-        this.loginForm.clearForm();
-        this.currentView = this.loginForm;
-        this.currentView.show();
+    public static showLogin(): void {
+        let view = new LoginForm();
+        view.show();
     }
 
-    public static resetPassword() {
-        if (this.currentView) {
-            this.currentView.close();
-        }
-        if (!this.resetForm) {
-            this.resetForm = new ResetPasswordForm();
-        }
-        this.currentView = this.resetForm;
-        this.currentView.show();
+    showReset(code: string): void {
+        let view = new PasswordReset(code);
+        view.show();
     }
 
-    public static showDashboard(): void {
-        if (this.currentView) {
-            this.currentView.close();
-        }
-        if (!this.dashboard) {
-            this.dashboard = new Dashboard();
-        }
-        this.currentView = this.dashboard;
-        this.currentView.show();
+    public static resetPassword(): void {
+        let view = new ResetPassworRequest();
+        view.show();
+    }
+
+    public static showDashboard(role: string): void {
+        let view = new Dashboard(role);
+        view.show();
     }
 
     public static signOut() {

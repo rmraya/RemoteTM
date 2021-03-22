@@ -28,10 +28,11 @@ import { View } from './view';
 export class Dashboard implements View {
 
     container: HTMLDivElement;
+    role: string;
     tbody: HTMLTableSectionElement;
 
-    constructor() {
-
+    constructor(role: string) {
+        this.role = role;
         let mainContent: HTMLDivElement = document.getElementById('mainContent') as HTMLDivElement;
 
         this.container = document.createElement('div');
@@ -60,7 +61,7 @@ export class Dashboard implements View {
 
         let signOut: HTMLAnchorElement = document.createElement('a');
         signOut.innerText = 'Sign Out';
-        signOut.addEventListener('click', () => { RemoteTM.signOut(); });
+        signOut.addEventListener('click', () => { this.signOut(); });
         topbar.appendChild(signOut);
 
         let toolbar: HTMLDivElement = document.createElement('div');
@@ -161,13 +162,16 @@ export class Dashboard implements View {
     }
 
     show(): void {
-        this.container.classList.remove('hidden');
-        this.container.classList.add('block');
     }
 
     close(): void {
-        this.container.classList.remove('block');
-        this.container.classList.add('hidden');
+        let mainContent: HTMLDivElement = document.getElementById('mainContent') as HTMLDivElement;
+        mainContent.removeChild(this.container);
+    }
+
+    signOut(): void {
+        this.close()
+        RemoteTM.signOut();
     }
 
     resize(): void {
@@ -179,19 +183,17 @@ export class Dashboard implements View {
         changePassword.innerText = 'Change Password';
         settingsMenu.addOption(changePassword);
 
-        let manageUsers: HTMLAnchorElement = document.createElement('a');
-        manageUsers.innerText = 'Manage Users';
-        manageUsers.addEventListener('click', () => { this.manageUsers(); })
-        settingsMenu.addOption(manageUsers);
+        if (this.role === 'SA') {
+            let manageUsers: HTMLAnchorElement = document.createElement('a');
+            manageUsers.innerText = 'Manage Users';
+            manageUsers.addEventListener('click', () => { this.manageUsers(); })
+            settingsMenu.addOption(manageUsers);
 
-        let sendEmail: HTMLAnchorElement = document.createElement('a');
-        sendEmail.innerText = 'Send Email';
-        settingsMenu.addOption(sendEmail);
-
-        let emailServer: HTMLAnchorElement = document.createElement('a');
-        emailServer.innerText = 'Email Server';
-        emailServer.addEventListener('click', () => { this.setEmailServer(); });
-        settingsMenu.addOption(emailServer);
+            let emailServer: HTMLAnchorElement = document.createElement('a');
+            emailServer.innerText = 'Email Server';
+            emailServer.addEventListener('click', () => { this.setEmailServer(); });
+            settingsMenu.addOption(emailServer);
+        }
     }
 
     createHelpMenu(helpMenu: DropDown): void {

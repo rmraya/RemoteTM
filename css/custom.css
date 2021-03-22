@@ -84,6 +84,19 @@ table {
 	border-collapse: collapse;
 }
 
+tr {
+	padding-top: 4px;
+	padding-bottom: 4px;
+}
+
+.stripes tr:nth-child(odd) {
+	background-color: var(--SECONDARY-50);
+}
+
+.stripes tr:nth-child(even) {
+	background-color: var(--SECONDARY-200);
+}
+
 a {
 	color: var(--primaryColor);
 	text-decoration: none;
@@ -648,12 +661,12 @@ hr {
 .message {
 	position: fixed;
 	top: 5%;
-	right: calc(50% - 150px);
+	right: 30px;
 	width: 300px;
+	border: 1px solid var(--SECONDARY-50);
 	border-radius: 2px;
-	background: var(--PRIMARY-900);
-	color: var(--primaryTextColor);
-	box-shadow: 0px 2px 4px var(--SECONDARY-700);
+	background: var(--SECONDARY-900);
+	color: var(--SECONDARY-50);
 	transition: all .2s ease-in;
 	padding: 16px;
 	text-align: center;

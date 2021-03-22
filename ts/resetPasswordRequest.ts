@@ -22,7 +22,7 @@ import { Message } from "./message";
 import { RemoteTM } from "./remotetm";
 import { View } from "./view";
 
-export class ResetPasswordForm implements View {
+export class ResetPassworRequest implements View {
 
     container: HTMLDivElement;
     dialog: HTMLDivElement;
@@ -94,14 +94,12 @@ export class ResetPasswordForm implements View {
     }
 
     show(): void {
-        this.container.classList.remove('hidden');
-        this.container.classList.add('block');
         this.userName.focus();
     }
 
     close(): void {
-        this.container.classList.remove('block');
-        this.container.classList.add('hidden');
+        let mainContent: HTMLDivElement = document.getElementById('mainContent') as HTMLDivElement;
+        mainContent.removeChild(this.container);
     }
 
     resize(): void {
@@ -120,11 +118,12 @@ export class ResetPasswordForm implements View {
             new Message('Enter email address');
             return;
         }
+
         let params: any = {
+            command: 'request',
             id: this.userName.getValue(),
             email: this.email.getValue()
         };
-
         fetch(RemoteTM.getMainURL() + '/reset', {
             method: 'POST',
             headers: [

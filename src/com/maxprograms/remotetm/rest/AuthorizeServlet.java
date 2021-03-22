@@ -71,6 +71,7 @@ public class AuthorizeServlet extends HttpServlet {
                     String session = UUID.randomUUID().toString();
                     result.put(Constants.STATUS, Constants.OK);
                     result.put(Constants.TICKET, session);
+                    result.put("role", user.getRole());
                     if (tickets == null) {
                         tickets = new ConcurrentHashMap<>();
                     }

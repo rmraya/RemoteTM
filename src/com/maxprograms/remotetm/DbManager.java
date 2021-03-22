@@ -189,4 +189,14 @@ public class DbManager {
     public void rollback() throws SQLException {
         conn.rollback();
     }
+
+    public void setPassword(String user, String password) throws NoSuchAlgorithmException, SQLException {
+        String sql = "UPDATE users SET password=?, updated='Y' WHERE id=?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, Crypto.sha256(password));
+            stmt.setString(2, user);
+            stmt.executeUpdate();
+        }
+        conn.commit();
+    }
 }

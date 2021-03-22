@@ -4,6 +4,10 @@
     <title>Access Management</title>
     <shortdesc></shortdesc>
     <conbody>
-        <p></p>
+        <p>The REST methods for access management exposed by RemoteTM are:</p>
+        <ul>
+            <li><xref href="authorizationRequest.dita">Authorization Request</xref></li>
+            <li><xref href="logout.dita">Logout</xref></li>
+        </ul>
     </conbody>
 </concept>

@@ -34,18 +34,20 @@
                 <tt>magic#123</tt>, the string to be encoded using Base64 is
                 <tt>services:magic#123</tt>. Then, the header to be sent to RemoteTM is:</p>
         <codeblock translate="no">Authorization: BASIC c2VydmljZXM6bWFnaWMjMTIz</codeblock>
-        <p>RemoteTM responds with a JSON object that contains two fields. </p>
-        <p>On success, the value of <tt>"status"</tt> field is <tt>"OK"</tt> and <tt>"ticket"</tt>
-            field contains the authorization code issued by RemoteTM. Example:</p>
+        <p>RemoteTM responds with a JSON object. </p>
+        <p>On success, the value of <tt>"status"</tt> field is <tt>"OK"</tt>, <tt>"ticket"</tt>
+            field contains the authorization code issued by RemoteTM and <tt>"role"</tt> field
+            contains the user's role. Example:</p>
         <codeblock translate="no">{
     "status": "OK",
-    "ticket": "28ceb966-150e-4b27-b603-c244160da5b7"
-}        </codeblock>
+    "ticket": "28ceb966-150e-4b27-b603-c244160da5b7",
+    "role": "PM"
+}</codeblock>
         <p>On error, field <tt>"status"</tt> is set to <tt>"Error"</tt> and failure reason is
             indicated in the <tt>"reason"</tt> field. Example:</p>
         <codeblock translate="no">{
     "status": "Error",
     "reason": "Access Denied"
-}        </codeblock>
+}</codeblock>
     </body>
 </topic>
