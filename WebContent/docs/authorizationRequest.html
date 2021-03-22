@@ -75,19 +75,21 @@
                <span class="tt">magic#123</span>, the string to be encoded using Base64 is
                <span class="tt">services:magic#123</span>. Then, the header to be sent to RemoteTM is:</div>
             <pre class="codeblock">Authorization: BASIC c2VydmljZXM6bWFnaWMjMTIz</pre>
-            <div class="p">RemoteTM responds with a JSON object that contains two fields. </div>
-            <div class="p">On success, the value of <span class="tt">&quot;status&quot;</span> field is <span class="tt">&quot;OK&quot;</span> and <span class="tt">&quot;ticket&quot;</span>
-               field contains the authorization code issued by RemoteTM. Example:</div>
+            <div class="p">RemoteTM responds with a JSON object. </div>
+            <div class="p">On success, the value of <span class="tt">&quot;status&quot;</span> field is <span class="tt">&quot;OK&quot;</span>, <span class="tt">&quot;ticket&quot;</span>
+               field contains the authorization code issued by RemoteTM and <span class="tt">&quot;role&quot;</span> field
+               contains the user's role. Example:</div>
             <pre class="codeblock">{
     &quot;status&quot;: &quot;OK&quot;,
-    &quot;ticket&quot;: &quot;28ceb966-150e-4b27-b603-c244160da5b7&quot;
-}        </pre>
+    &quot;ticket&quot;: &quot;28ceb966-150e-4b27-b603-c244160da5b7&quot;,
+    &quot;role&quot;: &quot;PM&quot;
+}</pre>
             <div class="p">On error, field <span class="tt">&quot;status&quot;</span> is set to <span class="tt">&quot;Error&quot;</span> and failure reason is
                indicated in the <span class="tt">&quot;reason&quot;</span> field. Example:</div>
             <pre class="codeblock">{
     &quot;status&quot;: &quot;Error&quot;,
     &quot;reason&quot;: &quot;Access Denied&quot;
-}        </pre>
+}</pre>
          </div>
       </section>
    </div>

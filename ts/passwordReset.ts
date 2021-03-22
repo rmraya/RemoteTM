@@ -30,8 +30,10 @@ export class PasswordReset implements View {
     passwd: Input;
     repeat: Input;
     id: string;
+    code: string
 
     constructor(code: string) {
+        this.code = code;
 
         let mainContent: HTMLDivElement = document.getElementById('mainContent') as HTMLDivElement;
 
@@ -141,6 +143,7 @@ export class PasswordReset implements View {
 
         let params: any = {
             command: 'setPassword',
+            code: this.code,
             id: this.id,
             password: password
         };

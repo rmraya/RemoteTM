@@ -89,7 +89,6 @@ public class PasswordResetServlet extends HttpServlet {
                 }
                 if (!id.isEmpty()) {
                     result.put("id", id);
-                    tickets.remove(id);
                     result.put(Constants.STATUS, Constants.OK);
                 } else {
                     result.put(Constants.STATUS, Constants.ERROR);
@@ -105,12 +104,27 @@ public class PasswordResetServlet extends HttpServlet {
 
     private boolean setPassword(JSONObject json) {
         try {
-            DbManager manager = DbManager.getInstance();
-            manager.setPassword(json.getString("id"), json.getString("password"));
-            return true;
+            String code = json.getString("code");
+            boolean found = false;
+            Set<String> keys = tickets.keySet();
+            Iterator<String> it = keys.iterator();
+            while (it.hasNext()) {
+                String key = it.next();
+                if (tickets.get(key).equals(code)) {
+                    tickets.remove(key);
+                    found = true;
+                    break;
+                }
+            }
+            if (found) {
+                DbManager manager = DbManager.getInstance();
+                manager.setPassword(json.getString("id"), json.getString("password"));
+                return true;
+            }
         } catch (SQLException | NoSuchAlgorithmException | IOException e) {
-            return false;
+            // do nothing
         }
+        return false;
     }
 
     private void issueRequest(JSONObject json) {
