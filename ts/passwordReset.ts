@@ -175,7 +175,6 @@ export class PasswordReset implements View {
     close(): void {
         let mainContent: HTMLDivElement = document.getElementById('mainContent') as HTMLDivElement;
         mainContent.removeChild(this.container);
-        RemoteTM.showLogin();
     }
 
     resize(): void {

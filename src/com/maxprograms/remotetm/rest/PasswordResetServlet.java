@@ -106,6 +106,9 @@ public class PasswordResetServlet extends HttpServlet {
         try {
             String code = json.getString("code");
             boolean found = false;
+            if (tickets == null) {
+                tickets = new ConcurrentHashMap<>();
+            }
             Set<String> keys = tickets.keySet();
             Iterator<String> it = keys.iterator();
             while (it.hasNext()) {
@@ -145,7 +148,7 @@ public class PasswordResetServlet extends HttpServlet {
                 String text = "\nDear " + user.getName()
                         + ",\n\nA password reset was requested for your RemoteTM account."
                         + "\n\nIf you did not request a password reset, simply ignore this message."
-                        + "\n\nPlease create a new password using the link provided below." + "\n\n  Reset Link: "
+                        + "\n\nPlease create a new password using the link provided below.\n\n  Reset Link: "
                         + link + "\n\nThanks for using RemoteTM.\n\n";
 
                 String html = "<p>Dear " + user.getName() + ",</p>"
