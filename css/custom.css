@@ -14,7 +14,7 @@ body {
 
 .titleBar {
 	width: 100%;
-	background: var(--primaryDarkColor);
+	background: var(--PRIMARY-DARK);
 	margin: 0px;
 	padding: 2px 2px 2px 4px;
 	white-space: nowrap;
@@ -52,7 +52,7 @@ footer {
 	padding-top: 2px;
 	vertical-align: bottom;
 	text-align: center;
-	background: var(--primaryColor);
+	background: var(--primaryDarkColor);
 	color: var(--primaryTextColor);
 	font-size: 0.8em;
 }
@@ -63,7 +63,7 @@ footer a {
 }
 
 footer a:hover {
-	background: var(--primaryColor);
+	background: var(--primaryDarkColor);
 	text-decoration: underline;
 }
 
@@ -104,8 +104,8 @@ a {
 }
 
 thead {
-	background: var(--primaryColor);
-	color: var(--primaryTextColor);
+	background: var(--GREY-LIGHT);
+	color: var(--secondaryTextColor);
 }
 
 tbody {
@@ -132,8 +132,8 @@ th {
 	top: 0;
 	z-index: 5;
 	font-weight: normal;
-	background: var(--primaryDarkColor);
-	color: var(--primaryTextColor);
+	background: var(--GREY-LIGHT);
+	color: var(--secondaryTextColor);
 	white-space: nowrap;
 	padding: 4px 0px;
 }
@@ -428,8 +428,8 @@ label {
 	position: absolute;
 	padding: 0;
 	background: var(--SECONDARY-50);
-	border: 1px solid var(--primaryColor);
-	border-radius: 0;
+	border: 1px solid var(--PRIMARY-DARK);
+	border-radius: 4px;
 	box-shadow: 0px 2px 4px var(--SECONDARY-700);
 	transition: left 0.6s;
 	transition-timing-function: ease;
@@ -456,9 +456,9 @@ label {
 .dialogTitle {
 	height: 24px;
 	vertical-align: middle;
-	background: var(--primaryColor);
-	color: var(--primaryTextColor);
-	fill: var(--primaryTextColor);
+	background: var(--PRIMARY-DARK);
+	color: var(--WHITE);
+	fill: var(--WHITE);
 }
 
 .dialogTitle span {
@@ -485,7 +485,7 @@ label {
 }
 
 .topbar {
-	background: var(--primaryColor);
+	background: var(--primaryDarkColor);
 	color: var(--primaryTextColor);
 	display: flex;
 	flex-direction: row;
@@ -517,13 +517,15 @@ label {
 }
 
 .toolbar {
-	background: var(--SECONDARY-300);
+	background: var(--WHITE);
 	color: var(--primaryColor);
 	fill: var(--primaryColor);
 	display: flex;
 	flex-direction: row;
 	width: 100%;
 	margin: 0px;
+	padding: 4px;
+	width: calc(100% - 8px);
 	vertical-align: middle;
 }
 
@@ -674,5 +676,5 @@ hr {
 }
 
 .selected {
-	background-color: var(--PRIMARY-100) !important;
+	background-color: #bbdefb !important;
 }

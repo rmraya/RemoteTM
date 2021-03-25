@@ -18,6 +18,7 @@ SOFTWARE.
 *******************************************************************************/
 
 import { AboutDialog } from './about';
+import { AddMemory } from './addMemory';
 import { DropDown } from './dropdown';
 import { EmailServerDialog } from './emailServerDialog';
 import { LicensesDialog } from './licenses';
@@ -68,35 +69,36 @@ export class Dashboard implements View {
         toolbar.classList.add('toolbar');
         this.container.appendChild(toolbar);
 
-        let addMemory: HTMLAnchorElement = document.createElement('a');
+        let addMemory: HTMLButtonElement = document.createElement('button');
         addMemory.innerText = 'Add Memory';
+        addMemory.addEventListener('click', () => { this.addMemory(); });
         toolbar.appendChild(addMemory);
 
-        let removeMemory: HTMLAnchorElement = document.createElement('a');
+        let removeMemory: HTMLButtonElement = document.createElement('button');
         removeMemory.innerText = 'Remove Memory';
         toolbar.appendChild(removeMemory);
 
-        let setAccess: HTMLAnchorElement = document.createElement('a');
+        let setAccess: HTMLButtonElement = document.createElement('button');
         setAccess.innerText = 'Set Access';
         toolbar.appendChild(setAccess);
 
-        let importMemory: HTMLAnchorElement = document.createElement('a');
+        let importMemory: HTMLButtonElement = document.createElement('button');
         importMemory.innerText = 'Import TMX';
         toolbar.appendChild(importMemory);
 
-        let exportMemory: HTMLAnchorElement = document.createElement('a');
+        let exportMemory: HTMLButtonElement = document.createElement('button');
         exportMemory.innerText = 'Export TMX';
         toolbar.appendChild(exportMemory);
 
-        let closeMemory: HTMLAnchorElement = document.createElement('a');
+        let closeMemory: HTMLButtonElement = document.createElement('button');
         closeMemory.innerText = 'Close Memory';
         toolbar.appendChild(closeMemory);
 
-        let closeAllMemories: HTMLAnchorElement = document.createElement('a');
+        let closeAllMemories: HTMLButtonElement = document.createElement('button');
         closeAllMemories.innerText = 'Close All Memories';
         toolbar.appendChild(closeAllMemories);
 
-        let refreshList: HTMLAnchorElement = document.createElement('a');
+        let refreshList: HTMLButtonElement = document.createElement('button');
         refreshList.innerText = 'Refresh';
         toolbar.appendChild(refreshList);
 
@@ -248,5 +250,10 @@ export class Dashboard implements View {
     viewLicenses(): void {
         let licenses = new LicensesDialog();
         licenses.open();
+    }
+
+    addMemory(): void {
+        let addMemory = new AddMemory(this);
+        addMemory.open();
     }
 }

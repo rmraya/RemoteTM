@@ -29,11 +29,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.maxprograms.remotetm.models.User;
 import com.maxprograms.remotetm.utils.Crypto;
+import com.maxprograms.swordfish.models.Memory;
 
 public class DbManager {
 
@@ -95,6 +97,27 @@ public class DbManager {
             stmt.setString(5, user.getRole());
             stmt.setString(6, user.isActive() ? "Y" : "N");
             stmt.setString(7, user.isUpdated() ? "Y" : "N");
+            stmt.execute();
+        }
+        conn.commit();
+    }
+
+    public void addMemory(Memory mem, User owner) throws SQLException {
+        String sql = "INSERT INTO memories (id, name, owner, project, subject, client, creationDate) VALUES (?,?,?,?,?,?,?)";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, mem.getId());
+            stmt.setNString(2, mem.getName());
+            stmt.setString(3, owner.getId());
+            stmt.setNString(4, mem.getProject());
+            stmt.setNString(5, mem.getSubject());
+            stmt.setNString(6, mem.getClient());
+            stmt.setTimestamp(7, new Timestamp(mem.getCreationDate().getTime()));
+            stmt.execute();
+        }
+        sql = "INSERT INTO permissions (user, memory, canread, canwrite, canexport) VALUES (?,?,'Y','Y','Y')";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, owner.getId());
+            stmt.setString(2, mem.getId());
             stmt.execute();
         }
         conn.commit();

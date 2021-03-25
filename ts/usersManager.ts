@@ -32,28 +32,29 @@ export class UsersManager {
     constructor() {
         this.selected = '';
         this.dialog = new Dialog(850);
+        this.dialog.position(84, 84);
         this.dialog.setTitle('Manage Users');
 
         let toolbar: HTMLDivElement = document.createElement('div');
         toolbar.classList.add('toolbar');
         this.dialog.appendChild(toolbar);
 
-        let addUser: HTMLAnchorElement = document.createElement('a');
+        let addUser: HTMLButtonElement = document.createElement('button');
         addUser.innerText = 'Add User';
         addUser.addEventListener('click', () => { this.addUser(); });
         toolbar.appendChild(addUser);
 
-        let editUser: HTMLAnchorElement = document.createElement('a');
+        let editUser: HTMLButtonElement = document.createElement('button');
         editUser.innerText = 'Edit User';
         editUser.addEventListener('click', () => { this.editUser(); });
         toolbar.appendChild(editUser);
 
-        let removeUser: HTMLAnchorElement = document.createElement('a');
+        let removeUser: HTMLButtonElement = document.createElement('button');
         removeUser.innerText = 'Remove User';
         removeUser.addEventListener('click', () => { this.removeUser(); });
         toolbar.appendChild(removeUser);
 
-        let lockUser: HTMLAnchorElement = document.createElement('a');
+        let lockUser: HTMLButtonElement = document.createElement('button');
         lockUser.innerText = 'Lock/Unlock User';
         lockUser.addEventListener('click', () => { this.lockUser(); });
         toolbar.appendChild(lockUser);

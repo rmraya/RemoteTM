@@ -31,7 +31,7 @@ import com.maxprograms.remotetm.utils.Utils;
 
 import org.json.JSONObject;
 
-public class Logout extends HttpServlet {
+public class LogoutServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
@@ -51,7 +51,7 @@ public class Logout extends HttpServlet {
             result.put(Constants.STATUS, Constants.ERROR);
             Utils.writeResponse(result, response, 500);
         } catch (IOException e) {
-            Logger logger = System.getLogger(Logout.class.getName());
+            Logger logger = System.getLogger(LogoutServlet.class.getName());
             logger.log(Level.ERROR, e);
         }
     }

@@ -16,7 +16,12 @@
 
   <servlet>
     <servlet-name>Logout</servlet-name>
-    <servlet-class>com.maxprograms.remotetm.rest.Logout</servlet-class>
+    <servlet-class>com.maxprograms.remotetm.rest.LogoutServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>Memories</servlet-name>
+    <servlet-class>com.maxprograms.remotetm.rest.MemoriesServlet</servlet-class>
   </servlet>
 
   <servlet>
@@ -58,6 +63,11 @@
   <servlet-mapping>
     <servlet-name>Logout</servlet-name>
     <url-pattern>/logout</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>Memories</servlet-name>
+    <url-pattern>/memories</url-pattern>
   </servlet-mapping>
 
   <servlet-mapping>
