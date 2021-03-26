@@ -32,6 +32,11 @@ export class Dialog {
     closeLink: HTMLAnchorElement;
     closeAction: Function;
 
+    mouseStartX: number;
+    mouseStartY: number;
+    dialogTop: number;
+    dialogLeft: number;
+
     constructor(width: number) {
         this.id = 'dia' + (Math.random() * 10000000);
         this.dialog = document.createElement('div');
@@ -40,8 +45,13 @@ export class Dialog {
         this.dialog.style.zIndex = (10 + (2 * RemoteTM.dialogCount())) + '';
         this.center(width);
         document.body.appendChild(this.dialog);
+
         this.titleArea = document.createElement('div');
+        this.titleArea.draggable = true;
         this.titleArea.classList.add('dialogTitle');
+        this.titleArea.addEventListener('dragstart', (ev: DragEvent) => { this.startMoving(ev); });
+        this.titleArea.addEventListener('drag', (ev: DragEvent) => { this.move(ev); })
+        this.titleArea.addEventListener('dragend', (ev: DragEvent) => { this.endMove(ev); })
 
         this.titleSpan = document.createElement('span');
         this.titleSpan.id = 'title';
@@ -126,5 +136,24 @@ export class Dialog {
 
     canClose(value: boolean): void {
         value ? this.closeLink.classList.remove('hidden') : this.closeLink.classList.add('hidden');
+    }
+
+    startMoving(event: DragEvent) {
+        this.mouseStartX = event.clientX;
+        this.mouseStartY = event.clientY;
+        this.dialogTop = this.dialog.offsetTop;
+        this.dialogLeft = this.dialog.offsetLeft;
+    }
+
+    move(event: DragEvent) {
+        
+    }
+
+    endMove(event: DragEvent) {
+        let left = event.clientX;
+        this.dialog.style.left = (this.dialogLeft - this.mouseStartX + left) + 'px';
+
+        let top = event.clientY;
+        this.dialog.style.top = (this.dialogTop - this.mouseStartY + top) + 'px';
     }
 }

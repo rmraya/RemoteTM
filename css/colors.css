@@ -2,13 +2,13 @@
     --PRIMARY: hsl(209.2, 100%, 40%);
     --PRIMARY-DARK: hsl(209.2, 100%, 30%);
     --PRIMARY-LIGTH: hsl(209.2, 100%, 50%);
+    --PRIMARY-ALT: hsl(209, 100%, 80%);
     --PRIMARY-HIGHLIGTH: hsl(209.2, 100%, 90%);
-    
-    --GREY: hsl(0, 0%, 50%);
-    --GREY-DARK: hsl(0,0%, 30%);
-    --GREY-LIGHT: hsl(0,0%, 70%);
-    --WHITE: hsl(0,100%,100%);
 
+    --GREY: hsl(0, 0%, 50%);
+    --GREY-DARK: hsl(0, 0%, 30%);
+    --GREY-LIGHT: hsl(0, 0%, 70%);
+    --WHITE: hsl(0, 100%, 100%);
     --primaryColor: #0073B5;
     --primaryLightColor: #56A1E8;
     --primaryDarkColor: #164166;

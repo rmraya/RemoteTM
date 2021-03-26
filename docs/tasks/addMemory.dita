@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE task PUBLIC "-//OASIS//DTD DITA Task//EN" "task.dtd">
+<task id="remotetm_create_database">
+    <title>Add Memory</title>
+    <shortdesc/>
+    <taskbody>
+        <steps>
+            <step>
+                <cmd>Login as a user with "System Administrator" or "Project Manager"
+                    privileges.</cmd>
+            </step>
+            <step>
+                <cmd>Click the <uicontrol>Add Memory</uicontrol> button.</cmd>
+                <stepresult>The following dialog appears: <image href="../images/addMemory.png"
+                        placement="break" scale="50">
+                        <alt>Add Memory dialog</alt>
+                    </image>
+                </stepresult>
+            </step>
+            <step>
+                <cmd>Type a name for the new memory in the <uicontrol>Memory Name</uicontrol> text
+                    box.</cmd>
+                <info>Only Latin characters, numbers and underscores should be used in a memory
+                    name.</info>
+            </step>
+            <step>
+                <cmd>Optionally, type a project description in the <uicontrol>Project</uicontrol>
+                    text box.</cmd>
+            </step>
+            <step>
+                <cmd>Optionally, type a subject for the TM data in the
+                        <uicontrol>Subject</uicontrol> text box.</cmd>
+            </step>
+            <step>
+                <cmd>Optionally, enter a client name in the <uicontrol>Client</uicontrol> text
+                    box.</cmd>
+            </step>
+            <step>
+                <cmd>Click the <uicontrol>Add Memory</uicontrol> button.</cmd>
+            </step>
+        </steps>
+        <result>A translation memory is created with full access granted to the owner.</result>
+    </taskbody>
+</task>

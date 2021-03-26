@@ -19,76 +19,61 @@ SOFTWARE.
 
 import { Dashboard } from "./dashboard";
 import { Dialog } from "./dialog";
-import { Input } from "./input";
+import { DropZone } from "./dropZone";
 import { Message } from "./message";
 import { RemoteTM } from "./remotetm";
 
-export class AddMemory {
+export class ImportTMX {
 
     parent: Dashboard;
     dialog: Dialog;
-    nameInput: Input;
-    projectInput: Input;
-    subjectInput: Input;
-    clientInput: Input;
+    dropZone: DropZone
 
     constructor(parent: Dashboard) {
         this.parent = parent;
 
-        this.dialog = new Dialog(350);
-        this.dialog.setTitle('Add Memory');
+        this.dialog = new Dialog(400);
+        this.dialog.setTitle('Import TMX');
 
-        this.nameInput = new Input(this.dialog.contentArea, 'Memory Name', 'text');
-        this.projectInput = new Input(this.dialog.contentArea, 'Project', 'text');
-        this.subjectInput = new Input(this.dialog.contentArea, 'Subject', 'text');
-        this.clientInput = new Input(this.dialog.contentArea, 'Client', 'text');
+        this.dropZone = new DropZone(this.dialog.contentArea);
 
-        let button: HTMLButtonElement = document.createElement('button');
-        button.innerText = 'Add Memory';
-        button.addEventListener('click', () => { this.addMemory(); });
-        this.dialog.addButton(button);
+        let importButton: HTMLButtonElement = document.createElement('button');
+        importButton.innerText = 'Import TMX';
+        importButton.addEventListener('click', () => { this.importTMX(); });
+        this.dialog.addButton(importButton);
     }
 
     open(): void {
         this.dialog.open();
     }
 
-    addMemory(): void {
-        let name: string = this.nameInput.getValue();
-        if (!name) {
-            new Message('Enter name');
+    importTMX(): void {
+        let files: FileList = this.dropZone.getFiles();
+        if (files.length === 0) {
+            new Message('Select file');
             return;
         }
-        let project: string = this.projectInput.getValue();
-        let subject: string = this.subjectInput.getValue();
-        let client: string = this.clientInput.getValue();
-        let params: any = {
-            name: name,
-            owner: RemoteTM.getUser(),
-            project: project,
-            subject: subject,
-            client: client,
-            command: 'addMemory'
-        };
-        fetch(RemoteTM.getMainURL() + '/memories', {
+        let formData = new FormData();
+        formData.append("file", files[0]);
+        fetch(RemoteTM.getMainURL() + '/upload', {
             method: 'POST',
             headers: [
                 ['Session', RemoteTM.getSession()],
-                ['Content-Type', 'application/json'],
+                ['Content-Type', 'multipart/form-data'],
                 ['Accept', 'application/json']
             ],
-            body: JSON.stringify(params)
+            body: formData
         }).then(async (response: Response) => {
             let json: any = await response.json();
+            console.log(JSON.stringify(json));
             if (json.status === 'OK') {
+
                 this.dialog.close();
-                this.parent.loadMemories();
             } else {
                 new Message(json.reason);
             }
         }).catch((reason: any) => {
             console.error('Error:', reason);
         });
-
     }
 }

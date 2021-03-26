@@ -25,14 +25,27 @@
         <topicref href="concepts/preparation.dita"/>
         <topicref href="tasks/installation.dita"/>
         <topicref href="tasks/emailserver_config.dita"/>
+    </chapter>
 
+    <chapter href="concepts/memoriesManagement.dita">
+        <topicref href="tasks/addMemory.dita"/>
+        
+    </chapter>
+
+    <chapter>
+        <topicmeta>
+            <navtitle>Users Management</navtitle>
+        </topicmeta>
     </chapter>
 
     <chapter href="rest/restApi.dita">
         <topicref href="rest/accessManagement.dita">
             <topicref href="rest/authorizationRequest.dita"/>
             <topicref href="rest/logout.dita"/>
-        </topicref>        
+        </topicref>
+        <topicref href="rest/memoriesManagement.dita">
+            <topicref href="rest/addMemory.dita"/>
+        </topicref>
         <topicref href="rest/usersManagement.dita">
             <topicref href="rest/addUser.dita"/>
             <topicref href="rest/getUser.dita"/>

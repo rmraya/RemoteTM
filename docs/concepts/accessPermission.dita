@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE concept PUBLIC "-//OASIS//DTD DITA Concept//EN" "concept.dtd">
+<concept id="remotetm">
+ <title>Set Access Permissions</title>
+ <shortdesc/>
+ <conbody>
+  <p>User access to translation memories content is controlled by setting access permissions. The
+   access rights a user can have for a given translation memory are:</p>
+  <ul>
+   <li>Read</li>
+   <li>Write</li>
+   <li>Export</li>
+  </ul>
+  <p>The following table summarizes the actions allowed to a user that has been granted access to a
+   database:</p>
+  <simpletable>
+   <sthead>
+    <stentry>Permission</stentry>
+    <stentry>Allowed Actions</stentry>
+   </sthead>
+   <strow>
+    <stentry>Read</stentry>
+    <stentry>Use the translation memory in Swordfish IV for the following tasks: <ul>
+      <li>TM matches retrieval</li>
+      <li>Concordance searches</li>
+      <li>Terms retrieval</li>
+      <li>Term searches</li>
+     </ul>
+    </stentry>
+   </strow>
+   <strow>
+    <stentry>Write</stentry>
+    <stentry>
+     <ul>
+      <li>Import TMX files using RemoteTM´s web interface.</li>
+      <li>Import TMX files using Swordfish IV.</li>
+      <li>Select the translation memory as write-enabled database in Swordfish IV for storing
+       segments at translation time.</li>
+     </ul>
+    </stentry>
+   </strow>
+   <strow>
+    <stentry>Export</stentry>
+    <stentry>
+     <ul>
+      <li>Export the translation memory as TMX using RemoteTM´s web interface.</li>
+      <li>Export the database as TMX using Swordfish IV.</li>
+     </ul>
+    </stentry>
+   </strow>
+  </simpletable>
+  <p>Users with "System Administrator" privileges can set access permissions for any translation
+   memory.</p>
+  <p>Users with "Project Manager" privileges can set access permissions for any database they
+   own.</p>
+  <p>To set the access permissions for any translation memory, select it from the memories list and
+   click the <uicontrol>Set Access</uicontrol> button and a dialog like the following one will
+   appear.</p>
+  <image href="../images/accesspermission.png" placement="break">
+   <alt>Set Access dialog</alt>
+  </image>
+  <p>Select or clear the check boxes to assign read, write or export permission to each user in the
+   list. Close the dialog to save the new settings.</p>
+ </conbody>
+</concept>

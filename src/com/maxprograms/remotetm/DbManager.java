@@ -231,6 +231,7 @@ public class DbManager {
 
     public JSONArray getMemories(String user) throws SQLException {
         JSONArray array = new JSONArray();
+        User who = getUser(user);
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         String sql = "SELECT id, name, owner, project, subject, client, creationDate FROM memories ORDER BY name";
         try (Statement stmt = conn.createStatement()) {
@@ -243,17 +244,23 @@ public class DbManager {
                     String subject = rs.getNString(5);
                     String client = rs.getNString(6);
                     Timestamp creationDate = rs.getTimestamp(7);
-                    Permission p = getPermission(id, user);
-                    if (p.canRead() || p.canWrite() || p.canExport()) {
-                        JSONObject memory = new JSONObject();
-                        memory.put("id", id);
-                        memory.put("name", name);
-                        memory.put("owner", owner);
-                        memory.put("project", project);
-                        memory.put("subject", subject);
-                        memory.put("client", client);
-                        memory.put("creationDate", df.format(new Date(creationDate.getTime())));
+                    JSONObject memory = new JSONObject();
+                    memory.put("id", id);
+                    memory.put("name", name);
+                    memory.put("owner", owner);
+                    memory.put("project", project);
+                    memory.put("subject", subject);
+                    memory.put("client", client);
+                    memory.put("creationDate", df.format(new Date(creationDate.getTime())));
+                    if (Constants.SYSTEM_ADMINISTRATOR.equals(who.getRole())) {
                         array.put(memory);
+                    } else if (user.equals(owner)) {
+                        array.put(memory);
+                    } else {
+                        Permission p = getPermission(id, user);
+                        if (p.canRead() || p.canWrite() || p.canExport()) {
+                            array.put(memory);
+                        }
                     }
                 }
             }
@@ -263,10 +270,10 @@ public class DbManager {
 
     private Permission getPermission(String memory, String user) throws SQLException {
         Permission p = new Permission(user, memory, false, false, false);
-        String sql = "SELECT canread, canwrite, canexport FROM permissions WHERE user=? AND memory=?";
+        String sql = "SELECT canread, canwrite, canexport FROM permissions WHERE memory=? AND user=?";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, user);
-            stmt.setString(2, memory);
+            stmt.setString(1, memory);
+            stmt.setString(2, user);
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     p.setRead("Y".equals(rs.getString(1)));

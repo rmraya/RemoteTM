@@ -21,6 +21,7 @@ import { AboutDialog } from './about';
 import { AddMemory } from './addMemory';
 import { DropDown } from './dropdown';
 import { EmailServerDialog } from './emailServerDialog';
+import { ImportTMX } from './importTMX';
 import { LicensesDialog } from './licenses';
 import { Message } from './message';
 import { RemoteTM } from './remotetm';
@@ -87,6 +88,7 @@ export class Dashboard implements View {
 
         let importMemory: HTMLButtonElement = document.createElement('button');
         importMemory.innerText = 'Import TMX';
+        importMemory.addEventListener('click', () => { this.importTMX(); });
         toolbar.appendChild(importMemory);
 
         let exportMemory: HTMLButtonElement = document.createElement('button');
@@ -333,5 +335,15 @@ export class Dashboard implements View {
     addMemory(): void {
         let addMemory = new AddMemory(this);
         addMemory.open();
+    }
+
+    importTMX(): void {
+        if (this.selected === '') {
+            new Message('Select memory');
+            return;
+        }
+
+        let importDialog: ImportTMX = new ImportTMX(this);
+        importDialog.open();
     }
 }

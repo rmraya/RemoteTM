@@ -104,7 +104,7 @@ a {
 }
 
 thead {
-	background: var(--GREY-LIGHT);
+	background: var(--PRIMARY-ALT);
 	color: var(--secondaryTextColor);
 }
 
@@ -132,7 +132,7 @@ th {
 	top: 0;
 	z-index: 5;
 	font-weight: normal;
-	background: var(--GREY-LIGHT);
+	background: var(--PRIMARY-ALT);
 	color: var(--secondaryTextColor);
 	white-space: nowrap;
 	padding: 4px 0px;
@@ -174,8 +174,8 @@ input[type=checkbox] {
 button {
 	color: var(--primaryTextColor);
 	fill: var(--primaryTextColor);
-	background: var(--primaryColor);
-	border: 1px solid var(--primaryColor);
+	background: var(--PRIMARY);
+	border: 1px solid var(--PRIMARY);
 	border-radius: 2px;
 	font-size: 1em;
 	text-align: center;
@@ -430,7 +430,8 @@ label {
 	border: 1px solid var(--PRIMARY-DARK);
 	border-radius: 4px;
 	box-shadow: 0px 2px 4px var(--SECONDARY-700);
-	transition: left 0.6s;
+	transition-property: top, left;
+	transition-delay: 0.3s;
 	transition-timing-function: ease;
 }
 
@@ -675,5 +676,30 @@ hr {
 }
 
 .selected {
-	background-color: #bbdefb !important;
+	background-color: var(--PRIMARY-HIGHLIGTH) !important;
+}
+
+.dropZone {
+	padding: 8px;
+	width: calc(100% - 16px);
+	height: 96px;
+	text-align: center;
+	font-size: 1.2em;
+	border-bottom: 1px solid var(--PRIMARY-LIGHT);
+}
+
+.dropZone label {
+	color: var(--PRIMARY);
+}
+
+.dropZone label:hover {
+	text-decoration: underline;
+}
+
+.dropZone p {
+	text-align: center;
+}
+
+.dragOver {
+	background-color: var(--PRIMARY-HIGHLIGTH);
 }

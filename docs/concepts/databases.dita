@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE concept PUBLIC "-//OASIS//DTD DITA Concept//EN" "concept.dtd">
+<concept id="remotetm_backup_databases">
+ <title>Backup Databases</title>
+ <shortdesc></shortdesc>
+ <conbody>
+ <p>Backup of RemoteTM Web Server databases can be done in these ways:</p>
+ <ol>
+  <li>Exporting all databases as TMX using scripts.</li>
+  <li>Exporting all databases as TMX using Swordfish III.</li>
+  <li>Exporting individual databases as TMX using the web interface.</li>
+  <li>Using the operating system backup functions to make copies of the database files</li>
+ </ol>
+ 
+  <p>Exporting data in TMX format is the most portable way. It allows moving data to other 
+ server engines and to other RemoteTM instances.</p>
+  
+ </conbody>
+</concept>
