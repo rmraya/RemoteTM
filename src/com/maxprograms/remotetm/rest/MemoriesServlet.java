@@ -38,6 +38,7 @@ import com.maxprograms.remotetm.utils.Utils;
 import com.maxprograms.swordfish.models.Memory;
 import com.maxprograms.swordfish.tm.InternalDatabase;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class MemoriesServlet extends HttpServlet {
@@ -45,6 +46,37 @@ public class MemoriesServlet extends HttpServlet {
     private static final long serialVersionUID = 6894498215572036825L;
 
     private static Logger logger = System.getLogger(MemoriesServlet.class.getName());
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            if (!Utils.isSafe(request, response)) {
+                return;
+            }
+            JSONObject result = new JSONObject();
+            String session = request.getHeader("Session");
+            if (AuthorizeServlet.sessionActive(session)) {
+                try {
+                    DbManager manager = DbManager.getInstance();
+                    JSONArray memories = manager.getMemories(AuthorizeServlet.getUser(session));
+                    result.put("memories", memories);
+                    result.put(Constants.STATUS, Constants.OK);
+                    Utils.writeResponse(result, response, 200);
+                } catch (SQLException | NoSuchAlgorithmException e) {
+                    logger.log(Level.ERROR, e);
+                    result.put(Constants.STATUS, Constants.ERROR);
+                    result.put(Constants.REASON, e.getMessage());
+                    Utils.writeResponse(result, response, 500);
+                }
+                return;
+            }
+            result.put(Constants.STATUS, Constants.ERROR);
+            result.put(Constants.REASON, Constants.DENIED);
+            Utils.writeResponse(result, response, 401);
+        } catch (IOException e) {
+            logger.log(Level.ERROR, e);
+        }
+    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException {
@@ -68,6 +100,7 @@ public class MemoriesServlet extends HttpServlet {
                     result.put(Constants.REASON, e.getMessage());
                     Utils.writeResponse(result, response, 500);
                 }
+                return;
             }
             result.put(Constants.STATUS, Constants.ERROR);
             result.put(Constants.REASON, Constants.DENIED);

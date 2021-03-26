@@ -85,8 +85,8 @@ table {
 }
 
 tr {
-	padding-top: 4px;
-	padding-bottom: 4px;
+	padding-top: 8px;
+	padding-bottom: 8px;
 }
 
 .stripes tr:nth-child(odd) {
@@ -185,7 +185,6 @@ button {
 }
 
 button:focus {
-	background: var(--primaryDarkColor);
 	outline: none !important;
 }
 

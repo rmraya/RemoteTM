@@ -82,6 +82,7 @@ export class AddMemory {
             let json: any = await response.json();
             if (json.status === 'OK') {
                 this.dialog.close();
+                this.parent.loadMemories();
             } else {
                 new Message(json.reason);
             }

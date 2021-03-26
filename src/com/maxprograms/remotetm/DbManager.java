@@ -30,12 +30,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import com.maxprograms.remotetm.models.Permission;
 import com.maxprograms.remotetm.models.User;
 import com.maxprograms.remotetm.utils.Crypto;
 import com.maxprograms.swordfish.models.Memory;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class DbManager {
 
@@ -221,5 +227,54 @@ public class DbManager {
             stmt.executeUpdate();
         }
         conn.commit();
+    }
+
+    public JSONArray getMemories(String user) throws SQLException {
+        JSONArray array = new JSONArray();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        String sql = "SELECT id, name, owner, project, subject, client, creationDate FROM memories ORDER BY name";
+        try (Statement stmt = conn.createStatement()) {
+            try (ResultSet rs = stmt.executeQuery(sql)) {
+                while (rs.next()) {
+                    String id = rs.getString(1);
+                    String name = rs.getNString(2);
+                    String owner = rs.getString(3);
+                    String project = rs.getNString(4);
+                    String subject = rs.getNString(5);
+                    String client = rs.getNString(6);
+                    Timestamp creationDate = rs.getTimestamp(7);
+                    Permission p = getPermission(id, user);
+                    if (p.canRead() || p.canWrite() || p.canExport()) {
+                        JSONObject memory = new JSONObject();
+                        memory.put("id", id);
+                        memory.put("name", name);
+                        memory.put("owner", owner);
+                        memory.put("project", project);
+                        memory.put("subject", subject);
+                        memory.put("client", client);
+                        memory.put("creationDate", df.format(new Date(creationDate.getTime())));
+                        array.put(memory);
+                    }
+                }
+            }
+        }
+        return array;
+    }
+
+    private Permission getPermission(String memory, String user) throws SQLException {
+        Permission p = new Permission(user, memory, false, false, false);
+        String sql = "SELECT canread, canwrite, canexport FROM permissions WHERE user=? AND memory=?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, user);
+            stmt.setString(2, memory);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    p.setRead("Y".equals(rs.getString(1)));
+                    p.setWrite("Y".equals(rs.getString(2)));
+                    p.setExport("Y".equals(rs.getString(3)));
+                }
+            }
+        }
+        return p;
     }
 }

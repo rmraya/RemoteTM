@@ -71,10 +71,12 @@ public class UsersServlet extends HttpServlet {
                         return;
                     }
                 } catch (NoSuchAlgorithmException | SQLException e) {
+                    logger.log(Level.ERROR, e);
                     result.put(Constants.STATUS, Constants.ERROR);
                     result.put(Constants.REASON, e.getMessage());
                     Utils.writeResponse(result, response, 500);
                 }
+                return;
             }
             result.put(Constants.STATUS, Constants.ERROR);
             result.put(Constants.REASON, Constants.DENIED);

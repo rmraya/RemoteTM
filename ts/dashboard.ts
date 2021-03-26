@@ -22,6 +22,7 @@ import { AddMemory } from './addMemory';
 import { DropDown } from './dropdown';
 import { EmailServerDialog } from './emailServerDialog';
 import { LicensesDialog } from './licenses';
+import { Message } from './message';
 import { RemoteTM } from './remotetm';
 import { UsersManager } from './usersManager';
 import { View } from './view';
@@ -31,9 +32,11 @@ export class Dashboard implements View {
     container: HTMLDivElement;
     role: string;
     tbody: HTMLTableSectionElement;
+    selected: string;
 
     constructor(role: string) {
         this.role = role;
+        this.selected = '';
         let mainContent: HTMLDivElement = document.getElementById('mainContent') as HTMLDivElement;
 
         this.container = document.createElement('div');
@@ -100,6 +103,7 @@ export class Dashboard implements View {
 
         let refreshList: HTMLButtonElement = document.createElement('button');
         refreshList.innerText = 'Refresh';
+        refreshList.addEventListener('click', () => { this.loadMemories(); });
         toolbar.appendChild(refreshList);
 
         let tableContainer: HTMLDivElement = document.createElement('div');
@@ -110,6 +114,7 @@ export class Dashboard implements View {
 
         let mainTable: HTMLTableElement = document.createElement('table');
         mainTable.classList.add('fullWidth');
+        mainTable.classList.add('stripes');
         tableContainer.appendChild(mainTable);
 
         let tableHeader: HTMLTableSectionElement = document.createElement('thead');
@@ -149,6 +154,8 @@ export class Dashboard implements View {
         this.tbody = document.createElement('tbody');
         mainTable.appendChild(this.tbody);
 
+        this.loadMemories();
+
         const config: MutationObserverInit = { attributes: false, childList: true, subtree: false };
         const callback = (mutationsList: MutationRecord[], observer: MutationObserver): void => {
             for (let mutation of mutationsList) {
@@ -164,6 +171,7 @@ export class Dashboard implements View {
     }
 
     show(): void {
+        // TODO
     }
 
     close(): void {
@@ -250,6 +258,76 @@ export class Dashboard implements View {
     viewLicenses(): void {
         let licenses = new LicensesDialog();
         licenses.open();
+    }
+
+    loadMemories(): void {
+        fetch(RemoteTM.getMainURL() + '/memories', {
+            method: 'GET',
+            headers: [
+                ['Session', RemoteTM.getSession()],
+                ['Content-Type', 'application/json'],
+                ['Accept', 'application/json']
+            ]
+        }).then(async (response: Response) => {
+            let json: any = await response.json();
+            if (json.status === 'OK') {
+                this.displayMemories(json.memories);
+            } else {
+                new Message(json.reason);
+            }
+        }).catch((reason: any) => {
+            console.error('Error:', reason);
+        });
+    }
+
+    displayMemories(memories: any[]): void {
+        this.tbody.innerHTML = '';
+        let length = memories.length;
+        for (let i = 0; i < length; i++) {
+            let memory: any = memories[i];
+            let tr: HTMLTableRowElement = document.createElement('tr');
+            tr.id = memory.id;
+            tr.addEventListener('click', () => { this.setSelected(memory.id) });
+
+            let td: HTMLTableCellElement = document.createElement('td');
+            td.innerText = memory.name;
+            tr.appendChild(td);
+            td = document.createElement('td');
+            td.innerText = memory.owner;
+            tr.appendChild(td);
+            td = document.createElement('td');
+            td.classList.add('center');
+            td.innerText = memory.creationDate;
+            tr.appendChild(td);
+            td = document.createElement('td');
+            td.innerText = 'Yes';
+            td.classList.add('center');
+            tr.appendChild(td);
+            td = document.createElement('td');
+            td.innerText = memory.project;
+            tr.appendChild(td);
+            td = document.createElement('td');
+            td.innerText = memory.subject;
+            tr.appendChild(td);
+            td = document.createElement('td');
+            td.innerText = memory.client;
+            tr.appendChild(td);
+            this.tbody.appendChild(tr);
+        }
+    }
+
+    setSelected(id: string): void {
+        let selectedRows: HTMLCollectionOf<Element> = this.tbody.getElementsByClassName('selected');
+        let length: number = selectedRows.length;
+        for (let i = 0; i < length; i++) {
+            selectedRows[i].classList.remove('selected');
+        }
+        if (this.selected === id) {
+            this.selected = '';
+            return;
+        }
+        document.getElementById(id).classList.add('selected');
+        this.selected = id;
     }
 
     addMemory(): void {
