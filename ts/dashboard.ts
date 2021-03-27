@@ -342,8 +342,7 @@ export class Dashboard implements View {
             new Message('Select memory');
             return;
         }
-
-        let importDialog: ImportTMX = new ImportTMX(this);
+        let importDialog: ImportTMX = new ImportTMX(this, this.selected);
         importDialog.open();
     }
 }

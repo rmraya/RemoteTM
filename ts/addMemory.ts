@@ -89,6 +89,5 @@ export class AddMemory {
         }).catch((reason: any) => {
             console.error('Error:', reason);
         });
-
     }
 }

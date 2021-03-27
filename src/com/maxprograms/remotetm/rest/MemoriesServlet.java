@@ -25,21 +25,28 @@ import java.lang.System.Logger.Level;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 
+import javax.mail.MessagingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.parsers.ParserConfigurationException;
 
 import com.maxprograms.remotetm.Constants;
 import com.maxprograms.remotetm.DbManager;
 import com.maxprograms.remotetm.RemoteTM;
+import com.maxprograms.remotetm.models.EmailServer;
+import com.maxprograms.remotetm.models.Permission;
 import com.maxprograms.remotetm.models.User;
+import com.maxprograms.remotetm.utils.SendMail;
 import com.maxprograms.remotetm.utils.Utils;
 import com.maxprograms.swordfish.models.Memory;
 import com.maxprograms.swordfish.tm.InternalDatabase;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
+import org.xml.sax.SAXException;
 
 public class MemoriesServlet extends HttpServlet {
 
@@ -93,12 +100,16 @@ public class MemoriesServlet extends HttpServlet {
                     if ("addMemory".equals(command)) {
                         addMemory(session, body);
                     }
+                    if ("importTMX".equals(command)) {
+                        importTMX(session, body);
+                    }
                     result.put(Constants.STATUS, Constants.OK);
                     Utils.writeResponse(result, response, 200);
-                } catch (SQLException | NoSuchAlgorithmException e) {
+                } catch (SQLException | NoSuchAlgorithmException | JSONException | IOException e) {
+                    logger.log(Level.ERROR, e);
                     result.put(Constants.STATUS, Constants.ERROR);
                     result.put(Constants.REASON, e.getMessage());
-                    Utils.writeResponse(result, response, 500);
+                    Utils.writeResponse(result, response, 200);
                 }
                 return;
             }
@@ -123,6 +134,52 @@ public class MemoriesServlet extends HttpServlet {
             engine.close();
             manager.addMemory(mem, who);
             return;
+        }
+        throw new IOException(Constants.DENIED);
+    }
+
+    private void importTMX(String session, JSONObject params)
+            throws SQLException, NoSuchAlgorithmException, IOException {
+        DbManager manager = DbManager.getInstance();
+        User who = manager.getUser(AuthorizeServlet.getUser(session));
+        if (who != null && who.isActive()) {
+            String memory = params.getString("memory");
+            Permission p = manager.getPermission(memory, who.getId());
+            if (p.canWrite()) {
+                Thread thread = new Thread() {
+                    @Override
+                    public void run() {
+                        try {
+                            File homeDir = RemoteTM.getWorkFolder();
+                            File tempDir = new File(homeDir, "tmp");
+                            File tmx = new File(tempDir,params.getString("file"));
+                            File memoriesFolder = new File(RemoteTM.getWorkFolder(), "memories");
+                            InternalDatabase engine = new InternalDatabase(memory, memoriesFolder.getAbsolutePath());
+                            int imported = engine.storeTMX(tmx.getAbsolutePath(), params.getString("project"),
+                                    params.getString("client"), params.getString("subject"));
+                            String[] to = new String[] { who.getEmail() };
+                            String text = "\nDear " + who.getName() + ",\n\nYour TMX file has been processed and "
+                                    + imported + " entries were added to your memory." + " \n\nThanks for using RemoteTM.\n\n";
+                            String html = "<p>Dear " + who.getName() + ",</p>"
+                                    + "<p>Your TMX file has been processed and " + imported
+                                    + " entries were added to your memory.</p><p>Thanks for using RemoteTM.</p>";
+                            try {
+                                EmailServer server = Utils.getEmailServer();
+                                SendMail sender = new SendMail(server);
+                                sender.sendMail(to, new String[] {}, new String[] {}, "[RemoteTM] TMX imported", text,
+                                        html);
+                            } catch (MessagingException e) {
+                                logger.log(Level.ERROR, "Error sending mail", e);
+                            }
+                        } catch (SQLException | JSONException | IOException | SAXException
+                                | ParserConfigurationException ex) {
+                            logger.log(Level.ERROR, "Error importing TMX", ex);
+                        }
+                    }
+                };
+                thread.start();
+                return;
+            }
         }
         throw new IOException(Constants.DENIED);
     }

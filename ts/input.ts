@@ -18,20 +18,22 @@ SOFTWARE.
 *******************************************************************************/
 
 export class Input {
+
+    container: HTMLDivElement
     labelText: string;
     label: HTMLLabelElement;
     input: HTMLInputElement;
 
     constructor(parent: HTMLElement, label: string, type: string) {
         this.labelText = label;
-        let container: HTMLDivElement = document.createElement('div');
-        container.classList.add('inputContainer');
-        parent.appendChild(container);
+        this.container = document.createElement('div');
+        this.container.classList.add('inputContainer');
+        parent.appendChild(this.container);
 
         this.label = document.createElement('label');
         this.label.innerHTML = label;
         this.label.className = 'inputLabel hiddenLabel';
-        container.appendChild(this.label);
+        this.container.appendChild(this.label);
 
         this.input = document.createElement('input');
         this.input.classList.add('inputBox');
@@ -44,7 +46,7 @@ export class Input {
         this.input.addEventListener('input', () => { this.handleChanges(); });
         this.input.addEventListener('focus', () => { this.focusIn(); });
         this.input.addEventListener('blur', () => { this.focusOut(); });
-        container.appendChild(this.input);
+        this.container.appendChild(this.input);
     }
 
     handleChanges(): void {
@@ -83,6 +85,19 @@ export class Input {
         if (!(code.startsWith('Digit') || code.startsWith('Numpad') || code === 'Delete' || code === 'Backspace')) {
             event.preventDefault();
             event.stopPropagation();
+        }
+    }
+
+    setList(list: string[]) {
+        let datalist = document.createElement('datalist');
+        datalist.id = 'list' + (Math.random() * 10000000);
+        this.container.appendChild(datalist);
+        this.input.setAttribute('list', datalist.id);
+        let length = list.length;
+        for (let i = 0; i < length; i++) {
+            let option: HTMLOptionElement = document.createElement('option');
+            option.value=list[i];
+            datalist.appendChild(option);
         }
     }
 }

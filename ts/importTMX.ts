@@ -20,22 +20,33 @@ SOFTWARE.
 import { Dashboard } from "./dashboard";
 import { Dialog } from "./dialog";
 import { DropZone } from "./dropZone";
+import { Input } from "./input";
 import { Message } from "./message";
 import { RemoteTM } from "./remotetm";
 
 export class ImportTMX {
 
     parent: Dashboard;
+    memory: string;
     dialog: Dialog;
     dropZone: DropZone
+    project: Input;
+    subject: Input;
+    client: Input;
 
-    constructor(parent: Dashboard) {
+    constructor(parent: Dashboard, memory: string) {
         this.parent = parent;
+        this.memory = memory;
 
         this.dialog = new Dialog(400);
         this.dialog.setTitle('Import TMX');
 
         this.dropZone = new DropZone(this.dialog.contentArea);
+        this.project = new Input(this.dialog.contentArea, 'Project', 'text');
+        this.subject = new Input(this.dialog.contentArea, 'Subject', 'text');
+        this.client = new Input(this.dialog.contentArea, 'Client', 'text');
+
+        // TODO set projects, clients and subjects
 
         let importButton: HTMLButtonElement = document.createElement('button');
         importButton.innerText = 'Import TMX';
@@ -67,7 +78,37 @@ export class ImportTMX {
             let json: any = await response.json();
             console.log(JSON.stringify(json));
             if (json.status === 'OK') {
+                this.requestImport(json.file);
+                this.dialog.close();
+            } else {
+                new Message(json.reason);
+            }
+        }).catch((reason: any) => {
+            console.error('Error:', reason);
+        });
+    }
 
+    requestImport(file: string) {
+        let params: any = {
+            command: 'importTMX',
+            memory: this.memory,
+            project: this.project.getValue(),
+            subject: this.subject.getValue(),
+            client: this.client.getValue(),
+            file: file
+        };
+        fetch(RemoteTM.getMainURL() + '/memories', {
+            method: 'POST',
+            headers: [
+                ['Session', RemoteTM.getSession()],
+                ['Content-Type', 'application/json'],
+                ['Accept', 'application/json']
+            ],
+            body: JSON.stringify(params)
+        }).then(async (response: Response) => {
+            let json: any = await response.json();
+            if (json.status === 'OK') {
+                new Message('You will receive an email with import results');
                 this.dialog.close();
             } else {
                 new Message(json.reason);

@@ -268,7 +268,26 @@ public class DbManager {
         return array;
     }
 
-    private Permission getPermission(String memory, String user) throws SQLException {
+    public Memory getMemory(String id) throws SQLException {
+        Memory memory = null;
+        String sql = "SELECT name, project, subject, client, creationDate FROM memories WHERE id=?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, id);
+            try (ResultSet rs = stmt.executeQuery(sql)) {
+                while (rs.next()) {
+                    String name = rs.getNString(1);
+                    String project = rs.getNString(2);
+                    String subject = rs.getNString(3);
+                    String client = rs.getNString(4);
+                    Timestamp creationDate = rs.getTimestamp(5);
+                    memory = new Memory(id, name, project, subject, client, new Date(creationDate.getTime()));
+                }
+            }
+        }
+        return memory;
+    }
+
+    public Permission getPermission(String memory, String user) throws SQLException {
         Permission p = new Permission(user, memory, false, false, false);
         String sql = "SELECT canread, canwrite, canexport FROM permissions WHERE memory=? AND user=?";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
