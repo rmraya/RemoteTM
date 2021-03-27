@@ -8,3 +8,4 @@ js
 WebContent/WEB-INF/classes
 .scannerwork
 docs/out
+WebContent/docs/*
