@@ -5,5 +5,14 @@
     <shortdesc></shortdesc>
     <conbody>
         <p>The REST methods for managing memories exposed by RemoteTM are:</p>
+        <ul>
+            <li><xref href="addMemory.dita">Add Memory</xref></li>
+            <li><xref href="importTMX.dita">Import TMX</xref>
+                <ul>
+                    <li><xref href="uploadFile.dita">Upload File</xref></li>
+                    <li><xref href="importFile.dita">Import File</xref></li>
+                </ul>
+            </li>
+        </ul>
     </conbody>
 </concept>

@@ -29,6 +29,7 @@
 
     <chapter href="concepts/memoriesManagement.dita">
         <topicref href="tasks/addMemory.dita"/>
+        <topicref href="tasks/importTMX.dita"/>
         
     </chapter>
 
@@ -45,6 +46,10 @@
         </topicref>
         <topicref href="rest/memoriesManagement.dita">
             <topicref href="rest/addMemory.dita"/>
+            <topicref href="rest/importTMX.dita">
+                <topicref href="rest/uploadFile.dita"/>
+                <topicref href="rest/importFile.dita"/>
+            </topicref>
         </topicref>
         <topicref href="rest/usersManagement.dita">
             <topicref href="rest/addUser.dita"/>

@@ -13,12 +13,12 @@
                 <cmd>Login as a user with "System Administrator" privileges.</cmd>
             </step>
             <step>
-                <cmd>Click the <uicontrol>Settings</uicontrol> drop-down in main tool bar.</cmd>
-            </step>
-            <step>
-                <cmd>Select the <uicontrol>Email Server</uicontrol> option.</cmd>
-                <stepresult>The following dialog appears: 
-                    <image href="../images/emailserver.png" placement="break" />
+                <cmd>Click  <menucascade>
+                        <uicontrol>Settings</uicontrol>
+                        <uicontrol>Email Server</uicontrol>
+                    </menucascade> in main toolbar.</cmd>
+                <stepresult>The following dialog appears: <image href="../images/emailserver.png"
+                        placement="break"/>
                 </stepresult>
             </step>
             <step>
