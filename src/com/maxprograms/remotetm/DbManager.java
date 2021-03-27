@@ -273,7 +273,7 @@ public class DbManager {
         String sql = "SELECT name, project, subject, client, creationDate FROM memories WHERE id=?";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, id);
-            try (ResultSet rs = stmt.executeQuery(sql)) {
+            try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     String name = rs.getNString(1);
                     String project = rs.getNString(2);

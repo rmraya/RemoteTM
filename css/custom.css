@@ -26,8 +26,8 @@ body {
 }
 
 header {
-	background: var(--primaryColor);
-	color: var(--primaryTextColor);
+	background: var(--PRIMARY);
+	color: var(--WHITE);
 	padding: 0px;
 	margin: 0px;
 }
@@ -53,12 +53,12 @@ footer {
 	vertical-align: bottom;
 	text-align: center;
 	background: var(--primaryDarkColor);
-	color: var(--primaryTextColor);
+	color: var(--WHITE);
 	font-size: 0.8em;
 }
 
 footer a {
-	color: var(--primaryTextColor);
+	color: var(--WHITE);
 	text-decoration: none;
 }
 
@@ -73,10 +73,12 @@ footer a:hover {
 	left: calc(40% - 100px);
 	width: 200px;
 	margin: auto;
-	background-color: var(--primaryColor);
-	color: var(--primaryTextColor);
+	background-color: var(--PRIMARY);
+	color: var(--WHITE);
 	padding: 20px;
-	border: 1px solid var(--primaryTextColor);
+	border: 1px solid var(--WHITE);
+	border-radius: 4px;
+	z-index: 200;
 }
 
 table {
@@ -98,7 +100,7 @@ tr {
 }
 
 a {
-	color: var(--primaryColor);
+	color: var(--PRIMARY);
 	text-decoration: none;
 	cursor: pointer;
 }
@@ -161,19 +163,19 @@ input[type=number] {
 	margin: 4px;
 	background: var(--secondaryColor);
 	color: var(--secondaryTextColor);
-	border: 1px solid var(--primaryColor);
+	border: 1px solid var(--PRIMARY);
 	border-radius: 2px;
 }
 
 input[type=checkbox] {
 	margin-top: 0.5em;
 	background-color: var(--input-background);
-	border: 1px solid var(--primaryColor);
+	border: 1px solid var(--PRIMARY);
 }
 
 button {
-	color: var(--primaryTextColor);
-	fill: var(--primaryTextColor);
+	color: var(--WHITE);
+	fill: var(--WHITE);
 	background-color: var(--PRIMARY);
 	border: 1px solid var(--PRIMARY);
 	border-radius: 2px;
@@ -195,7 +197,7 @@ button:hover {
 }
 
 a.secondary {
-	color: var(--primaryColor);
+	color: var(--PRIMARY);
 	background: var(--SECONDARY-50);
 	margin: 4px;
 	padding: 4px 8px;
@@ -320,17 +322,17 @@ label {
 
 .tab {
 	overflow: hidden;
-	color: var(--primaryColor);
-	background: var(--primaryTextColor);
+	color: var(--PRIMARY);
+	background: var(--WHITE);
 	padding-left: 10px;
 	padding-right: 10px;
 	margin-right: 2px;
-	border-bottom: 2px solid var(--primaryTextColor);
+	border-bottom: 2px solid var(--WHITE);
 	vertical-align: middle;
 }
 
 .selectedTab {
-	border-bottom: 2px solid var(--primaryColor);
+	border-bottom: 2px solid var(--PRIMARY);
 }
 
 .tab:hover {
@@ -343,7 +345,7 @@ label {
 }
 
 .tab a {
-	color: var(--primaryColor);
+	color: var(--PRIMARY);
 	text-decoration: none;
 	cursor: pointer;
 }
@@ -387,7 +389,7 @@ label {
 .tooltip .tooltiptext {
 	background-color: var(--primaryDarkColor);
 	border-color: var(--secondaryColor);
-	color: var(--primaryTextColor);
+	color: var(--WHITE);
 	visibility: hidden;
 	padding: 4px;
 	border-radius: 2px;
@@ -484,7 +486,7 @@ label {
 
 .topbar {
 	background: var(--primaryDarkColor);
-	color: var(--primaryTextColor);
+	color: var(--WHITE);
 	display: flex;
 	flex-direction: row;
 	width: 100%;
@@ -499,8 +501,8 @@ label {
 }
 
 .topbar a {
-	color: var(--primaryTextColor);
-	fill: var(--primaryTextColor);
+	color: var(--WHITE);
+	fill: var(--WHITE);
 	padding: 8px 16px;
 	white-space: nowrap;
 }
@@ -516,8 +518,8 @@ label {
 
 .toolbar {
 	background: var(--WHITE);
-	color: var(--primaryColor);
-	fill: var(--primaryColor);
+	color: var(--PRIMARY);
+	fill: var(--PRIMARY);
 	display: flex;
 	flex-direction: row;
 	width: 100%;
@@ -575,7 +577,7 @@ hr {
 
 .dropdownOptions a {
 	background: var(--SECONDARY-200);
-	color: var(--primaryColor);
+	color: var(--PRIMARY);
 	padding: 8px 16px;
 	white-space: nowrap;
 	z-index: 4;
@@ -594,7 +596,7 @@ hr {
 }
 
 .inputLabel {
-	color: var(--primaryColor);
+	color: var(--PRIMARY);
 	font-size: 0.8em;
 	margin-left: 8px;
 	margin-bottom: 2px;
@@ -651,7 +653,7 @@ hr {
 }
 
 .checkBox svg {
-	fill: var(--primaryColor);
+	fill: var(--PRIMARY);
 }
 
 .unchecked {

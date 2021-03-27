@@ -54,57 +54,63 @@ public class UploadServlet extends HttpServlet {
                 return;
             }
             JSONObject result = new JSONObject();
-
-            try {
-                File homeDir = RemoteTM.getWorkFolder();
-                File tempDir = new File(homeDir, "tmp");
-                if (!tempDir.exists()) {
-                    Files.createDirectories(tempDir.toPath());
-                }
-                File temp = File.createTempFile("uploaded", ".tmx", tempDir);
-                try (FileOutputStream out = new FileOutputStream(temp)) {
-                    try (ServletInputStream input = request.getInputStream()) {
-                        try (BufferedReader reader = new BufferedReader(new InputStreamReader(input))) {
-                            String boundary = "";
-                            String disposition = "";
-                            String contentType = "";
-                            String line = "";
-                            boolean firstWritten = false;
-                            while ((line = reader.readLine()) != null) {
-                                if (boundary.isEmpty()) {
-                                    boundary = line;
-                                    continue;
-                                }
-                                if (disposition.isEmpty() && line.startsWith("Content-Disposition")) {
-                                    disposition = line;
-                                    continue;
-                                }
-                                if (contentType.isEmpty() && line.startsWith("Content-Type")) {
-                                    contentType = line;
-                                    continue;
-                                }
-                                if (line.startsWith(boundary)) {
-                                    break;
-                                }
-                                if (firstWritten) {
-                                    out.write(("\n").getBytes(StandardCharsets.UTF_8));
-                                }
-                                out.write((line).getBytes(StandardCharsets.UTF_8));
-                                if (!line.isBlank()) {
-                                    firstWritten = true;
+            String session = request.getHeader("Session");
+            if (AuthorizeServlet.sessionActive(session)) {
+                try {
+                    File homeDir = RemoteTM.getWorkFolder();
+                    File tempDir = new File(homeDir, "tmp");
+                    if (!tempDir.exists()) {
+                        Files.createDirectories(tempDir.toPath());
+                    }
+                    File temp = File.createTempFile("uploaded", ".tmx", tempDir);
+                    try (FileOutputStream out = new FileOutputStream(temp)) {
+                        try (ServletInputStream input = request.getInputStream()) {
+                            try (BufferedReader reader = new BufferedReader(new InputStreamReader(input))) {
+                                String boundary = "";
+                                String disposition = "";
+                                String contentType = "";
+                                String line = "";
+                                boolean firstWritten = false;
+                                while ((line = reader.readLine()) != null) {
+                                    if (boundary.isEmpty()) {
+                                        boundary = line;
+                                        continue;
+                                    }
+                                    if (disposition.isEmpty() && line.startsWith("Content-Disposition")) {
+                                        disposition = line;
+                                        continue;
+                                    }
+                                    if (contentType.isEmpty() && line.startsWith("Content-Type")) {
+                                        contentType = line;
+                                        continue;
+                                    }
+                                    if (line.startsWith(boundary)) {
+                                        break;
+                                    }
+                                    if (firstWritten) {
+                                        out.write(("\n").getBytes(StandardCharsets.UTF_8));
+                                    }
+                                    out.write((line).getBytes(StandardCharsets.UTF_8));
+                                    if (!line.isBlank()) {
+                                        firstWritten = true;
+                                    }
                                 }
                             }
                         }
                     }
+                    result.put("file", temp.getName());
+                    result.put(Constants.STATUS, Constants.OK);
+                } catch (Exception e) {
+                    result.put(Constants.STATUS, Constants.ERROR);
+                    result.put(Constants.REASON, e.getMessage());
+                    logger.log(Level.ERROR, "File upload error", e);
                 }
-                result.put("file", temp.getName());
-                result.put(Constants.STATUS, Constants.OK);
-            } catch (Exception e) {
-                result.put(Constants.STATUS, Constants.ERROR);
-                result.put(Constants.REASON, e.getMessage());
-                logger.log(Level.ERROR, "File upload error", e);
+                Utils.writeResponse(result, response, 200);
+                return;
             }
-            Utils.writeResponse(result, response, 200);
+            result.put(Constants.STATUS, Constants.ERROR);
+            result.put(Constants.REASON, Constants.DENIED);
+            Utils.writeResponse(result, response, 401);
         } catch (IOException e) {
             logger.log(Level.ERROR, e);
         }

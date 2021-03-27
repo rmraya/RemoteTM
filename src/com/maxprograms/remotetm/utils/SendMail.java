@@ -21,8 +21,8 @@ public class SendMail {
 
     private EmailServer server;
 
-    private static final String HEADER = "<div style='width:100%; background:#0073B5; color:#ffffff; font-size:1.4em; padding:8px; margin-bottom: 1em; hight:2em;'>RemoteTM</div>";
-    private static final String FOOTER = "<div style='width:100%; background:#0073B5; color:#ffffff; font-size:0.8em; padding:4px; text-align:center; margin-top: 1em; hight:2em;'>"
+    private static final String HEADER = "<div style='width:100%; background:#0073B5; color:#ffffff; font-size:1.4em; padding:8px; margin-bottom: 1em; height:2em;'>RemoteTM</div>";
+    private static final String FOOTER = "<div style='width:100%; background:#0073B5; color:#ffffff; font-size:0.8em; padding:4px; text-align:center; margin-top: 1em; height:2em;'>"
             + "Copyright &copy; 2008-2021 <a href='https://maxprograms.com' style='color:#ffffff;'>Maxprograms</a></div>";
 
     public SendMail(EmailServer server) {

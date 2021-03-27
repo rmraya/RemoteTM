@@ -302,7 +302,7 @@ export class Dashboard implements View {
             td.innerText = memory.creationDate;
             tr.appendChild(td);
             td = document.createElement('td');
-            td.innerText = 'Yes';
+            td.innerText = memory.open ? 'Yes' : 'No';
             td.classList.add('center');
             tr.appendChild(td);
             td = document.createElement('td');
@@ -344,5 +344,11 @@ export class Dashboard implements View {
         }
         let importDialog: ImportTMX = new ImportTMX(this, this.selected);
         importDialog.open();
+    }
+
+    setStatus(status: string) {
+        let statusDiv: HTMLDivElement = document.getElementById('status') as HTMLDivElement;
+        statusDiv.innerText = status;
+        statusDiv.style.display = status === '' ? 'none' : 'block';
     }
 }

@@ -98,20 +98,27 @@ public class UsersServlet extends HttpServlet {
                 try {
                     JSONObject body = Utils.readJSON(request.getInputStream());
                     String command = body.getString("command");
-                    if ("addUser".equals(command)) {
+                    switch (command) {
+                    case "addUser":
                         addUser(session, body);
-                    }
-                    if ("getUser".equals(command)) {
+                        break;
+                    case "getUser":
                         result.put("user", getUser(session, body));
-                    }
-                    if ("updateUser".equals(command)) {
+                        break;
+                    case "updateUser":
                         updateUser(session, body);
-                    }
-                    if ("removeUser".equals(command)) {
+                        break;
+                    case "removeUser":
                         removeUser(session, body);
-                    }
-                    if ("toggleLock".equals(command)) {
+                        break;
+                    case "toggleLock":
                         toggleLock(session, body);
+                        break;
+                    default:
+                        result.put(Constants.STATUS, Constants.ERROR);
+                        result.put(Constants.REASON, Constants.DENIED);
+                        Utils.writeResponse(result, response, 401);
+                        return;
                     }
                     result.put(Constants.STATUS, Constants.OK);
                     Utils.writeResponse(result, response, 200);
@@ -126,7 +133,9 @@ public class UsersServlet extends HttpServlet {
             result.put(Constants.STATUS, Constants.ERROR);
             result.put(Constants.REASON, Constants.DENIED);
             Utils.writeResponse(result, response, 401);
-        } catch (IOException e) {
+        } catch (
+
+        IOException e) {
             logger.log(Level.ERROR, e);
         }
     }
@@ -183,15 +192,15 @@ public class UsersServlet extends HttpServlet {
         manager.addUser(user);
 
         String text = "\nDear " + user.getName() + ",\n\nA new account has been created for you in RemoteTM."
-                + "\n\nPlease login to the server using the credentials provided below.\n\n"
-                + "  RemoteTM Server: " + server.getInstanceUrl() + "\n  User Name: " + user.getId() + "\n  Code: "
-                + password + " \n\nThanks for using RemoteTM.\n\n";
+                + "\n\nPlease login to the server using the credentials provided below.\n\n" + "  RemoteTM Server: "
+                + server.getInstanceUrl() + "\n  User Name: " + user.getId() + "\n  Code: " + password
+                + " \n\nThanks for using RemoteTM.\n\n";
 
         String html = "<p>Dear " + user.getName() + ",</p>"
                 + "<p>A new account has been created for you in RemoteTM.</p>"
-                + "<p>Please login to the server using the credentials provided below.</p>"
-                + "<pre>  RemoteTM Server: " + server.getInstanceUrl() + "\n  User Name: " + user.getId() + "\n  Code: "
-                + password + "</pre>" + "<p>Thanks for using RemoteTM.</p>";
+                + "<p>Please login to the server using the credentials provided below.</p>" + "<pre>  RemoteTM Server: "
+                + server.getInstanceUrl() + "\n  User Name: " + user.getId() + "\n  Code: " + password + "</pre>"
+                + "<p>Thanks for using RemoteTM.</p>";
         try {
             sender.sendMail(new String[] { user.getEmail() }, new String[] {}, new String[] {},
                     "[RemoteTM] New Account", text, html);

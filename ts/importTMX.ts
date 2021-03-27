@@ -46,7 +46,9 @@ export class ImportTMX {
         this.subject = new Input(this.dialog.contentArea, 'Subject', 'text');
         this.client = new Input(this.dialog.contentArea, 'Client', 'text');
 
-        // TODO set projects, clients and subjects
+        this.getProjects();
+        this.getSubjects();
+        this.getClients();
 
         let importButton: HTMLButtonElement = document.createElement('button');
         importButton.innerText = 'Import TMX';
@@ -66,6 +68,7 @@ export class ImportTMX {
         }
         let formData = new FormData();
         formData.append("file", files[0]);
+        this.parent.setStatus('Uploading...');
         fetch(RemoteTM.getMainURL() + '/upload', {
             method: 'POST',
             headers: [
@@ -77,6 +80,7 @@ export class ImportTMX {
         }).then(async (response: Response) => {
             let json: any = await response.json();
             console.log(JSON.stringify(json));
+            this.parent.setStatus('');
             if (json.status === 'OK') {
                 this.requestImport(json.file);
                 this.dialog.close();
@@ -84,6 +88,7 @@ export class ImportTMX {
                 new Message(json.reason);
             }
         }).catch((reason: any) => {
+            this.parent.setStatus('');
             console.error('Error:', reason);
         });
     }
@@ -110,6 +115,78 @@ export class ImportTMX {
             if (json.status === 'OK') {
                 new Message('You will receive an email with import results');
                 this.dialog.close();
+            } else {
+                new Message(json.reason);
+            }
+        }).catch((reason: any) => {
+            console.error('Error:', reason);
+        });
+    }
+
+    getProjects(): void {
+        let params: any = {
+            command: 'getProjects'
+        }
+        fetch(RemoteTM.getMainURL() + '/memories', {
+            method: 'POST',
+            headers: [
+                ['Session', RemoteTM.getSession()],
+                ['Content-Type', 'application/json'],
+                ['Accept', 'application/json']
+            ],
+            body: JSON.stringify(params)
+        }).then(async (response: Response) => {
+            let json: any = await response.json();
+            if (json.status === 'OK') {
+                this.project.setList(json.projects);
+            } else {
+                new Message(json.reason);
+            }
+        }).catch((reason: any) => {
+            console.error('Error:', reason);
+        });
+    }
+
+    getSubjects(): void {
+        let params: any = {
+            command: 'getSubjects'
+        }
+        fetch(RemoteTM.getMainURL() + '/memories', {
+            method: 'POST',
+            headers: [
+                ['Session', RemoteTM.getSession()],
+                ['Content-Type', 'application/json'],
+                ['Accept', 'application/json']
+            ],
+            body: JSON.stringify(params)
+        }).then(async (response: Response) => {
+            let json: any = await response.json();
+            if (json.status === 'OK') {
+                this.subject.setList(json.subjects);
+            } else {
+                new Message(json.reason);
+            }
+        }).catch((reason: any) => {
+            console.error('Error:', reason);
+        });
+    }
+
+    getClients(): void {
+        let params: any = {
+            command: 'getClients'
+        }
+        fetch(RemoteTM.getMainURL() + '/memories', {
+            method: 'POST',
+            headers: [
+                ['Session', RemoteTM.getSession()],
+                ['Content-Type', 'application/json'],
+                ['Accept', 'application/json']
+            ],
+            body: JSON.stringify(params)
+        }).then(async (response: Response) => {
+            let json: any = await response.json();
+            if (json.status === 'OK') {
+                this.client.setList(json.clients);
             } else {
                 new Message(json.reason);
             }
