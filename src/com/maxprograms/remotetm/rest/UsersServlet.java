@@ -68,7 +68,6 @@ public class UsersServlet extends HttpServlet {
                         result.put(Constants.STATUS, Constants.OK);
                         result.put("users", array);
                         Utils.writeResponse(result, response, 200);
-                        return;
                     }
                 } catch (NoSuchAlgorithmException | SQLException e) {
                     logger.log(Level.ERROR, e);

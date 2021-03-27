@@ -33,6 +33,10 @@ import org.xml.sax.SAXException;
 
 public class TmManager {
 
+    private TmManager() {
+        // private for security
+    }
+
     private static Map<String, InternalDatabase> databases;
     private static Map<String, Integer> count;
 
