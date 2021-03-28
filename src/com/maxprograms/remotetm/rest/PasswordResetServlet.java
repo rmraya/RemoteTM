@@ -60,33 +60,21 @@ public class PasswordResetServlet extends HttpServlet {
             JSONObject body = Utils.readJSON(request.getInputStream());
             String command = body.getString("command");
             JSONObject result = new JSONObject();
-            if ("request".equals(command)) {
+            switch (command) {
+            case "request":
                 issueRequest(body);
                 result.put(Constants.STATUS, Constants.OK);
-            }
-            if ("setPassword".equals(command)) {
+                break;
+            case "setPassword":
                 if (setPassword(body)) {
                     result.put(Constants.STATUS, Constants.OK);
                 } else {
                     result.put(Constants.STATUS, Constants.ERROR);
                     result.put(Constants.REASON, "Database error");
                 }
-            }
-            if ("getId".equals(command)) {
-                String code = body.getString("code");
-                if (tickets == null) {
-                    tickets = new ConcurrentHashMap<>();
-                }
-                Set<String> keys = tickets.keySet();
-                Iterator<String> it = keys.iterator();
-                String id = "";
-                while (it.hasNext()) {
-                    String key = it.next();
-                    if (tickets.get(key).equals(code)) {
-                        id = key;
-                        break;
-                    }
-                }
+                break;
+            case "getId":
+                String id = getId(body.getString("code"));
                 if (!id.isEmpty()) {
                     result.put("id", id);
                     result.put(Constants.STATUS, Constants.OK);
@@ -94,12 +82,33 @@ public class PasswordResetServlet extends HttpServlet {
                     result.put(Constants.STATUS, Constants.ERROR);
                     result.put(Constants.REASON, "Invalid link");
                 }
+                break;
+            default:
+                Utils.denyAccess(response);
+                return;
             }
             Utils.writeResponse(result, response, 200);
         } catch (IOException e) {
             Logger logger = System.getLogger(PasswordResetServlet.class.getName());
             logger.log(Level.ERROR, e);
         }
+    }
+
+    private String getId(String code) {
+        if (tickets == null) {
+            tickets = new ConcurrentHashMap<>();
+        }
+        Set<String> keys = tickets.keySet();
+        Iterator<String> it = keys.iterator();
+        String id = "";
+        while (it.hasNext()) {
+            String key = it.next();
+            if (tickets.get(key).equals(code)) {
+                id = key;
+                break;
+            }
+        }
+        return id;
     }
 
     private boolean setPassword(JSONObject json) {
@@ -148,8 +157,8 @@ public class PasswordResetServlet extends HttpServlet {
                 String text = "\nDear " + user.getName()
                         + ",\n\nA password reset was requested for your RemoteTM account."
                         + "\n\nIf you did not request a password reset, simply ignore this message."
-                        + "\n\nPlease create a new password using the link provided below.\n\n  Reset Link: "
-                        + link + "\n\nThanks for using RemoteTM.\n\n";
+                        + "\n\nPlease create a new password using the link provided below.\n\n  Reset Link: " + link
+                        + "\n\nThanks for using RemoteTM.\n\n";
 
                 String html = "<p>Dear " + user.getName() + ",</p>"
                         + "<p>A password reset was requested for your RemoteTM account.</p>"

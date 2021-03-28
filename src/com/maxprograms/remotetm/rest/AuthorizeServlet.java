@@ -80,10 +80,7 @@ public class AuthorizeServlet extends HttpServlet {
                     return;
                 }
             }
-            response.setStatus(401);
-            result.put(Constants.STATUS, Constants.ERROR);
-            result.put(Constants.REASON, "Access denied");
-            Utils.writeResponse(result, response, 401);
+            Utils.denyAccess(response);
         } catch (IOException | SQLException | NoSuchAlgorithmException e) {
             logger.log(Level.ERROR, e);
         }

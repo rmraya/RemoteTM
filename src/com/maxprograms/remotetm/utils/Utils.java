@@ -48,8 +48,8 @@ public class Utils {
 
     private static Random random;
 
-    public static void writeResponse(JSONObject result, HttpServletResponse response, int status) throws IOException {
-        byte[] bytes = result.toString().getBytes(StandardCharsets.UTF_8);
+    public static void writeResponse(JSONObject json, HttpServletResponse response, int status) throws IOException {
+        byte[] bytes = json.toString().getBytes(StandardCharsets.UTF_8);
         response.setContentLength(bytes.length);
         response.setStatus(status);
         try (ServletOutputStream output = response.getOutputStream()) {
@@ -105,5 +105,12 @@ public class Utils {
         return new EmailServer(json.getString("server"), json.getString("port"), json.getString("user"),
                 json.getString("password"), json.getString("from"), json.getString("instance"),
                 json.getBoolean("authenticate"), json.getBoolean("tls"));
+    }
+
+    public static void denyAccess( HttpServletResponse response) throws IOException {
+        JSONObject json = new JSONObject();
+        json.put(Constants.STATUS, Constants.ERROR);
+        json.put(Constants.REASON, Constants.DENIED);
+        writeResponse(json, response, 401);
     }
 }

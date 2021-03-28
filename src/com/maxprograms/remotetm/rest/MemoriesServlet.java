@@ -84,9 +84,7 @@ public class MemoriesServlet extends HttpServlet {
                 }
                 return;
             }
-            result.put(Constants.STATUS, Constants.ERROR);
-            result.put(Constants.REASON, Constants.DENIED);
-            Utils.writeResponse(result, response, 401);
+            Utils.denyAccess(response);
         } catch (IOException e) {
             logger.log(Level.ERROR, e);
         }
@@ -121,9 +119,7 @@ public class MemoriesServlet extends HttpServlet {
                         result.put("clients", getProperty(session, "client"));
                         break;
                     default:
-                        result.put(Constants.STATUS, Constants.ERROR);
-                        result.put(Constants.REASON, Constants.DENIED);
-                        Utils.writeResponse(result, response, 401);
+                        Utils.denyAccess(response);
                         return;
                     }
                     result.put(Constants.STATUS, Constants.OK);
@@ -136,9 +132,7 @@ public class MemoriesServlet extends HttpServlet {
                 }
                 return;
             }
-            result.put(Constants.STATUS, Constants.ERROR);
-            result.put(Constants.REASON, Constants.DENIED);
-            Utils.writeResponse(result, response, 401);
+            Utils.denyAccess(response);
         } catch (IOException e) {
             logger.log(Level.ERROR, e);
         }

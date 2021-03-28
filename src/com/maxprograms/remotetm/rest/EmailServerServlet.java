@@ -63,9 +63,7 @@ public class EmailServerServlet extends HttpServlet {
                     return;
                 }
             }
-            result.put(Constants.STATUS, Constants.ERROR);
-            result.put(Constants.REASON, Constants.DENIED);
-            Utils.writeResponse(result, response, 401);
+            Utils.denyAccess(response);
         } catch (IOException | SQLException | NoSuchAlgorithmException e) {
             logger.log(Level.ERROR, e);
         }
@@ -93,9 +91,7 @@ public class EmailServerServlet extends HttpServlet {
                     return;
                 }
             }
-            result.put(Constants.STATUS, Constants.ERROR);
-            result.put(Constants.REASON, Constants.DENIED);
-            Utils.writeResponse(result, response, 401);
+            Utils.denyAccess(response);
         } catch (IOException | SQLException | NoSuchAlgorithmException e) {
             logger.log(Level.ERROR, e);
         }

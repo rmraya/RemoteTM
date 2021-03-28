@@ -77,9 +77,7 @@ public class UsersServlet extends HttpServlet {
                 }
                 return;
             }
-            result.put(Constants.STATUS, Constants.ERROR);
-            result.put(Constants.REASON, Constants.DENIED);
-            Utils.writeResponse(result, response, 401);
+            Utils.denyAccess(response);
         } catch (IOException e) {
             logger.log(Level.ERROR, e);
         }
@@ -114,9 +112,7 @@ public class UsersServlet extends HttpServlet {
                         toggleLock(session, body);
                         break;
                     default:
-                        result.put(Constants.STATUS, Constants.ERROR);
-                        result.put(Constants.REASON, Constants.DENIED);
-                        Utils.writeResponse(result, response, 401);
+                        Utils.denyAccess(response);
                         return;
                     }
                     result.put(Constants.STATUS, Constants.OK);
@@ -129,9 +125,7 @@ public class UsersServlet extends HttpServlet {
                 }
                 return;
             }
-            result.put(Constants.STATUS, Constants.ERROR);
-            result.put(Constants.REASON, Constants.DENIED);
-            Utils.writeResponse(result, response, 401);
+            Utils.denyAccess(response);
         } catch (
 
         IOException e) {
