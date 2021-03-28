@@ -83,7 +83,6 @@ export class ImportTMX {
             this.parent.setStatus('');
             if (json.status === 'OK') {
                 this.requestImport(json.file);
-                this.dialog.close();
             } else {
                 new Message(json.reason);
             }

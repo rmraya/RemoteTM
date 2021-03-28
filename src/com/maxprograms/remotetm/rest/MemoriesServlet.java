@@ -54,7 +54,6 @@ import org.xml.sax.SAXException;
 public class MemoriesServlet extends HttpServlet {
 
     private static final long serialVersionUID = 6894498215572036825L;
-
     private static Logger logger = System.getLogger(MemoriesServlet.class.getName());
 
     @Override
@@ -121,6 +120,9 @@ public class MemoriesServlet extends HttpServlet {
                     case "removeMemory":
                         removeMemory(session, body);
                         break;
+                    case "exportMemory":
+                        result.put("file", exportMemory(session, body));
+                        break;
                     default:
                         Utils.denyAccess(response);
                         return;
@@ -139,6 +141,24 @@ public class MemoriesServlet extends HttpServlet {
         } catch (IOException e) {
             logger.log(Level.ERROR, e);
         }
+    }
+
+    private String exportMemory(String session, JSONObject params)
+            throws SQLException, NoSuchAlgorithmException, IOException {
+        String memory = params.getString("memory");
+        DbManager manager = DbManager.getInstance();
+        User who = manager.getUser(AuthorizeServlet.getUser(session));
+        if (who != null && who.isActive()) {
+            Memory mem = manager.getMemory(memory);
+            if (Constants.SYSTEM_ADMINISTRATOR.equals(who.getRole())) {
+                return TmManager.exportMemory(memory, mem.getName());
+            }
+            String owner = manager.getOwner(memory);
+            if (who.getId().equals(owner)) {
+                return TmManager.exportMemory(memory, mem.getName());
+            }
+        }
+        throw new IOException(Constants.DENIED);
     }
 
     private void removeMemory(String session, JSONObject params)

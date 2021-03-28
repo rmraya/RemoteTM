@@ -94,6 +94,7 @@ export class Dashboard implements View {
 
         let exportMemory: HTMLButtonElement = document.createElement('button');
         exportMemory.innerText = 'Export TMX';
+        exportMemory.addEventListener('click', () => { this.exportTMX(); });
         toolbar.appendChild(exportMemory);
 
         let closeMemory: HTMLButtonElement = document.createElement('button');
@@ -380,6 +381,46 @@ export class Dashboard implements View {
         }).catch((reason: any) => {
             console.error('Error:', reason);
         });
+    }
+
+    exportTMX(): void {
+        if (this.selected === '') {
+            new Message('Select memory');
+            return;
+        }
+        if (this.role === 'TR') {
+            new Message('Access denied');
+            return;
+        }
+        let params: any = {
+            command: 'exportMemory',
+            memory: this.selected
+        }
+        fetch(RemoteTM.getMainURL() + '/memories', {
+            method: 'POST',
+            headers: [
+                ['Session', RemoteTM.getSession()],
+                ['Content-Type', 'application/json'],
+                ['Accept', 'application/json']
+            ],
+            body: JSON.stringify(params)
+        }).then(async (response: Response) => {
+            let json: any = await response.json();
+            if (json.status === 'OK') {
+                this.downloadMemory(json.file);
+            } else {
+                new Message(json.reason);
+            }
+        }).catch((reason: any) => {
+            console.error('Error:', reason);
+        });
+    }
+
+    downloadMemory(file: string) {
+        window.open(RemoteTM.getMainURL() + '/download?session=' +
+            encodeURIComponent(RemoteTM.getSession()) +
+            '&file=' +
+            encodeURIComponent(file));
     }
 
     setStatus(status: string) {

@@ -34,6 +34,8 @@ import org.xml.sax.SAXException;
 
 public class TmManager {
 
+    static final String MEMORIES = "memories";
+
     private TmManager() {
         // private for security
     }
@@ -47,24 +49,15 @@ public class TmManager {
             databases = new ConcurrentHashMap<>();
             count = new ConcurrentHashMap<>();
         }
-        if (!databases.containsKey(memory)) {
-            File memoriesFolder = new File(RemoteTM.getWorkFolder(), "memories");
-            databases.put(memory, new InternalDatabase(memory, memoriesFolder.getAbsolutePath()));
-            count.put(memory, 1);
-        }
+        openMemory(memory);
         int imported = databases.get(memory).storeTMX(tmx, project, client, subject);
+        closeMemory(memory);
         Files.deleteIfExists(new File(tmx).toPath());
-        count.put(memory, count.get(memory) - 1);
-        if (count.get(memory) == 0) {
-            databases.get(memory).close();
-            databases.remove(memory);
-            count.remove(memory);
-        }
         return imported;
     }
 
     public static void createMemory(String memory) throws SQLException, IOException {
-        File memoriesFolder = new File(RemoteTM.getWorkFolder(), "memories");
+        File memoriesFolder = new File(RemoteTM.getWorkFolder(), MEMORIES);
         if (!memoriesFolder.exists()) {
             Files.createDirectories(memoriesFolder.toPath());
         }
@@ -91,7 +84,7 @@ public class TmManager {
             databases.remove(memory);
             count.remove(memory);
         }
-        File memoriesFolder = new File(RemoteTM.getWorkFolder(), "memories");
+        File memoriesFolder = new File(RemoteTM.getWorkFolder(), MEMORIES);
         Utils.removeDir(new File(memoriesFolder, memory));
     }
 
@@ -111,5 +104,31 @@ public class TmManager {
             }
             count.put(memory, users - 1);
         }
+    }
+
+    public static String exportMemory(String memory, String name) throws SQLException, IOException {
+        openMemory(memory);
+        InternalDatabase engine = databases.get(memory);
+        File tempFolder = new File(RemoteTM.getWorkFolder(), "tmp");
+        File tmx = new File(tempFolder, name + ".tmx");
+        if (tmx.exists()) {
+            Files.delete(tmx.toPath());
+        }
+        engine.exportMemory(tmx.getAbsolutePath(), engine.getAllLanguages(), "*all*");
+        closeMemory(memory);
+        return tmx.getName();
+    }
+
+    private static void openMemory(String memory) throws SQLException, IOException {
+        if (databases == null) {
+            databases = new ConcurrentHashMap<>();
+            count = new ConcurrentHashMap<>();
+        }
+        if (!databases.containsKey(memory)) {
+            File memoriesFolder = new File(RemoteTM.getWorkFolder(), MEMORIES);
+            databases.put(memory, new InternalDatabase(memory, memoriesFolder.getAbsolutePath()));
+            count.put(memory, 0);
+        }
+        count.put(memory, count.get(memory) + 1);
     }
 }
