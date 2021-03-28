@@ -83,14 +83,9 @@ public class Utils {
     }
 
     public static boolean isSafe(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        StringBuffer from = request.getRequestURL();
-        URL url = new URL(from.toString());
+        URL url = new URL(request.getRequestURL().toString());
         if (!Constants.HTTPS.equals(url.getProtocol())) {
-            JSONObject result = new JSONObject();
-            response.setContentType("application/json");
-            result.put(Constants.STATUS, Constants.ERROR);
-            result.put(Constants.REASON, Constants.DENIED);
-            writeResponse(result, response, 401);
+            denyAccess(response);
             return false;
         }
         return true;
@@ -107,7 +102,7 @@ public class Utils {
                 json.getBoolean("authenticate"), json.getBoolean("tls"));
     }
 
-    public static void denyAccess( HttpServletResponse response) throws IOException {
+    public static void denyAccess(HttpServletResponse response) throws IOException {
         JSONObject json = new JSONObject();
         json.put(Constants.STATUS, Constants.ERROR);
         json.put(Constants.REASON, Constants.DENIED);
