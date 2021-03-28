@@ -26,6 +26,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Random;
@@ -107,5 +108,15 @@ public class Utils {
         json.put(Constants.STATUS, Constants.ERROR);
         json.put(Constants.REASON, Constants.DENIED);
         writeResponse(json, response, 401);
+    }
+
+    public static void removeDir(File file) throws IOException {
+        if (file.isDirectory()) {
+            File[] list = file.listFiles();
+            for (int i = 0; i < list.length; i++) {
+                removeDir(list[i]);
+            }
+        }
+        Files.delete(file.toPath());
     }
 }

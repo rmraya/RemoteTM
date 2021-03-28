@@ -118,6 +118,9 @@ public class MemoriesServlet extends HttpServlet {
                     case "getClients":
                         result.put("clients", getProperty(session, "client"));
                         break;
+                    case "removeMemory":
+                        removeMemory(session, body);
+                        break;
                     default:
                         Utils.denyAccess(response);
                         return;
@@ -136,6 +139,27 @@ public class MemoriesServlet extends HttpServlet {
         } catch (IOException e) {
             logger.log(Level.ERROR, e);
         }
+    }
+
+    private void removeMemory(String session, JSONObject params)
+            throws SQLException, NoSuchAlgorithmException, IOException {
+        String memory = params.getString("memory");
+        DbManager manager = DbManager.getInstance();
+        User who = manager.getUser(AuthorizeServlet.getUser(session));
+        if (who != null && who.isActive()) {
+            if (Constants.SYSTEM_ADMINISTRATOR.equals(who.getRole())) {
+                TmManager.removeMemory(memory);
+                manager.removeMemory(memory);
+                return;
+            }
+            String owner = manager.getOwner(memory);
+            if (who.getId().equals(owner)) {
+                TmManager.removeMemory(memory);
+                manager.removeMemory(memory);
+                return;
+            }
+        }
+        throw new IOException(Constants.DENIED);
     }
 
     private void addMemory(String session, JSONObject params)

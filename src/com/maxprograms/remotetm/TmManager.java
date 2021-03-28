@@ -27,6 +27,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import com.maxprograms.remotetm.utils.Utils;
 import com.maxprograms.swordfish.tm.InternalDatabase;
 
 import org.xml.sax.SAXException;
@@ -77,5 +78,38 @@ public class TmManager {
             count = new ConcurrentHashMap<>();
         }
         return databases.containsKey(memory);
+    }
+
+    public static void removeMemory(String memory) throws SQLException, IOException {
+        if (databases == null) {
+            databases = new ConcurrentHashMap<>();
+            count = new ConcurrentHashMap<>();
+        }
+        if (databases.containsKey(memory)) {
+            InternalDatabase engine = databases.get(memory);
+            engine.close();
+            databases.remove(memory);
+            count.remove(memory);
+        }
+        File memoriesFolder = new File(RemoteTM.getWorkFolder(), "memories");
+        Utils.removeDir(new File(memoriesFolder, memory));
+    }
+
+    public static void closeMemory(String memory) throws SQLException {
+        if (databases == null) {
+            databases = new ConcurrentHashMap<>();
+            count = new ConcurrentHashMap<>();
+        }
+        if (databases.containsKey(memory)) {
+            int users = count.get(memory);
+            if (users == 1) {
+                InternalDatabase engine = databases.get(memory);
+                engine.close();
+                databases.remove(memory);
+                count.remove(memory);
+                return;
+            }
+            count.put(memory, users - 1);
+        }
     }
 }

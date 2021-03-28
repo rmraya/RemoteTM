@@ -12,7 +12,18 @@
                     <li><xref href="logout.dita">Logout</xref></li>
                 </ul>
             </li>
-            <li>Memories </li>
+            <li><xref href="memoriesManagement.dita">Memories</xref>
+                <ul>
+                    <li><xref href="addMemory.dita">Add Memory</xref></li>
+                    <li><xref href="removeMemory.dita">Remove Memory</xref></li>
+                    <li><xref href="importTMX.dita">Import TMX</xref>
+                        <ul>
+                            <li><xref href="uploadFile.dita">Upload File</xref></li>
+                            <li><xref href="importFile.dita">Import File</xref></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
             <li>Memory Permissions </li>
             <li><xref href="usersManagement.dita">Users Management</xref>
                 <ul>

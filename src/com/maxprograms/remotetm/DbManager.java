@@ -303,4 +303,32 @@ public class DbManager {
         }
         return p;
     }
+
+    public String getOwner(String memory) throws SQLException {
+        String owner = "";
+        String sql = "SELECT owner FROM memories WHERE id=?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, memory);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    owner = rs.getString(1);
+                }
+            }
+        }
+        return owner;
+    }
+
+    public void removeMemory(String memory) throws SQLException {
+        String sql = "DELETE FROM permissions WHERE memory=?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, memory);
+            stmt.execute();
+        }
+        sql = "DELETE FROM memories WHERE id=?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, memory);
+            stmt.execute();
+        }
+        conn.commit();
+    }
 }

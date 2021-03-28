@@ -80,6 +80,7 @@ export class Dashboard implements View {
 
         let removeMemory: HTMLButtonElement = document.createElement('button');
         removeMemory.innerText = 'Remove Memory';
+        removeMemory.addEventListener('click', () => { this.removeMemory(); });
         toolbar.appendChild(removeMemory);
 
         let setAccess: HTMLButtonElement = document.createElement('button');
@@ -196,6 +197,8 @@ export class Dashboard implements View {
         settingsMenu.addOption(changePassword);
 
         if (this.role === 'SA') {
+            settingsMenu.addOption(document.createElement('hr'));
+
             let manageUsers: HTMLAnchorElement = document.createElement('a');
             manageUsers.innerText = 'Manage Users';
             manageUsers.addEventListener('click', () => { this.manageUsers(); })
@@ -344,6 +347,39 @@ export class Dashboard implements View {
         }
         let importDialog: ImportTMX = new ImportTMX(this, this.selected);
         importDialog.open();
+    }
+
+    removeMemory(): void {
+        if (this.selected === '') {
+            new Message('Select memory');
+            return;
+        }
+        if (this.role === 'TR') {
+            new Message('Access denied');
+            return;
+        }
+        let params: any = {
+            command: 'removeMemory',
+            memory: this.selected
+        }
+        fetch(RemoteTM.getMainURL() + '/memories', {
+            method: 'POST',
+            headers: [
+                ['Session', RemoteTM.getSession()],
+                ['Content-Type', 'application/json'],
+                ['Accept', 'application/json']
+            ],
+            body: JSON.stringify(params)
+        }).then(async (response: Response) => {
+            let json: any = await response.json();
+            if (json.status === 'OK') {
+                this.loadMemories();
+            } else {
+                new Message(json.reason);
+            }
+        }).catch((reason: any) => {
+            console.error('Error:', reason);
+        });
     }
 
     setStatus(status: string) {

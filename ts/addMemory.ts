@@ -70,6 +70,7 @@ export class AddMemory {
             client: client,
             command: 'addMemory'
         };
+        this.parent.setStatus('Adding memory...');
         fetch(RemoteTM.getMainURL() + '/memories', {
             method: 'POST',
             headers: [
@@ -79,6 +80,7 @@ export class AddMemory {
             ],
             body: JSON.stringify(params)
         }).then(async (response: Response) => {
+            this.parent.setStatus('');
             let json: any = await response.json();
             if (json.status === 'OK') {
                 this.dialog.close();
@@ -87,6 +89,7 @@ export class AddMemory {
                 new Message(json.reason);
             }
         }).catch((reason: any) => {
+            this.parent.setStatus('');
             console.error('Error:', reason);
         });
     }

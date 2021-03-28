@@ -46,6 +46,7 @@
         </topicref>
         <topicref href="rest/memoriesManagement.dita">
             <topicref href="rest/addMemory.dita"/>
+            <topicref href="rest/removeMemory.dita"/>
             <topicref href="rest/importTMX.dita">
                 <topicref href="rest/uploadFile.dita"/>
                 <topicref href="rest/importFile.dita"/>

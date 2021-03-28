@@ -102,6 +102,7 @@ export class ImportTMX {
             client: this.client.getValue(),
             file: file
         };
+        this.parent.setStatus('Starting import...');
         fetch(RemoteTM.getMainURL() + '/memories', {
             method: 'POST',
             headers: [
@@ -111,6 +112,7 @@ export class ImportTMX {
             ],
             body: JSON.stringify(params)
         }).then(async (response: Response) => {
+            this.parent.setStatus('');
             let json: any = await response.json();
             if (json.status === 'OK') {
                 new Message('You will receive an email with import results');
@@ -119,6 +121,7 @@ export class ImportTMX {
                 new Message(json.reason);
             }
         }).catch((reason: any) => {
+            this.parent.setStatus('');
             console.error('Error:', reason);
         });
     }
