@@ -82,6 +82,7 @@ export class AddUser {
             role: role,
             email: email
         }
+        this.parent.setStatus('Adding user...');
         fetch(RemoteTM.getMainURL() + '/users', {
             method: 'POST',
             headers: [
@@ -92,6 +93,7 @@ export class AddUser {
             body: JSON.stringify(params)
         }).then(async (response: Response) => {
             let json: any = await response.json();
+            this.parent.setStatus('');
             if (json.status === 'OK') {
                 this.parent.loadUsers();
                 this.dialog.close();
@@ -99,6 +101,7 @@ export class AddUser {
                 new Message(json.reason);
             }
         }).catch((reason: any) => {
+            this.parent.setStatus('');
             console.error('Error:', reason);
         });
     }

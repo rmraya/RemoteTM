@@ -79,7 +79,6 @@ export class ImportTMX {
             body: formData
         }).then(async (response: Response) => {
             let json: any = await response.json();
-            console.log(JSON.stringify(json));
             this.parent.setStatus('');
             if (json.status === 'OK') {
                 this.requestImport(json.file);
@@ -111,8 +110,8 @@ export class ImportTMX {
             ],
             body: JSON.stringify(params)
         }).then(async (response: Response) => {
-            this.parent.setStatus('');
             let json: any = await response.json();
+            this.parent.setStatus('');
             if (json.status === 'OK') {
                 new Message('You will receive an email with import results');
                 this.dialog.close();

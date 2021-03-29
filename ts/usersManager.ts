@@ -18,6 +18,7 @@ SOFTWARE.
 *******************************************************************************/
 
 import { AddUser } from "./adduser";
+import { Dashboard } from "./dashboard";
 import { Dialog } from "./dialog";
 import { EditUser } from "./editUSer";
 import { Message } from "./message";
@@ -28,8 +29,11 @@ export class UsersManager {
     dialog: Dialog;
     tbody: HTMLTableSectionElement;
     selected: string;
+    parent: Dashboard;
 
-    constructor() {
+    constructor(parent: Dashboard) {
+        this.parent = parent;
+
         this.selected = '';
         this.dialog = new Dialog(850);
         this.dialog.position(84, 84);
@@ -250,5 +254,9 @@ export class UsersManager {
         }).catch((reason: any) => {
             console.error('Error:', reason);
         });
+    }
+
+    setStatus(status: string): void {
+        this.parent.setStatus(status);
     }
 }

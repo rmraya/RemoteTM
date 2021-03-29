@@ -80,8 +80,8 @@ export class AddMemory {
             ],
             body: JSON.stringify(params)
         }).then(async (response: Response) => {
-            this.parent.setStatus('');
             let json: any = await response.json();
+            this.parent.setStatus('');
             if (json.status === 'OK') {
                 this.dialog.close();
                 this.parent.loadMemories();

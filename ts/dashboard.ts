@@ -252,7 +252,7 @@ export class Dashboard implements View {
     }
 
     manageUsers(): void {
-        let dialog: UsersManager = new UsersManager();
+        let dialog: UsersManager = new UsersManager(this);
         dialog.open();
     }
 

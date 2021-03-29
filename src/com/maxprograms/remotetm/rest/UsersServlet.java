@@ -126,9 +126,7 @@ public class UsersServlet extends HttpServlet {
                 return;
             }
             Utils.denyAccess(response);
-        } catch (
-
-        IOException e) {
+        } catch (IOException e) {
             logger.log(Level.ERROR, e);
         }
     }
