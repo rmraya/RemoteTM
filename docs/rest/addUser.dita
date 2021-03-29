@@ -51,7 +51,6 @@
                 <stentry><tt>email</tt></stentry>
                 <stentry>The email address of the new user</stentry>
             </strow>
-
         </simpletable>
         <p>Example:</p>
         <codeblock translate="no">{

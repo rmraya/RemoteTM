@@ -6,6 +6,7 @@
     <conbody>
         <p>The REST methods for managing users exposed by RemoteTM are:</p>
         <ul>
+            <li><xref href="getUsers.dita">Get Users</xref></li>
             <li><xref href="addUser.dita">Add User</xref></li>
             <li><xref href="getUser.dita">Get User</xref></li>
             <li><xref href="updateUser.dita">Update User</xref></li>

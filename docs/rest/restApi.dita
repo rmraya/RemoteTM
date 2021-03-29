@@ -14,6 +14,7 @@
             </li>
             <li><xref href="memoriesManagement.dita">Memories</xref>
                 <ul>
+                    <li><xref href="getMemories.dita">Get Memories</xref></li>
                     <li><xref href="addMemory.dita">Add Memory</xref></li>
                     <li><xref href="removeMemory.dita">Remove Memory</xref></li>
                     <li><xref href="importTMX.dita">Import TMX</xref>
@@ -27,6 +28,7 @@
             <li>Memory Permissions </li>
             <li><xref href="usersManagement.dita">Users Management</xref>
                 <ul>
+                    <li><xref href="getUsers.dita">Get Users</xref></li>
                     <li><xref href="addUser.dita">Add User</xref></li>
                     <li><xref href="getUser.dita">Get User</xref></li>
                     <li><xref href="updateUser.dita">Update User</xref></li>
