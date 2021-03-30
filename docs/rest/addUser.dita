@@ -71,5 +71,8 @@
     "status": "Error",
     "reason": "Duplicated ID"
 }        </codeblock>
+        <p>An email with a temporay password is sent to the new user's email. The user must login to
+            RemoteTM and set a new password.</p>
+        <note>User creation fails if RemoteTM's email server is not configured.</note>
     </body>
 </topic>

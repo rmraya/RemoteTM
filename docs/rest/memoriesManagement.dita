@@ -2,7 +2,7 @@
 <!DOCTYPE concept PUBLIC "-//OASIS//DTD DITA Concept//EN" "concept.dtd">
 <concept id="memoriesManagement">
     <title>Memories Management</title>
-    <shortdesc></shortdesc>
+    <shortdesc/>
     <conbody>
         <p>The REST methods for managing memories exposed by RemoteTM are:</p>
         <ul>

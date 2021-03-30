@@ -53,6 +53,10 @@
                 <topicref href="rest/importFile.dita"/>
             </topicref>
         </topicref>
+        <topicref href="rest/permissions.dita">
+            <topicref href="rest/getPermissions.dita"/>
+            <topicref href="rest/setPermissions.dita"/>
+        </topicref>
         <topicref href="rest/usersManagement.dita">
             <topicref href="rest/getUsers.dita"/>
             <topicref href="rest/addUser.dita"/>
@@ -60,6 +64,10 @@
             <topicref href="rest/updateUser.dita"/>
             <topicref href="rest/removeUser.dita"/>
             <topicref href="rest/lockUser.dita"/>
+        </topicref>
+        <topicref href="rest/emailServer.dita">
+            <topicref href="rest/getEmailServer.dita"/>
+            <topicref href="rest/updateEmailServer.dita"/>
         </topicref>
     </chapter>
 

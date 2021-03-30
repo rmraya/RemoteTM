@@ -25,7 +25,12 @@
                     </li>
                 </ul>
             </li>
-            <li>Memory Permissions </li>
+            <li><xref href="permissions.dita">Memory Permissions</xref>
+                <ul>
+                    <li><xref href="getPermissions.dita">Get Permissions</xref></li>
+                    <li><xref href="setPermissions.dita">Set Permissions</xref></li>
+                </ul>
+            </li>
             <li><xref href="usersManagement.dita">Users Management</xref>
                 <ul>
                     <li><xref href="getUsers.dita">Get Users</xref></li>
@@ -34,6 +39,12 @@
                     <li><xref href="updateUser.dita">Update User</xref></li>
                     <li><xref href="removeUser.dita">Remove User</xref></li>
                     <li><xref href="lockUser.dita">Lock/Unlock User</xref></li>
+                </ul>
+            </li>
+            <li><xref href="emailServer.dita">Email Server</xref>
+                <ul>
+                    <li><xref href="getEmailServer.dita">Get Email Server</xref></li>
+                    <li><xref href="updateEmailServer.dita">Update Email Server</xref></li>
                 </ul>
             </li>
         </ul>

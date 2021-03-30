@@ -21,10 +21,6 @@ body {
 	overflow-x: hidden;
 }
 
-.move {
-	cursor: move !important;
-}
-
 header {
 	background: var(--PRIMARY);
 	color: var(--WHITE);

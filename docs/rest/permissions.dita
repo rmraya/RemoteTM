@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE concept PUBLIC "-//OASIS//DTD DITA Concept//EN" "concept.dtd">
+<concept id="permissions">
+    <title>Memory Permissions</title>
+    <shortdesc></shortdesc>
+    <conbody>
+        <p>The REST methods for managing memory permissions exposed by RemotTM are:</p>
+        <ul>
+            <li><xref href="getPermissions.dita">Get Permissions</xref></li>
+            <li><xref href="setPermissions.dita">Set Permissions</xref></li>
+        </ul>
+    </conbody>
+</concept>

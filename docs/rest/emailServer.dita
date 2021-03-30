@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE concept PUBLIC "-//OASIS//DTD DITA Concept//EN" "concept.dtd">
+<concept id="emailServer">
+    <title>Email Server Management</title>
+    <shortdesc/>
+    <conbody>
+        <p>The REST methods for managing its email server exposed by RemoteTM are:</p>
+        <ul>
+            <li><xref href="getEmailServer.dita">Get Email Server</xref></li>
+            <li><xref href="updateEmailServer.dita">Update Email Server</xref></li>
+        </ul>
+    </conbody>
+</concept>
