@@ -137,7 +137,7 @@ export class PasswordReset implements View {
             new Message('Different passwords');
             return;
         }
-        if (this.isWeak(password)) {
+        if (PasswordReset.isWeak(password)) {
             new Message('Weak passwords');
             return;
         }
@@ -182,7 +182,7 @@ export class PasswordReset implements View {
         this.dialog.style.left = (document.body.clientWidth - 400) / 2 + 'px';
     }
 
-    isWeak(password: string): boolean {
+    static isWeak(password: string): boolean {
         let length: number = password.length;
         if (length < 10) {
             return true;
@@ -220,15 +220,15 @@ export class PasswordReset implements View {
         return false;
     }
 
-    isLower(char: string): boolean {
+    static isLower(char: string): boolean {
         return (/[a-z]/).test(char)
     }
 
-    isUpper(char: string): boolean {
+    static isUpper(char: string): boolean {
         return (/[A-Z]/).test(char)
     }
 
-    isNumber(char: string): boolean {
+    static isNumber(char: string): boolean {
         return (/[0-9]/).test(char)
     }
 }

@@ -18,7 +18,9 @@ SOFTWARE.
 *******************************************************************************/
 
 import { AboutDialog } from './about';
+import { AccessDialog } from './accessDialog';
 import { AddMemory } from './addMemory';
+import { ChangePasswordDialog } from './changePassword';
 import { DropDown } from './dropdown';
 import { EmailServerDialog } from './emailServerDialog';
 import { ImportTMX } from './importTMX';
@@ -85,6 +87,7 @@ export class Dashboard implements View {
 
         let setAccess: HTMLButtonElement = document.createElement('button');
         setAccess.innerText = 'Set Access';
+        setAccess.addEventListener('click', () => { this.setAccess(); });
         toolbar.appendChild(setAccess);
 
         let importMemory: HTMLButtonElement = document.createElement('button');
@@ -195,6 +198,7 @@ export class Dashboard implements View {
     createSettingsMenu(settingsMenu: DropDown): void {
         let changePassword: HTMLAnchorElement = document.createElement('a');
         changePassword.innerText = 'Change Password';
+        changePassword.addEventListener('click', () => { this.changePassword(); });
         settingsMenu.addOption(changePassword);
 
         if (this.role === 'SA') {
@@ -256,9 +260,23 @@ export class Dashboard implements View {
         dialog.open();
     }
 
+    changePassword(): void {
+        let dialog: ChangePasswordDialog = new ChangePasswordDialog(this);
+        dialog.open();
+    }
+
+    setAccess(): void {
+        if (this.selected === '') {
+            new Message('Select memory');
+            return;
+        }
+        let dialog: AccessDialog = new AccessDialog(this.selected);
+        dialog.open();
+    }
+
     showAbout(): void {
-        let about: AboutDialog = new AboutDialog();
-        about.open();
+        let dialog: AboutDialog = new AboutDialog();
+        dialog.open();
     }
 
     viewLicenses(): void {

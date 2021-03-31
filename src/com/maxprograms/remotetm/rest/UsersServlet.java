@@ -35,6 +35,7 @@ import com.maxprograms.remotetm.Constants;
 import com.maxprograms.remotetm.DbManager;
 import com.maxprograms.remotetm.models.EmailServer;
 import com.maxprograms.remotetm.models.User;
+import com.maxprograms.remotetm.utils.Crypto;
 import com.maxprograms.remotetm.utils.SendMail;
 import com.maxprograms.remotetm.utils.Utils;
 
@@ -111,6 +112,9 @@ public class UsersServlet extends HttpServlet {
                     case "toggleLock":
                         toggleLock(session, body);
                         break;
+                    case "changePassword":
+                        changePassword(session, body);
+                        break;
                     default:
                         Utils.denyAccess(response);
                         return;
@@ -155,6 +159,19 @@ public class UsersServlet extends HttpServlet {
         User user = manager.getUser(body.getString("id"));
         user.setActive(!user.isActive());
         manager.updateUser(user);
+    }
+
+    private void changePassword(String session, JSONObject json)
+            throws NoSuchAlgorithmException, IOException, SQLException {
+        DbManager manager = DbManager.getInstance();
+        User who = manager.getUser(AuthorizeServlet.getUser(session));
+        String current = json.getString("current");
+        String newPassword = json.getString("newPassword");
+        if (who.getPassword().equals(Crypto.sha256(current))) {
+            manager.setPassword(who.getId(), newPassword);
+            return;
+        }
+        throw new IOException(Constants.DENIED);
     }
 
     private JSONObject getUser(String session, JSONObject body)
