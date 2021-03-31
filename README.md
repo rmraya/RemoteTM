@@ -1,5 +1,5 @@
 # RemoteTM 5.0
- A Translation Memory (TM)) Server with an open REST API
+ A Translation Memory (TM) Server with an open REST API
 
  <img src="images/favicon.png" alt=""/>
 
