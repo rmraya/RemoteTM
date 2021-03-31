@@ -22,7 +22,7 @@ import { Dialog } from "./dialog";
 export class AccessDialog {
 
     dialog: Dialog;
-    
+
     constructor(memory: string) {
 
         this.dialog = new Dialog(350);
@@ -30,7 +30,7 @@ export class AccessDialog {
 
         let setAccess: HTMLButtonElement = document.createElement('button');
         setAccess.innerText = 'Set Access';
-        setAccess.addEventListener('click', ()=>{this.setAccess();});
+        setAccess.addEventListener('click', () => { this.setAccess(); });
         this.dialog.addButton(setAccess);
     }
 
@@ -39,6 +39,6 @@ export class AccessDialog {
     }
 
     setAccess(): void {
-        
+
     }
 }

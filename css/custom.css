@@ -4,8 +4,8 @@
 }
 
 body {
-	background-color: var(--secondaryColor);
-	color: var(--secondaryTextColor)
+	background-color: var(--WHITE);
+	color: var(--BLACK)
 }
 
 .bg {
@@ -48,7 +48,7 @@ footer {
 	padding-top: 2px;
 	vertical-align: bottom;
 	text-align: center;
-	background: var(--primaryDarkColor);
+	background: var(--SWORDFISH-DARK);
 	color: var(--WHITE);
 	font-size: 0.8em;
 }
@@ -59,7 +59,7 @@ footer a {
 }
 
 footer a:hover {
-	background: var(--primaryDarkColor);
+	background: var(--SWORDFISH-DARK);
 	text-decoration: underline;
 }
 
@@ -102,8 +102,10 @@ a {
 }
 
 thead {
-	background: var(--PRIMARY-ALT);
-	color: var(--secondaryTextColor);
+	background: var(--WHITE);
+	color: var(--PRIMARY);
+	border-top: 1px solid var(--PRIMARY);
+	border-bottom: 1px solid var(--PRIMARY);
 }
 
 tbody {
@@ -121,7 +123,7 @@ td.fixed {
 	text-align: center;
 	vertical-align: middle;
 	background: var(--lighter-background);
-	color: var(--secondaryTextColor);
+	color: var(--BLACK);
 	cursor: default !important;
 }
 
@@ -130,9 +132,9 @@ th {
 	top: 0;
 	z-index: 5;
 	font-weight: normal;
-	background: var(--PRIMARY-ALT);
-	color: var(--secondaryTextColor);
 	white-space: nowrap;
+	color: inherit;
+	background-color: inherit;
 	padding: 4px 0px;
 }
 
@@ -157,8 +159,8 @@ input[type=number] {
 	height: 1.2rem;
 	font-size: 1rem;
 	margin: 4px;
-	background: var(--secondaryColor);
-	color: var(--secondaryTextColor);
+	background: var(--WHITE);
+	color: var(--BLACK);
 	border: 1px solid var(--PRIMARY);
 	border-radius: 2px;
 }
@@ -188,8 +190,8 @@ button:focus {
 }
 
 button:hover {
-	background-color: var(--primaryDarkColor);
-	border-color: (--primaryDarkColor);
+	background-color: var(--PRIMARY-DARK);
+	border-color: (--PRIMARY-DARK);
 }
 
 a.secondary {
@@ -202,7 +204,7 @@ a.secondary {
 }
 
 a.secondary:hover {
-	color: var(--primaryDarkColor);
+	color: var(--PRIMARY-DARK);
 	background: var(--SECONDARY-400);
 	border-radius: 2px;
 }
@@ -234,8 +236,8 @@ option[value=""][disabled] {
 	padding: 4px;
 	width: calc(100% - 16px);
 	font-size: 1em;
-	background: var(--secondaryColor);
-	color: var(--secondaryTextColor);
+	background: var(--WHITE);
+	color: var(--BLACK);
 	border-top: none;
 	border-left: none;
 	border-right: none;
@@ -251,8 +253,8 @@ option[value=""][disabled] {
 
 option {
 	font-size: 1em;
-	background: var(--secondaryColor) !important;
-	color: var(--secondaryTextColor);
+	background: var(--WHITE) !important;
+	color: var(--BLACK);
 }
 
 label {
@@ -311,7 +313,7 @@ label {
 .tabHolder {
 	display: flex;
 	flex-flow: row;
-	color: var(--secondaryTextColor);
+	color: var(--BLACK);
 	background: var(--lighter-background);
 	padding: 0px 0px 0px 8px;
 }
@@ -332,12 +334,12 @@ label {
 }
 
 .tab:hover {
-	border-bottom: 2px solid var(--primaryDarkColor);
+	border-bottom: 2px solid var(--PRIMARY-DARK);
 }
 
 .selectedTab:hover {
 	background: var(--normal-background);
-	color: var(--primaryDarkColor);
+	color: var(--PRIMARY-DARK);
 }
 
 .tab a {
@@ -348,7 +350,7 @@ label {
 
 .tab a:hover {
 	background: var(--normal-background);
-	color: var(--primaryDarkColor);
+	color: var(--PRIMARY-DARK);
 }
 
 .tabContent {
@@ -383,8 +385,8 @@ label {
 }
 
 .tooltip .tooltiptext {
-	background-color: var(--primaryDarkColor);
-	border-color: var(--secondaryColor);
+	background-color: var(--PRIMARY-DARK);
+	border-color: var(--WHITE);
 	color: var(--WHITE);
 	visibility: hidden;
 	padding: 4px;
@@ -426,7 +428,7 @@ label {
 	position: absolute;
 	padding: 0;
 	background: var(--SECONDARY-50);
-	border: 1px solid var(--PRIMARY-DARK);
+	border: 1px solid var(--SWORDFISH-DARK);
 	border-radius: 4px;
 	box-shadow: 0px 2px 4px var(--SECONDARY-700);
 }
@@ -452,7 +454,7 @@ label {
 .dialogTitle {
 	height: 24px;
 	vertical-align: middle;
-	background: var(--PRIMARY-DARK);
+	background: var(--SWORDFISH-DARK);
 	color: var(--WHITE);
 	fill: var(--WHITE);
 }
@@ -468,7 +470,7 @@ label {
 }
 
 .dialogTitle a:hover {
-	background: var(--primaryDarkColor);
+	background: var(--PRIMARY-DARK);
 }
 
 .dialog table th {
@@ -481,7 +483,7 @@ label {
 }
 
 .topbar {
-	background: var(--primaryDarkColor);
+	background: var(--SWORDFISH-DARK);
 	color: var(--WHITE);
 	display: flex;
 	flex-direction: row;
@@ -504,7 +506,7 @@ label {
 }
 
 .topbar a:hover {
-	background: var(--primaryDarkColor);
+	background: var(--SWORDFISH-DARK);
 	cursor: pointer;
 }
 
@@ -533,8 +535,8 @@ label {
 
 .toolbar a:hover {
 	background: var(--SECONDARY-500);
-	color: var(--primaryDarkColor);
-	fill: var(--primaryDarkColor);
+	color: var(--PRIMARY-DARK);
+	fill: var(--PRIMARY-DARK);
 	cursor: pointer;
 }
 
@@ -581,7 +583,7 @@ hr {
 
 .dropdownOptions a:hover {
 	background: var(--SECONDARY-400);
-	color: var(--primaryDarkColor);
+	color: var(--PRIMARY-DARK);
 }
 
 .inputContainer {
@@ -608,8 +610,8 @@ hr {
 	padding: 4px;
 	width: calc(100% - 24px);
 	font-size: 1em;
-	background: var(--secondaryColor);
-	color: var(--secondaryTextColor);
+	background: var(--WHITE);
+	color: var(--BLACK);
 	border-top: none;
 	border-left: none;
 	border-right: none;
@@ -644,7 +646,7 @@ hr {
 .checkBox span {
 	margin-top: 4px;
 	margin-left: 4px;
-	color: var(--secondaryTextColor);
+	color: var(--BLACK);
 	width: calc(100% - 8px);
 }
 
@@ -658,13 +660,13 @@ hr {
 
 .message {
 	position: fixed;
-	top: 5%;
+	top: 40px;
 	right: 30px;
 	width: 300px;
-	border: 1px solid var(--SECONDARY-50);
-	border-radius: 2px;
-	background: var(--SECONDARY-900);
-	color: var(--SECONDARY-50);
+	border: none;
+	border-radius: 4px;
+	background: var(--SWORDFISH-DARK);
+	color: var(--WHITE);
 	transition: all .2s ease-in;
 	padding: 16px;
 	text-align: center;
