@@ -22,7 +22,9 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.sql.SQLException;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -130,5 +132,17 @@ public class TmManager {
             count.put(memory, 0);
         }
         count.put(memory, count.get(memory) + 1);
+    }
+
+    public static void closeMemories() throws SQLException {
+        if (databases == null) {
+            databases = new ConcurrentHashMap<>();
+            count = new ConcurrentHashMap<>();
+        }
+        Set<String> keys = databases.keySet();
+        Iterator<String> it = keys.iterator();
+        while (it.hasNext()) {
+            closeMemory(it.next());
+        }
     }
 }

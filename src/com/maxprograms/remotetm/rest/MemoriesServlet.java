@@ -123,6 +123,9 @@ public class MemoriesServlet extends HttpServlet {
                     case "exportMemory":
                         result.put("file", exportMemory(session, body));
                         break;
+                    case "closeMemories":
+                        TmManager.closeMemories();
+                        break;
                     default:
                         Utils.denyAccess(response);
                         return;

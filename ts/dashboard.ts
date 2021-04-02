@@ -100,13 +100,10 @@ export class Dashboard implements View {
         exportMemory.addEventListener('click', () => { this.exportTMX(); });
         toolbar.appendChild(exportMemory);
 
-        let closeMemory: HTMLButtonElement = document.createElement('button');
-        closeMemory.innerText = 'Close Memory';
-        toolbar.appendChild(closeMemory);
-
-        let closeAllMemories: HTMLButtonElement = document.createElement('button');
-        closeAllMemories.innerText = 'Close All Memories';
-        toolbar.appendChild(closeAllMemories);
+        let closeMemories: HTMLButtonElement = document.createElement('button');
+        closeMemories.innerText = 'Close Memories';
+        closeMemories.addEventListener('click', () => { this.closeMemories(); });
+        toolbar.appendChild(closeMemories);
 
         let refreshList: HTMLButtonElement = document.createElement('button');
         refreshList.innerText = 'Refresh';
@@ -433,5 +430,29 @@ export class Dashboard implements View {
         let statusDiv: HTMLDivElement = document.getElementById('status') as HTMLDivElement;
         statusDiv.innerText = status;
         statusDiv.style.display = status === '' ? 'none' : 'block';
+    }
+
+    closeMemories(): void {
+        if (this.role !== 'SA') {
+            new Message('Access denied');
+            return;
+        }
+        let params: any = {
+            command: 'closeMemories'
+        }
+        fetch(RemoteTM.getMainURL() + '/memories', {
+            method: 'POST',
+            headers: [
+                ['Session', RemoteTM.getSession()],
+                ['Content-Type', 'application/json'],
+                ['Accept', 'application/json']
+            ],
+            body: JSON.stringify(params)
+        }).then(async (response: Response) => {
+            let json: any = await response.json();
+            json.status === 'OK' ? this.loadMemories() : new Message(json.reason);
+        }).catch((reason: any) => {
+            console.error('Error:', reason);
+        });
     }
 }
