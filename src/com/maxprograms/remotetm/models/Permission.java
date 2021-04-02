@@ -18,17 +18,16 @@ SOFTWARE.
 *******************************************************************************/
 package com.maxprograms.remotetm.models;
 
-import java.io.Serializable;
+import org.json.JSONObject;
 
-public class Permission implements Serializable {
+public class Permission implements Comparable<Permission> {
 
-	private static final long serialVersionUID = -894160119064340701L;
 	private String user;
 	private String memory;
 	private boolean read;
 	private boolean write;
 	private boolean export;
-		
+
 	public Permission(String user, String memory, boolean read, boolean write, boolean export) {
 		this.user = user;
 		this.memory = memory;
@@ -36,7 +35,7 @@ public class Permission implements Serializable {
 		this.write = write;
 		this.export = export;
 	}
-	
+
 	public String getUser() {
 		return user;
 	}
@@ -44,7 +43,7 @@ public class Permission implements Serializable {
 	public String getMemory() {
 		return memory;
 	}
-	
+
 	public boolean canRead() {
 		return read;
 	}
@@ -68,5 +67,34 @@ public class Permission implements Serializable {
 	public void setExport(boolean export) {
 		this.export = export;
 	}
-	
+
+	public JSONObject toJSON() {
+		JSONObject json = new JSONObject();
+		json.put("memory", memory);
+		json.put("user", user);
+		json.put("read", read);
+		json.put("write", write);
+		json.put("export", export);
+		return json;
+	}
+
+	private int access() {
+		int access = 0;
+		access += read ? 4 : 0;
+		access += write ? 2 : 0;
+		access += export ? 1 : 0;
+		return access;
+	}
+
+	@Override
+	public int compareTo(Permission o) {
+		if (access() > o.access()) {
+			return -1;
+		}
+		if (access() < o.access()) {
+			return 1;
+		}
+		return user.compareToIgnoreCase(o.user);
+	}
+
 }

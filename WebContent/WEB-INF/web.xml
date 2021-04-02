@@ -49,6 +49,11 @@
     <servlet-class>com.maxprograms.remotetm.rest.DownloadServlet</servlet-class>
   </servlet>
 
+  <servlet>
+    <servlet-name>Permissions</servlet-name>
+    <servlet-class>com.maxprograms.remotetm.rest.PermissionsServlet</servlet-class>
+  </servlet>
+
   <filter>
     <filter-name>SecurityFilter</filter-name>
     <filter-class>com.maxprograms.remotetm.utils.SecurityFilter</filter-class>
@@ -103,6 +108,11 @@
   <servlet-mapping>
     <servlet-name>Download</servlet-name>
     <url-pattern>/download</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>Permissions</servlet-name>
+    <url-pattern>/permissions</url-pattern>
   </servlet-mapping>
 
   <!-- Default page to serve -->

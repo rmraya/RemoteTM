@@ -18,11 +18,8 @@ SOFTWARE.
 *******************************************************************************/
 package com.maxprograms.remotetm.models;
 
-import java.io.Serializable;
+public class EmailServer  {
 
-public class EmailServer implements Serializable {
-
-	private static final long serialVersionUID = 6029495600166324338L;
 	private String server;
 	private String port;
 	private String user;

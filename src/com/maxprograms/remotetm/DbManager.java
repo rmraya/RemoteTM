@@ -32,8 +32,12 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import com.maxprograms.remotetm.models.Permission;
 import com.maxprograms.remotetm.models.User;
@@ -302,6 +306,62 @@ public class DbManager {
             }
         }
         return p;
+    }
+
+    public void setPermissions(String memory, JSONArray permissions) throws SQLException {
+        String sql = "DELETE FROM permissions WHERE memory=?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, memory);
+            stmt.execute();
+        }
+        sql = "INSERT INTO permissions (user, memory, canread, canwrite, canexport) VALUES (?,?,?,?,?)";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(2, memory);
+            for (int i = 0; i < permissions.length(); i++) {
+                JSONObject permission = permissions.getJSONObject(i);
+                stmt.setString(1, permission.getString("user"));
+                stmt.setString(3, permission.getBoolean("read") ? "Y" : "N");
+                stmt.setString(4, permission.getBoolean("write") ? "Y" : "N");
+                stmt.setString(5, permission.getBoolean("export") ? "Y" : "N");
+                stmt.execute();
+            }
+        }
+        conn.commit();
+    }
+
+    public List<Permission> getPermissions(String memory) throws SQLException {
+        Map<String, Permission> map = new TreeMap<>();
+        String sql = "SELECT user, canread, canwrite, canexport FROM permissions WHERE memory=?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, memory);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    String user = rs.getString(1);
+                    boolean canRead = rs.getString(2).equals("Y");
+                    boolean canWrite = rs.getString(3).equals("Y");
+                    boolean canExport = rs.getString(4).equals("Y");
+                    Permission p = new Permission(user, memory, canRead, canWrite, canExport);
+                    map.put(user, p);
+                }
+            }
+        }
+        List<String> users = new ArrayList<>();
+        sql = "SELECT id FROM users WHERE active='Y'";
+        try (Statement stmt = conn.createStatement()) {
+            try (ResultSet rs = stmt.executeQuery(sql)) {
+                while (rs.next()) {
+                    users.add(rs.getString(1));
+                }
+            }
+        }
+        List<Permission> permissions = new ArrayList<>();
+        Iterator<String> it = users.iterator();
+        while (it.hasNext()) {
+            String user = it.next();
+            permissions.add(map.containsKey(user) ? map.get(user) : new Permission(user, memory, false, false, false));
+        }
+        Collections.sort(permissions);
+        return permissions;
     }
 
     public String getOwner(String memory) throws SQLException {

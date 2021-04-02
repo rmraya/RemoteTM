@@ -50,18 +50,13 @@ export class EditUser {
         button.addEventListener('click', () => { this.addUser(); });
         this.dialog.addButton(button);
 
-        let params: any = {
-            command: 'getUser',
-            id: this.userId
-        }
-        fetch(RemoteTM.getMainURL() + '/users', {
-            method: 'POST',
+        fetch(RemoteTM.getMainURL() + '/users?id=' + this.userId, {
+            method: 'GET',
             headers: [
                 ['Session', RemoteTM.getSession()],
                 ['Content-Type', 'application/json'],
                 ['Accept', 'application/json']
-            ],
-            body: JSON.stringify(params)
+            ]
         }).then(async (response: Response) => {
             let json: any = await response.json();
             if (json.status === 'OK') {

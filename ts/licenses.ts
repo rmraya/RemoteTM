@@ -121,23 +121,6 @@ export class LicensesDialog {
         openXliff.addEventListener('click', ()=> {this.viewLicense('Eclipse Publice License 1.0', '/licenses/EclipsePublicLicense1.0.html')});
         right4.appendChild(openXliff);
 
-        let tr5: HTMLTableRowElement = document.createElement('tr');
-        table.appendChild(tr5);
-
-        let left5: HTMLTableCellElement = document.createElement('td');
-        left5.innerText = 'Apache Commons';
-        left5.classList.add('noWrap');
-        tr5.appendChild(left5);
-
-        let right5: HTMLTableCellElement = document.createElement('td');
-        right5.classList.add('noWrap');
-        tr5.appendChild(right5);
-
-        let commons: HTMLAnchorElement = document.createElement('a');
-        commons.innerText = 'Apache License 2.0';
-        commons.addEventListener('click', ()=> {this.viewLicense('Apache License 2.0', '/licenses/Apache2.0.html')});
-        right5.appendChild(commons);
-
         let tr6: HTMLTableRowElement = document.createElement('tr');
         table.appendChild(tr6);
 

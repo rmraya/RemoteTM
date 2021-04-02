@@ -53,6 +53,7 @@ public class UsersServlet extends HttpServlet {
             if (!Utils.isSafe(request, response)) {
                 return;
             }
+            String id = request.getParameter("id");
             JSONObject result = new JSONObject();
             String session = request.getHeader("Session");
             if (AuthorizeServlet.sessionActive(session)) {
@@ -60,14 +61,18 @@ public class UsersServlet extends HttpServlet {
                     DbManager manager = DbManager.getInstance();
                     User who = manager.getUser(AuthorizeServlet.getUser(session));
                     if (who != null && who.isActive() && Constants.SYSTEM_ADMINISTRATOR.equals(who.getRole())) {
-                        JSONArray array = new JSONArray();
-                        List<User> users = manager.getUsers();
-                        Iterator<User> it = users.iterator();
-                        while (it.hasNext()) {
-                            array.put(it.next().toJSON());
+                        if (id != null) {
+                            result.put("user", manager.getUser(id).toJSON());
+                        } else {
+                            JSONArray array = new JSONArray();
+                            List<User> users = manager.getUsers();
+                            Iterator<User> it = users.iterator();
+                            while (it.hasNext()) {
+                                array.put(it.next().toJSON());
+                            }
+                            result.put("users", array);
                         }
                         result.put(Constants.STATUS, Constants.OK);
-                        result.put("users", array);
                         Utils.writeResponse(result, response, 200);
                     }
                 } catch (NoSuchAlgorithmException | SQLException e) {
@@ -99,9 +104,6 @@ public class UsersServlet extends HttpServlet {
                     switch (command) {
                     case "addUser":
                         addUser(session, body);
-                        break;
-                    case "getUser":
-                        result.put("user", getUser(session, body));
                         break;
                     case "updateUser":
                         updateUser(session, body);
@@ -172,17 +174,6 @@ public class UsersServlet extends HttpServlet {
             return;
         }
         throw new IOException(Constants.DENIED);
-    }
-
-    private JSONObject getUser(String session, JSONObject body)
-            throws SQLException, NoSuchAlgorithmException, IOException {
-        DbManager manager = DbManager.getInstance();
-        User who = manager.getUser(AuthorizeServlet.getUser(session));
-        if (!Constants.SYSTEM_ADMINISTRATOR.equals(who.getRole())) {
-            throw new IOException(Constants.DENIED);
-        }
-        User user = manager.getUser(body.getString("id"));
-        return user.toJSON();
     }
 
     private void addUser(String session, JSONObject body)
