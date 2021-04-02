@@ -217,11 +217,7 @@ export class UsersManager {
             body: JSON.stringify(params)
         }).then(async (response: Response) => {
             let json: any = await response.json();
-            if (json.status === 'OK') {
-                this.loadUsers();
-            } else {
-                new Message(json.reason);
-            }
+            json.status === 'OK' ? this.loadUsers() : new Message(json.reason);
         }).catch((reason: any) => {
             console.error('Error:', reason);
         });
@@ -246,11 +242,7 @@ export class UsersManager {
             body: JSON.stringify(params)
         }).then(async (response: Response) => {
             let json: any = await response.json();
-            if (json.status === 'OK') {
-                this.loadUsers();
-            } else {
-                new Message(json.reason);
-            }
+            json.status === 'OK' ? this.loadUsers() : new Message(json.reason);
         }).catch((reason: any) => {
             console.error('Error:', reason);
         });

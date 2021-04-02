@@ -294,11 +294,7 @@ export class Dashboard implements View {
             ]
         }).then(async (response: Response) => {
             let json: any = await response.json();
-            if (json.status === 'OK') {
-                this.displayMemories(json.memories);
-            } else {
-                new Message(json.reason);
-            }
+            json.status === 'OK' ? this.displayMemories(json.memories) : new Message(json.reason);
         }).catch((reason: any) => {
             console.error('Error:', reason);
         });
@@ -391,11 +387,7 @@ export class Dashboard implements View {
             body: JSON.stringify(params)
         }).then(async (response: Response) => {
             let json: any = await response.json();
-            if (json.status === 'OK') {
-                this.loadMemories();
-            } else {
-                new Message(json.reason);
-            }
+            json.status === 'OK' ? this.loadMemories() : new Message(json.reason);
         }).catch((reason: any) => {
             console.error('Error:', reason);
         });
@@ -424,11 +416,7 @@ export class Dashboard implements View {
             body: JSON.stringify(params)
         }).then(async (response: Response) => {
             let json: any = await response.json();
-            if (json.status === 'OK') {
-                this.downloadMemory(json.file);
-            } else {
-                new Message(json.reason);
-            }
+            json.status === 'OK' ? this.downloadMemory(json.file) : new Message(json.reason);
         }).catch((reason: any) => {
             console.error('Error:', reason);
         });

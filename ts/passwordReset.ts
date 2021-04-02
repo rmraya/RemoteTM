@@ -157,11 +157,7 @@ export class PasswordReset implements View {
             body: JSON.stringify(params)
         }).then(async (response: Response) => {
             let json: any = await response.json();
-            if (json.status === 'OK') {
-                new Message('Password set');
-            } else {
-                new Message(json.reason);
-            }
+            json.status === 'OK' ? new Message('Password set') : new Message(json.reason);
             this.close();
             RemoteTM.showLogin();
         }).catch((reason: any) => {

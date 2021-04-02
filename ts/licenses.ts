@@ -50,7 +50,7 @@ export class LicensesDialog {
 
         let remoteTm: HTMLAnchorElement = document.createElement('a');
         remoteTm.innerText = 'RemoteTM License';
-        remoteTm.addEventListener('click', ()=> {this.viewLicense('RemoteTM License', '/licenses/license.txt')});
+        remoteTm.addEventListener('click', () => { this.viewLicense('RemoteTM License', '/licenses/license.txt') });
         right0.appendChild(remoteTm);
 
         let tr1: HTMLTableRowElement = document.createElement('tr');
@@ -67,7 +67,7 @@ export class LicensesDialog {
 
         let swordfish: HTMLAnchorElement = document.createElement('a');
         swordfish.innerText = 'Swordfish License';
-        swordfish.addEventListener('click', ()=> {this.viewLicense('Swordfish License', '/licenses/swordfish.txt')});
+        swordfish.addEventListener('click', () => { this.viewLicense('Swordfish License', '/licenses/swordfish.txt') });
         right1.appendChild(swordfish);
 
         let tr2: HTMLTableRowElement = document.createElement('tr');
@@ -84,7 +84,7 @@ export class LicensesDialog {
 
         let typeScript: HTMLAnchorElement = document.createElement('a');
         typeScript.innerText = 'Apache License 2.0';
-        typeScript.addEventListener('click', ()=> {this.viewLicense('Apache License 2.0', '/licenses/Apache2.0.html')});
+        typeScript.addEventListener('click', () => { this.viewLicense('Apache License 2.0', '/licenses/Apache2.0.html') });
         right2.appendChild(typeScript);
 
         let tr3: HTMLTableRowElement = document.createElement('tr');
@@ -101,7 +101,7 @@ export class LicensesDialog {
 
         let java: HTMLAnchorElement = document.createElement('a');
         java.innerText = 'GPL2 with Classpath Exception';
-        java.addEventListener('click', ()=> {this.viewLicense('GPL2 with Classpath Exception', '/licenses/java.html')});
+        java.addEventListener('click', () => { this.viewLicense('GPL2 with Classpath Exception', '/licenses/java.html') });
         right3.appendChild(java);
 
         let tr4: HTMLTableRowElement = document.createElement('tr');
@@ -118,7 +118,7 @@ export class LicensesDialog {
 
         let openXliff: HTMLAnchorElement = document.createElement('a');
         openXliff.innerText = 'Eclipse Publice License 1.0';
-        openXliff.addEventListener('click', ()=> {this.viewLicense('Eclipse Publice License 1.0', '/licenses/EclipsePublicLicense1.0.html')});
+        openXliff.addEventListener('click', () => { this.viewLicense('Eclipse Publice License 1.0', '/licenses/EclipsePublicLicense1.0.html') });
         right4.appendChild(openXliff);
 
         let tr6: HTMLTableRowElement = document.createElement('tr');
@@ -135,7 +135,7 @@ export class LicensesDialog {
 
         let h2: HTMLAnchorElement = document.createElement('a');
         h2.innerText = 'Eclipse Publice License 1.0';
-        h2.addEventListener('click', ()=> {this.viewLicense('Eclipse Publice License 1.0', '/licenses/EclipsePublicLicense1.0.html')});
+        h2.addEventListener('click', () => { this.viewLicense('Eclipse Publice License 1.0', '/licenses/EclipsePublicLicense1.0.html') });
         right6.appendChild(h2);
 
         let tr7: HTMLTableRowElement = document.createElement('tr');
@@ -152,7 +152,7 @@ export class LicensesDialog {
 
         let json: HTMLAnchorElement = document.createElement('a');
         json.innerText = 'JSON.org';
-        json.addEventListener('click', ()=> {this.viewLicense('JSON.org', '/licenses/json.txt')});
+        json.addEventListener('click', () => { this.viewLicense('JSON.org', '/licenses/json.txt') });
         right7.appendChild(json);
 
         let tr8: HTMLTableRowElement = document.createElement('tr');
@@ -169,7 +169,7 @@ export class LicensesDialog {
 
         let mapDb: HTMLAnchorElement = document.createElement('a');
         mapDb.innerText = 'Apache License 2.0';
-        mapDb.addEventListener('click', ()=> {this.viewLicense('Apache License 2.0', '/licenses/Apache2.0.html')});
+        mapDb.addEventListener('click', () => { this.viewLicense('Apache License 2.0', '/licenses/Apache2.0.html') });
         right8.appendChild(mapDb);
 
         let tr9: HTMLTableRowElement = document.createElement('tr');
@@ -186,7 +186,7 @@ export class LicensesDialog {
 
         let jsoup: HTMLAnchorElement = document.createElement('a');
         jsoup.innerText = 'MIT License';
-        jsoup.addEventListener('click', ()=> {this.viewLicense('MIT License', '/licenses/jsoup.txt')});
+        jsoup.addEventListener('click', () => { this.viewLicense('MIT License', '/licenses/jsoup.txt') });
         right9.appendChild(jsoup);
 
         let tr10: HTMLTableRowElement = document.createElement('tr');
@@ -203,7 +203,7 @@ export class LicensesDialog {
 
         let dtdParser: HTMLAnchorElement = document.createElement('a');
         dtdParser.innerText = 'LGPL 2.1';
-        dtdParser.addEventListener('click', ()=> {this.viewLicense('LGPL 2.1', '/licenses/LGPL2.1.txt')});
+        dtdParser.addEventListener('click', () => { this.viewLicense('LGPL 2.1', '/licenses/LGPL2.1.txt') });
         right10.appendChild(dtdParser);
     }
 
@@ -212,7 +212,7 @@ export class LicensesDialog {
     }
 
     viewLicense(title: string, license: string): void {
-         let viewer: LicenseViewer = new LicenseViewer(title, license);
-         viewer.open();
+        let viewer: LicenseViewer = new LicenseViewer(title, license);
+        viewer.open();
     }
 }

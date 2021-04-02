@@ -80,11 +80,7 @@ export class ImportTMX {
         }).then(async (response: Response) => {
             let json: any = await response.json();
             this.parent.setStatus('');
-            if (json.status === 'OK') {
-                this.requestImport(json.file);
-            } else {
-                new Message(json.reason);
-            }
+            json.status === 'OK' ? this.requestImport(json.file) : new Message(json.reason);
         }).catch((reason: any) => {
             this.parent.setStatus('');
             console.error('Error:', reason);

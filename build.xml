@@ -1,14 +1,14 @@
 <project name="RemoteTM" default="build" basedir=".">
 	<description>Build file for RemoteTM</description>
 
-	<path id="RemoteTM.classpath">		
-		<pathelement location="lib/javax.servlet-api.jar"/>
-		<pathelement location="WebContent/WEB-INF/lib/activation.jar"/>
-		<pathelement location="WebContent/WEB-INF/lib/h2-1.4.200.jar"/>
-		<pathelement location="WebContent/WEB-INF/lib/javax.mail.jar"/>
-		<pathelement location="WebContent/WEB-INF/lib/json.jar"/>
-		<pathelement location="WebContent/WEB-INF/lib/openxliff.jar"/>
-		<pathelement location="WebContent/WEB-INF/lib/swordfish.jar"/>
+	<path id="RemoteTM.classpath">
+		<pathelement location="lib/javax.servlet-api.jar" />
+		<pathelement location="WebContent/WEB-INF/lib/activation.jar" />
+		<pathelement location="WebContent/WEB-INF/lib/h2-1.4.200.jar" />
+		<pathelement location="WebContent/WEB-INF/lib/javax.mail.jar" />
+		<pathelement location="WebContent/WEB-INF/lib/json.jar" />
+		<pathelement location="WebContent/WEB-INF/lib/openxliff.jar" />
+		<pathelement location="WebContent/WEB-INF/lib/swordfish.jar" />
 	</path>
 
 	<target name="clean" description="Cleans this project">
@@ -16,31 +16,31 @@
 	</target>
 
 	<target name="init">
-		<mkdir dir="WebContent/WEB-INF/classes"/>
+		<mkdir dir="WebContent/WEB-INF/classes" />
 		<copy includeemptydirs="false" todir="WebContent/WEB-INF/classes">
 			<fileset dir="src">
-				<exclude name="**/*.java"/>
+				<exclude name="**/*.java" />
 			</fileset>
 		</copy>
 	</target>
 
 	<target name="compile" depends="clean,init">
 		<description>Compile Java classes</description>
-		<javac srcdir="src" destdir="WebContent/WEB-INF/classes" classpathref="RemoteTM.classpath" includeAntRuntime="false"/>
+		<javac srcdir="src" destdir="WebContent/WEB-INF/classes" classpathref="RemoteTM.classpath" includeAntRuntime="false" />
 	</target>
 
 	<target name="bundle">
 		<delete dir="build/release/" failonerror="false" />
 		<exec executable="npm">
-			<arg value="run-script"/>
-			<arg value="bundle"/>
+			<arg value="run-script" />
+			<arg value="bundle" />
 		</exec>
 	</target>
 
 	<target name="war">
-		<mkdir dir="war"/>
+		<mkdir dir="war" />
 		<copy includeemptydirs="false" todir="war">
-			<fileset dir="WebContent"/>
+			<fileset dir="WebContent" />
 		</copy>
 		<copy includeemptydirs="false" todir="war">
 			<fileset dir="build/release/" />
@@ -50,15 +50,15 @@
 		<delete dir="war" failonerror="true" />
 	</target>
 
-	<target name="build" depends="compile, bundle, war"/>
+	<target name="build" depends="compile, bundle, war" />
 
-	<target name="ui" depends="bundle, war"/>
+	<target name="ui" depends="bundle, war" />
 
 	<target name="copyDocs">
-		<delete dir="WebContent/docs" failonerror="true"/>
+		<delete dir="WebContent/docs" failonerror="true" />
 		<copy includeemptydirs="false" todir="WebContent/docs">
 			<fileset dir="docs/out/webhelp5" />
 		</copy>
 	</target>
-	
+
 </project>
