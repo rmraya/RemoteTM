@@ -19,6 +19,7 @@ SOFTWARE.
 package com.maxprograms.remotetm.utils;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -34,12 +35,16 @@ import java.util.Random;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.parsers.ParserConfigurationException;
 
 import com.maxprograms.remotetm.Constants;
 import com.maxprograms.remotetm.RemoteTM;
 import com.maxprograms.remotetm.models.EmailServer;
+import com.maxprograms.xml.Element;
+import com.maxprograms.xml.SAXBuilder;
 
 import org.json.JSONObject;
+import org.xml.sax.SAXException;
 
 public class Utils {
 
@@ -48,6 +53,7 @@ public class Utils {
     }
 
     private static Random random;
+    private static SAXBuilder builder;
 
     public static void writeResponse(JSONObject json, HttpServletResponse response, int status) throws IOException {
         byte[] bytes = json.toString().getBytes(StandardCharsets.UTF_8);
@@ -118,5 +124,12 @@ public class Utils {
             }
         }
         Files.delete(file.toPath());
+    }
+
+    public static Element toElement(String string) throws SAXException, IOException, ParserConfigurationException {
+        if (builder == null) {
+            builder = new SAXBuilder();
+        }
+        return builder.build(new ByteArrayInputStream(string.getBytes(StandardCharsets.UTF_8))).getRootElement();
     }
 }

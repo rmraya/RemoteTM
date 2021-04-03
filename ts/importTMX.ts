@@ -66,8 +66,29 @@ export class ImportTMX {
             new Message('Select file');
             return;
         }
+        let params: any = {
+            command: 'openMemory',
+            memory: this.memory
+        }
+        fetch(RemoteTM.getMainURL() + '/memories', {
+            method: 'POST',
+            headers: [
+                ['Session', RemoteTM.getSession()],
+                ['Content-Type', 'application/json'],
+                ['Accept', 'application/json']
+            ],
+            body: JSON.stringify(params)
+        }).then(async (response: Response) => {
+            let json: any = await response.json();
+            json.status === 'OK' ? this.uploadFile(files[0]) : new Message(json.reason);
+        }).catch((reason: any) => {
+            console.error('Error:', reason);
+        });
+    }
+
+    uploadFile(file: File): void {
         let formData = new FormData();
-        formData.append("file", files[0]);
+        formData.append("file", file);
         this.parent.setStatus('Uploading...');
         fetch(RemoteTM.getMainURL() + '/upload', {
             method: 'POST',
@@ -94,7 +115,8 @@ export class ImportTMX {
             project: this.project.getValue(),
             subject: this.subject.getValue(),
             client: this.client.getValue(),
-            file: file
+            file: file,
+            close: true
         };
         this.parent.setStatus('Starting import...');
         fetch(RemoteTM.getMainURL() + '/memories', {

@@ -400,9 +400,10 @@ export class Dashboard implements View {
             return;
         }
         let params: any = {
-            command: 'exportMemory',
+            command: 'openMemory',
             memory: this.selected
         }
+        this.setStatus('Opening memory...');
         fetch(RemoteTM.getMainURL() + '/memories', {
             method: 'POST',
             headers: [
@@ -412,9 +413,38 @@ export class Dashboard implements View {
             ],
             body: JSON.stringify(params)
         }).then(async (response: Response) => {
+            this.setStatus('');
+            let json: any = await response.json();
+            json.status === 'OK' ? this.requestExport() : new Message(json.reason);
+        }).catch((reason: any) => {
+            this.setStatus('');
+            console.error('Error:', reason);
+        });
+
+    }
+
+    requestExport(): void {
+        let params: any = {
+            command: 'exportMemory',
+            memory: this.selected,
+            srcLang: '*all*',
+            close: true
+        }
+        this.setStatus('Preparing download...');
+        fetch(RemoteTM.getMainURL() + '/memories', {
+            method: 'POST',
+            headers: [
+                ['Session', RemoteTM.getSession()],
+                ['Content-Type', 'application/json'],
+                ['Accept', 'application/json']
+            ],
+            body: JSON.stringify(params)
+        }).then(async (response: Response) => {
+            this.setStatus('');
             let json: any = await response.json();
             json.status === 'OK' ? this.downloadMemory(json.file) : new Message(json.reason);
         }).catch((reason: any) => {
+            this.setStatus('');
             console.error('Error:', reason);
         });
     }
@@ -440,6 +470,7 @@ export class Dashboard implements View {
         let params: any = {
             command: 'closeMemories'
         }
+        this.setStatus('Closing memories...');
         fetch(RemoteTM.getMainURL() + '/memories', {
             method: 'POST',
             headers: [
@@ -449,9 +480,11 @@ export class Dashboard implements View {
             ],
             body: JSON.stringify(params)
         }).then(async (response: Response) => {
+            this.setStatus('');
             let json: any = await response.json();
             json.status === 'OK' ? this.loadMemories() : new Message(json.reason);
         }).catch((reason: any) => {
+            this.setStatus('');
             console.error('Error:', reason);
         });
     }

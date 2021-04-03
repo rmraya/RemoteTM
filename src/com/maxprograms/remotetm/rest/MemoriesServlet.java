@@ -25,6 +25,7 @@ import java.lang.System.Logger.Level;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -45,6 +46,8 @@ import com.maxprograms.remotetm.models.User;
 import com.maxprograms.remotetm.utils.SendMail;
 import com.maxprograms.remotetm.utils.Utils;
 import com.maxprograms.swordfish.models.Memory;
+import com.maxprograms.swordfish.tm.Match;
+import com.maxprograms.xml.Element;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -126,13 +129,52 @@ public class MemoriesServlet extends HttpServlet {
                     case "closeMemories":
                         TmManager.closeMemories();
                         break;
+                    case "openMemory":
+                        openMemory(session, body);
+                        break;
+                    case "closeMemory":
+                        closeMemory(session, body);
+                        break;
+                    case "memoryClients":
+                        result.put("clients", memoryClients(session, body));
+                        break;
+                    case "memoryLanguages":
+                        result.put("languages", memoryLanguages(session, body));
+                        break;
+                    case "memoryProjects":
+                        result.put("projects", memoryProjects(session, body));
+                    case "memorySubjects":
+                        result.put("subjects", memorySubjects(session, body));
+                        break;
+                    case "storeTu":
+                        storeTu(session, body);
+                        break;
+                    case "getTu":
+                        result.put("tu", getTu(session, body).toString());
+                        break;
+                    case "removeTu":
+                        removeTu(session, body);
+                        break;
+                    case "commit":
+                        commit(session, body);
+                        break;
+                    case "searchTranslation":
+                        result.put("matches", searchTranslation(session, body));
+                        break;
+                    case "searchAll":
+                        result.put("tus", searchAll(session, body));
+                        break;
+                    case "concordanceSearch":
+                        result.put("tus", concordanceSearch(session, body));
+                        break;
                     default:
                         Utils.denyAccess(response);
                         return;
                     }
                     result.put(Constants.STATUS, Constants.OK);
                     Utils.writeResponse(result, response, 200);
-                } catch (SQLException | NoSuchAlgorithmException | JSONException | IOException e) {
+                } catch (SQLException | NoSuchAlgorithmException | JSONException | IOException | SAXException
+                        | ParserConfigurationException e) {
                     logger.log(Level.ERROR, e);
                     result.put(Constants.STATUS, Constants.ERROR);
                     result.put(Constants.REASON, e.getMessage());
@@ -151,14 +193,55 @@ public class MemoriesServlet extends HttpServlet {
         String memory = params.getString("memory");
         DbManager manager = DbManager.getInstance();
         User who = manager.getUser(AuthorizeServlet.getUser(session));
+        String owner = manager.getOwner(memory);
         if (who != null && who.isActive()) {
             Memory mem = manager.getMemory(memory);
-            if (Constants.SYSTEM_ADMINISTRATOR.equals(who.getRole())) {
-                return TmManager.exportMemory(memory, mem.getName());
+            if (Constants.SYSTEM_ADMINISTRATOR.equals(who.getRole()) || who.getId().equals(owner)) {
+                Set<String> languages = null;
+                if (params.has("languages")) {
+                    languages = new TreeSet<>();
+                    JSONArray langs = params.getJSONArray("languages");
+                    for (int i = 0; i < langs.length(); i++) {
+                        languages.add(langs.getString(i));
+                    }
+                } else {
+                    languages = TmManager.getAllLanguages(memory);
+                }
+                String file = TmManager.exportMemory(memory, mem.getName(), languages, params.getString("srcLang"));
+                if (params.has("close") && params.getBoolean("close")) {
+                    TmManager.close(memory);
+                }
+                return file;
             }
-            String owner = manager.getOwner(memory);
-            if (who.getId().equals(owner)) {
-                return TmManager.exportMemory(memory, mem.getName());
+        }
+        throw new IOException(Constants.DENIED);
+    }
+
+    private void openMemory(String session, JSONObject params)
+            throws SQLException, NoSuchAlgorithmException, IOException {
+        String memory = params.getString("memory");
+        DbManager manager = DbManager.getInstance();
+        User who = manager.getUser(AuthorizeServlet.getUser(session));
+        if (who != null && who.isActive()) {
+            Permission p = manager.getPermission(memory, who.getId());
+            if (p.canRead() || p.canWrite() || p.canExport()) {
+                TmManager.openMemory(memory);
+                return;
+            }
+        }
+        throw new IOException(Constants.DENIED);
+    }
+
+    private void closeMemory(String session, JSONObject params)
+            throws SQLException, NoSuchAlgorithmException, IOException {
+        String memory = params.getString("memory");
+        DbManager manager = DbManager.getInstance();
+        User who = manager.getUser(AuthorizeServlet.getUser(session));
+        if (who != null && who.isActive()) {
+            Permission p = manager.getPermission(memory, who.getId());
+            if (p.canRead() || p.canWrite() || p.canExport()) {
+                TmManager.close(memory);
+                return;
             }
         }
         throw new IOException(Constants.DENIED);
@@ -170,17 +253,98 @@ public class MemoriesServlet extends HttpServlet {
         DbManager manager = DbManager.getInstance();
         User who = manager.getUser(AuthorizeServlet.getUser(session));
         if (who != null && who.isActive()) {
-            if (Constants.SYSTEM_ADMINISTRATOR.equals(who.getRole())) {
-                TmManager.removeMemory(memory);
-                manager.removeMemory(memory);
-                return;
-            }
             String owner = manager.getOwner(memory);
-            if (who.getId().equals(owner)) {
+            if (Constants.SYSTEM_ADMINISTRATOR.equals(who.getRole()) || who.getId().equals(owner)) {
                 TmManager.removeMemory(memory);
                 manager.removeMemory(memory);
                 return;
             }
+        }
+        throw new IOException(Constants.DENIED);
+    }
+
+    private JSONArray memoryClients(String session, JSONObject params)
+            throws NoSuchAlgorithmException, IOException, SQLException {
+        String memory = params.getString("memory");
+        DbManager manager = DbManager.getInstance();
+        User who = manager.getUser(AuthorizeServlet.getUser(session));
+        if (who != null && who.isActive()) {
+            JSONArray array = new JSONArray();
+            Set<String> set = TmManager.getAllClients(memory);
+            Iterator<String> it = set.iterator();
+            while (it.hasNext()) {
+                array.put(it.next());
+            }
+            return array;
+        }
+        throw new IOException(Constants.DENIED);
+    }
+
+    private JSONArray memoryLanguages(String session, JSONObject params)
+            throws NoSuchAlgorithmException, IOException, SQLException {
+        String memory = params.getString("memory");
+        DbManager manager = DbManager.getInstance();
+        User who = manager.getUser(AuthorizeServlet.getUser(session));
+        if (who != null && who.isActive()) {
+            JSONArray array = new JSONArray();
+            Set<String> set = TmManager.getAllLanguages(memory);
+            Iterator<String> it = set.iterator();
+            while (it.hasNext()) {
+                array.put(it.next());
+            }
+            return array;
+        }
+        throw new IOException(Constants.DENIED);
+    }
+
+    private Element getTu(String session, JSONObject params) throws IOException, NoSuchAlgorithmException, SQLException,
+            JSONException, SAXException, ParserConfigurationException {
+        DbManager manager = DbManager.getInstance();
+        User who = manager.getUser(AuthorizeServlet.getUser(session));
+        if (who != null && who.isActive()) {
+            String memory = params.getString("memory");
+            Permission p = manager.getPermission(memory, who.getId());
+            if (p.canRead()) {
+                Element tu = TmManager.getTu(memory, params.getString("tuid"));
+                if (tu != null) {
+                    return tu;
+                }
+                throw new IOException("TU does not exist");
+            }
+        }
+        throw new IOException(Constants.DENIED);
+    }
+
+    private JSONArray memoryProjects(String session, JSONObject params)
+            throws NoSuchAlgorithmException, IOException, SQLException {
+        String memory = params.getString("memory");
+        DbManager manager = DbManager.getInstance();
+        User who = manager.getUser(AuthorizeServlet.getUser(session));
+        if (who != null && who.isActive()) {
+            JSONArray array = new JSONArray();
+            Set<String> set = TmManager.getAllProjects(memory);
+            Iterator<String> it = set.iterator();
+            while (it.hasNext()) {
+                array.put(it.next());
+            }
+            return array;
+        }
+        throw new IOException(Constants.DENIED);
+    }
+
+    private JSONArray memorySubjects(String session, JSONObject params)
+            throws NoSuchAlgorithmException, IOException, SQLException {
+        String memory = params.getString("memory");
+        DbManager manager = DbManager.getInstance();
+        User who = manager.getUser(AuthorizeServlet.getUser(session));
+        if (who != null && who.isActive()) {
+            JSONArray array = new JSONArray();
+            Set<String> set = TmManager.getAllSubjects(memory);
+            Iterator<String> it = set.iterator();
+            while (it.hasNext()) {
+                array.put(it.next());
+            }
+            return array;
         }
         throw new IOException(Constants.DENIED);
     }
@@ -196,6 +360,113 @@ public class MemoriesServlet extends HttpServlet {
             TmManager.createMemory(mem.getId());
             manager.addMemory(mem, who);
             return;
+        }
+        throw new IOException(Constants.DENIED);
+    }
+
+    private void storeTu(String session, JSONObject params) throws NoSuchAlgorithmException, IOException, SQLException,
+            JSONException, SAXException, ParserConfigurationException {
+        DbManager manager = DbManager.getInstance();
+        User who = manager.getUser(AuthorizeServlet.getUser(session));
+        if (who != null && who.isActive()) {
+            String memory = params.getString("memory");
+            Permission p = manager.getPermission(memory, who.getId());
+            if (p.canWrite()) {
+                Element tu = Utils.toElement(params.getString("tu"));
+                TmManager.storeTu(memory, tu);
+                return;
+            }
+        }
+        throw new IOException(Constants.DENIED);
+    }
+
+    private void removeTu(String session, JSONObject params)
+            throws NoSuchAlgorithmException, IOException, SQLException {
+        DbManager manager = DbManager.getInstance();
+        User who = manager.getUser(AuthorizeServlet.getUser(session));
+        if (who != null && who.isActive()) {
+            String memory = params.getString("memory");
+            Permission p = manager.getPermission(memory, who.getId());
+            if (p.canWrite()) {
+                TmManager.removeTu(memory, params.getString("tuid"));
+                return;
+            }
+        }
+        throw new IOException(Constants.DENIED);
+    }
+
+    private JSONArray searchTranslation(String session, JSONObject params) throws IOException, JSONException,
+            SAXException, ParserConfigurationException, SQLException, NoSuchAlgorithmException {
+        DbManager manager = DbManager.getInstance();
+        User who = manager.getUser(AuthorizeServlet.getUser(session));
+        if (who != null && who.isActive()) {
+            String memory = params.getString("memory");
+            Permission p = manager.getPermission(memory, who.getId());
+            if (p.canRead()) {
+                List<Match> matches = TmManager.searchTranslation(memory, params.getString("searchStr"),
+                        params.getString("srcLang"), params.getString("tgtLang"), params.getInt("similarity"),
+                        params.getBoolean("caseSensitive"));
+                JSONArray array = new JSONArray();
+                for (int i = 0; i < matches.size(); i++) {
+                    array.put(matches.get(i).toJSON());
+                }
+                return array;
+            }
+        }
+        throw new IOException(Constants.DENIED);
+    }
+
+    private JSONArray searchAll(String session, JSONObject params) throws IOException, JSONException, SAXException,
+            ParserConfigurationException, SQLException, NoSuchAlgorithmException {
+        DbManager manager = DbManager.getInstance();
+        User who = manager.getUser(AuthorizeServlet.getUser(session));
+        if (who != null && who.isActive()) {
+            String memory = params.getString("memory");
+            Permission p = manager.getPermission(memory, who.getId());
+            if (p.canRead()) {
+                List<Element> matches = TmManager.searchAll(memory, params.getString("searchStr"),
+                        params.getString("srcLang"), params.getInt("similarity"), params.getBoolean("caseSensitive"));
+                JSONArray array = new JSONArray();
+                for (int i = 0; i < matches.size(); i++) {
+                    array.put(matches.get(i).toString());
+                }
+                return array;
+            }
+        }
+        throw new IOException(Constants.DENIED);
+    }
+
+    private JSONArray concordanceSearch(String session, JSONObject params) throws IOException, JSONException,
+            SAXException, ParserConfigurationException, SQLException, NoSuchAlgorithmException {
+        DbManager manager = DbManager.getInstance();
+        User who = manager.getUser(AuthorizeServlet.getUser(session));
+        if (who != null && who.isActive()) {
+            String memory = params.getString("memory");
+            Permission p = manager.getPermission(memory, who.getId());
+            if (p.canRead()) {
+                List<Element> matches = TmManager.concordanceSearch(memory, params.getString("searchStr"),
+                        params.getString("srcLang"), params.getInt("limit"), params.getBoolean("isRegexp"),
+                        params.getBoolean("caseSensitive"));
+                JSONArray array = new JSONArray();
+                for (int i = 0; i < matches.size(); i++) {
+                    array.put(matches.get(i).toString());
+                }
+                return array;
+            }
+        }
+        throw new IOException(Constants.DENIED);
+    }
+
+    private void commit(String session, JSONObject params) throws NoSuchAlgorithmException, IOException, SQLException {
+        DbManager manager = DbManager.getInstance();
+        User who = manager.getUser(AuthorizeServlet.getUser(session));
+        if (who != null && who.isActive()) {
+            String memory = params.getString("memory");
+            Permission p = manager.getPermission(memory, who.getId());
+            if (p.canWrite()) {
+                TmManager.commit(memory);
+                return;
+            }
         }
         throw new IOException(Constants.DENIED);
     }
@@ -232,6 +503,9 @@ public class MemoriesServlet extends HttpServlet {
                                         "[RemoteTM] TMX imported", text, html);
                             } catch (IOException | MessagingException e) {
                                 logger.log(Level.ERROR, "Error sending mail", e);
+                            }
+                            if (params.has("close") && params.getBoolean("close")) {
+                                TmManager.close(memory);
                             }
                         } catch (SQLException | JSONException | IOException | SAXException
                                 | ParserConfigurationException ex) {
