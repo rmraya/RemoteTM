@@ -97,4 +97,17 @@ public class Permission implements Comparable<Permission> {
 		return user.compareToIgnoreCase(o.user);
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Permission) {
+			Permission p = (Permission) obj;
+			return user.equals(p.user) && memory.equals(p.memory) && access() == p.access();
+		}
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		return user.hashCode() * memory.hashCode() * access();
+	}
 }

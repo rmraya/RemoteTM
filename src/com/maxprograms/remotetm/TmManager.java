@@ -146,7 +146,7 @@ public class TmManager {
         }
     }
 
-    public static Set<String> getAllClients(String memory) throws SQLException, IOException {
+    public static Set<String> getAllClients(String memory) throws IOException {
         if (!isOpen(memory)) {
             throw new IOException(CLOSED);
         }

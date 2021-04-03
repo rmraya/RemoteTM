@@ -58,6 +58,7 @@ public class MemoriesServlet extends HttpServlet {
 
     private static final long serialVersionUID = 6894498215572036825L;
     private static Logger logger = System.getLogger(MemoriesServlet.class.getName());
+    private static final String MEMORY="memory";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
@@ -143,6 +144,7 @@ public class MemoriesServlet extends HttpServlet {
                         break;
                     case "memoryProjects":
                         result.put("projects", memoryProjects(session, body));
+                        break;
                     case "memorySubjects":
                         result.put("subjects", memorySubjects(session, body));
                         break;
@@ -190,7 +192,7 @@ public class MemoriesServlet extends HttpServlet {
 
     private String exportMemory(String session, JSONObject params)
             throws SQLException, NoSuchAlgorithmException, IOException {
-        String memory = params.getString("memory");
+        String memory = params.getString(MEMORY);
         DbManager manager = DbManager.getInstance();
         User who = manager.getUser(AuthorizeServlet.getUser(session));
         String owner = manager.getOwner(memory);
@@ -219,7 +221,7 @@ public class MemoriesServlet extends HttpServlet {
 
     private void openMemory(String session, JSONObject params)
             throws SQLException, NoSuchAlgorithmException, IOException {
-        String memory = params.getString("memory");
+        String memory = params.getString(MEMORY);
         DbManager manager = DbManager.getInstance();
         User who = manager.getUser(AuthorizeServlet.getUser(session));
         if (who != null && who.isActive()) {
@@ -234,7 +236,7 @@ public class MemoriesServlet extends HttpServlet {
 
     private void closeMemory(String session, JSONObject params)
             throws SQLException, NoSuchAlgorithmException, IOException {
-        String memory = params.getString("memory");
+        String memory = params.getString(MEMORY);
         DbManager manager = DbManager.getInstance();
         User who = manager.getUser(AuthorizeServlet.getUser(session));
         if (who != null && who.isActive()) {
@@ -249,7 +251,7 @@ public class MemoriesServlet extends HttpServlet {
 
     private void removeMemory(String session, JSONObject params)
             throws SQLException, NoSuchAlgorithmException, IOException {
-        String memory = params.getString("memory");
+        String memory = params.getString(MEMORY);
         DbManager manager = DbManager.getInstance();
         User who = manager.getUser(AuthorizeServlet.getUser(session));
         if (who != null && who.isActive()) {
@@ -265,7 +267,7 @@ public class MemoriesServlet extends HttpServlet {
 
     private JSONArray memoryClients(String session, JSONObject params)
             throws NoSuchAlgorithmException, IOException, SQLException {
-        String memory = params.getString("memory");
+        String memory = params.getString(MEMORY);
         DbManager manager = DbManager.getInstance();
         User who = manager.getUser(AuthorizeServlet.getUser(session));
         if (who != null && who.isActive()) {
@@ -282,7 +284,7 @@ public class MemoriesServlet extends HttpServlet {
 
     private JSONArray memoryLanguages(String session, JSONObject params)
             throws NoSuchAlgorithmException, IOException, SQLException {
-        String memory = params.getString("memory");
+        String memory = params.getString(MEMORY);
         DbManager manager = DbManager.getInstance();
         User who = manager.getUser(AuthorizeServlet.getUser(session));
         if (who != null && who.isActive()) {
@@ -297,12 +299,12 @@ public class MemoriesServlet extends HttpServlet {
         throw new IOException(Constants.DENIED);
     }
 
-    private Element getTu(String session, JSONObject params) throws IOException, NoSuchAlgorithmException, SQLException,
-            JSONException, SAXException, ParserConfigurationException {
+    private Element getTu(String session, JSONObject params)
+            throws IOException, NoSuchAlgorithmException, SQLException, SAXException, ParserConfigurationException {
         DbManager manager = DbManager.getInstance();
         User who = manager.getUser(AuthorizeServlet.getUser(session));
         if (who != null && who.isActive()) {
-            String memory = params.getString("memory");
+            String memory = params.getString(MEMORY);
             Permission p = manager.getPermission(memory, who.getId());
             if (p.canRead()) {
                 Element tu = TmManager.getTu(memory, params.getString("tuid"));
@@ -317,7 +319,7 @@ public class MemoriesServlet extends HttpServlet {
 
     private JSONArray memoryProjects(String session, JSONObject params)
             throws NoSuchAlgorithmException, IOException, SQLException {
-        String memory = params.getString("memory");
+        String memory = params.getString(MEMORY);
         DbManager manager = DbManager.getInstance();
         User who = manager.getUser(AuthorizeServlet.getUser(session));
         if (who != null && who.isActive()) {
@@ -334,7 +336,7 @@ public class MemoriesServlet extends HttpServlet {
 
     private JSONArray memorySubjects(String session, JSONObject params)
             throws NoSuchAlgorithmException, IOException, SQLException {
-        String memory = params.getString("memory");
+        String memory = params.getString(MEMORY);
         DbManager manager = DbManager.getInstance();
         User who = manager.getUser(AuthorizeServlet.getUser(session));
         if (who != null && who.isActive()) {
@@ -364,12 +366,12 @@ public class MemoriesServlet extends HttpServlet {
         throw new IOException(Constants.DENIED);
     }
 
-    private void storeTu(String session, JSONObject params) throws NoSuchAlgorithmException, IOException, SQLException,
-            JSONException, SAXException, ParserConfigurationException {
+    private void storeTu(String session, JSONObject params)
+            throws NoSuchAlgorithmException, IOException, SQLException, SAXException, ParserConfigurationException {
         DbManager manager = DbManager.getInstance();
         User who = manager.getUser(AuthorizeServlet.getUser(session));
         if (who != null && who.isActive()) {
-            String memory = params.getString("memory");
+            String memory = params.getString(MEMORY);
             Permission p = manager.getPermission(memory, who.getId());
             if (p.canWrite()) {
                 Element tu = Utils.toElement(params.getString("tu"));
@@ -385,7 +387,7 @@ public class MemoriesServlet extends HttpServlet {
         DbManager manager = DbManager.getInstance();
         User who = manager.getUser(AuthorizeServlet.getUser(session));
         if (who != null && who.isActive()) {
-            String memory = params.getString("memory");
+            String memory = params.getString(MEMORY);
             Permission p = manager.getPermission(memory, who.getId());
             if (p.canWrite()) {
                 TmManager.removeTu(memory, params.getString("tuid"));
@@ -395,12 +397,12 @@ public class MemoriesServlet extends HttpServlet {
         throw new IOException(Constants.DENIED);
     }
 
-    private JSONArray searchTranslation(String session, JSONObject params) throws IOException, JSONException,
-            SAXException, ParserConfigurationException, SQLException, NoSuchAlgorithmException {
+    private JSONArray searchTranslation(String session, JSONObject params)
+            throws IOException, SAXException, ParserConfigurationException, SQLException, NoSuchAlgorithmException {
         DbManager manager = DbManager.getInstance();
         User who = manager.getUser(AuthorizeServlet.getUser(session));
         if (who != null && who.isActive()) {
-            String memory = params.getString("memory");
+            String memory = params.getString(MEMORY);
             Permission p = manager.getPermission(memory, who.getId());
             if (p.canRead()) {
                 List<Match> matches = TmManager.searchTranslation(memory, params.getString("searchStr"),
@@ -416,12 +418,12 @@ public class MemoriesServlet extends HttpServlet {
         throw new IOException(Constants.DENIED);
     }
 
-    private JSONArray searchAll(String session, JSONObject params) throws IOException, JSONException, SAXException,
-            ParserConfigurationException, SQLException, NoSuchAlgorithmException {
+    private JSONArray searchAll(String session, JSONObject params)
+            throws IOException, SAXException, ParserConfigurationException, SQLException, NoSuchAlgorithmException {
         DbManager manager = DbManager.getInstance();
         User who = manager.getUser(AuthorizeServlet.getUser(session));
         if (who != null && who.isActive()) {
-            String memory = params.getString("memory");
+            String memory = params.getString(MEMORY);
             Permission p = manager.getPermission(memory, who.getId());
             if (p.canRead()) {
                 List<Element> matches = TmManager.searchAll(memory, params.getString("searchStr"),
@@ -436,12 +438,12 @@ public class MemoriesServlet extends HttpServlet {
         throw new IOException(Constants.DENIED);
     }
 
-    private JSONArray concordanceSearch(String session, JSONObject params) throws IOException, JSONException,
-            SAXException, ParserConfigurationException, SQLException, NoSuchAlgorithmException {
+    private JSONArray concordanceSearch(String session, JSONObject params)
+            throws IOException, SAXException, ParserConfigurationException, SQLException, NoSuchAlgorithmException {
         DbManager manager = DbManager.getInstance();
         User who = manager.getUser(AuthorizeServlet.getUser(session));
         if (who != null && who.isActive()) {
-            String memory = params.getString("memory");
+            String memory = params.getString(MEMORY);
             Permission p = manager.getPermission(memory, who.getId());
             if (p.canRead()) {
                 List<Element> matches = TmManager.concordanceSearch(memory, params.getString("searchStr"),
@@ -461,7 +463,7 @@ public class MemoriesServlet extends HttpServlet {
         DbManager manager = DbManager.getInstance();
         User who = manager.getUser(AuthorizeServlet.getUser(session));
         if (who != null && who.isActive()) {
-            String memory = params.getString("memory");
+            String memory = params.getString(MEMORY);
             Permission p = manager.getPermission(memory, who.getId());
             if (p.canWrite()) {
                 TmManager.commit(memory);
@@ -476,7 +478,7 @@ public class MemoriesServlet extends HttpServlet {
         DbManager manager = DbManager.getInstance();
         User who = manager.getUser(AuthorizeServlet.getUser(session));
         if (who != null && who.isActive()) {
-            String memory = params.getString("memory");
+            String memory = params.getString(MEMORY);
             Memory mem = manager.getMemory(memory);
             Permission p = manager.getPermission(memory, who.getId());
             if (p.canWrite()) {

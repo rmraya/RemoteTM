@@ -111,7 +111,7 @@ public class UploadServlet extends HttpServlet {
                         }
                     }
                     if (zipped) {
-                        File tmx = null;
+                        File tmx = File.createTempFile("üploaded", ".tmx", temp.getParentFile());
                         try (ZipInputStream in = new ZipInputStream(new FileInputStream(temp))) {
                             ZipEntry entry = null;
                             while ((entry = in.getNextEntry()) != null) {
