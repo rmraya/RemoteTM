@@ -216,20 +216,9 @@ export class Dashboard implements View {
     createHelpMenu(helpMenu: DropDown): void {
         let help: HTMLAnchorElement = document.createElement('a');
         help.innerText = 'RemoteTM User Guide';
-        help.href = RemoteTM.getMainURL() + '/docs/remotetm.html';
+        help.href = RemoteTM.getMainURL() + '/docs/remotetm.pdf';
         help.target = '_blank';
         helpMenu.addOption(help);
-
-        helpMenu.addOption(document.createElement('hr'));
-
-        let checkUpdates: HTMLAnchorElement = document.createElement('a');
-        checkUpdates.innerText = 'Check for Updates';
-        helpMenu.addOption(checkUpdates);
-
-        let licenses: HTMLAnchorElement = document.createElement('a');
-        licenses.innerText = 'View Licenses';
-        licenses.addEventListener('click', () => { this.viewLicenses(); });
-        helpMenu.addOption(licenses);
 
         helpMenu.addOption(document.createElement('hr'));
 
@@ -238,6 +227,13 @@ export class Dashboard implements View {
         supportGroup.href = 'https://groups.io/g/maxprograms/';
         supportGroup.target = '_blank';
         helpMenu.addOption(supportGroup);
+
+        helpMenu.addOption(document.createElement('hr'));
+
+        let licenses: HTMLAnchorElement = document.createElement('a');
+        licenses.innerText = 'View Licenses';
+        licenses.addEventListener('click', () => { this.viewLicenses(); });
+        helpMenu.addOption(licenses);
 
         helpMenu.addOption(document.createElement('hr'));
 

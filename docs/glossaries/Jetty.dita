@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE glossentry PUBLIC "-//OASIS//DTD DITA Glossary//EN" "glossary.dtd">
-<glossentry id="glossentry_mnc_fbz_yx">
-    <glossterm>Jetty</glossterm>
-    <glossdef><xref href="http://www.eclipse.org/jetty/" format="html">Jetty</xref> is an open
-        source software implementation of the Java Servlet and Java Server Pages technologies hosted by the Eclipse Foundation. The
-        Java Servlet and JavaServer Pages specifications are developed under the Java Community
-        Process.</glossdef>
-</glossentry>

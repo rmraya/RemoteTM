@@ -27,6 +27,7 @@ import { ResetPassworRequest } from "./resetPasswordRequest";
 export class RemoteTM {
 
     public static VERSION: string = '5.0.0';
+    public static BUILD: string = '';
 
     private static waitingCount: number;
     private static session: string = '';
@@ -96,8 +97,10 @@ export class RemoteTM {
             if (json.status === 'OK') {
                 let versionSpan: HTMLSpanElement = document.getElementById('version') as HTMLSpanElement;
                 if (versionSpan) {
-                    versionSpan.innerHTML = json.version;
+                    versionSpan.innerHTML = json.version + '_' + json.build;
                 }
+                RemoteTM.VERSION = json.version;
+                RemoteTM.BUILD = json.build;
             } else {
                 new Message(json.reason);
             }

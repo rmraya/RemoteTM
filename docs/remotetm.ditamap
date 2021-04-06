@@ -17,11 +17,7 @@
 
     <chapter href="concepts/introduction.dita"> </chapter>
 
-    <chapter>
-        <topicmeta>
-            <navtitle>Installation and Configuration</navtitle>
-        </topicmeta>
-        <topicref href="concepts/requirements.dita"/>
+    <chapter href="concepts/requirements.dita">
         <topicref href="concepts/preparation.dita"/>
         <topicref href="tasks/installation.dita"/>
         <topicref href="tasks/emailserver_config.dita"/>
@@ -30,13 +26,11 @@
     <chapter href="concepts/memoriesManagement.dita">
         <topicref href="tasks/addMemory.dita"/>
         <topicref href="tasks/importTMX.dita"/>
-        
+
     </chapter>
 
-    <chapter>
-        <topicmeta>
-            <navtitle>Users Management</navtitle>
-        </topicmeta>
+    <chapter href="concepts/usersManagement.dita">
+        <topicref href="tasks/addUser.dita"/>
     </chapter>
 
     <chapter href="rest/restApi.dita">
@@ -75,7 +69,6 @@
         <booklists>
             <glossarylist chunk="to-content">
                 <topicref keys="tomcat" href="glossaries/Tomcat.dita" type="glossentry"/>
-                <topicref keys="jetty" href="glossaries/Jetty.dita" type="glossentry"/>
                 <topicref keys="swordfish" href="glossaries/Swordfish.dita" type="glossentry"/>
                 <topicref keys="tmx" href="glossaries/TMX.dita" type="glossentry"/>
                 <topicref keys="tm" href="glossaries/translation_memory.dita" type="glossentry"/>

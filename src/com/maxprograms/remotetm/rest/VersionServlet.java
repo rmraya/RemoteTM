@@ -44,7 +44,8 @@ public class VersionServlet extends HttpServlet {
             response.setContentType("application/json");
             JSONObject result = new JSONObject();
             result.put(Constants.STATUS, Constants.OK);
-            result.put("version", Constants.VERSION + "_" + Constants.BUILD);
+            result.put("version", Constants.VERSION);
+            result.put("build", Constants.BUILD);
             Utils.writeResponse(result, response, 200);
         } catch (IOException e) {
             Logger logger = System.getLogger(VersionServlet.class.getName());

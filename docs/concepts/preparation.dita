@@ -2,18 +2,18 @@
 <!DOCTYPE concept PUBLIC "-//OASIS//DTD DITA Concept//EN" "concept.dtd">
 <concept id="preparation">
     <title>Preparation</title>
-    <shortdesc></shortdesc>
+    <shortdesc/>
     <conbody>
         <p>Collect the following information before installing RemoteTM Web Server:</p>
         <ul>
-            <li>The URL in which the <xref keyref="tomcat">Apache Tomcat</xref> or <xref keyref="jetty"
-                >Jetty</xref> server accepts requests;</li>
+            <li>The URL in which the <xref keyref="tomcat">Apache Tomcat</xref> server accepts HTTPS
+                requests;</li>
             <li>Configuration details for the SMTP server to use for sending email notifications: <ul>
-                <li>Server name</li>
-                <li>Server port</li>
-                <li>User name</li>
-                <li>User password</li>
-            </ul>
+                    <li>Server name</li>
+                    <li>Server port</li>
+                    <li>User name</li>
+                    <li>User password</li>
+                </ul>
             </li>
         </ul>
     </conbody>

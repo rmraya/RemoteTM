@@ -4,14 +4,13 @@
     <title>Introduction</title>
     <shortdesc/>
     <conbody>
-        <p><b>RemoteTM</b> a is a secure multiuser application designed for sharing the super fast
-            Internal Translation Memory engine used in <xref type="html"
-                href="http://www.maxprograms.com/products/swordfish.html" format="html"
+        <p><b>RemoteTM</b> a is a secure application designed for sharing the <xref keyref="tm"
+                >Translation Memory</xref> engine used in <xref type="html"
+                href="https://www.maxprograms.com/products/swordfish.html" format="html"
                 scope="external">Swordfish IV</xref> in LAN environments or over the Internet.</p>
         <p>RemoteTM runs on top of a Java Servlet container like <xref keyref="tomcat">Apache
-                Tomcat</xref> or <xref keyref="jetty">Jetty</xref>.</p>
-        <p>RemoteTM is a platform independent application. It can be used in all operating systems
-            where the combination of Java and Apache Tomcat or Jetty works.</p>
+                Tomcat</xref> and can be used in all operating systems
+            where the combination of Java and Apache Tomcat works.</p>
         <image href="../images/remotetmGUI.png" scalefit="yes">
             <alt>RemoteTM GUI</alt>
         </image>

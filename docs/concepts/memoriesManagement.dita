@@ -6,9 +6,9 @@
  <conbody>
   <p>Translation Memories served by RemoteTM are created and deleted using RemoteTM's web
    interface.</p>
-  <p>Make sure that the port used by Apache Tomcat or Jetty is open in the server firewall and also
-            in the firewalls of all client computers.</p>
+  <p>Make sure that the port used by Apache Tomcat is open in the server firewall and also in the
+   firewalls of all client computers.</p>
   <note importance="high">Make sure that all memories are closed before shutting down or restarting
-            Apache Tomcat or Jetty.</note>
+   Apache Tomcat.</note>
  </conbody>
 </concept>

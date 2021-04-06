@@ -2,48 +2,53 @@
 <!DOCTYPE task PUBLIC "-//OASIS//DTD DITA Task//EN" "task.dtd">
 <task id="emailserver_config">
     <title>Email Server Configuration</title>
-    <shortdesc></shortdesc>
+    <shortdesc>Follow these steps to configure the SMTP server that RemoteTM uses for sending
+        email.</shortdesc>
     <taskbody>
         <context>
-            <p>An SMTP server account is required for sending notifications to RemoteTM users.
-                Follow these steps to configure the email server to use.</p>
+            <p>RemoteTM sends email notifications in these cases:</p>
+            <ul>
+                <li>When a new user is added, to provide new credentials</li>
+                <li>When TMX files are imported, to deliver import results</li>
+                <li>When a password reset is requested, to provide a custom reset link</li>
+            </ul>
         </context>
         <steps>
             <step>
                 <cmd>Login as a user with "System Administrator" privileges.</cmd>
             </step>
             <step>
-                <cmd>Click  <menucascade>
+                <cmd>Click <menucascade>
                         <uicontrol>Settings</uicontrol>
                         <uicontrol>Email Server</uicontrol>
                     </menucascade> in main toolbar.</cmd>
                 <stepresult>The following dialog appears: <image href="../images/emailserver.png"
-                        placement="break"/>
+                        placement="break" scale="70"/>
                 </stepresult>
             </step>
             <step>
-                <cmd>In the <uicontrol>SMTP Server</uicontrol> text box enter the name or IP of the
-                    SMTP server.</cmd>
+                <cmd>Enter the name or IP of the SMTP server In the <uicontrol>SMTP
+                        Server</uicontrol> text box.</cmd>
             </step>
             <step>
-                <cmd>In the <uicontrol>Port</uicontrol> text box enter the port number in which the SMTP
-                    server accepts requests.</cmd>
+                <cmd>Enter the port number in which the SMTP server accepts requests in the
+                        <uicontrol>Port</uicontrol> text box.</cmd>
             </step>
             <step>
-                <cmd>In the <uicontrol>SMTP User</uicontrol> text box enter the user name for the
-                    SMTP server.</cmd>
+                <cmd>Enter the user name for the SMTP server in the <uicontrol>SMTP User</uicontrol>
+                    text box.</cmd>
             </step>
             <step>
-                <cmd>In the <uicontrol>SMTP Password</uicontrol> text box enter the password for the
-                    user selected in previous step.</cmd>
+                <cmd>Enter the password for the user selected in previous step in the
+                        <uicontrol>SMTP Password</uicontrol> text box.</cmd>
             </step>
             <step>
-                <cmd>In the <uicontrol>Send From</uicontrol> text box enter the email address used
-                    for sending notifications.</cmd>
+                <cmd>Enter the email address used
+                    for sending notifications in the <uicontrol>Send From</uicontrol> text box.</cmd>
             </step>
             <step>
-                <cmd>In the <uicontrol>RemoteTM Server</uicontrol> text box enter the URL of the
-                    RemoteTM server.</cmd>
+                <cmd>Enter the URL of the
+                    RemoteTM server in the <uicontrol>RemoteTM Server</uicontrol> text box.</cmd>
             </step>
             <step>
                 <cmd>Check the <uicontrol>Authentication Required</uicontrol> check box if your SMTP

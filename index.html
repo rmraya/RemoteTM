@@ -1,19 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="images/favicon.png">
-    <link rel="stylesheet" href="css/layout.css" />
-    <link rel="stylesheet" href="css/custom.css" />
-    <title>RemoteTM</title>
-  </head>
-  <body class="bg" style="height: 100vh; width: 100%; " id="body">
-    <div id="mainContent" class="mainContent"></div>
-    <div id="status" class="status" style="display:none;"></div>
-    <footer id="footer">RemoteTM <span id="version">5.0.0</span> © 2008 - 2021 <a href="https://maxprograms.com" target="_blank">Maxprograms</a>
-    </footer>
-    <script src="ts/remotetm.ts"></script>
-  </body>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/custom.css" />
+  <title>RemoteTM</title>
+  <script>
+    if (window.location.protocol !== 'https:') {
+      window.location = 'https://' + window.location.hostname + window.location.pathname + window.location.hash;
+    }
+  </script>
+</head>
+
+<body class="bg" style="height: 100vh; width: 100%; " id="body">
+  <div id="mainContent" class="mainContent"></div>
+  <div id="status" class="status" style="display:none;"></div>
+  <footer id="footer">RemoteTM <span id="version">5.0.0</span> © 2008 - 2021 <a href="https://maxprograms.com"
+      target="_blank">Maxprograms</a>
+  </footer>
+  <script src="ts/remotetm.ts"></script>
+</body>
+
 </html>
-  

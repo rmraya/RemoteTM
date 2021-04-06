@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE concept PUBLIC "-//OASIS//DTD DITA Concept//EN" "concept.dtd">
 <concept id="requirements">
-    <title>Requirements</title>
+    <title>Installation And Configuration</title>
     <shortdesc/>
     <conbody>
         <p>The following applications are required to install and run RemoteTM Web Server:</p>
         <ul>
-            <li>Java 11, available at <xref href="http://www.adoptopenjdk.net" format="html"
-                    scope="external">http://www.adoptopenjdk.net</xref>. </li>
+            <li>Java 11, available at <xref href="https://www.adoptopenjdk.net" format="html"
+                    scope="external">https://www.adoptopenjdk.net</xref>. </li>
             <li><xref keyref="tomcat">Apache Tomcat</xref> available from <xref
-                    href="http://tomcat.apache.org/" format="html" scope="external"
-                    >http://tomcat.apache.org/</xref>, or <xref keyref="jetty">Jetty</xref>
-                available from <xref href="http://www.eclipse.org/jetty/" format="html"
-                    scope="external">http://www.eclipse.org/jetty/</xref>.</li>
+                    href="https://tomcat.apache.org/" format="html" scope="external"
+                    >https://tomcat.apache.org/</xref>, configured with an SSL certificate to work
+                with HTTPS protocol.</li>
         </ul>
-        <p>JavaScript and cookies must be enabled in all client web browsers for using RemoteTM.</p>
+        <p>JavaScript must be enabled in all client web browsers for using RemoteTM.</p>
     </conbody>
 </concept>
