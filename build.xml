@@ -57,7 +57,7 @@
 	<target name="copyDocs">
 		<delete dir="WebContent/docs" failonerror="true" />
 		<copy includeemptydirs="false" todir="WebContent/docs">
-			<fileset dir="docs/out/webhelp5" />
+			<fileset dir="docs/out/pdf" />
 		</copy>
 	</target>
 
