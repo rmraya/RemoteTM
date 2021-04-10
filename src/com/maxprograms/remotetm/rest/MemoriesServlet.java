@@ -58,7 +58,7 @@ public class MemoriesServlet extends HttpServlet {
 
     private static final long serialVersionUID = 6894498215572036825L;
     private static Logger logger = System.getLogger(MemoriesServlet.class.getName());
-    private static final String MEMORY="memory";
+    private static final String MEMORY = "memory";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
@@ -168,6 +168,9 @@ public class MemoriesServlet extends HttpServlet {
                         break;
                     case "concordanceSearch":
                         result.put("tus", concordanceSearch(session, body));
+                        break;
+                    case "batchTranslate":
+                        result.put("matches", batchTranslate(session, body));
                         break;
                     default:
                         Utils.denyAccess(response);
@@ -542,6 +545,37 @@ public class MemoriesServlet extends HttpServlet {
                 result.put(it.next());
             }
             return result;
+        }
+        throw new IOException(Constants.DENIED);
+    }
+
+    private JSONArray batchTranslate(String session, JSONObject params) throws NoSuchAlgorithmException, IOException,
+            SQLException, JSONException, SAXException, ParserConfigurationException {
+        DbManager manager = DbManager.getInstance();
+        User who = manager.getUser(AuthorizeServlet.getUser(session));
+        if (who != null && who.isActive()) {
+            String memory = params.getString(MEMORY);
+            Permission p = manager.getPermission(memory, who.getId());
+            if (p.canRead()) {
+                JSONArray result = new JSONArray();
+                String srcLang = params.getString("srcLang");
+                String tgtLang = params.getString("tgtLang");
+                JSONArray segments = params.getJSONArray("segments");
+                TmManager.openMemory(memory);
+                for (int i = 0; i < segments.length(); i++) {
+                    JSONObject json = segments.getJSONObject(i);
+                    List<Match> matches = TmManager.searchTranslation(memory, json.getString("pure"), srcLang, tgtLang,
+                            60, false);
+                    JSONArray array = new JSONArray();
+                    for (int j = 0; j < matches.size(); j++) {
+                        array.put(matches.get(j).toJSON());
+                    }
+                    json.put("matches", array);
+                    result.put(json);
+                }
+                TmManager.close(memory);
+                return result;
+            }
         }
         throw new IOException(Constants.DENIED);
     }

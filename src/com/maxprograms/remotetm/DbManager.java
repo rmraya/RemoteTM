@@ -284,7 +284,7 @@ public class DbManager {
                     String subject = rs.getNString(3);
                     String client = rs.getNString(4);
                     Timestamp creationDate = rs.getTimestamp(5);
-                    memory = new Memory(id, name, project, subject, client, new Date(creationDate.getTime()));
+                    memory = new Memory(id, name, project, subject, client, new Date(creationDate.getTime()), Memory.LOCAL, "", "", "");
                 }
             }
         }
