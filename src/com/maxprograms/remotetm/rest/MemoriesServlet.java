@@ -549,8 +549,8 @@ public class MemoriesServlet extends HttpServlet {
         throw new IOException(Constants.DENIED);
     }
 
-    private JSONArray batchTranslate(String session, JSONObject params) throws NoSuchAlgorithmException, IOException,
-            SQLException, JSONException, SAXException, ParserConfigurationException {
+    private JSONArray batchTranslate(String session, JSONObject params)
+            throws NoSuchAlgorithmException, IOException, SQLException, SAXException, ParserConfigurationException {
         DbManager manager = DbManager.getInstance();
         User who = manager.getUser(AuthorizeServlet.getUser(session));
         if (who != null && who.isActive()) {
