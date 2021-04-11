@@ -25,12 +25,23 @@
 
     <chapter href="concepts/memoriesManagement.dita">
         <topicref href="tasks/addMemory.dita"/>
+        <topicref href="tasks/removeMemory.dita"/>
+        <topicref href="tasks/setAccess.dita"/>
         <topicref href="tasks/importTMX.dita"/>
-
+        <topicref href="tasks/exportTMX.dita"/>
+        <topicref href="tasks/closeMemories.dita"/>
+        <topicref href="tasks/refreshMemories.dita"/>
     </chapter>
 
     <chapter href="concepts/usersManagement.dita">
         <topicref href="tasks/addUser.dita"/>
+        <topicref href="tasks/editUser.dita"/>
+        <topicref href="tasks/removeUser.dita"/>
+        <topicref href="tasks/lockUser.dita"/>
+        <topicref href="concepts/passwordManagement.dita">
+            <topicref href="tasks/changePassword.dita"/>
+            <topicref href="tasks/resetPassword.dita"/>
+        </topicref>
     </chapter>
 
     <chapter href="rest/restApi.dita">

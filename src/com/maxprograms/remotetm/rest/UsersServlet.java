@@ -192,13 +192,13 @@ public class UsersServlet extends HttpServlet {
 
         String text = "\nDear " + user.getName() + ",\n\nA new account has been created for you in RemoteTM."
                 + "\n\nPlease login to the server using the credentials provided below.\n\n" + "  RemoteTM Server: "
-                + server.getInstanceUrl() + "\n  User Name: " + user.getId() + "\n  Code: " + password
+                + server.getInstanceUrl() + "\n  User Name: " + user.getId() + "\n  Password: " + password
                 + " \n\nThanks for using RemoteTM.\n\n";
 
         String html = "<p>Dear " + user.getName() + ",</p>"
                 + "<p>A new account has been created for you in RemoteTM.</p>"
                 + "<p>Please login to the server using the credentials provided below.</p>" + "<pre>  RemoteTM Server: "
-                + server.getInstanceUrl() + "\n  User Name: " + user.getId() + "\n  Code: " + password + "</pre>"
+                + server.getInstanceUrl() + "\n  User Name: " + user.getId() + "\n  Password: " + password + "</pre>"
                 + "<p>Thanks for using RemoteTM.</p>";
         try {
             sender.sendMail(new String[] { user.getEmail() }, new String[] {}, new String[] {},

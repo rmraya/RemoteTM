@@ -59,6 +59,8 @@ public class Utils {
         byte[] bytes = json.toString().getBytes(StandardCharsets.UTF_8);
         response.setContentLength(bytes.length);
         response.setStatus(status);
+        response.setCharacterEncoding(StandardCharsets.UTF_8.name());
+        response.setContentType("application/json");
         try (ServletOutputStream output = response.getOutputStream()) {
             output.write(bytes);
         }

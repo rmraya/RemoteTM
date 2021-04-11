@@ -21,9 +21,8 @@ public class SendMail {
 
     private EmailServer server;
 
-    private static final String HEADER = "<div style='width:100%; background:#0073B5; color:#ffffff; font-size:1.4em; padding:8px; margin-bottom: 1em; height:2em;'>RemoteTM</div>";
-    private static final String FOOTER = "<div style='width:100%; background:#0073B5; color:#ffffff; font-size:0.8em; padding:4px; text-align:center; margin-top: 1em; height:2em;'>"
-            + "Copyright &copy; 2008-2021 <a href='https://maxprograms.com' style='color:#ffffff;'>Maxprograms</a></div>";
+    private static final String HEADER = "<table width='100%' style='border-collapse:collapse; margin-bottom:30px;'><tr><td style='background:#0073B5;color:white; text-align:left; font-family: sans-serif; font-size:2em; letter-spacing: 2px; font-weight: lighter; padding-left:20px; padding-top:10px; padding-bottom:10px; text-shadow: 2px 2px 7px #444444;'>RemoteTM</td></tr></table>";
+    private static final String FOOTER = "<table width='100%' style='border-collapse:collapse; margin-top:40px;'><tr><td style='background:#0073B5;color:#dddddd; text-align:center; font-family:sans-serif; font-size:0.8em; padding:20px;'>Copyright &copy; 2008 - 2021 <a style='color:#eeeeee; text-decoration:none' href='https://www.maxprograms.com/'>Maxprograms</a>. All rights reserved.</td></tr></table>";
 
     public SendMail(EmailServer server) {
         this.server = server;
