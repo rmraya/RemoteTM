@@ -28,7 +28,7 @@ export class DropZone {
 
         this.dropArea = document.createElement('div');
         this.dropArea.classList.add('dropZone');
-        this.dropArea.addEventListener('dragover', (ev: DragEvent) => { this.dragOverHandle(ev); });
+        this.dropArea.addEventListener('dragover', (ev: DragEvent) => { this.dragOverHandler(ev); });
         this.dropArea.addEventListener('dragleave', () => { this.dragExitHandler(); });
         this.dropArea.addEventListener('drop', (ev: DragEvent) => { this.dropHandler(ev); });
         parent.appendChild(this.dropArea);
@@ -55,7 +55,7 @@ export class DropZone {
         this.dropArea.appendChild(this.fileName);
     }
 
-    dragOverHandle(event: DragEvent): void {
+    dragOverHandler(event: DragEvent): void {
         event.preventDefault();
         this.dropArea.classList.add('dragOver');
     }
