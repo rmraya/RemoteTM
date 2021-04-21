@@ -1,11 +1,17 @@
-@import "./colors.css";
+@import "./neutral.css";
+@import "./theme.css";
+:root {
+	--focus-border: #f57c00;
+	--error-color: #960303;
+}
+
 * {
 	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 body {
-	background-color: var(--WHITE);
-	color: var(--BLACK)
+	background: var(--gray10);
+	color: var(--black);
 }
 
 .bg {
@@ -14,52 +20,29 @@ body {
 
 .titleBar {
 	width: 100%;
-	background: var(--PRIMARY-DARK);
+	background: var(--themeDark);
 	margin: 0px;
 	padding: 2px 2px 2px 4px;
 	white-space: nowrap;
 	overflow-x: hidden;
 }
 
-header {
-	background: var(--PRIMARY);
-	color: var(--WHITE);
-	padding: 0px;
-	margin: 0px;
-}
-
-header a {
-	background: var(--toolbar-text);
-	color: var(--toolbar-background);
-	fill: var(--toolbar-background);
-	text-decoration: none;
-	margin-top: 20px;
-	padding-right: 5px;
-}
-
-header a:hover {
-	text-decoration: underline;
-	color: var(--toolbar-background);
-	fill: var(--toolbar-background);
-	background: var(--toolbar-text) !important;
-}
-
 footer {
 	padding-top: 2px;
 	vertical-align: bottom;
 	text-align: center;
-	background: var(--SWORDFISH-DARK);
-	color: var(--WHITE);
+	background: var(--themeDark);
+	color: var(--white);
 	font-size: 0.8em;
 }
 
 footer a {
-	color: var(--WHITE);
+	color: var(--white);
 	text-decoration: none;
 }
 
 footer a:hover {
-	background: var(--SWORDFISH-DARK);
+	background: var(--themeDark);
 	text-decoration: underline;
 }
 
@@ -69,10 +52,10 @@ footer a:hover {
 	left: calc(40% - 100px);
 	width: 200px;
 	margin: auto;
-	background-color: var(--PRIMARY);
-	color: var(--WHITE);
+	background-color: var(--themePrimary);
+	color: var(--white);
 	padding: 20px;
-	border: 1px solid var(--WHITE);
+	border: 1px solid var(--white);
 	border-radius: 4px;
 	z-index: 200;
 }
@@ -82,30 +65,35 @@ table {
 	border-collapse: collapse;
 }
 
-tr {
-	padding-top: 8px;
-	padding-bottom: 8px;
-}
-
-.stripes tr:nth-child(odd) {
-	background-color: var(--SECONDARY-50);
-}
-
-.stripes tr:nth-child(even) {
-	background-color: var(--SECONDARY-200);
-}
-
 a {
-	color: var(--PRIMARY);
+	color: var(--themePrimary);
 	text-decoration: none;
 	cursor: pointer;
 }
 
 thead {
-	background: var(--WHITE);
-	color: var(--PRIMARY);
-	border-top: 1px solid var(--PRIMARY);
-	border-bottom: 1px solid var(--PRIMARY);
+	height: 24px;
+	background: var(--white);
+	color: var(--themeDark);
+	border-top: 1px solid var(--themeDark);
+	border-bottom: 1px solid var(--themeDark);
+}
+
+thead tr {
+	background: inherit !important;
+	color: inherit !important;
+}
+
+tr {
+	border-bottom: 1px solid var(--gray40);
+}
+
+tr.selected {
+	background-color: var(--gray30) !important;
+}
+
+.discover tr:hover {
+	background-color: var(--themeLight) !important;
 }
 
 tbody {
@@ -114,33 +102,19 @@ tbody {
 }
 
 td {
-	padding: 4px;
+	padding: 8px 4px;
 	vertical-align: top;
 	font-size: medium;
 }
 
-td.fixed {
-	text-align: center;
-	vertical-align: middle;
-	background: var(--lighter-background);
-	color: var(--BLACK);
-	cursor: default !important;
-}
-
 th {
 	position: sticky;
+	padding: 8px 4px;
 	top: 0;
 	z-index: 5;
-	font-weight: normal;
-	white-space: nowrap;
-	color: inherit;
-	background-color: inherit;
-	padding: 4px 0px;
-}
-
-.fixed {
-	width: 1px;
-	text-align: center;
+	font-weight: 300;
+	background: var(--white);
+	color: var(--themePrimary);
 }
 
 .right {
@@ -159,30 +133,28 @@ input[type=number] {
 	height: 1.2rem;
 	font-size: 1rem;
 	margin: 4px;
-	background: var(--WHITE);
-	color: var(--BLACK);
-	border: 1px solid var(--PRIMARY);
+	background: var(--gray10);
+	color: var(--black);
+	border: 1px solid var(--themePrimary);
 	border-radius: 2px;
 }
 
 input[type=checkbox] {
 	margin-top: 0.5em;
 	background-color: var(--input-background);
-	border: 1px solid var(--PRIMARY);
+	border: 1px solid var(--themePrimary);
 }
 
 button {
-	color: var(--WHITE);
-	fill: var(--WHITE);
-	background-color: var(--PRIMARY);
-	border: 1px solid var(--PRIMARY);
+	color: var(--white);
+	background: var(--themePrimary);
+	border: 1px solid var(--themePrimary);
 	border-radius: 2px;
 	font-size: 1em;
 	text-align: center;
 	margin: 4px;
 	padding: 4px 8px;
 	white-space: nowrap;
-	transition: background-color .2s ease-in;
 }
 
 button:focus {
@@ -190,13 +162,20 @@ button:focus {
 }
 
 button:hover {
-	background-color: var(--PRIMARY-DARK);
-	border-color: (--PRIMARY-DARK);
+	background: var(--themeDarkAlt);
+	border: 1px solid var(--themeDarkAlt);
+	transition-property: all;
+	transition-duration: 0.5s;
+	transition-timing-function: cubic-bezier(0.14, 0.71, 0.38, 1);
+	transition-delay: 0s;
 }
 
 a.secondary {
-	color: var(--PRIMARY);
-	background: var(--SECONDARY-50);
+	color: var(--themePrimary);
+	background: var(--gray10);
+	border-radius: 2px;
+	font-size: 1em;
+	text-align: center;
 	margin: 4px;
 	padding: 4px 8px;
 	white-space: nowrap;
@@ -204,9 +183,8 @@ a.secondary {
 }
 
 a.secondary:hover {
-	color: var(--PRIMARY-DARK);
-	background: var(--SECONDARY-400);
-	border-radius: 2px;
+	color: var(--themeDark);
+	background: var(--gray30);
 }
 
 .row {
@@ -219,12 +197,12 @@ a.secondary:hover {
 
 select:required:invalid {
 	font-weight: lighter;
-	color: var(--SECONDARY-600) !important;
+	color: var(--gray110) !important;
 }
 
 .placeholder {
 	font-weight: lighter;
-	color: var(--SECONDARY-600) !important;
+	color: var(--gray110) !important;
 }
 
 option[value=""][disabled] {
@@ -236,25 +214,25 @@ option[value=""][disabled] {
 	padding: 4px;
 	width: calc(100% - 16px);
 	font-size: 1em;
-	background: var(--WHITE);
-	color: var(--BLACK);
+	background: var(--gray10);
+	color: var(--black);
 	border-top: none;
 	border-left: none;
 	border-right: none;
-	border-bottom: 1px solid var(--SECONDARY-600);
+	border-bottom: 1px solid var(--gray110);
 	border-radius: 2px;
 	transition: border .2s ease-in;
 }
 
 .selectBox:focus {
 	outline: none !important;
-	border-bottom: 1px solid var(--PRIMARY-600);
+	border-bottom: 1px solid var(--themePrimary);
 }
 
 option {
 	font-size: 1em;
-	background: var(--WHITE) !important;
-	color: var(--BLACK);
+	background: var(--white) !important;
+	color: var(--black);
 }
 
 label {
@@ -313,44 +291,44 @@ label {
 .tabHolder {
 	display: flex;
 	flex-flow: row;
-	color: var(--BLACK);
+	color: var(--black);
 	background: var(--lighter-background);
 	padding: 0px 0px 0px 8px;
 }
 
 .tab {
 	overflow: hidden;
-	color: var(--PRIMARY);
-	background: var(--WHITE);
+	color: var(--themePrimary);
+	background: var(--white);
 	padding-left: 10px;
 	padding-right: 10px;
 	margin-right: 2px;
-	border-bottom: 2px solid var(--WHITE);
+	border-bottom: 2px solid var(--white);
 	vertical-align: middle;
 }
 
 .selectedTab {
-	border-bottom: 2px solid var(--PRIMARY);
+	border-bottom: 2px solid var(--themePrimary);
 }
 
 .tab:hover {
-	border-bottom: 2px solid var(--PRIMARY-DARK);
+	border-bottom: 2px solid var(--themeDark);
 }
 
 .selectedTab:hover {
 	background: var(--normal-background);
-	color: var(--PRIMARY-DARK);
+	color: var(--themeDark);
 }
 
 .tab a {
-	color: var(--PRIMARY);
+	color: var(--themePrimary);
 	text-decoration: none;
 	cursor: pointer;
 }
 
 .tab a:hover {
 	background: var(--normal-background);
-	color: var(--PRIMARY-DARK);
+	color: var(--themeDark);
 }
 
 .tabContent {
@@ -385,9 +363,9 @@ label {
 }
 
 .tooltip .tooltiptext {
-	background-color: var(--PRIMARY-DARK);
-	border-color: var(--WHITE);
-	color: var(--WHITE);
+	background-color: var(--themeDark);
+	border-color: var(--white);
+	color: var(--white);
 	visibility: hidden;
 	padding: 4px;
 	border-radius: 2px;
@@ -427,14 +405,13 @@ label {
 .dialog {
 	position: absolute;
 	padding: 0;
-	background: var(--SECONDARY-50);
-	border: 1px solid var(--SWORDFISH-DARK);
+	background: var(--gray10);
 	border-radius: 4px;
-	box-shadow: 0px 2px 4px var(--SECONDARY-700);
+	box-shadow: 0px 2px 4px var(--gray130);
 }
 
 .shadow {
-	box-shadow: 0px 2px 4px var(--SECONDARY-700);
+	box-shadow: 0px 4px 8px var(--gray130);
 }
 
 .backdrop {
@@ -454,9 +431,11 @@ label {
 .dialogTitle {
 	height: 24px;
 	vertical-align: middle;
-	background: var(--SWORDFISH-DARK);
-	color: var(--WHITE);
-	fill: var(--WHITE);
+	background: var(--themeDark);
+	border: 1px solid var(--themeDark);
+	border-radius: 4px 4px 0 0;
+	color: var(--white);
+	fill: var(--white);
 }
 
 .dialogTitle span {
@@ -470,7 +449,7 @@ label {
 }
 
 .dialogTitle a:hover {
-	background: var(--PRIMARY-DARK);
+	background: var(--themeDark);
 }
 
 .dialog table th {
@@ -479,12 +458,12 @@ label {
 
 .larger {
 	font-size: 1.4em;
-	font-weight: lighter;
+	font-weight: 200;
 }
 
 .topbar {
-	background: var(--SWORDFISH-DARK);
-	color: var(--WHITE);
+	background: var(--themeDark);
+	color: var(--white);
 	display: flex;
 	flex-direction: row;
 	width: 100%;
@@ -499,14 +478,14 @@ label {
 }
 
 .topbar a {
-	color: var(--WHITE);
-	fill: var(--WHITE);
+	color: var(--white);
+	fill: var(--white);
 	padding: 8px 16px;
 	white-space: nowrap;
 }
 
 .topbar a:hover {
-	background: var(--SWORDFISH-DARK);
+	background: var(--themeDark);
 	cursor: pointer;
 }
 
@@ -515,9 +494,9 @@ label {
 }
 
 .toolbar {
-	background: var(--WHITE);
-	color: var(--PRIMARY);
-	fill: var(--PRIMARY);
+	background: var(--white);
+	color: var(--themePrimary);
+	fill: var(--themePrimary);
 	display: flex;
 	flex-direction: row;
 	width: 100%;
@@ -527,29 +506,12 @@ label {
 	vertical-align: middle;
 }
 
-.toolbar a {
-	padding: 8px 16px;
-	white-space: nowrap;
-	line-height: 24px;
-}
-
-.toolbar a:hover {
-	background: var(--SECONDARY-500);
-	color: var(--PRIMARY-DARK);
-	fill: var(--PRIMARY-DARK);
-	cursor: pointer;
-}
-
-.toolbar a svg {
-	vertical-align: middle;
-}
-
 .flex {
 	display: flex !important;
 }
 
 hr {
-	background: var(--PRIMARY-600);
+	background: var(--themePrimary);
 	border: none;
 	height: 1px;
 	width: 100%;
@@ -574,16 +536,16 @@ hr {
 }
 
 .dropdownOptions a {
-	background: var(--SECONDARY-200);
-	color: var(--PRIMARY);
+	background: var(--white);
+	color: var(--gray160);
 	padding: 8px 16px;
 	white-space: nowrap;
 	z-index: 4;
 }
 
 .dropdownOptions a:hover {
-	background: var(--SECONDARY-400);
-	color: var(--PRIMARY-DARK);
+	background: var(--gray20);
+	color: var(--themePrimary);
 }
 
 .inputContainer {
@@ -594,7 +556,7 @@ hr {
 }
 
 .inputLabel {
-	color: var(--PRIMARY);
+	color: var(--themePrimary);
 	font-size: 0.8em;
 	margin-left: 8px;
 	margin-bottom: 2px;
@@ -602,7 +564,7 @@ hr {
 }
 
 .hiddenLabel {
-	color: var(--SECONDARY-50) !important;
+	color: var(--gray10) !important;
 }
 
 .inputBox {
@@ -610,24 +572,24 @@ hr {
 	padding: 4px;
 	width: calc(100% - 24px);
 	font-size: 1em;
-	background: var(--WHITE);
-	color: var(--BLACK);
+	background: var(--gray10);
+	color: var(--black);
 	border-top: none;
 	border-left: none;
 	border-right: none;
-	border-bottom: 1px solid var(--SECONDARY-600);
+	border-bottom: 1px solid var(--gray110);
 	border-radius: 2px;
 	transition: border .2s ease-in;
 }
 
 .inputBox::placeholder {
-	color: var(--SECONDARY-600);
+	color: var(--gray110);
 	font-weight: lighter;
 }
 
 .inputBox:focus {
 	outline: none !important;
-	border-bottom: 1px solid var(--PRIMARY-600);
+	border-bottom: 1px solid var(--themePrimary);
 }
 
 .inputBox svg {
@@ -639,23 +601,23 @@ hr {
 	flex-direction: row;
 	-ms-flex-align: center;
 	width: calc(100% - 24px);
-	padding: 8px;
+	padding: 0px 8px;
 	margin-left: 4px;
 }
 
 .checkBox span {
 	margin-top: 4px;
 	margin-left: 4px;
-	color: var(--BLACK);
+	color: var(--black);
 	width: calc(100% - 8px);
 }
 
 .checkBox svg {
-	fill: var(--PRIMARY);
+	fill: var(--themePrimary);
 }
 
 .unchecked {
-	color: var(--SECONDARY-600) !important;
+	color: var(--gray110) !important;
 }
 
 .message {
@@ -665,8 +627,8 @@ hr {
 	width: 300px;
 	border: none;
 	border-radius: 4px;
-	background: var(--SWORDFISH-DARK);
-	color: var(--WHITE);
+	background: var(--themeDark);
+	color: var(--white);
 	transition: all .2s ease-in;
 	padding: 16px;
 	text-align: center;
@@ -674,7 +636,7 @@ hr {
 }
 
 .selected {
-	background-color: var(--PRIMARY-HIGHLIGTH) !important;
+	background-color: var(--themeLight) !important;
 }
 
 .dropZone {
@@ -683,11 +645,11 @@ hr {
 	height: 96px;
 	text-align: center;
 	font-size: 1.2em;
-	border-bottom: 1px solid var(--SECONDARY-600);
+	border-bottom: 1px solid var(--gray110);
 }
 
 .dropZone label {
-	color: var(--PRIMARY);
+	color: var(--themePrimary);
 }
 
 .dropZone label:hover {
@@ -699,6 +661,6 @@ hr {
 }
 
 .dragOver {
-	background-color: var(--PRIMARY-HIGHLIGTH);
-	border-bottom: 1px solid var(--PRIMARY);
+	background-color: var(--themeLight);
+	border-bottom: 1px solid var(--themePrimary);
 }

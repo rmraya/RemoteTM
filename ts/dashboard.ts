@@ -45,7 +45,7 @@ export class Dashboard implements View {
         this.container = document.createElement('div');
         this.container.classList.add('fullWidth');
         this.container.classList.add('fullHeight');
-        this.container.style.background = 'var(--SECONDARY-50)';
+        this.container.style.background = 'var(--gray10)';
         mainContent.appendChild(this.container);
 
         let topbar: HTMLDivElement = document.createElement('div');
@@ -118,7 +118,7 @@ export class Dashboard implements View {
 
         let mainTable: HTMLTableElement = document.createElement('table');
         mainTable.classList.add('fullWidth');
-        mainTable.classList.add('stripes');
+        mainTable.classList.add('discover');
         tableContainer.appendChild(mainTable);
 
         let tableHeader: HTMLTableSectionElement = document.createElement('thead');
@@ -220,15 +220,11 @@ export class Dashboard implements View {
         help.target = '_blank';
         helpMenu.addOption(help);
 
-        helpMenu.addOption(document.createElement('hr'));
-
         let supportGroup: HTMLAnchorElement = document.createElement('a');
         supportGroup.innerText = 'Support Group';
         supportGroup.href = 'https://groups.io/g/maxprograms/';
         supportGroup.target = '_blank';
         helpMenu.addOption(supportGroup);
-
-        helpMenu.addOption(document.createElement('hr'));
 
         let licenses: HTMLAnchorElement = document.createElement('a');
         licenses.innerText = 'View Licenses';

@@ -34,17 +34,16 @@ export class AccessDialog {
     constructor(memory: string) {
         this.memory = memory;
 
-        this.dialog = new Dialog(450);
+        this.dialog = new Dialog(500);
         this.dialog.setTitle('Set Access');
 
         let tableContainer: HTMLDivElement = document.createElement('div');
-        tableContainer.classList.add('divContanter');
+        tableContainer.classList.add('divContainer');
         tableContainer.classList.add('fullWidth');
         tableContainer.style.height = '300px';
         this.dialog.contentArea.appendChild(tableContainer);
 
         this.table = document.createElement('table');
-        this.table.classList.add('stripes');
         tableContainer.appendChild(this.table);
 
         let setAccess: HTMLButtonElement = document.createElement('button');
