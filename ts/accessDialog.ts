@@ -22,6 +22,13 @@ import { Dialog } from "./dialog";
 import { Message } from "./message";
 import { RemoteTM } from "./remotetm";
 
+class Permission {
+    user: string;
+    read: boolean;
+    write: boolean;
+    export: boolean
+}
+
 export class AccessDialog {
 
     memory: string;
@@ -74,10 +81,10 @@ export class AccessDialog {
         this.dialog.open();
     }
 
-    addPermissions(array: any[]): void {
+    addPermissions(array: Permission[]): void {
         let length = array.length;
         for (let i = 0; i < length; i++) {
-            let permission: any = array[i];
+            let permission: Permission = array[i];
             let tr: HTMLTableRowElement = document.createElement('tr');
             tr.id = permission.user;
             this.table.appendChild(tr);

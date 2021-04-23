@@ -73,10 +73,8 @@ a {
 
 thead {
 	height: 24px;
-	background: var(--white);
+	background: var(--gray20);
 	color: var(--themeDark);
-	border-top: 1px solid var(--themeDark);
-	border-bottom: 1px solid var(--themeDark);
 }
 
 thead tr {
@@ -113,7 +111,7 @@ th {
 	top: 0;
 	z-index: 5;
 	font-weight: 300;
-	background: var(--white);
+	background: inherit !important;
 	color: var(--themePrimary);
 }
 
@@ -504,6 +502,7 @@ label {
 	padding: 4px;
 	width: calc(100% - 8px);
 	vertical-align: middle;
+	border-bottom: 1px solid var(--gray50);
 }
 
 .flex {

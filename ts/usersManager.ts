@@ -71,7 +71,6 @@ export class UsersManager {
 
         let mainTable: HTMLTableElement = document.createElement('table');
         mainTable.classList.add('fullWidth');
-        mainTable.classList.add('discover');
         tableContainer.appendChild(mainTable);
 
         let tableHeader: HTMLTableSectionElement = document.createElement('thead');
@@ -101,6 +100,7 @@ export class UsersManager {
         headerRow.appendChild(activeTh);
 
         this.tbody = document.createElement('tbody');
+        this.tbody.classList.add('discover');
         mainTable.appendChild(this.tbody);
 
         this.loadUsers();

@@ -30,6 +30,17 @@ import { RemoteTM } from './remotetm';
 import { UsersManager } from './usersManager';
 import { View } from './view';
 
+class Database {
+    id: string;
+    name: string;
+    owner: string;
+    project: string;
+    subject: string;
+    client: string;
+    creationDate: string;
+    open: boolean;
+}
+
 export class Dashboard implements View {
 
     container: HTMLDivElement;
@@ -118,7 +129,6 @@ export class Dashboard implements View {
 
         let mainTable: HTMLTableElement = document.createElement('table');
         mainTable.classList.add('fullWidth');
-        mainTable.classList.add('discover');
         tableContainer.appendChild(mainTable);
 
         let tableHeader: HTMLTableSectionElement = document.createElement('thead');
@@ -156,6 +166,7 @@ export class Dashboard implements View {
         headerRow.appendChild(ClientTh);
 
         this.tbody = document.createElement('tbody');
+        this.tbody.classList.add('discover');
         mainTable.appendChild(this.tbody);
 
         this.loadMemories();
@@ -289,11 +300,11 @@ export class Dashboard implements View {
         });
     }
 
-    displayMemories(memories: any[]): void {
+    displayMemories(memories: Database[]): void {
         this.tbody.innerHTML = '';
         let length = memories.length;
         for (let i = 0; i < length; i++) {
-            let memory: any = memories[i];
+            let memory: Database = memories[i];
             let tr: HTMLTableRowElement = document.createElement('tr');
             tr.id = memory.id;
             tr.addEventListener('click', () => { this.setSelected(memory.id) });
