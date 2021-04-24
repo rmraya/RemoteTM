@@ -38,12 +38,19 @@ export class Dialog {
     dialogLeft: number;
     dragging: boolean;
 
+    backdrop: HTMLDivElement;
+
     constructor(width: number) {
+        this.backdrop = document.createElement('div');
+        this.backdrop.classList.add('dialogBackdrop');
+        this.backdrop.style.zIndex = (100 + (2 * RemoteTM.dialogCount())) + '';
+        document.body.appendChild(this.backdrop);
+
         this.id = 'dia' + (Math.random() * 10000000);
         this.dialog = document.createElement('div');
         this.dialog.classList.add('dialog');
         this.dialog.classList.add('hidden');
-        this.dialog.style.zIndex = (10 + (2 * RemoteTM.dialogCount())) + '';
+        this.dialog.style.zIndex = (102 + (2 * RemoteTM.dialogCount())) + '';
         this.dialog.draggable = true;
         this.dialog.addEventListener('dragstart', (ev: DragEvent) => { this.startMoving(ev); });
         this.dialog.addEventListener('drag', (ev: DragEvent) => { this.move(ev); });
@@ -100,6 +107,7 @@ export class Dialog {
         }
         RemoteTM.removeDialog(this);
         document.body.removeChild(this.dialog);
+        document.body.removeChild(this.backdrop);
     }
 
     appendChild(child: HTMLElement): void {
