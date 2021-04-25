@@ -2,14 +2,88 @@
 <!DOCTYPE task PUBLIC "-//OASIS//DTD DITA Task//EN" "task.dtd">
 <task id="setAccess">
     <title>Set Access Permissions</title>
-    <shortdesc></shortdesc>
+    <shortdesc>Follow these steps to set the access levels for each user on your
+        memories.</shortdesc>
     <taskbody>
         <context>
-            <p></p>
+            <p>User access to translation memories content is controlled by setting access
+                permissions. The access rights a user can have for a given translation memory
+                are:</p>
+            <ul>
+                <li>Read</li>
+                <li>Write</li>
+                <li>Export</li>
+            </ul>
+            <p>The following table summarizes the actions allowed to a user that has been granted
+                access to a database:</p>
+            <simpletable>
+                <sthead>
+                    <stentry>Permission</stentry>
+                    <stentry>Allowed Actions</stentry>
+                </sthead>
+                <strow>
+                    <stentry>Read</stentry>
+                    <stentry>Use the translation memory in <xref keyref="swordfish">Swordfish
+                            IV</xref> or RemoteTM's <xref href="../rest/restApi.dita">REST
+                            API</xref> for the following tasks: <ul>
+                            <li>TM matches retrieval</li>
+                            <li>Concordance searches</li>
+                            <li>Terms retrieval</li>
+                            <li>Term searches</li>
+                        </ul>
+                    </stentry>
+                </strow>
+                <strow>
+                    <stentry>Write</stentry>
+                    <stentry>
+                        <ul>
+                            <li>Import TMX files using RemoteTM´s web interface.</li>
+                            <li>Import TMX files using <xref keyref="swordfish">Swordfish IV</xref>
+                                or RemoteTM's <xref href="../rest/restApi.dita">REST
+                                API</xref>.</li>
+                            <li>Select the translation memory as write-enabled database in <xref
+                                    keyref="swordfish">Swordfish IV</xref> or RemoteTM's <xref
+                                    href="../rest/restApi.dita">REST API</xref> for storing segments
+                                at translation time.</li>
+                        </ul>
+                    </stentry>
+                </strow>
+                <strow>
+                    <stentry>Export</stentry>
+                    <stentry>
+                        <ul>
+                            <li>Export the translation memory as TMX using RemoteTM´s web
+                                interface.</li>
+                            <li>Export the database as TMX using <xref keyref="swordfish">Swordfish
+                                    IV</xref> or RemoteTM's <xref href="../rest/restApi.dita">REST
+                                    API</xref>.</li>
+                        </ul>
+                    </stentry>
+                </strow>
+            </simpletable>
+            <p>Users with "System Administrator" privileges can set access permissions for any
+                translation memory.</p>
+            <p>Users with "Project Manager" privileges can set access permissions for any database
+                they own.</p>
         </context>
         <steps>
             <step>
-                <cmd></cmd>
+                <cmd>Select a memory on the main list by clicking on it.</cmd>
+            </step>
+            <step>
+                <cmd>Click the <uicontrol>Set Access</uicontrol> button on the main toolbar.</cmd>
+                <stepresult>The <uicontrol>Set Access</uicontrol> dialog appears: <image
+                        href="../images/setAccess.png" placement="break" scale="50">
+                        <alt>Set Acces Dialog</alt>
+                    </image>
+                </stepresult>
+            </step>
+            <step>
+                <cmd>Click on the checkboxes next each user ID to set the desired permission levels
+                    for that user.</cmd>
+            </step>
+            <step>
+                <cmd>Click on the <uicontrol>Set Access</uicontrol> button.</cmd>
             </step>
         </steps>
     </taskbody>

@@ -2,13 +2,13 @@
 <!DOCTYPE concept PUBLIC "-//OASIS//DTD DITA Concept//EN" "concept.dtd">
 <concept id="remotetm_database_management">
  <title>Translation Memories</title>
- <shortdesc/>
+ <shortdesc>Use the buttons on RemoteTM's main toolbar to manage your memories.</shortdesc>
  <conbody>
-  <p>Use the buttons on the main toolbar to manage your memories.</p>
-  <p>Make sure that the port used by Apache Tomcat is open in the server firewall and also in the
-   firewalls of all client computers.</p>
-  
+  <image placement="break" href="../images/buttons.png" scalefit="yes">
+   <alt>RemoteTM Toolbar Buttons</alt>
+  </image>
 
+  <p>The buttons on RemoteTM's main tool bar let you perform these tasks:</p>
   <ul>
    <li><xref href="../tasks/addMemory.dita">Add Memory</xref></li>
    <li><xref href="../tasks/removeMemory.dita">Remove Memory</xref></li>
@@ -18,7 +18,7 @@
    <li><xref href="../tasks/closeMemories.dita">Close Memories</xref></li>
    <li><xref href="../tasks/refreshMemories.dita">Refresh Memories</xref></li>
   </ul>
-  
+
   <note importance="high">Make sure that all memories are closed before shutting down or restarting
    Apache Tomcat.</note>
  </conbody>

@@ -92,6 +92,7 @@ export class Select {
             this.backdrop = document.createElement('div');
             this.backdrop.classList.add('backdrop');
             this.backdrop.addEventListener('click', () => { this.toggleOptions(); });
+            this.backdrop.style.zIndex = (104 + (2 * RemoteTM.dialogCount())) + '';
             document.body.appendChild(this.backdrop);
 
             let options: HTMLDivElement = document.createElement('div');

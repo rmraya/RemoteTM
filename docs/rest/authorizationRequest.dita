@@ -11,10 +11,6 @@
                 <stentry>Value</stentry>
             </sthead>
             <strow>
-                <stentry><tt>Accept</tt></stentry>
-                <stentry><tt>application/json</tt></stentry>
-            </strow>
-            <strow>
                 <stentry><tt>Content-Type</tt></stentry>
                 <stentry><tt>application/json</tt></stentry>
             </strow>

@@ -365,6 +365,7 @@ export class Dashboard implements View {
     }
 
     removeMemory(): void {
+
         if (this.selected === '') {
             new Message('Select memory');
             return;
@@ -373,24 +374,26 @@ export class Dashboard implements View {
             new Message('Access denied');
             return;
         }
-        let params: any = {
-            command: 'removeMemory',
-            memory: this.selected
+        if (window.confirm('Remove selected memory?')) {
+            let params: any = {
+                command: 'removeMemory',
+                memory: this.selected
+            }
+            fetch(RemoteTM.getMainURL() + '/memories', {
+                method: 'POST',
+                headers: [
+                    ['Session', RemoteTM.getSession()],
+                    ['Content-Type', 'application/json'],
+                    ['Accept', 'application/json']
+                ],
+                body: JSON.stringify(params)
+            }).then(async (response: Response) => {
+                let json: any = await response.json();
+                json.status === 'OK' ? this.loadMemories() : new Message(json.reason);
+            }).catch((reason: any) => {
+                console.error('Error:', reason);
+            });
         }
-        fetch(RemoteTM.getMainURL() + '/memories', {
-            method: 'POST',
-            headers: [
-                ['Session', RemoteTM.getSession()],
-                ['Content-Type', 'application/json'],
-                ['Accept', 'application/json']
-            ],
-            body: JSON.stringify(params)
-        }).then(async (response: Response) => {
-            let json: any = await response.json();
-            json.status === 'OK' ? this.loadMemories() : new Message(json.reason);
-        }).catch((reason: any) => {
-            console.error('Error:', reason);
-        });
     }
 
     exportTMX(): void {

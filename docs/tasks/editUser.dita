@@ -2,15 +2,39 @@
 <!DOCTYPE task PUBLIC "-//OASIS//DTD DITA Task//EN" "task.dtd">
 <task id="editUser">
     <title>Edit User</title>
-    <shortdesc></shortdesc>
+    <shortdesc>Follow these steps for modifying an existing RemoteTM user.</shortdesc>
     <taskbody>
         <context>
-            <p></p>
+            <p/>
         </context>
         <steps>
             <step>
-                <cmd></cmd>
+                <cmd>Click <menucascade>
+                        <uicontrol>Settings</uicontrol>
+                        <uicontrol>Manage Users</uicontrol>
+                    </menucascade> in main toolbar.</cmd>
+                <stepresult>The <uicontrol>Manage Users</uicontrol> dialog appears.</stepresult>
+            </step>
+            <step>
+                <cmd>Select a user on the <uicontrol>Manage Users</uicontrol> dialog list by clicking on it.</cmd>
+            </step>
+            <step>
+                <cmd>In the <uicontrol>Manage Users</uicontrol> dialog, click the <uicontrol>Edit
+                        User</uicontrol> button.</cmd>
+                <stepresult>The <uicontrol>Edit User</uicontrol> dialog appears: <image
+                        href="../images/editUser.png" placement="break" scale="50">
+                        <alt>Edit User Dialog</alt>
+                    </image>
+                </stepresult>
+            </step>
+            <step>
+                <cmd>Adjust the contents of <uicontrol>Name</uicontrol>, <uicontrol>Role</uicontrol>
+                    or <uicontrol>Email</uicontrol> fields as needed.</cmd>
+            </step>
+            <step>
+                <cmd>Click the <uicontrol>Save</uicontrol> button.</cmd>
             </step>
         </steps>
+        <result>The user account is updated with the new data.</result>
     </taskbody>
 </task>

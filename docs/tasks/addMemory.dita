@@ -2,7 +2,7 @@
 <!DOCTYPE task PUBLIC "-//OASIS//DTD DITA Task//EN" "task.dtd">
 <task id="remotetm_create_database">
     <title>Add Memory</title>
-    <shortdesc/>
+    <shortdesc>Follow these steps to add a new Translation Memory to RemoteTM.</shortdesc>
     <taskbody>
         <steps>
             <step>
@@ -10,10 +10,10 @@
                     privileges.</cmd>
             </step>
             <step>
-                <cmd>Click the <uicontrol>Add Memory</uicontrol> button.</cmd>
-                <stepresult>The following dialog appears: <image href="../images/addMemory.png"
+                <cmd>Click the <uicontrol>Add Memory</uicontrol> button on the main toolbar.</cmd>
+                <stepresult>The <uicontrol>Add Memory</uicontrol> dialog appears: <image href="../images/addMemory.png"
                         placement="break" scale="50">
-                        <alt>Add Memory dialog</alt>
+                        <alt>Add Memory Dialog</alt>
                     </image>
                 </stepresult>
             </step>
@@ -25,11 +25,11 @@
             </step>
             <step>
                 <cmd>Optionally, type a project description in the <uicontrol>Project</uicontrol>
-                    text box.</cmd>
+                    text input.</cmd>
             </step>
             <step>
                 <cmd>Optionally, type a subject for the TM data in the
-                        <uicontrol>Subject</uicontrol> text box.</cmd>
+                        <uicontrol>Subject</uicontrol> text input.</cmd>
             </step>
             <step>
                 <cmd>Optionally, enter a client name in the <uicontrol>Client</uicontrol> text

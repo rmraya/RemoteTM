@@ -133,6 +133,8 @@ export class RemoteTM {
     }
 
     public static showLogin(): void {
+        RemoteTM.who = '';
+        RemoteTM.session = '';
         let view = new LoginForm();
         view.show();
     }

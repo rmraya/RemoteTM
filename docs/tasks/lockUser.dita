@@ -2,15 +2,27 @@
 <!DOCTYPE task PUBLIC "-//OASIS//DTD DITA Task//EN" "task.dtd">
 <task id="lockUser">
     <title>Lock/Unlock User</title>
-    <shortdesc></shortdesc>
+    <shortdesc>A user account can be temporarily disabled without removing the associated data using this option.</shortdesc>
     <taskbody>
         <context>
             <p></p>
         </context>
         <steps>
             <step>
-                <cmd></cmd>
+                <cmd>Click <menucascade>
+                    <uicontrol>Settings</uicontrol>
+                    <uicontrol>Manage Users</uicontrol>
+                </menucascade> in main toolbar.</cmd>
+                <stepresult>The <uicontrol>Manage Users</uicontrol> dialog appears.</stepresult>
+            </step>
+            <step>
+                <cmd>Select the user to be deleted in the table displayed by the <uicontrol>Manage
+                    Users</uicontrol> dialog by clicking on it.</cmd>
+            </step>
+            <step>
+                <cmd>Click the <uicontrol>Lock/Unlock User</uicontrol> button.</cmd>
             </step>
         </steps>
+        <result>User status is changed and its status is updated in the Active column.</result>
     </taskbody>
 </task>

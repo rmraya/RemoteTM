@@ -16,10 +16,6 @@
                         >Authorization Request</xref></stentry>
             </strow>
             <strow>
-                <stentry><tt>Accept</tt></stentry>
-                <stentry><tt>application/json</tt></stentry>
-            </strow>
-            <strow>
                 <stentry><tt>Content-Type</tt></stentry>
                 <stentry><tt>application/json</tt></stentry>
             </strow>

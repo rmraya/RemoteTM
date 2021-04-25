@@ -22,33 +22,36 @@
                         <uicontrol>Settings</uicontrol>
                         <uicontrol>Email Server</uicontrol>
                     </menucascade> in main toolbar.</cmd>
-                <stepresult>The following dialog appears: <image href="../images/emailserver.png"
-                        placement="break" scale="70"/>
+                <stepresult>The <uicontrol>Email Server</uicontrol> dialog appears: <image
+                        href="../images/emailserver.png" placement="break" scale="50">
+                        <alt>Email Server Dialog</alt>
+                    </image>
                 </stepresult>
             </step>
             <step>
                 <cmd>Enter the name or IP of the SMTP server In the <uicontrol>SMTP
-                        Server</uicontrol> text box.</cmd>
+                        Server</uicontrol> text input.</cmd>
             </step>
             <step>
                 <cmd>Enter the port number in which the SMTP server accepts requests in the
-                        <uicontrol>Port</uicontrol> text box.</cmd>
+                        <uicontrol>Port</uicontrol> text input.</cmd>
             </step>
             <step>
                 <cmd>Enter the user name for the SMTP server in the <uicontrol>SMTP User</uicontrol>
-                    text box.</cmd>
+                    text input.</cmd>
             </step>
             <step>
                 <cmd>Enter the password for the user selected in previous step in the
-                        <uicontrol>SMTP Password</uicontrol> text box.</cmd>
+                        <uicontrol>SMTP Password</uicontrol> text input.</cmd>
             </step>
             <step>
-                <cmd>Enter the email address used
-                    for sending notifications in the <uicontrol>Send From</uicontrol> text box.</cmd>
+                <cmd>Enter the email address used for sending notifications in the <uicontrol>Send
+                        From</uicontrol> text input.</cmd>
             </step>
             <step>
-                <cmd>Enter the URL of the
-                    RemoteTM server in the <uicontrol>RemoteTM Server</uicontrol> text box.</cmd>
+                <cmd>Id necessary, adjust the URL of the RemoteTM server in the <uicontrol>RemoteTM
+                        Server</uicontrol> text input. This field is automatically populated by
+                    RemoteTM.</cmd>
             </step>
             <step>
                 <cmd>Check the <uicontrol>Authentication Required</uicontrol> check box if your SMTP
@@ -59,7 +62,7 @@
                     TLS/SSL protocols.</cmd>
             </step>
             <step>
-                <cmd>Click the <uicontrol>SAVE</uicontrol> button.</cmd>
+                <cmd>Click the <uicontrol>Save</uicontrol> button.</cmd>
             </step>
         </steps>
         <result>The updated email server configuration is stored in RemoteTM server.</result>

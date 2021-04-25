@@ -2,15 +2,24 @@
 <!DOCTYPE task PUBLIC "-//OASIS//DTD DITA Task//EN" "task.dtd">
 <task id="closeMemories">
     <title>Close Memories</title>
-    <shortdesc></shortdesc>
+    <shortdesc/>
     <taskbody>
         <context>
-            <p></p>
+            <p>All translation memories must be closed before shutting down / restarting Apache
+                Tomcat. Closing Apache Tomcat when translation memories are open may result in data
+                loss.</p>
         </context>
         <steps>
             <step>
-                <cmd></cmd>
+                <cmd>Click the <uicontrol>Close Memories</uicontrol> button on the main
+                    toolbar.</cmd>
+            </step>
+            <step>
+                <cmd>Confirm the close operation.</cmd>
             </step>
         </steps>
+        <result>All data is flushed to disk and translation memories are closed. Once all memories
+            are closed, the list of memories is refreshed.
+        </result>
     </taskbody>
 </task>

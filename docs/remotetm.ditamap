@@ -80,6 +80,7 @@
         <booklists>
             <glossarylist chunk="to-content">
                 <topicref keys="tomcat" href="glossaries/Tomcat.dita" type="glossentry"/>
+                <topicref keys="rest" href="glossaries/rest.dita" type="glossentry"/>
                 <topicref keys="swordfish" href="glossaries/Swordfish.dita" type="glossentry"/>
                 <topicref keys="tmx" href="glossaries/TMX.dita" type="glossentry"/>
                 <topicref keys="tm" href="glossaries/translation_memory.dita" type="glossentry"/>

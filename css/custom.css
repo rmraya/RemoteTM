@@ -140,8 +140,8 @@ input[type=checkbox] {
 
 button {
 	color: var(--white);
-	background: var(--themePrimary);
-	border: 1px solid var(--themePrimary);
+	background: var(--themeDark);
+	border: 1px solid var(--themeDark);
 	border-radius: 2px;
 	font-size: 1em;
 	text-align: center;
@@ -461,6 +461,7 @@ label {
 .larger {
 	font-size: 1.4em;
 	font-weight: 200;
+	text-shadow: 1px 1px 2px var(--gray150);
 }
 
 .topbar {
@@ -535,7 +536,7 @@ hr {
 	display: flex;
 	flex-direction: column;
 	position: fixed;
-	z-index: 30;
+	z-index: 230;
 }
 
 .dropdownOptions a {
@@ -543,7 +544,7 @@ hr {
 	color: var(--gray160);
 	padding: 8px 16px;
 	white-space: nowrap;
-	z-index: 4;
+	z-index: 240;
 }
 
 .dropdownOptions a:hover {

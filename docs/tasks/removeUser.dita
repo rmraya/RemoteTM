@@ -2,15 +2,33 @@
 <!DOCTYPE task PUBLIC "-//OASIS//DTD DITA Task//EN" "task.dtd">
 <task id="removeUser">
     <title>Remove User</title>
-    <shortdesc></shortdesc>
     <taskbody>
         <context>
-            <p></p>
+            <p>You should only delete users that do not own translation memories. If a user owns a
+                translation memory, <xref href="lockUser.dita">lock the user's account</xref>
+                instead.</p>
         </context>
         <steps>
             <step>
-                <cmd></cmd>
+                <cmd>Click <menucascade>
+                        <uicontrol>Settings</uicontrol>
+                        <uicontrol>Manage Users</uicontrol>
+                    </menucascade> in main toolbar.</cmd>
+                <stepresult>The <uicontrol>Manage Users</uicontrol> dialog appears.</stepresult>
+            </step>
+            <step>
+                <cmd>Select the user to be removed in the table displayed by the <uicontrol>Manage
+                        Users</uicontrol> dialog by clicking on it.</cmd>
+            </step>
+            <step>
+                <cmd>Click the <uicontrol>Remove User</uicontrol> button.</cmd>
+            </step>
+            <step>
+                <cmd>Confirm the removal operation.</cmd>
+                <info><note type="caution">User removal is permanent and cannot be
+                    undone.</note></info>
             </step>
         </steps>
+        <result>The selected user account is removed.</result>
     </taskbody>
 </task>

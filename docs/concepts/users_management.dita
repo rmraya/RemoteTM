@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE concept PUBLIC "-//OASIS//DTD DITA Concept//EN" "concept.dtd">
+<concept id="remotetm_users_managment">
+ <title>Users and Roles</title>
+ <shortdesc>RemoteTM Web Server is a multi-user application. This section provides information for
+  administering RemoteTM users.</shortdesc>
+ <conbody>
+  <p>A RemoteTM user can have one of these roles:</p>
+  <ul>
+   <li>System Administrator</li>
+   <li>Project Manager</li>
+   <li>Translator</li>
+  </ul>
+  
+  <p>The following table defines task restrictions based on user roles:</p>
+  <simpletable>
+   <sthead>
+    <stentry>Task</stentry>
+    <stentry>System Administrator</stentry>
+    <stentry>Project Manager</stentry>
+    <stentry>Translator</stentry>
+   </sthead>
+   <strow>
+    <stentry>Create/modify users</stentry>
+    <stentry>Yes</stentry>
+    <stentry>No</stentry>
+    <stentry>No</stentry>
+   </strow>
+   <strow>
+    <stentry>Create translation memories</stentry>
+    <stentry>Yes</stentry>
+    <stentry>Yes</stentry>
+    <stentry>No</stentry>
+   </strow>
+   <strow>
+    <stentry>Set access permissions</stentry>
+    <stentry>Yes</stentry>
+    <stentry>Yes</stentry>
+    <stentry>No</stentry>
+   </strow>
+   <strow>
+    <stentry>Delete a translation memory</stentry>
+    <stentry>Yes</stentry>
+    <stentry>No</stentry>
+    <stentry>No</stentry>
+   </strow>
+   <strow>
+    <stentry>Close a memory</stentry>
+    <stentry>Yes</stentry>
+    <stentry>No</stentry>
+    <stentry>No</stentry>
+   </strow>
+   <strow>
+   <stentry>Close all open memories</stentry>
+    <stentry>Yes</stentry>
+    <stentry>No</stentry>
+    <stentry>No</stentry>
+   </strow>
+  </simpletable>
+ 
+  <p>The following tasks do not have restrictions based on user roles, restrictions are defined at
+   translation memory level by setting <b>Access Permissions</b> instead:</p>
+  <ul>
+   <li>Import TMX files;</li>
+   <li>Write segments to the translation memory using Swordfish;</li>
+   <li>Export translation memory as TMX.</li>
+  </ul>
+  
+  <p>Users are created and maintained in the <uicontrol>Users Management</uicontrol> form that is
+   available in <uicontrol>SETTINGS</uicontrol> menu.</p>
+  <image href="../images/manageusers.png" scale="50" placement="break" otherprops="pdf">
+   <alt>Users Management Form</alt>
+  </image>
+  <image href="../images/manageusers.png" placement="break" otherprops="html">
+   <alt>Users Management Form</alt>
+  </image>
+ </conbody>
+</concept>

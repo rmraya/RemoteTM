@@ -2,15 +2,20 @@
 <!DOCTYPE task PUBLIC "-//OASIS//DTD DITA Task//EN" "task.dtd">
 <task id="refreshMemories">
     <title>Refresh Memories</title>
-    <shortdesc></shortdesc>
+    <shortdesc/>
     <taskbody>
         <context>
-            <p></p>
+            <p>The list of memories and their statuses is loaded when a user signs in and is not
+                updated automatically to reflect operations happening in background. It may be
+                necessary to refresh the list to verify that there aren't open memories before sutting
+                down <xref keyref="tomcat">Apache Tomcat</xref>.</p>
         </context>
         <steps>
             <step>
-                <cmd></cmd>
+                <cmd>Click the <uicontrol>Refresh Memories</uicontrol> button on the main
+                    toolbar.</cmd>
             </step>
         </steps>
+        <result>The list of memories is updated.</result>
     </taskbody>
 </task>

@@ -2,15 +2,51 @@
 <!DOCTYPE task PUBLIC "-//OASIS//DTD DITA Task//EN" "task.dtd">
 <task id="importTMX">
     <title>Import TMX</title>
-    <shortdesc></shortdesc>
+    <shortdesc>Steps for importing TMX files into a translation memory using RemoteTM's web
+        interface.</shortdesc>
     <taskbody>
         <context>
-            <p></p>
+            <p>RemoteTM translation memories can be populated with data from TMX files either using
+                    <xref keyref="swordfish">Swordfish IV</xref>, its <xref
+                    href="../rest/restApi.dita">REST API</xref> or RemoteTM's own web interface.
+                Using RemoteTM's web interface is faster.</p>
         </context>
         <steps>
             <step>
-                <cmd></cmd>
+                <cmd>Select a memory on the main list by clicking on it.</cmd>
+            </step>
+            <step>
+                <cmd>Click the <uicontrol>Import TMX</uicontrol> button on the main toolbar.</cmd>
+                <stepresult>The <uicontrol>Import TMX</uicontrol> dialog appears: <image
+                        href="../images/importTMX.png" placement="break" scale="50">
+                        <alt>Import TMX Dialog</alt>
+                    </image>
+                </stepresult>
+            </step>
+            <step>
+                <cmd>Drag a TMX file from your computer and drop it on the top area of the
+                        <uicontrol>Import TMX</uicontrol> dialog. Alternatively, click on the
+                        <uicontrol>Select File</uicontrol> link to open a dialog for selecting a
+                    file from your computer.</cmd>
+            </step>
+            <step>
+                <cmd>Optionally, type a project description in the <uicontrol>Project</uicontrol>
+                    text input.</cmd>
+            </step>
+            <step>
+                <cmd>Optionally, type a subject for the TMX data in the
+                        <uicontrol>Subject</uicontrol> text input.</cmd>
+            </step>
+            <step>
+                <cmd>Optionally, enter a client name in the <uicontrol>Client</uicontrol> text
+                    box.</cmd>
+            </step>
+            <step>
+                <cmd>Click the <uicontrol>Import TMX</uicontrol> button.</cmd>
             </step>
         </steps>
+        <result>RemoteTM uploads the selected TMX file and starts importing its data into the
+            selected memory. On completion, an email with import results is sent to the user.
+        </result>
     </taskbody>
 </task>

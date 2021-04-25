@@ -2,15 +2,67 @@
 <!DOCTYPE task PUBLIC "-//OASIS//DTD DITA Task//EN" "task.dtd">
 <task id="addUser">
     <title>Add User</title>
-    <shortdesc></shortdesc>
+    <shortdesc>Follow these steps for adding a new RemoteTM user.</shortdesc>
     <taskbody>
-        <context>
-            <p></p>
-        </context>
         <steps>
             <step>
-                <cmd></cmd>
+                <cmd>Click <menucascade>
+                        <uicontrol>Settings</uicontrol>
+                        <uicontrol>Manage Users</uicontrol>
+                    </menucascade> in main toolbar.</cmd>
+                <stepresult>The <uicontrol>Manage Users</uicontrol> dialog appears.</stepresult>
+            </step>
+            <step>
+                <cmd>In the <uicontrol>Manage Users</uicontrol> dialog, click the <uicontrol>Add
+                        User</uicontrol> button.</cmd>
+                <stepresult>The <uicontrol>Add User</uicontrol> dialog appears: <image href="../images/addUser.png"
+                        placement="break" scale="50">
+                        <alt>Add user Dialog</alt>
+                    </image>
+                </stepresult>
+            </step>
+            <step>
+                <cmd>Type a unique identification code for the new user in the <uicontrol>User
+                        ID</uicontrol> text input.</cmd>
+                <info>Only Latin characters, numbers, underscores or the '@' sign should be used in
+                    a User ID.</info>
+            </step>
+            <step>
+                <cmd>Type the name of the user in the <uicontrol>Name</uicontrol> text input.</cmd>
+            </step>
+            <step>
+                <cmd>Select a role for the user from the <uicontrol>Role</uicontrol> drop-down list.
+                    Available options are:</cmd>
+                <choicetable>
+                    <chrow>
+                        <choption>System Administrator</choption>
+                        <chdesc>User that can manage the RemoteTM server without
+                            restrictions.</chdesc>
+                    </chrow>
+                    <chrow>
+                        <choption>Project Manager</choption>
+                        <chdesc>User that can create translation memories and assign use rights to
+                            other users.</chdesc>
+                    </chrow>
+                    <chrow>
+                        <choption>Translator</choption>
+                        <chdesc>User with access restricted to assigned translation
+                            memories.</chdesc>
+                    </chrow>
+                </choicetable>
+            </step>
+            <step>
+                <cmd>Type the email address to use for sending notifications to the user in the
+                        <uicontrol>Email</uicontrol> text input. </cmd>
+                <info><note type="important">If the email address of the user is invalid, sending
+                        the initial login credentials will fail and the user will not be
+                        created.</note></info>
+            </step>
+            <step>
+                <cmd>Click the <uicontrol>Add User</uicontrol> button.</cmd>
             </step>
         </steps>
+        <result>An email with login credentials is sent to the new user and the user account is
+            created.</result>
     </taskbody>
 </task>

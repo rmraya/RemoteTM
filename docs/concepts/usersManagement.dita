@@ -2,19 +2,71 @@
 <!DOCTYPE concept PUBLIC "-//OASIS//DTD DITA Concept//EN" "concept.dtd">
 <concept id="usersManagement">
     <title>Users Management</title>
-    <shortdesc></shortdesc>
+    <shortdesc>RemoteTM is a multi-user application. This section provides information for
+        administering RemoteTM users.</shortdesc>
     <conbody>
+        <p>A RemoteTM user can have one of these roles:</p>
         <ul>
-            <li><xref href="../tasks/addUser.dita">Add User</xref></li>
-            <li><xref href="../tasks/editUser.dita">Edit User</xref></li>
-            <li><xref href="../tasks/removeUser.dita">Remove User</xref></li>
-            <li><xref href="../tasks/lockUser.dita">Lock/Unlock User</xref></li>
-            <li><xref href="../concepts/passwordManagement.dita">Password Manageement</xref>
-                <ul>
-                    <li><xref href="../tasks/changePassword.dita">Change Password</xref></li>
-                    <li><xref href="../tasks/resetPassword.dita">Password Reset</xref></li>
-                </ul>
-            </li>
+            <li>System Administrator</li>
+            <li>Project Manager</li>
+            <li>Translator</li>
         </ul>
+
+        <p>The following table defines task restrictions based on user roles:</p>
+        <simpletable>
+            <sthead>
+                <stentry>Task</stentry>
+                <stentry>System Administrator</stentry>
+                <stentry>Project Manager</stentry>
+                <stentry>Translator</stentry>
+            </sthead>
+            <strow>
+                <stentry>Create/modify users</stentry>
+                <stentry>Yes</stentry>
+                <stentry>No</stentry>
+                <stentry>No</stentry>
+            </strow>
+            <strow>
+                <stentry>Create translation memories</stentry>
+                <stentry>Yes</stentry>
+                <stentry>Yes</stentry>
+                <stentry>No</stentry>
+            </strow>
+            <strow>
+                <stentry>Set access permissions</stentry>
+                <stentry>Yes</stentry>
+                <stentry>Yes</stentry>
+                <stentry>No</stentry>
+            </strow>
+            <strow>
+                <stentry>Delete a translation memory</stentry>
+                <stentry>Yes</stentry>
+                <stentry>No</stentry>
+                <stentry>No</stentry>
+            </strow>
+            <strow>
+                <stentry>Closememories</stentry>
+                <stentry>Yes</stentry>
+                <stentry>No</stentry>
+                <stentry>No</stentry>
+            </strow>
+        </simpletable>
+
+        <p>The following tasks do not have restrictions based on user roles, restrictions are
+            defined at translation memory level by setting <xref href="accessPermission.dita">Access Permissions</xref> instead:</p>
+        <ul>
+            <li>Retrieve translations or perform searches using <xref keyref="swordfish">Swordfish
+                    IV</xref> or the <xref href="../rest/restApi.dita">REST API</xref>.</li>
+            <li>Import TMX files</li>
+            <li>Write segments to the translation memory using <xref keyref="swordfish">Swordfish
+                    IV</xref> or the <xref href="../rest/restApi.dita">REST API</xref></li>
+            <li>Export translation memory as TMX</li>
+        </ul>
+
+        <p>Users are created and maintained in the <uicontrol>Manage Users</uicontrol> dialog that
+            is available in <uicontrol>Settings</uicontrol> menu.</p>
+        <image href="../images/manageUsers.png" scale="50" placement="break">
+            <alt>Manage Users Dialog</alt>
+        </image>
     </conbody>
 </concept>

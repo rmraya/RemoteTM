@@ -2,15 +2,26 @@
 <!DOCTYPE task PUBLIC "-//OASIS//DTD DITA Task//EN" "task.dtd">
 <task id="removeMemory">
     <title>Remove Memory</title>
-    <shortdesc></shortdesc>
+    <shortdesc>Follow these steps to remove a Translation Memory from RemoteTM.</shortdesc>
     <taskbody>
         <context>
-            <p></p>
+            <p>When you no longer need a Translation Memory, you may remove it from RemoteTM. Backup
+                your data <xref href="exportTMX.dita">exporting the memory as TMX</xref> before
+                removing it. </p>
         </context>
         <steps>
             <step>
-                <cmd></cmd>
+                <cmd>Select a memory on the main list by clicking on it.</cmd>
+            </step>
+            <step>
+                <cmd>Click on the <uicontrol>Remove Memory</uicontrol> button on the main toolbar.</cmd>
+            </step>
+            <step>
+                <cmd>Confirm memory removal on the dialog displayed by the browser. </cmd>
+                <info><note type="caution">Memory removal is permanent and cannot be
+                    undone.</note></info>
             </step>
         </steps>
+        <result>Selected memory is removed and the list of memories is updated.</result>
     </taskbody>
 </task>

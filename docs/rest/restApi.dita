@@ -4,7 +4,7 @@
     <title>REST API</title>
     <shortdesc/>
     <conbody>
-        <p>The REST methods exposed by RemotTM are:</p>
+        <p>The <xref keyref="rest">REST</xref> methods exposed by RemotTM are:</p>
         <ul>
             <li><xref href="accessManagement.dita">Access Management</xref>
                 <ul>

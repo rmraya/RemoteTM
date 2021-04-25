@@ -9,8 +9,10 @@
                 href="https://www.maxprograms.com/products/swordfish.html" format="html"
                 scope="external">Swordfish IV</xref> in LAN environments or over the Internet.</p>
         <p>RemoteTM runs on top of a Java Servlet container like <xref keyref="tomcat">Apache
-                Tomcat</xref> and can be used in all operating systems
-            where the combination of Java and Apache Tomcat works.</p>
+                Tomcat</xref> and can be used in all operating systems where the combination of Java
+            and Apache Tomcat works.</p>
+        <p>RemoteTM has an open <xref href="../rest/restApi.dita">REST API</xref> that allows
+            integration with any translation tool using web services.</p>
         <image href="../images/remotetmGUI.png" scalefit="yes">
             <alt>RemoteTM GUI</alt>
         </image>
