@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
-<topic id="removeMemory">
-    <title>Remove Memory</title>
+<topic id="exportTMX">
+    <title>Export TMX</title>
     <body>
         <p>End point: <tt>[RemoteTM URL]/memories</tt><tt> </tt></p>
         <p>Send a <tt>POST</tt> request with these headers:</p>
@@ -13,7 +13,7 @@
             <strow>
                 <stentry><tt>Session</tt> </stentry>
                 <stentry>The ticket received from <xref href="authorizationRequest.dita"
-                    >Authorization Request</xref></stentry>
+                        >Authorization Request</xref></stentry>
             </strow>
             <strow>
                 <stentry><tt>Content-Type</tt></stentry>
@@ -28,22 +28,35 @@
             </sthead>
             <strow>
                 <stentry><tt>command</tt> </stentry>
-                <stentry><tt>removeMemory</tt></stentry>
+                <stentry><tt>exportMemory</tt></stentry>
             </strow>
             <strow>
                 <stentry><tt>memory</tt> </stentry>
-                <stentry>ID of the memory to remove</stentry>
+                <stentry>ID of the memory to export</stentry>
+            </strow>
+            <strow>
+                <stentry><tt>srcLang</tt>></stentry>
+                <stentry>The code of the language to set as source or '*all*' if any languages is to
+                    be considered as source language</stentry>
+            </strow>
+            <strow>
+                <stentry><tt>close</tt></stentry>
+                <stentry>Boolean value indicating wether the memory should be closed after exporting.</stentry>
             </strow>
         </simpletable>
         <p>Example:</p>
         <codeblock translate="no">{
-    "command": "removeMemory",
-    "memory": "1617053861912"
+            "command": "exportMemory",
+    "memory": "1617053861912",
+    "srcLang": "*all*",
+    "close": false
 }</codeblock>
         <p>RemoteTM responds with a JSON object.</p>
-        <p>On success, field 'status' is set to 'OK'. Example:</p>
+        <p>On success, field 'status' is set to 'OK' and the location of the exported file is returned on
+            the 'file' field. Example:</p>
         <codeblock translate="no">{
-    "status": "OK"
+    "status": "OK",
+    "file": "exportedFile.tmx"
 }</codeblock>
         <p>On error, field 'status' is set to 'Error' and field 'reason' contains the error cause.
             Example:</p>
@@ -51,5 +64,6 @@
     "status": "Error",
     "reason": "Access denied"
 }</codeblock>
+        <p>After the memory has been exported to the server filesystem, send a <xref href="downloadFile.dita">file download</xref> request  to RemoteTM.</p>
     </body>
 </topic>

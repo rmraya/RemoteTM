@@ -426,7 +426,6 @@ export class Dashboard implements View {
             this.setStatus('');
             console.error('Error:', reason);
         });
-
     }
 
     requestExport(): void {

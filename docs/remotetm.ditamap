@@ -57,6 +57,9 @@
                 <topicref href="rest/uploadFile.dita"/>
                 <topicref href="rest/importFile.dita"/>
             </topicref>
+            <topicref href="rest/exportTMX.dita">
+                <topicref href="rest/downloadFile.dita"/>
+            </topicref>
         </topicref>
         <topicref href="rest/permissions.dita">
             <topicref href="rest/getPermissions.dita"/>

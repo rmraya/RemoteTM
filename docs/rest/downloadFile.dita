@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="downloadFile">
+    <title>Download File</title>
+    <body>
+        <p>End point: <tt>[RemoteTM URL]/download</tt><tt> </tt></p>
+        <p>Send a <tt>GET</tt> request with these parameters:</p>
+        <simpletable>
+            <sthead>
+                <stentry>Parameter</stentry>
+                <stentry>Value</stentry>
+            </sthead>
+            <strow>
+                <stentry><tt>Session</tt> </stentry>
+                <stentry>The ticket received from <xref href="authorizationRequest.dita"
+                    >Authorization Request</xref></stentry>
+            </strow>
+            <strow>
+                <stentry><tt>file</tt></stentry>
+                <stentry><tt>URL-encoded name of the file to download</tt></stentry>
+            </strow>
+        </simpletable>
+        <p>Example:</p>
+        <codeblock>https://myserver.com/RemoteTM/download?session=9321f-1070ae8&amp;file=exportedFile.tmx</codeblock>
+        <p>On success, RemoteTM responds with the requested file as attachment.</p>
+    </body>
+</topic>
