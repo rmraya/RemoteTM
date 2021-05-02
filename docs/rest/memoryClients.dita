@@ -3,6 +3,54 @@
 <topic id="memoryClients">
     <title>Get Memory Clients</title>
     <body>
-        <p></p>
+        <p>End point: <tt>[RemoteTM URL]/memories</tt><tt> </tt></p>
+        <p>Send a <tt>POST</tt> request with these headers:</p>
+        <simpletable>
+            <sthead>
+                <stentry>Header</stentry>
+                <stentry>Value</stentry>
+            </sthead>
+            <strow>
+                <stentry><tt>Session</tt> </stentry>
+                <stentry>The ticket received from <xref href="authorizationRequest.dita"
+                    >Authorization Request</xref></stentry>
+            </strow>
+            <strow>
+                <stentry><tt>Content-Type</tt></stentry>
+                <stentry><tt>application/json</tt></stentry>
+            </strow>
+        </simpletable>
+        <p>Include these parameters in a JSON body:</p>
+        <simpletable>
+            <sthead>
+                <stentry>Parameter</stentry>
+                <stentry>Value</stentry>
+            </sthead>
+            <strow>
+                <stentry><tt>command</tt></stentry>
+                <stentry><tt>memoryClients</tt></stentry>
+            </strow>
+            <strow>
+                <stentry><tt>memory</tt> </stentry>
+                <stentry>ID of the memory to query</stentry>
+            </strow>
+        </simpletable>
+        <p>Example:</p>
+        <codeblock>{
+    "command": "memoryClients",
+    "memory": "1619955225759"
+}</codeblock>
+        <p>RemoteTM responds with a JSON object.</p>
+        <p>On success, field 'status' is set to 'OK'. Example:</p>
+        <codeblock translate="no" id="codeblock_ypl_1xh_mpb">{
+    "clients":["Maxprograms","MVDSoftware"],
+    "status":"OK"
+}</codeblock>
+        <p>On error, field 'status' is set to 'Error' and field 'reason' contains the error cause.
+            Example:</p>
+        <codeblock translate="no">{
+    "status": "Error",
+    "reason": "Access denied"
+}</codeblock>
     </body>
 </topic>

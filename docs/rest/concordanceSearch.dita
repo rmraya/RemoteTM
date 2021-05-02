@@ -3,6 +3,92 @@
 <topic id="concordanceSearch">
     <title>Concordance Search</title>
     <body>
-        <p></p>
+        <p>End point: <tt>[RemoteTM URL]/memories</tt><tt> </tt></p>
+        <p>Send a <tt>POST</tt> request with these headers:</p>
+        <simpletable>
+            <sthead>
+                <stentry>Header</stentry>
+                <stentry>Value</stentry>
+            </sthead>
+            <strow>
+                <stentry><tt>Session</tt> </stentry>
+                <stentry>The ticket received from <xref href="authorizationRequest.dita"
+                        >Authorization Request</xref></stentry>
+            </strow>
+            <strow>
+                <stentry><tt>Content-Type</tt></stentry>
+                <stentry><tt>application/json</tt></stentry>
+            </strow>
+        </simpletable>
+        <p>Include these parameters in a JSON body:</p>
+        <simpletable>
+            <sthead>
+                <stentry>Parameter</stentry>
+                <stentry>Value</stentry>
+            </sthead>
+            <strow>
+                <stentry><tt>command</tt></stentry>
+                <stentry><tt>concordanceSearch</tt></stentry>
+            </strow>
+            <strow>
+                <stentry><tt>memory</tt> </stentry>
+                <stentry>ID of the memory to query</stentry>
+            </strow>
+            <strow>
+                <stentry><tt>searchStr</tt> </stentry>
+                <stentry>Text to search</stentry>
+            </strow>
+            <strow>
+                <stentry><tt>srcLang</tt> </stentry>
+                <stentry>Source language code</stentry>
+            </strow>
+            <strow>
+                <stentry><tt>limit</tt> </stentry>
+                <stentry>Maximum number of matches to retrieve</stentry>
+            </strow>
+            <strow>
+                <stentry><tt>isRegexp</tt> </stentry>
+                <stentry>Boolean value indicating whether the search string is a regular
+                    expression</stentry>
+            </strow>
+            <strow>
+                <stentry><tt>caseSensitive</tt> </stentry>
+                <stentry>Boolean value indicating whether the search should be case
+                    sensitive</stentry>
+            </strow>
+        </simpletable>
+        <p>Example:</p>
+        <codeblock>{
+    "command": "concordanceSearch",
+    "memory": "1619955225759",
+    "searchStr": "source code",
+    "isRegexp": false,
+    "caseSensitive": false,
+    "limit": 20,
+    "srcLang": "en"
+}</codeblock>
+        <p>RemoteTM responds with a JSON object.</p>
+        <p>On success, field 'status' is set to 'OK' and search results are included in 'tus' field,
+            escaped for JSON notation. Example:</p>
+        <codeblock>{"tus":[
+    "&lt;tu creationtool=\"Swordfish\" tuid=\"1668707130-10-12-12\">
+       &lt;prop type=\"project\">swordfish.ditamap&lt;\/prop>
+       &lt;tuv xml:lang=\"en\">&lt;seg>Source Code&lt;\/seg>&lt;\/tuv>
+       &lt;tuv xml:lang=\"es\">&lt;seg>Código Fuente&lt;\/seg>&lt;\/tuv>
+     &lt;\/tu>",
+    "&lt;tu creationtool=\"Swordfish\" tuid=\"467840381-10-12-12\">
+       &lt;prop type=\"customer\">Maxprograms&lt;\/prop>
+       &lt;prop type=\"project\">swordfish.ditamap&lt;\/prop>
+       &lt;tuv xml:lang=\"en\">&lt;seg>Source Code&lt;\/seg>&lt;\/tuv>
+       &lt;tuv xml:lang=\"pt\">&lt;seg>Código fonte&lt;\/seg>&lt;\/tuv>
+     &lt;\/tu>"],
+    "status":"OK"
+}</codeblock>
+        <p>On error, field 'status' is set to 'Error' and field 'reason' contains the error cause.
+            Example:</p>
+        <codeblock translate="no">{
+    "status": "Error",
+    "reason": "Access denied"
+}</codeblock>
     </body>
 </topic>

@@ -3,6 +3,159 @@
 <topic id="batchTranslate">
     <title>Batch Translation</title>
     <body>
-        <p></p>
+        <p>End point: <tt>[RemoteTM URL]/memories</tt><tt> </tt></p>
+        <p>Send a <tt>POST</tt> request with these headers:</p>
+        <simpletable>
+            <sthead>
+                <stentry>Header</stentry>
+                <stentry>Value</stentry>
+            </sthead>
+            <strow>
+                <stentry><tt>Session</tt> </stentry>
+                <stentry>The ticket received from <xref href="authorizationRequest.dita"
+                    >Authorization Request</xref></stentry>
+            </strow>
+            <strow>
+                <stentry><tt>Content-Type</tt></stentry>
+                <stentry><tt>application/json</tt></stentry>
+            </strow>
+        </simpletable>
+        <p>Include these parameters in a JSON body:</p>
+        <simpletable>
+            <sthead>
+                <stentry>Parameter</stentry>
+                <stentry>Value</stentry>
+            </sthead>
+            <strow>
+                <stentry><tt>command</tt></stentry>
+                <stentry><tt>batchTranslate</tt></stentry>
+            </strow>
+            <strow>
+                <stentry><tt>memory</tt> </stentry>
+                <stentry>ID of the memory to query</stentry>
+            </strow>
+            <strow>
+                <stentry><tt>srcLang</tt> </stentry>
+                <stentry>Source language code</stentry>
+            </strow>
+            <strow>
+                <stentry><tt>tgtLang</tt> </stentry>
+                <stentry>Target Language</stentry>
+            </strow>
+            <strow>
+                <stentry><tt>segments</tt> </stentry>
+                <stentry>Array of JSON entries containing these fields:
+                    <ul>
+                        <li><tt>unit</tt>: ID of the XLIFF &lt;unit> being translated</li>
+                        <li><tt>file</tt>: ID of the XLIFF &lt;file> being translated</li>
+                        <li><tt>segment</tt>: ID of the XLIFF &lt;segment> being translated</li>
+                        <li><tt>pure</tt>: Pure text content of the segment being translated</li>
+                    </ul>
+                </stentry>
+            </strow>
+        </simpletable>
+        <p>Example:</p>
+        <codeblock>{
+  "command": "batchTranslate",
+  "memory": "1619955225759",
+  "srcLang": "en",
+  "tgtLang": "es",
+  "segments": [{
+      "unit": "2",
+      "file": "1",
+      "segment": "2",
+      "pure": "Get Auto-Translations"
+    },{
+      "unit": "3",
+      "file": "1",
+      "segment": "3",
+      "pure": "Apply Auto-Translation to All Segments"
+    },{
+      "unit": "4",
+      "file": "1",
+      "segment": "4-1",
+      "pure": "Yearly Subscriptions"
+    }]
+}</codeblock>
+        <p>RemoteTM responds with a JSON object.</p>
+        <p>On success, field 'status' is set to 'OK' and translation results are included in
+            'matches' field. Example:</p>
+        <codeblock>{
+  "matches": [{
+      "unit": "2",
+      "file": "1",
+      "segment": "2",
+      "pure": "Get Auto-Translations",
+      "matches": [{
+          "similarity": 76,
+          "origin": "1619955225759",
+          "source": "&lt;tuv xml:lang=\"en\">&lt;seg>Auto-Translation&lt;\/seg>&lt;\/tuv>",
+          "properties": {
+            "project": "swordfish.ditamap"
+          },
+          "target": "&lt;tuv xml:lang=\"es\">&lt;seg>Auto-Traducción&lt;\/seg>&lt;\/tuv>"
+        },{
+          "similarity": 76,
+          "origin": "1619955225759",
+          "source": "&lt;tuv xml:lang=\"en\">&lt;seg>Auto-Translation&lt;\/seg>&lt;\/tuv>",
+          "target": "&lt;tuv xml:lang=\"es\">&lt;seg>Auto-Traducción&lt;\/seg>&lt;\/tuv>"
+        },{
+          "similarity": 70,
+          "origin": "1619955225759",
+          "source": "&lt;tuv xml:lang=\"en\">&lt;seg>Export Translations&lt;\/seg>&lt;\/tuv>",
+          "properties": {
+            "project": "swordfish.ditamap"
+          },
+          "target": "&lt;tuv xml:lang=\"es\">&lt;seg>Exportar Traducciones&lt;\/seg>&lt;\/tuv>"
+        }
+      ]
+    },{
+      "unit": "3",
+      "file": "1",
+      "segment": "3",
+      "pure": "Apply Auto-Translation to All Segments",
+      "matches": [{
+          "similarity": 100,
+          "origin": "1619955225759",
+          "source": "&lt;tuv xml:lang=\"en\">&lt;seg>Apply Auto-Translation to All Segments&lt;\/seg>&lt;\/tuv>",
+          "target": "&lt;tuv xml:lang=\"es\">&lt;seg>Apply Auto-Translation to All Segments&lt;\/seg>&lt;\/tuv>"
+        }
+      ]
+    },{
+      "unit": "4",
+      "file": "1",
+      "segment": "4-1",
+      "pure": "Yearly Subscriptions",
+      "matches": [{
+          "similarity": 100,
+          "origin": "1619955225759",
+          "source": "&lt;tuv xml:lang=\"en\">&lt;seg>Yearly Subscriptions&lt;\/seg>&lt;\/tuv>",
+          "target": "&lt;tuv xml:lang=\"es\">&lt;seg>Suscripciones Anuales&lt;\/seg>&lt;\/tuv>"
+        },{
+          "similarity": 72,
+          "origin": "1619955225759",
+          "source": "&lt;tuv xml:lang=\"en\">&lt;seg>Subscription Renewal&lt;\/seg>&lt;\/tuv>",
+          "properties": {
+            "project": "swordfish.ditamap"
+          },
+          "target": "&lt;tuv xml:lang=\"es\">&lt;seg>Renovación de Suscripción&lt;\/seg>&lt;\/tuv>"
+        },{
+          "similarity": 65,
+          "origin": "1619955225759",
+          "source": "&lt;tuv xml:lang=\"en\">&lt;seg>Subscriptions&lt;\/seg>&lt;\/tuv>",
+          "properties": {
+            "project": "swordfish.ditamap"
+          },
+          "target": "&lt;tuv xml:lang=\"es\">&lt;seg>Suscripciones&lt;\/seg>&lt;\/tuv>"
+        }]
+    }],
+  "status": "OK"
+}</codeblock>
+        <p>On error, field 'status' is set to 'Error' and field 'reason' contains the error cause.
+            Example:</p>
+        <codeblock translate="no">{
+    "status": "Error",
+    "reason": "Access denied"
+}</codeblock>
     </body>
 </topic>

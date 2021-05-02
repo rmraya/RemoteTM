@@ -23,17 +23,34 @@
                             <li><xref href="importFile.dita">Import File</xref></li>
                         </ul>
                     </li>
-                    <li><xref href="exportTMX.dita">Export TMX</xref>
+                    <li><xref href="../rest/exportTMX.dita">Export TMX</xref>
                         <ul>
                             <li><xref href="downloadFile.dita">Download File</xref></li>
                         </ul>
                     </li>
-                </ul>
-            </li>
-            <li><xref href="permissions.dita">Memory Permissions</xref>
-                <ul>
-                    <li><xref href="getPermissions.dita">Get Permissions</xref></li>
-                    <li><xref href="setPermissions.dita">Set Permissions</xref></li>
+                    <li><xref href="accessManagement.dita">Memory Permissions</xref>
+                        <ul>
+                            <li><xref href="getPermissions.dita">Get Permissions</xref></li>
+                            <li><xref href="setPermissions.dita">Set Permissions</xref></li>
+                        </ul>
+                    </li>
+                    <li><xref href="openMemory.dita">Open Memory</xref></li>
+                    <li><xref href="closeMemory.dita">Close Memory</xref></li>
+                    <li><xref href="closeMemories.dita">Close Memories</xref></li>
+                    <li><xref href="storeTu.dita">Store Translation Unit</xref></li>
+                    <li><xref href="getTu.dita">Get Translation Unit</xref></li>
+                    <li><xref href="removeTu.dita">Remove Translation Unit</xref></li>
+                    <li><xref href="commit.dita">Commit Changes</xref></li>
+                    <li><xref href="searchTranslations.dita">Search Translations</xref></li>
+                    <li><xref href="searchAll.dita">Search All Translations</xref></li>
+                    <li><xref href="concordanceSearch.dita">Concordance Search</xref></li>
+                    <li><xref href="batchTranslate.dita">Batch Translation</xref></li>
+                    <li><xref href="getProjects.dita">Get Projects</xref></li>
+                    <li><xref href="getSubjects.dita">Get Subjects</xref></li>
+                    <li><xref href="getClients.dita">Get Clients</xref></li>
+                    <li><xref href="memoryProjects.dita">Get Memory Projects</xref></li>
+                    <li><xref href="memorySubjects.dita">Get Memory Subjects</xref></li>
+                    <li><xref href="memoryClients.dita">Get Memory Clients</xref></li>
                 </ul>
             </li>
             <li><xref href="usersManagement.dita">Users Management</xref>

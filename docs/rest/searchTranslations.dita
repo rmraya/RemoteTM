@@ -3,6 +3,93 @@
 <topic id="searchTranslation">
     <title>Search Translations</title>
     <body>
-        <p></p>
+        <p>End point: <tt>[RemoteTM URL]/memories</tt><tt> </tt></p>
+        <p>Send a <tt>POST</tt> request with these headers:</p>
+        <simpletable>
+            <sthead>
+                <stentry>Header</stentry>
+                <stentry>Value</stentry>
+            </sthead>
+            <strow>
+                <stentry><tt>Session</tt> </stentry>
+                <stentry>The ticket received from <xref href="authorizationRequest.dita"
+                        >Authorization Request</xref></stentry>
+            </strow>
+            <strow>
+                <stentry><tt>Content-Type</tt></stentry>
+                <stentry><tt>application/json</tt></stentry>
+            </strow>
+        </simpletable>
+        <p>Include these parameters in a JSON body:</p>
+        <simpletable>
+            <sthead>
+                <stentry>Parameter</stentry>
+                <stentry>Value</stentry>
+            </sthead>
+            <strow>
+                <stentry><tt>command</tt></stentry>
+                <stentry><tt>searchTranslation</tt></stentry>
+            </strow>
+            <strow>
+                <stentry><tt>memory</tt> </stentry>
+                <stentry>ID of the memory to query</stentry>
+            </strow>
+            <strow>
+                <stentry><tt>searchStr</tt> </stentry>
+                <stentry>Text to search</stentry>
+            </strow>
+            <strow>
+                <stentry><tt>srcLang</tt> </stentry>
+                <stentry>Source language code</stentry>
+            </strow>
+            <strow>
+                <stentry><tt>tgtLang</tt> </stentry>
+                <stentry>Target language code</stentry>
+            </strow>
+            <strow>
+                <stentry><tt>similarity</tt> </stentry>
+                <stentry>Minimum similarity percentage</stentry>
+            </strow>
+            <strow>
+                <stentry><tt>caseSensitive</tt> </stentry>
+                <stentry>Boolean value indicating whether the search should be case
+                    sensitive</stentry>
+            </strow>
+        </simpletable>
+        <p>Example:</p>
+        <codeblock>{
+    "command": "searchTranslation",
+    "memory": "1619955225759",
+    "searchStr": "Get Auto-Translations",
+    "srcLang": "en",
+    "tgtLang": "es",
+    "similarity": 60,
+    "caseSensitive": false
+}</codeblock>
+        <p>RemoteTM responds with a JSON object.</p>
+        <p>On success, field 'status' is set to 'OK' and search results are included in 'matches'
+            field. Example:</p>
+        <codeblock>{
+    "status": "OK",
+    "matches": [{
+    "similarity": 76,
+    "origin": "1619955225759",
+    "source": "&lt;tuv xml:lang=\"en\">&lt;seg>Auto-Translation&lt;\/seg>&lt;\/tuv>",
+    "properties": {"project": "swordfish.ditamap"},
+    "target": "&lt;tuv xml:lang=\"es\">&lt;seg>Auto-Traducción&lt;\/seg>&lt;\/tuv>"
+    },{
+    "similarity": 70,
+    "origin": "1619955225759",
+    "source": "&lt;tuv xml:lang=\"en\">&lt;seg>Export Translations&lt;\/seg>&lt;\/tuv>",
+    "properties": {"project": "swordfish.ditamap"},
+    "target": "&lt;tuv xml:lang=\"es\">&lt;seg>Exportar Traducciones&lt;\/seg>&lt;\/tuv>"
+    }]
+}</codeblock>
+        <p>On error, field 'status' is set to 'Error' and field 'reason' contains the error cause.
+            Example:</p>
+        <codeblock translate="no">{
+    "status": "Error",
+    "reason": "Access denied"
+}</codeblock>
     </body>
 </topic>

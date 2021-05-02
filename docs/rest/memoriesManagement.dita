@@ -32,7 +32,7 @@
             <li><xref href="storeTu.dita">Store Translation Unit</xref></li>
             <li><xref href="getTu.dita">Get Translation Unit</xref></li>
             <li><xref href="removeTu.dita">Remove Translation Unit</xref></li>
-            <li><xref href="commit.dita">Commit</xref></li>
+            <li><xref href="commit.dita">Commit Changes</xref></li>
             <li><xref href="searchTranslations.dita">Search Translations</xref></li>
             <li><xref href="searchAll.dita">Search All Translations</xref></li>
             <li><xref href="concordanceSearch.dita">Concordance Search</xref></li>
