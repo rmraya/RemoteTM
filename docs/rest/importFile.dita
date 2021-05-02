@@ -3,6 +3,73 @@
 <topic id="importFile">
     <title>Import File</title>
     <body>
-        <p></p>
+        <p>End point: <tt>[RemoteTM URL]/memories</tt><tt> </tt></p>
+        <p>Send a <tt>POST</tt> request with these headers:</p>
+        <simpletable>
+            <sthead>
+                <stentry>Header</stentry>
+                <stentry>Value</stentry>
+            </sthead>
+            <strow>
+                <stentry><tt>Session</tt> </stentry>
+                <stentry>The ticket received from <xref href="authorizationRequest.dita"
+                        >Authorization Request</xref></stentry>
+            </strow>
+            <strow>
+                <stentry><tt>Content-Type</tt></stentry>
+                <stentry><tt>application/json</tt></stentry>
+            </strow>
+        </simpletable>
+        <p>Include these parameters in a JSON body:</p>
+        <simpletable>
+            <sthead>
+                <stentry>Parameter</stentry>
+                <stentry>Value</stentry>
+            </sthead>
+            <strow>
+                <stentry><tt>command</tt></stentry>
+                <stentry><tt>importTMX</tt></stentry>
+            </strow>
+            <strow>
+                <stentry><tt>memory</tt> </stentry>
+                <stentry>ID of the memory to populate</stentry>
+            </strow>
+            <strow>
+                <stentry><tt>file</tt> </stentry>
+                <stentry>Value of the "file" field received when <xref href="uploadFile.dita"
+                        >uploading a TMX</xref> file</stentry>
+            </strow>
+            <strow>
+                <stentry><tt>project</tt> </stentry>
+                <stentry>Optional description of a related project</stentry>
+            </strow>
+            <strow>
+                <stentry><tt>subject</tt> </stentry>
+                <stentry>Optional description of the related subject</stentry>
+            </strow>
+            <strow>
+                <stentry><tt>client</tt> </stentry>
+                <stentry>Optional description of a related client</stentry>
+            </strow>
+            <strow>
+                <stentry><tt>close</tt> </stentry>
+                <stentry>
+                    <p>Boolean value indicating wether the memory should be closed after</p>
+                    <p>importing the TMX file.</p>
+                </stentry>
+            </strow>
+        </simpletable>
+        <p>Example:</p>
+        <codeblock>{
+   "command": "importTMX",
+   "memory": "1617053861912",
+   "file": "uploaded.tmx",
+   "project": "Book Translation",
+   "subject": "Chapter One",
+   "client": "",
+   "close": true
+}</codeblock>
+        <p>RemoteTM imports the TMX file into the selected memory and sends an email with import
+            results to the session owner.</p>
     </body>
 </topic>

@@ -3,6 +3,42 @@
 <topic id="uploadFile">
     <title>Upload File</title>
     <body>
-        <p></p>
+        <p>End point: <tt>[RemoteTM URL]/memories</tt><tt> </tt></p>
+        <p>Send a <tt>POST</tt> request with these headers:</p>
+        <simpletable>
+            <sthead>
+                <stentry>Header</stentry>
+                <stentry>Value</stentry>
+            </sthead>
+            <strow>
+                <stentry><tt>Session</tt> </stentry>
+                <stentry>The ticket received from <xref href="authorizationRequest.dita"
+                        >Authorization Request</xref></stentry>
+            </strow>
+            <strow>
+                <stentry><tt>Content-Type</tt></stentry>
+                <stentry>
+                    <ul>
+                        <li><tt>application/zip</tt> to upload the TMX file zipped in request
+                            body</li>
+                        <li><tt>multipart/form-data</tt>to upload the TMX file as HTML form
+                            attachment</li>
+                    </ul></stentry>
+            </strow>
+        </simpletable>
+        <p>Include the TMX file in the request body, either zipped or as HTML form attachment.</p>
+        <p>RemoteTM tries to store the uploaded file in a temporary location and returns a JSON
+            object.</p>
+        <p>On success, field 'status' is set to 'OK' and field 'file' contains the temporary file location. Example:</p>
+        <codeblock>{
+   "status": "OK",
+   "file": "uploaded.tmx"
+}</codeblock>
+        <p>On error, field 'status' is set to 'Error' and field 'reason' contains the error cause.
+            Example:</p>
+        <codeblock>{
+   "reason": "File upload error",
+   "status": "Error"
+}</codeblock>
     </body>
 </topic>

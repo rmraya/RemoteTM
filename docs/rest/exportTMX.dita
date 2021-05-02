@@ -35,9 +35,9 @@
                 <stentry>ID of the memory to export</stentry>
             </strow>
             <strow>
-                <stentry><tt>srcLang</tt>></stentry>
-                <stentry>The code of the language to set as source or '*all*' if any languages is to
-                    be considered as source language</stentry>
+                <stentry><tt>srcLang</tt></stentry>
+                <stentry>The code of the language to set as source or '*all*' if any language is to
+                    be treated as source language</stentry>
             </strow>
             <strow>
                 <stentry><tt>close</tt></stentry>
@@ -46,7 +46,7 @@
         </simpletable>
         <p>Example:</p>
         <codeblock translate="no">{
-            "command": "exportMemory",
+    "command": "exportMemory",
     "memory": "1617053861912",
     "srcLang": "*all*",
     "close": false

@@ -3,6 +3,56 @@
 <topic id="getUsers">
     <title>Get Users</title>
     <body>
-        <p></p>
+        <p>End point: <tt>[RemoteTM URL]/users</tt><tt> </tt></p>
+        <p>Send a <tt>GET</tt> request with these headers:</p>
+        <simpletable>
+            <sthead>
+                <stentry>Header</stentry>
+                <stentry>Value</stentry>
+            </sthead>
+            <strow>
+                <stentry><tt>Session</tt> </stentry>
+                <stentry>The ticket received from <xref href="authorizationRequest.dita"
+                    >Authorization Request</xref></stentry>
+            </strow>
+            <strow>
+                <stentry><tt>Content-Type</tt></stentry>
+                <stentry><tt>application/json</tt></stentry>
+            </strow>
+        </simpletable>
+        <p>RemoteTM responds with a JSON object.</p>
+        <p>On success, field 'status' is set to 'OK' and a list of users in JSON format is returned
+            in field 'users'. Example:</p>
+        <codeblock>{
+    "users":[{
+        "role":"PM",
+        "name":"Project Manager",
+        "active":true,
+        "id":"projman",
+        "updated":false,
+        "email":"projman@mydomain.com"
+    },{
+        "role":"TR",
+        "name":"Linguist",
+        "active":true,
+        "id":"linguist",
+        "updated":true,
+        "email":"linguist@mydomain.com"
+    },{
+        "role":"SA",
+        "name":"System Administrator",
+        "active":true,
+        "id":"sysadmin",
+        "updated":true,
+        "email":"sysadmin@mydomain.com"
+    }],
+    "status":"OK"
+}</codeblock>
+        <p>On error, field 'status' is set to 'Error' and field 'reason' contains the error cause.
+            Example:</p>
+        <codeblock translate="no">{
+    "status": "Error",
+    "reason": "Access denied"
+}</codeblock>
     </body>
 </topic>

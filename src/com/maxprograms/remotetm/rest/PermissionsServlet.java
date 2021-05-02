@@ -60,6 +60,12 @@ public class PermissionsServlet extends HttpServlet {
                     User who = manager.getUser(AuthorizeServlet.getUser(session));
                     if (who != null && who.isActive()) {
                         String owner = manager.getOwner(memory);
+                        if (owner.isEmpty()) {
+                            result.put(Constants.STATUS, Constants.ERROR);
+                            result.put(Constants.REASON, "Invalid memory");
+                            Utils.writeResponse(result, response, 200);
+                            return;
+                        }
                         if (who.getId().equals(owner) || Constants.SYSTEM_ADMINISTRATOR.equals(who.getRole())) {
                             JSONArray array = new JSONArray();
                             List<Permission> list = manager.getPermissions(memory);
@@ -103,6 +109,12 @@ public class PermissionsServlet extends HttpServlet {
                     User who = manager.getUser(AuthorizeServlet.getUser(session));
                     if (who != null && who.isActive()) {
                         String owner = manager.getOwner(body.getString("memory"));
+                        if (owner.isEmpty()) {
+                            result.put(Constants.STATUS, Constants.ERROR);
+                            result.put(Constants.REASON, "Invalid memory");
+                            Utils.writeResponse(result, response, 200);
+                            return;
+                        }
                         if (who.getId().equals(owner) || Constants.SYSTEM_ADMINISTRATOR.equals(who.getRole())) {
                             manager.setPermissions(body.getString("memory"), body.getJSONArray("permissions"));
                             result.put(Constants.STATUS, Constants.OK);

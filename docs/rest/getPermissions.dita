@@ -3,6 +3,66 @@
 <topic id="getPermissions">
     <title>Get Permissions</title>
     <body>
-        <p></p>
+        <p>End point: <tt>[RemoteTM URL]/permissions</tt><tt> </tt></p>
+        <p>Send a <tt>GET</tt> request with these headers:</p>
+        <simpletable>
+            <sthead>
+                <stentry>Header</stentry>
+                <stentry>Value</stentry>
+            </sthead>
+            <strow>
+                <stentry><tt>Session</tt> </stentry>
+                <stentry>The ticket received from <xref href="authorizationRequest.dita"
+                        >Authorization Request</xref></stentry>
+            </strow>
+            <strow>
+                <stentry><tt>Content-Type</tt></stentry>
+                <stentry><tt>application/json</tt></stentry>
+            </strow>
+        </simpletable>
+        <p>Inlude this parameter in the request URL:</p>
+        <simpletable>
+            <sthead>
+                <stentry>Parameter</stentry>
+                <stentry>Value</stentry>
+            </sthead>
+            <strow>
+                <stentry><tt>id</tt> </stentry>
+                <stentry>ID of the memory to query</stentry>
+            </strow>
+        </simpletable>
+        <p>Example:</p>
+        <codeblock>https://tm.mydomain.com:8443/RemoteTM/permissions?id=1619955225759</codeblock>
+        <p>RemoteTM responds with a JSON object.</p>
+        <p>On success, field 'status' is set to 'OK' and memory access rights are listed in the
+            'permissions' field. Example:</p>
+        <codeblock>{
+    "permissions": [{
+        "memory": "1619955225759",
+        "read": true,
+        "user": "projman",
+        "write": true,
+        "export": true
+    },{
+        "memory": "1619955225759",
+        "read": true,
+        "user": "linguist",
+        "write": false,
+        "export": false
+    },{
+        "memory": "1619955225759",
+        "read": true,
+        "user": "sysadmin",
+        "write": true,
+        "export": true
+    }],
+    "status": "OK"
+}</codeblock>
+        <p>On error, field 'status' is set to 'Error' and field 'reason' contains the error cause.
+            Example:</p>
+        <codeblock>{
+    "reason": "Invalid memory",
+    "status": "Error"
+}</codeblock>
     </body>
 </topic>

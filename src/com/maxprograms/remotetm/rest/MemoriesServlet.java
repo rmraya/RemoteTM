@@ -259,6 +259,9 @@ public class MemoriesServlet extends HttpServlet {
         User who = manager.getUser(AuthorizeServlet.getUser(session));
         if (who != null && who.isActive()) {
             String owner = manager.getOwner(memory);
+            if (owner.isEmpty()) {
+                throw new IOException("Invalid memory");
+            }
             if (Constants.SYSTEM_ADMINISTRATOR.equals(who.getRole()) || who.getId().equals(owner)) {
                 TmManager.removeMemory(memory);
                 manager.removeMemory(memory);

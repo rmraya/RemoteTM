@@ -3,6 +3,83 @@
 <topic id="updateEmailServer">
     <title>Update Email Server</title>
     <body>
-        <p></p>
+        <p>End point: <tt>[RemoteTM URL]/email</tt><tt> </tt></p>
+        <p>Send a <tt>POST</tt> request with these headers:</p>
+        <simpletable>
+            <sthead>
+                <stentry>Header</stentry>
+                <stentry>Value</stentry>
+            </sthead>
+            <strow>
+                <stentry><tt>Session</tt> </stentry>
+                <stentry>The ticket received from <xref href="authorizationRequest.dita"
+                    >Authorization Request</xref></stentry>
+            </strow>
+            <strow>
+                <stentry><tt>Content-Type</tt></stentry>
+                <stentry><tt>application/json</tt></stentry>
+            </strow>
+        </simpletable>
+        <p>Include these parameters in a JSON body:</p>
+        <simpletable>
+            <sthead>
+                <stentry>Field</stentry>
+                <stentry>Value</stentry>
+            </sthead>
+            <strow>
+                <stentry><tt>server</tt> </stentry>
+                <stentry>Name or IP of the SMTP server</stentry>
+            </strow>
+            <strow>
+                <stentry><tt>port</tt> </stentry>
+                <stentry>Port number in which the SMTP server accepts requests</stentry>
+            </strow>
+            <strow>
+                <stentry><tt>user</tt></stentry>
+                <stentry>User name for the SMTP server</stentry>
+            </strow>
+            <strow>
+                <stentry><tt>password</tt></stentry>
+                <stentry>Password for the SMTP user</stentry>
+            </strow>
+            <strow>
+                <stentry><tt>instance</tt></stentry>
+                <stentry>URL of the RemoteTM server</stentry>
+            </strow>
+            <strow>
+                <stentry><tt>from</tt></stentry>
+                <stentry>Email address used for sending notifications</stentry>
+            </strow>
+            <strow>
+                <stentry><tt>authenticate</tt></stentry>
+                <stentry>Boolean value indicating whether SMTP server requires authentication</stentry>
+            </strow>
+            <strow>
+                <stentry><tt>tls</tt></stentry>
+                <stentry>Boolean value indicating whether SMTP server requires TLS/SSL protocols</stentry>
+            </strow>
+        </simpletable>
+        <p>Example:</p>
+        <codeblock>{
+    "server": "smtp.mydomain.com",    
+    "port": "465",
+    "user": "postmaster",
+    "password": "pass123$",
+    "instance": "https://tm.mydomain.com:8443/RemoteTM",
+    "from": "remotetm@mydomain.com",
+    "authenticate": true,
+    "tls": false
+}</codeblock>
+        <p>RemoteTM responds with a JSON object.</p>
+        <p>On success, field 'status' is set to 'OK'. Example:</p>
+        <codeblock>{
+    "status": "OK"
+}</codeblock>
+        <p>On error, field 'status' is set to 'Error' and field 'reason' contains the error cause.
+            Example:</p>
+        <codeblock translate="no">{
+    "status": "Error",
+    "reason": "Access denied"
+}</codeblock>
     </body>
 </topic>

@@ -1,31 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE concept PUBLIC "-//OASIS//DTD DITA Concept//EN" "concept.dtd">
-<concept id="memoriesManagement">
-    <title>Memories Management</title>
-    <shortdesc/>
+<concept id="tasks">
+    <title>Memory Operations</title>
+    <shortdesc></shortdesc>
     <conbody>
-        <p>The REST methods for managing memories exposed by RemoteTM are:</p>
+        <p>The REST methods for common memory-related tasks exposed by RemotTM are:</p>
         <ul>
-            <li><xref href="getMemories.dita">Get Memories</xref></li>
-            <li><xref href="addMemory.dita">Add Memory</xref></li>
-            <li><xref href="removeMemory.dita">Remove Memory</xref></li>
-            <li><xref href="importTMX.dita">Import TMX</xref>
-                <ul>
-                    <li><xref href="uploadFile.dita">Upload File</xref></li>
-                    <li><xref href="importFile.dita">Import File</xref></li>
-                </ul>
-            </li>
-            <li><xref href="../rest/exportTMX.dita">Export TMX</xref>
-                <ul>
-                    <li><xref href="downloadFile.dita">Download File</xref></li>
-                </ul>
-            </li>
-            <li><xref href="accessManagement.dita">Memory Permissions</xref>
-                <ul>
-                    <li><xref href="getPermissions.dita">Get Permissions</xref></li>
-                    <li><xref href="setPermissions.dita">Set Permissions</xref></li>
-                </ul>
-            </li>
             <li><xref href="openMemory.dita">Open Memory</xref></li>
             <li><xref href="closeMemory.dita">Close Memory</xref></li>
             <li><xref href="closeMemories.dita">Close Memories</xref></li>

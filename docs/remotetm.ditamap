@@ -60,10 +60,26 @@
             <topicref href="rest/exportTMX.dita">
                 <topicref href="rest/downloadFile.dita"/>
             </topicref>
-        </topicref>
-        <topicref href="rest/permissions.dita">
-            <topicref href="rest/getPermissions.dita"/>
-            <topicref href="rest/setPermissions.dita"/>
+            <topicref href="rest/permissions.dita">
+                <topicref href="rest/getPermissions.dita"/>
+                <topicref href="rest/setPermissions.dita"/>
+            </topicref>
+            <topicref href="rest/openMemory.dita"/>
+            <topicref href="rest/closeMemory.dita"/>
+            <topicref href="rest/closeMemories.dita"/>
+            <topicref href="rest/storeTu.dita"/>
+            <topicref href="rest/removeTu.dita"/>
+            <topicref href="rest/commit.dita"/>
+            <topicref href="rest/searchTranslations.dita"/>
+            <topicref href="rest/searchAll.dita"/>
+            <topicref href="rest/concordanceSearch.dita"/>
+            <topicref href="rest/batchTranslate.dita"/>
+            <topicref href="rest/getProjects.dita"/>
+            <topicref href="rest/getSubjects.dita"/>
+            <topicref href="rest/getClients.dita"/>
+            <topicref href="rest/memoryProjects.dita"/>
+            <topicref href="rest/memorySubjects.dita"/>
+            <topicref href="rest/memoryClients.dita"/>
         </topicref>
         <topicref href="rest/usersManagement.dita">
             <topicref href="rest/getUsers.dita"/>

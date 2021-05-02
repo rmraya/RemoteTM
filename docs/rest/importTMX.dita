@@ -3,6 +3,10 @@
 <topic id="importTMX">
     <title>Import TMX</title>
     <body>
-        <p></p>
+        <p>Importing a TMX file into a memory is a two-step process:</p>
+        <ol>
+            <li><xref href="uploadFile.dita">Upload File</xref></li>
+            <li><xref href="importTMX.dita">Import File</xref></li>
+        </ol>
     </body>
 </topic>

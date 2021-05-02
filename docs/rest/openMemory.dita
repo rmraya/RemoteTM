@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
-<topic id="setPermissions">
-    <title>Set Permissions</title>
+<topic id="openMemory">
+    <title>Open Memory</title>
     <body>
-        <p>End point: <tt>[RemoteTM URL]/permissions</tt><tt> </tt></p>
+        <p>End point: <tt>[RemoteTM URL]/memories</tt><tt> </tt></p>
         <p>Send a <tt>POST</tt> request with these headers:</p>
         <simpletable>
             <sthead>
@@ -23,45 +23,26 @@
         <p>Include these parameters in a JSON body:</p>
         <simpletable>
             <sthead>
-                <stentry>Field</stentry>
+                <stentry>Parameter</stentry>
                 <stentry>Value</stentry>
             </sthead>
             <strow>
-                <stentry><tt>memory</tt> </stentry>
-                <stentry>ID of the memory to update</stentry>
+                <stentry><tt>command</tt></stentry>
+                <stentry><tt>openMemory</tt></stentry>
             </strow>
             <strow>
-                <stentry><tt>permissions</tt> </stentry>
-                <stentry>Array containing individual access rights, in the format produced by <xref
-                        href="getPermissions.dita">Get Permissions</xref> method</stentry>
+                <stentry><tt>memory</tt> </stentry>
+                <stentry>ID of the memory to open</stentry>
             </strow>
         </simpletable>
         <p>Example:</p>
         <codeblock>{
-    "memory": "1619955225759",
-    "permissions": [{
-        "memory": "1619955225759",
-        "read": true,
-        "user": "projman",
-        "write": true,
-        "export": true
-    },{
-        "memory": "1619955225759",
-        "read": true,
-        "user": "sysadmin",
-        "write": true,
-        "export": true
-    },{
-        "memory": "1619955225759",
-        "read": true,
-        "user": "linguist",
-        "write": true,
-        "export": false
-    }]
+    "command": "openMemory",
+    "memory": "1617053861912"
 }</codeblock>
         <p>RemoteTM responds with a JSON object.</p>
         <p>On success, field 'status' is set to 'OK'. Example:</p>
-        <codeblock>{
+        <codeblock translate="no">{
     "status": "OK"
 }</codeblock>
         <p>On error, field 'status' is set to 'Error' and field 'reason' contains the error cause.

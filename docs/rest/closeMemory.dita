@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
-<topic id="getEmailServer">
-    <title>Get Email Server</title>
+<topic id="closeMemory">
+    <title>Close Memory</title>
     <body>
-        <p>End point: <tt>[RemoteTM URL]/email</tt><tt> </tt></p>
-        <p>Send a <tt>GET</tt> request with these headers:</p>
+        <p>End point: <tt>[RemoteTM URL]/memories</tt><tt> </tt></p>
+        <p>Send a <tt>POST</tt> request with these headers:</p>
         <simpletable>
             <sthead>
                 <stentry>Header</stentry>
@@ -20,18 +20,29 @@
                 <stentry><tt>application/json</tt></stentry>
             </strow>
         </simpletable>
+        <p>Include these parameters in a JSON body:</p>
+        <simpletable>
+            <sthead>
+                <stentry>Parameter</stentry>
+                <stentry>Value</stentry>
+            </sthead>
+            <strow>
+                <stentry><tt>command</tt></stentry>
+                <stentry><tt>closeMemory</tt></stentry>
+            </strow>
+            <strow>
+                <stentry><tt>memory</tt> </stentry>
+                <stentry>ID of the memory to close</stentry>
+            </strow>
+        </simpletable>
+        <p>Example:</p>
+        <codeblock>{
+    "command": "closeMemory",
+    "memory": "1617963861912"
+}</codeblock>
         <p>RemoteTM responds with a JSON object.</p>
-        <p>On success, field 'status' is set to 'OK'  and server configuration is returned.
-            Example:</p> 
-            <codeblock>{
-    "server": "smtp.mydomain.com",
-    "password": "pass123$",
-    "instance": "https://tm.mydomain.com:8443/RemoteTM",
-    "authenticate": true,
-    "port": "465",
-    "from": "remotetm@mydomain.com",
-    "tls": false,
-    "user": "postmaster",
+        <p>On success, field 'status' is set to 'OK'. Example:</p>
+        <codeblock translate="no">{
     "status": "OK"
 }</codeblock>
         <p>On error, field 'status' is set to 'Error' and field 'reason' contains the error cause.
