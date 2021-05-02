@@ -35,6 +35,16 @@
         <codeblock>{
     "command": "closeMemories"
 }</codeblock>
-        <p>RemoteTM closes all open memories.</p>
+        <p>RemoteTM responds with a JSON object.</p>
+        <p>On success, field 'status' is set to 'OK'. Example:</p>
+        <codeblock translate="no">{
+    "status": "OK"
+}</codeblock>
+        <p>On error, field 'status' is set to 'Error' and field 'reason' contains the error cause.
+            Example:</p>
+        <codeblock translate="no">{
+    "status": "Error",
+    "reason": "Access denied"
+}</codeblock>
     </body>
 </topic>

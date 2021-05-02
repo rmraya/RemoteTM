@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
-<topic id="storeTu">
-    <title>Store Translation Unit</title>
+<topic id="getTu">
+    <title>Get Translation Unit</title>
     <body>
         <p>End point: <tt>[RemoteTM URL]/memories</tt><tt> </tt></p>
         <p>Send a <tt>POST</tt> request with these headers:</p>
@@ -27,33 +27,35 @@
             </sthead>
             <strow>
                 <stentry><tt>command</tt></stentry>
-                <stentry><tt>storeTu</tt></stentry>
+                <stentry><tt>getTu</tt></stentry>
             </strow>
             <strow>
                 <stentry><tt>memory</tt> </stentry>
-                <stentry>ID of the memory to update</stentry>
+                <stentry>ID of the memory to query</stentry>
             </strow>
             <strow>
-                <stentry><tt>tu</tt> </stentry>
-                <stentry>Translation unit to import as TMX &lt;tu> element</stentry>
+                <stentry><tt>tuid</tt> </stentry>
+                <stentry>ID of the translation unit to retrieve</stentry>
             </strow>
         </simpletable>
         <p>Example:</p>
         <codeblock>{
-    "command": "storeTu",
+    "command": "getTu",
     "memory": "1617963861912",
-    "tu": "&lt;tu tuid=\"1668707130-10-12-12\"> ... &lt;/tu>"
+    "tuid": "1668707130-10-12-12"
 }</codeblock>
         <p>RemoteTM responds with a JSON object.</p>
-        <p>On success, field 'status' is set to 'OK'. Example:</p>
+        <p>On success, field 'status' is set to 'OK' and requested translation unit is included in
+            'tu' field, escaped for JSON format. Example:</p>
         <codeblock translate="no">{
+    "tu": "&lt;tu tuid=\"1668707130-10-12-12\"> ... &lt;/tu>",    
     "status": "OK"
 }</codeblock>
         <p>On error, field 'status' is set to 'Error' and field 'reason' contains the error cause.
             Example:</p>
         <codeblock translate="no">{
     "status": "Error",
-    "reason": "Memory is closed"
+    "reason": "TU does not exist"
 }</codeblock>
     </body>
 </topic>
