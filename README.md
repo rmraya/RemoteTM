@@ -5,6 +5,8 @@
 
 RemoteTM is a Translation Memory (TM) server designed for sharing the super fast Translation Memory engine included in [Swordfish IV](https://maxprograms.com/products/swordfish.html) in network environments.
 
+Thanks to its open [REST API](https://en.wikipedia.org/wiki/Representational_state_transfer), you can use RemoteTM from Swordfish IV and from any other tool via Web Services.
+
 ## Requirements
 
 These applications are required to install and run RemoteTM Web Server:
@@ -17,6 +19,11 @@ These applications are required to install and run RemoteTM Web Server:
 Source code of RemoteTM is free for personal use. Anyone can download the source code, compile, modify and use it at no cost in compliance with the accompanying license terms.
 
 You can host RemoteTM on your own server at no cost and share translation memories with an unlimited number of users.
+
+## SaaS (Software as a Service)
+RemoteTM servers are available for rent at Maxprograms' [Online Store](https://www.maxprograms.com/store/buy.html).
+
+Maxprograms takes care of the IT work, managing server backups and updates for you.
 
 ## Downloads
 
