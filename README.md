@@ -27,7 +27,7 @@ Maxprograms takes care of the IT work, managing server backups and updates for y
 
 ## Downloads
 
-You can download `RemoteTM.war` from [RemoteTM's Home Page](https://maxprograms.com/support/remotetm.html).
+You can download `RemoteTM.war` from RemoteTM's [Home Page](https://maxprograms.com/products/remotetm.html).
 
 ## Documentation
 
