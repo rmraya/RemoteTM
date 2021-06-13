@@ -1,5 +1,11 @@
 {
-    "license": "See LICENSE",
+    "author": {
+        "name": "Rodolfo M. Raya",
+        "email": "rmraya@maxprograms.com",
+        "url": "https://www.maxprograms.com"
+    },
+    "homepage": "https://www.maxprograms.com/products/remotetm.html",
+    "license": "EPL-1.0",
     "repository": {
         "type": "git",
         "url": "https://github.com/rmraya/RemoteTM.git"
@@ -7,7 +13,7 @@
     "devDependencies": {
         "cssnano": "^4.1.10",
         "parcel-bundler": "^1.12.4",
-        "typescript": "^4.2.3"
+        "typescript": "^4.3.2"
     },
     "scripts": {
         "build": "tsc",

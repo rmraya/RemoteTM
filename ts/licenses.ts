@@ -1,21 +1,14 @@
 /*******************************************************************************
-Copyright (c) 2008-2021 - Maxprograms,  http://www.maxprograms.com/
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of 
-this software and associated documentation files (the "Software"), to compile, 
-modify and use the Software in its executable form without restrictions.
-
-Redistribution of this Software or parts of it in any form (source code or 
-executable binaries) requires prior written permission from Maxprograms.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
-SOFTWARE.
-*******************************************************************************/
+ * Copyright (c) 2008-2021 Maxprograms.
+ *
+ * This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 1.0
+ * which accompanies this distribution, and is available at
+ * https://www.eclipse.org/org/documents/epl-v10.html
+ *
+ * Contributors:
+ *     Maxprograms - initial API and implementation
+ *******************************************************************************/
 
 import { Dialog } from "./dialog";
 import { LicenseViewer } from "./licenseViewer";
@@ -49,8 +42,8 @@ export class LicensesDialog {
         tr0.appendChild(right0);
 
         let remoteTm: HTMLAnchorElement = document.createElement('a');
-        remoteTm.innerText = 'RemoteTM License';
-        remoteTm.addEventListener('click', () => { this.viewLicense('RemoteTM License', '/licenses/license.txt') });
+        remoteTm.innerText = 'Eclipse Publice License 1.0';
+        remoteTm.addEventListener('click', () => { this.viewLicense('Eclipse Publice License 1.0', '/licenses/EclipsePublicLicense1.0.html') });
         right0.appendChild(remoteTm);
 
         let tr1: HTMLTableRowElement = document.createElement('tr');
@@ -66,8 +59,8 @@ export class LicensesDialog {
         tr1.appendChild(right1);
 
         let swordfish: HTMLAnchorElement = document.createElement('a');
-        swordfish.innerText = 'Swordfish License';
-        swordfish.addEventListener('click', () => { this.viewLicense('Swordfish License', '/licenses/swordfish.txt') });
+        swordfish.innerText = 'Eclipse Publice License 1.0';
+        swordfish.addEventListener('click', () => { this.viewLicense('Eclipse Publice License 1.0', '/licenses/EclipsePublicLicense1.0.html') });
         right1.appendChild(swordfish);
 
         let tr2: HTMLTableRowElement = document.createElement('tr');

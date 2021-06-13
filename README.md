@@ -38,5 +38,4 @@ You can download `RemoteTM.war` from RemoteTM's [Home Page](https://maxprograms.
 
  Peer support is available at  [Groups.io](https://groups.io/g/maxprograms/)
 
- Users with a valid Swordfish subscription may contact tech@maxprograms.com for assistance
-
+ Users with an active Swordfish subscription may contact tech@maxprograms.com for assistance
