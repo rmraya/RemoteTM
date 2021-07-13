@@ -29,7 +29,6 @@ export class Dialog {
     mouseStartY: number;
     dialogTop: number;
     dialogLeft: number;
-    dragging: boolean;
 
     backdrop: HTMLDivElement;
 
@@ -45,9 +44,9 @@ export class Dialog {
         this.dialog.classList.add('hidden');
         this.dialog.style.zIndex = (102 + (2 * RemoteTM.dialogCount())) + '';
         this.dialog.draggable = true;
-        this.dialog.addEventListener('dragstart', (ev: DragEvent) => { this.startMoving(ev); });
-        this.dialog.addEventListener('drag', (ev: DragEvent) => { this.move(ev); });
-        this.dialog.addEventListener('dragend', (ev: DragEvent) => { this.endMove(ev); })
+        this.dialog.addEventListener('dragstart', (ev: DragEvent) => { this.dragStart(ev); });
+        this.dialog.addEventListener('drag', (ev: DragEvent) => { this.drag(ev); });
+        this.dialog.addEventListener('dragend', (ev: DragEvent) => { this.dragEnd(ev); })
         this.center(width);
         document.body.appendChild(this.dialog);
 
@@ -139,7 +138,7 @@ export class Dialog {
         value ? this.closeLink.classList.remove('hidden') : this.closeLink.classList.add('hidden');
     }
 
-    startMoving(event: DragEvent) {
+    dragStart(event: DragEvent) {
         this.mouseStartX = event.clientX;
         this.mouseStartY = event.clientY;
         this.dialogTop = this.dialog.offsetTop;
@@ -147,29 +146,23 @@ export class Dialog {
         if (this.mouseStartY > this.dialogTop + this.titleArea.clientHeight) {
             event.preventDefault();
             event.stopPropagation();
-            this.dragging = false;
+        }
+    }
+
+    drag(event: DragEvent) {
+        event.preventDefault();
+        event.stopPropagation();
+        if (event.clientX === 0 && event.clientY === 0) {
             return;
         }
-        this.dragging = true;
+        this.dialog.style.left = (this.dialogLeft - this.mouseStartX + event.clientX) + 'px';
+        this.dialog.style.top = (this.dialogTop - this.mouseStartY + event.clientY) + 'px';
     }
 
-    move(event: DragEvent) {
-        if (this.dragging) {
-            event.preventDefault();
-            event.stopPropagation();
-            if (event.clientX === 0 && event.clientY === 0) {
-                return;
-            }
-            this.dialog.style.left = (this.dialogLeft - this.mouseStartX + event.clientX) + 'px';
-            this.dialog.style.top = (this.dialogTop - this.mouseStartY + event.clientY) + 'px';
-        }
-    }
-
-    endMove(event: DragEvent) {
-        if (this.dragging) {
-            event.preventDefault();
-            event.stopPropagation();
-            this.dragging = false;
-        }
+    dragEnd(event: DragEvent) {
+        event.preventDefault();
+        event.stopPropagation();
+        this.dialog.style.left = (this.dialogLeft - this.mouseStartX + event.clientX) + 'px';
+        this.dialog.style.top = (this.dialogTop - this.mouseStartY + event.clientY) + 'px';
     }
 }
