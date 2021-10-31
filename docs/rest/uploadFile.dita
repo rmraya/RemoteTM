@@ -26,7 +26,8 @@
                     </ul></stentry>
             </strow>
         </simpletable>
-        <p>Include the TMX file in the request body, either zipped or as HTML form attachment.</p>
+        <p>Include the TMX file in the request body, either zipped or as HTML form attachment in a
+                "<apiname>file</apiname>" form data param.</p>
         <p>RemoteTM tries to store the uploaded file in a temporary location and returns a JSON
             object.</p>
         <p>On success, field 'status' is set to 'OK' and field 'file' contains the temporary file location. Example:</p>
