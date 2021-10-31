@@ -3,7 +3,7 @@
 <topic id="uploadFile">
     <title>Upload File</title>
     <body>
-        <p>End point: <tt>[RemoteTM URL]/memories</tt><tt> </tt></p>
+        <p>End point: <tt>[RemoteTM URL]/upload</tt><tt> </tt></p>
         <p>Send a <tt>POST</tt> request with these headers:</p>
         <simpletable>
             <sthead>
