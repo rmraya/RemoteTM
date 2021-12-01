@@ -6,8 +6,8 @@
     <conbody>
         <p>The following applications are required to install and run RemoteTM Web Server:</p>
         <ul>
-            <li>Java 11, available at <xref href="https://www.adoptopenjdk.net" format="html"
-                    scope="external">https://www.adoptopenjdk.net</xref>. </li>
+            <li>Java 17, available at <xref href="https://www.adoptium.net" format="html"
+                    scope="external">https://www.adoptium.net</xref>. </li>
             <li><xref keyref="tomcat">Apache Tomcat</xref> available from <xref
                     href="https://tomcat.apache.org/" format="html" scope="external"
                     >https://tomcat.apache.org/</xref>, configured with an SSL certificate to work
