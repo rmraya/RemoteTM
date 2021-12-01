@@ -10,7 +10,7 @@ Thanks to its open [REST API](https://en.wikipedia.org/wiki/Representational_sta
 ## Requirements
 
 These applications are required to install and run RemoteTM Web Server:
- - Java 11, available at https://www.adoptopenjdk.net.
+ - Java 17, available at https://www.adoptium.net.
  - Apache Tomcat available from https://tomcat.apache.org/, configured with an SSL certificate to work with HTTPS protocol.
 
  _Tip_: Visit [SSL/TLS Configuration How-To](https://tomcat.apache.org/tomcat-9.0-doc/ssl-howto.html) for information on configuring Apache Tomcat to support HTTPS protocol.
