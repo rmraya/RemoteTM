@@ -16,7 +16,7 @@ These applications are required to install and run RemoteTM Web Server:
  _Tip_: Visit [SSL/TLS Configuration How-To](https://tomcat.apache.org/tomcat-9.0-doc/ssl-howto.html) for information on configuring Apache Tomcat to support HTTPS protocol.
 
 ## License
-Source code of RemoteTM is free for personal use. Anyone can download the source code, compile, modify and use it at no cost in compliance with the accompanying license terms.
+Source code of RemoteTM is free. Anyone can download the source code, compile, modify and use it at no cost in compliance with the accompanying license terms.
 
 You can host RemoteTM on your own server at no cost and share translation memories with an unlimited number of users.
 
