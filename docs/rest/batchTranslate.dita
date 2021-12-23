@@ -118,7 +118,7 @@
           "similarity": 100,
           "origin": "1619955225759",
           "source": "&lt;tuv xml:lang=\"en\">&lt;seg>Apply Auto-Translation to All Segments&lt;\/seg>&lt;\/tuv>",
-          "target": "&lt;tuv xml:lang=\"es\">&lt;seg>Apply Auto-Translation to All Segments&lt;\/seg>&lt;\/tuv>"
+          "target": "&lt;tuv xml:lang=\"es\">&lt;seg>Aplicar Auto-Translation a Todos los Segmentos&lt;\/seg>&lt;\/tuv>"
         }
       ]
     },{
