@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008-2021 Maxprograms.
+ * Copyright (c) 2008-2022 Maxprograms.
  *
  * This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 1.0
@@ -14,6 +14,7 @@ import { Dialog } from "./dialog";
 import { Input } from "./input";
 import { Message } from "./message";
 import { RemoteTM } from "./remotetm";
+import { Role } from "./roles";
 import { Select } from "./select";
 import { UsersManager } from "./usersManager";
 
@@ -103,18 +104,18 @@ export class AddUser {
         let roles: HTMLOptionElement[] = [];
 
         let sa: HTMLOptionElement = document.createElement('option');
-        sa.value = 'SA';
-        sa.innerText = 'System Administrator';
+        sa.value = Role.SYSTEM_ADMINISTRATOR;
+        sa.innerText = Role.getDescription(Role.SYSTEM_ADMINISTRATOR);
         roles.push(sa);
 
         let pm: HTMLOptionElement = document.createElement('option');
-        pm.value = 'PM';
-        pm.innerText = 'Project Manager';
+        pm.value = Role.PROJECT_MANAGER;
+        pm.innerText = Role.getDescription(Role.PROJECT_MANAGER);
         roles.push(pm);
 
         let tr: HTMLOptionElement = document.createElement('option');
-        tr.value = 'TR';
-        tr.innerText = 'Translator';
+        tr.value = Role.TRANSLATOR;
+        tr.innerText = Role.getDescription(Role.TRANSLATOR);
         roles.push(tr);
 
         return roles;

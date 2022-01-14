@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008-2021 Maxprograms.
+ * Copyright (c) 2008-2022 Maxprograms.
  *
  * This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 1.0
@@ -12,9 +12,13 @@
 
 package com.maxprograms.remotetm.rest;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
+import java.net.URL;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -40,6 +44,19 @@ public class VersionServlet extends HttpServlet {
             result.put(Constants.STATUS, Constants.OK);
             result.put("version", Constants.VERSION);
             result.put("build", Constants.BUILD);
+            URL home = new URL("https://maxprograms.com/remotetm.json");
+            try (InputStream stream = home.openStream()) {
+                try (InputStreamReader reader = new InputStreamReader(stream)) {
+                    StringBuilder builder = new StringBuilder();
+                    String line = "";
+                    try (BufferedReader buffered = new BufferedReader(reader)) {
+                        while ((line = buffered.readLine()) != null) {
+                            builder.append(line);
+                        }
+                    }
+                    result.put("updates", new JSONObject(builder.toString()));
+                }
+            }
             Utils.writeResponse(result, response, 200);
         } catch (IOException e) {
             Logger logger = System.getLogger(VersionServlet.class.getName());

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008-2021 Maxprograms.
+ * Copyright (c) 2008-2022 Maxprograms.
  *
  * This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 1.0
@@ -20,6 +20,8 @@ import { ImportTMX } from './importTMX';
 import { LicensesDialog } from './licenses';
 import { Message } from './message';
 import { RemoteTM } from './remotetm';
+import { Role } from './roles';
+import { UpdatesDialog } from './updatesDialog';
 import { UsersManager } from './usersManager';
 import { View } from './view';
 
@@ -202,7 +204,7 @@ export class Dashboard implements View {
         changePassword.addEventListener('click', () => { this.changePassword(); });
         settingsMenu.addOption(changePassword);
 
-        if (this.role === 'SA') {
+        if (this.role === Role.SYSTEM_ADMINISTRATOR) {
             settingsMenu.addOption(document.createElement('hr'));
 
             let manageUsers: HTMLAnchorElement = document.createElement('a');
@@ -235,6 +237,13 @@ export class Dashboard implements View {
         licenses.addEventListener('click', () => { this.viewLicenses(); });
         helpMenu.addOption(licenses);
 
+        if (this.role === Role.SYSTEM_ADMINISTRATOR) {
+            let checkUpdates: HTMLAnchorElement = document.createElement('a');
+            checkUpdates.innerText = 'Check for Updates...';
+            checkUpdates.addEventListener('click', () => { this.checkUpdates(); });
+            helpMenu.addOption(checkUpdates);
+        }
+
         helpMenu.addOption(document.createElement('hr'));
 
         let about: HTMLAnchorElement = document.createElement('a');
@@ -243,7 +252,12 @@ export class Dashboard implements View {
         helpMenu.addOption(about);
     }
 
-    setEmailServer() {
+    checkUpdates(): void {
+        let dialog: UpdatesDialog = new UpdatesDialog();
+        dialog.open();
+    }
+
+    setEmailServer(): void {
         let dialog: EmailServerDialog = new EmailServerDialog();
         dialog.open();
     }
@@ -363,7 +377,7 @@ export class Dashboard implements View {
             new Message('Select memory');
             return;
         }
-        if (this.role === 'TR') {
+        if (this.role === Role.TRANSLATOR) {
             new Message('Access denied');
             return;
         }
@@ -394,7 +408,7 @@ export class Dashboard implements View {
             new Message('Select memory');
             return;
         }
-        if (this.role === 'TR') {
+        if (this.role === Role.TRANSLATOR) {
             new Message('Access denied');
             return;
         }
@@ -461,7 +475,7 @@ export class Dashboard implements View {
     }
 
     closeMemories(): void {
-        if (this.role !== 'SA') {
+        if (this.role !== Role.SYSTEM_ADMINISTRATOR) {
             new Message('Access denied');
             return;
         }

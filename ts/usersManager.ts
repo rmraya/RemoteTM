@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008-2021 Maxprograms.
+ * Copyright (c) 2008-2022 Maxprograms.
  *
  * This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 1.0
@@ -16,6 +16,7 @@ import { Dialog } from "./dialog";
 import { EditUser } from "./editUSer";
 import { Message } from "./message";
 import { RemoteTM } from "./remotetm";
+import { Role } from "./roles";
 
 export class UsersManager {
 
@@ -138,7 +139,7 @@ export class UsersManager {
                     tr.appendChild(td);
 
                     td = document.createElement('td');
-                    td.innerText = this.getRole(user.role);
+                    td.innerText = Role.getDescription(user.role);
                     tr.appendChild(td);
 
                     td = document.createElement('td');
@@ -166,15 +167,6 @@ export class UsersManager {
         }
         document.getElementById('u_' + id).classList.add('selected');
         this.selected = id;
-    }
-
-    getRole(role: string): string {
-        switch (role) {
-            case 'SA': return 'System Administrator';
-            case 'PM': return 'Project Manager';
-            case 'TR': return 'Translator';
-            default: return undefined;
-        }
     }
 
     addUser(): void {

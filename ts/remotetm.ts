@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008-2021 Maxprograms.
+ * Copyright (c) 2008-2022 Maxprograms.
  *
  * This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 1.0
@@ -16,11 +16,13 @@ import { LoginForm } from "./loginForm";
 import { Message } from "./message";
 import { PasswordReset } from "./passwordReset";
 import { ResetPassworRequest } from "./resetPasswordRequest";
+import { Role } from "./roles";
 
 export class RemoteTM {
 
     public static VERSION: string = '5.0.0';
     public static BUILD: string = '';
+    public static UPDATES: any = {};
 
     private static waitingCount: number;
     private static session: string = '';
@@ -94,6 +96,7 @@ export class RemoteTM {
                 }
                 RemoteTM.VERSION = json.version;
                 RemoteTM.BUILD = json.build;
+                RemoteTM.UPDATES = json.updates;
             } else {
                 new Message(json.reason);
             }
@@ -116,6 +119,11 @@ export class RemoteTM {
                 RemoteTM.session = json.ticket;
                 RemoteTM.who = userName;
                 RemoteTM.showDashboard(json.role);
+                if (json.role === Role.SYSTEM_ADMINISTRATOR) {
+                    if (RemoteTM.VERSION !== RemoteTM.UPDATES.version || RemoteTM.BUILD !== RemoteTM.UPDATES.build) {
+                        new Message('RemoteTM version ' + RemoteTM.UPDATES.version + '_' + RemoteTM.UPDATES.build + ' is available');
+                    }
+                }
             } else {
                 new Message(json.reason);
                 RemoteTM.showLogin();

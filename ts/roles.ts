@@ -10,8 +10,18 @@
  *     Maxprograms - initial API and implementation
  *******************************************************************************/
 
-export interface View {
-    show(): void;
-    close(): void;
-    resize(): void;
+export class Role {
+
+    public static TRANSLATOR: string = 'TR';
+    public static PROJECT_MANAGER: string = 'PM';
+    public static SYSTEM_ADMINISTRATOR: string = 'SA';
+
+    public static getDescription(role: string): string {
+        switch (role) {
+            case Role.SYSTEM_ADMINISTRATOR: return 'System Administrator';
+            case Role.PROJECT_MANAGER: return 'Project Manager';
+            case Role.TRANSLATOR: return 'Translator';
+            default: return undefined;
+        }
+    }
 }
