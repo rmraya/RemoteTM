@@ -46,7 +46,7 @@ public class TmManager {
     public static int storeTMX(String memory, String tmx, String project, String client, String subject)
             throws IOException, SQLException, SAXException, ParserConfigurationException {
         if (!isOpen(memory)) {
-            throw new IOException(CLOSED);
+            openMemory(memory);
         }
         int imported = databases.get(memory).storeTMX(tmx, project, client, subject);
         Files.deleteIfExists(new File(tmx).toPath());
@@ -87,7 +87,7 @@ public class TmManager {
 
     public static void close(String memory) throws SQLException, IOException {
         if (!isOpen(memory)) {
-            throw new IOException(CLOSED);
+            return;
         }
         if (databases.containsKey(memory)) {
             int users = count.get(memory);
@@ -102,9 +102,10 @@ public class TmManager {
         }
     }
 
-    public static String exportMemory(String memory, String name, Set<String> languages, String srcLang) throws SQLException, IOException {
+    public static String exportMemory(String memory, String name, Set<String> languages, String srcLang)
+            throws SQLException, IOException {
         if (!isOpen(memory)) {
-            throw new IOException(CLOSED);
+            openMemory(memory);
         }
         File tempFolder = new File(RemoteTM.getWorkFolder(), "tmp");
         File tmx = new File(tempFolder, name + ".tmx");
@@ -140,37 +141,37 @@ public class TmManager {
         }
     }
 
-    public static Set<String> getAllClients(String memory) throws IOException {
+    public static Set<String> getAllClients(String memory) throws IOException, SQLException {
         if (!isOpen(memory)) {
-            throw new IOException(CLOSED);
+            openMemory(memory);
         }
         return databases.get(memory).getAllClients();
     }
 
     public static Set<String> getAllLanguages(String memory) throws SQLException, IOException {
         if (!isOpen(memory)) {
-            throw new IOException(CLOSED);
+            openMemory(memory);
         }
         return databases.get(memory).getAllLanguages();
     }
 
-    public static Set<String> getAllProjects(String memory) throws IOException {
+    public static Set<String> getAllProjects(String memory) throws IOException, SQLException {
         if (!isOpen(memory)) {
-            throw new IOException(CLOSED);
+            openMemory(memory);
         }
         return databases.get(memory).getAllProjects();
     }
 
-    public static Set<String> getAllSubjects(String memory) throws IOException {
+    public static Set<String> getAllSubjects(String memory) throws IOException, SQLException {
         if (!isOpen(memory)) {
-            throw new IOException(CLOSED);
+            openMemory(memory);
         }
         return databases.get(memory).getAllSubjects();
     }
 
     public static void storeTu(String memory, Element tu) throws SQLException, IOException {
         if (!isOpen(memory)) {
-            throw new IOException(CLOSED);
+            openMemory(memory);
         }
         databases.get(memory).storeTu(tu);
     }
@@ -178,14 +179,14 @@ public class TmManager {
     public static Element getTu(String memory, String tuid)
             throws IOException, SQLException, SAXException, ParserConfigurationException {
         if (!isOpen(memory)) {
-            throw new IOException(CLOSED);
+            openMemory(memory);
         }
         return databases.get(memory).getTu(tuid);
     }
 
     public static void removeTu(String memory, String tuid) throws IOException, SQLException {
         if (!isOpen(memory)) {
-            throw new IOException(CLOSED);
+            openMemory(memory);
         }
         databases.get(memory).removeTu(tuid);
     }
@@ -201,7 +202,7 @@ public class TmManager {
             int similarity, boolean caseSensitive)
             throws IOException, SAXException, ParserConfigurationException, SQLException {
         if (!isOpen(memory)) {
-            throw new IOException(CLOSED);
+            openMemory(memory);
         }
         return databases.get(memory).searchTranslation(searchStr, srcLang, tgtLang, similarity, caseSensitive);
     }
@@ -209,7 +210,7 @@ public class TmManager {
     public static List<Element> searchAll(String memory, String searchStr, String srcLang, int similarity,
             boolean caseSensitive) throws IOException, SAXException, ParserConfigurationException, SQLException {
         if (!isOpen(memory)) {
-            throw new IOException(CLOSED);
+            openMemory(memory);
         }
         return databases.get(memory).searchAll(searchStr, srcLang, similarity, caseSensitive);
     }
@@ -218,7 +219,7 @@ public class TmManager {
             boolean isRegexp, boolean caseSensitive)
             throws SQLException, SAXException, IOException, ParserConfigurationException {
         if (!isOpen(memory)) {
-            throw new IOException(CLOSED);
+            openMemory(memory);
         }
         return databases.get(memory).concordanceSearch(searchStr, srcLang, limit, isRegexp, caseSensitive);
     }
