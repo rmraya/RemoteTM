@@ -17,23 +17,16 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.sql.SQLException;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import javax.xml.parsers.ParserConfigurationException;
-
 import com.maxprograms.remotetm.utils.Utils;
 import com.maxprograms.swordfish.tm.InternalDatabase;
-import com.maxprograms.swordfish.tm.Match;
-import com.maxprograms.xml.Element;
-
-import org.xml.sax.SAXException;
 
 public class TmManager {
 
-    static final String MEMORIES = "memories";
+    public static final String MEMORIES = "memories";
     static final String CLOSED = "Memory is closed";
 
     private TmManager() {
@@ -42,16 +35,6 @@ public class TmManager {
 
     private static Map<String, InternalDatabase> databases;
     private static Map<String, Integer> count;
-
-    public static int storeTMX(String memory, String tmx, String project, String client, String subject)
-            throws IOException, SQLException, SAXException, ParserConfigurationException {
-        if (!isOpen(memory)) {
-            openMemory(memory);
-        }
-        int imported = databases.get(memory).storeTMX(tmx, project, client, subject);
-        Files.deleteIfExists(new File(tmx).toPath());
-        return imported;
-    }
 
     public static void createMemory(String memory) throws SQLException, IOException {
         File memoriesFolder = new File(RemoteTM.getWorkFolder(), MEMORIES);
@@ -87,7 +70,7 @@ public class TmManager {
 
     public static void close(String memory) throws SQLException, IOException {
         if (!isOpen(memory)) {
-            return;
+            throw new IOException(CLOSED);
         }
         if (databases.containsKey(memory)) {
             int users = count.get(memory);
@@ -102,21 +85,7 @@ public class TmManager {
         }
     }
 
-    public static String exportMemory(String memory, String name, Set<String> languages, String srcLang)
-            throws SQLException, IOException {
-        if (!isOpen(memory)) {
-            openMemory(memory);
-        }
-        File tempFolder = new File(RemoteTM.getWorkFolder(), "tmp");
-        File tmx = new File(tempFolder, name + ".tmx");
-        if (tmx.exists()) {
-            Files.delete(tmx.toPath());
-        }
-        databases.get(memory).exportMemory(tmx.getAbsolutePath(), languages, srcLang);
-        return tmx.getName();
-    }
-
-    public static void openMemory(String memory) throws SQLException, IOException {
+    public static void setOpen(String memory) throws SQLException, IOException {
         if (databases == null) {
             databases = new ConcurrentHashMap<>();
             count = new ConcurrentHashMap<>();
@@ -141,86 +110,10 @@ public class TmManager {
         }
     }
 
-    public static Set<String> getAllClients(String memory) throws IOException, SQLException {
-        if (!isOpen(memory)) {
-            openMemory(memory);
-        }
-        return databases.get(memory).getAllClients();
-    }
-
-    public static Set<String> getAllLanguages(String memory) throws SQLException, IOException {
-        if (!isOpen(memory)) {
-            openMemory(memory);
-        }
-        return databases.get(memory).getAllLanguages();
-    }
-
-    public static Set<String> getAllProjects(String memory) throws IOException, SQLException {
-        if (!isOpen(memory)) {
-            openMemory(memory);
-        }
-        return databases.get(memory).getAllProjects();
-    }
-
-    public static Set<String> getAllSubjects(String memory) throws IOException, SQLException {
-        if (!isOpen(memory)) {
-            openMemory(memory);
-        }
-        return databases.get(memory).getAllSubjects();
-    }
-
-    public static void storeTu(String memory, Element tu) throws SQLException, IOException {
-        if (!isOpen(memory)) {
-            openMemory(memory);
-        }
-        databases.get(memory).storeTu(tu);
-    }
-
-    public static Element getTu(String memory, String tuid)
-            throws IOException, SQLException, SAXException, ParserConfigurationException {
-        if (!isOpen(memory)) {
-            openMemory(memory);
-        }
-        return databases.get(memory).getTu(tuid);
-    }
-
-    public static void removeTu(String memory, String tuid) throws IOException, SQLException {
-        if (!isOpen(memory)) {
-            openMemory(memory);
-        }
-        databases.get(memory).removeTu(tuid);
-    }
-
     public static void commit(String memory) throws SQLException, IOException {
         if (!isOpen(memory)) {
             throw new IOException(CLOSED);
         }
         databases.get(memory).commit();
-    }
-
-    public static List<Match> searchTranslation(String memory, String searchStr, String srcLang, String tgtLang,
-            int similarity, boolean caseSensitive)
-            throws IOException, SAXException, ParserConfigurationException, SQLException {
-        if (!isOpen(memory)) {
-            openMemory(memory);
-        }
-        return databases.get(memory).searchTranslation(searchStr, srcLang, tgtLang, similarity, caseSensitive);
-    }
-
-    public static List<Element> searchAll(String memory, String searchStr, String srcLang, int similarity,
-            boolean caseSensitive) throws IOException, SAXException, ParserConfigurationException, SQLException {
-        if (!isOpen(memory)) {
-            openMemory(memory);
-        }
-        return databases.get(memory).searchAll(searchStr, srcLang, similarity, caseSensitive);
-    }
-
-    public static List<Element> concordanceSearch(String memory, String searchStr, String srcLang, int limit,
-            boolean isRegexp, boolean caseSensitive)
-            throws SQLException, SAXException, IOException, ParserConfigurationException {
-        if (!isOpen(memory)) {
-            openMemory(memory);
-        }
-        return databases.get(memory).concordanceSearch(searchStr, srcLang, limit, isRegexp, caseSensitive);
     }
 }
