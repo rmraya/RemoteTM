@@ -17,16 +17,23 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.sql.SQLException;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import javax.xml.parsers.ParserConfigurationException;
+
 import com.maxprograms.remotetm.utils.Utils;
 import com.maxprograms.swordfish.tm.InternalDatabase;
+import com.maxprograms.swordfish.tm.Match;
+import com.maxprograms.xml.Element;
+
+import org.xml.sax.SAXException;
 
 public class TmManager {
 
-    public static final String MEMORIES = "memories";
+    static final String MEMORIES = "memories";
     static final String CLOSED = "Memory is closed";
 
     private TmManager() {
@@ -35,6 +42,16 @@ public class TmManager {
 
     private static Map<String, InternalDatabase> databases;
     private static Map<String, Integer> count;
+
+    public static int storeTMX(String memory, String tmx, String project, String client, String subject)
+            throws IOException, SQLException, SAXException, ParserConfigurationException {
+        File memoriesFolder = new File(RemoteTM.getWorkFolder(), MEMORIES);
+        InternalDatabase db = new InternalDatabase(memory, memoriesFolder.getAbsolutePath());
+        int imported = db.storeTMX(tmx, project, client, subject);
+        db.close();
+        Files.deleteIfExists(new File(tmx).toPath());
+        return imported;
+    }
 
     public static void createMemory(String memory) throws SQLException, IOException {
         File memoriesFolder = new File(RemoteTM.getWorkFolder(), MEMORIES);
@@ -85,7 +102,21 @@ public class TmManager {
         }
     }
 
-    public static void setOpen(String memory) throws SQLException, IOException {
+    public static String exportMemory(String memory, String name, Set<String> languages, String srcLang)
+            throws SQLException, IOException {
+        File memoriesFolder = new File(RemoteTM.getWorkFolder(), MEMORIES);
+        InternalDatabase db = new InternalDatabase(memory, memoriesFolder.getAbsolutePath());
+        File tempFolder = new File(RemoteTM.getWorkFolder(), "tmp");
+        File tmx = new File(tempFolder, name + ".tmx");
+        if (tmx.exists()) {
+            Files.delete(tmx.toPath());
+        }
+        db.exportMemory(tmx.getAbsolutePath(), languages, srcLang);
+        db.close();
+        return tmx.getName();
+    }
+
+    public static void openMemory(String memory) throws SQLException, IOException {
         if (databases == null) {
             databases = new ConcurrentHashMap<>();
             count = new ConcurrentHashMap<>();
@@ -110,10 +141,94 @@ public class TmManager {
         }
     }
 
+    public static Set<String> getAllClients(String memory) throws IOException, SQLException {
+        File memoriesFolder = new File(RemoteTM.getWorkFolder(), MEMORIES);
+        InternalDatabase db = new InternalDatabase(memory, memoriesFolder.getAbsolutePath());
+        Set<String> result = db.getAllClients();
+        db.close();
+        return result;
+    }
+
+    public static Set<String> getAllLanguages(String memory) throws SQLException, IOException {
+        File memoriesFolder = new File(RemoteTM.getWorkFolder(), MEMORIES);
+        InternalDatabase db = new InternalDatabase(memory, memoriesFolder.getAbsolutePath());
+        Set<String> result = db.getAllLanguages();
+        db.close();
+        return result;
+    }
+
+    public static Set<String> getAllProjects(String memory) throws IOException, SQLException {
+        File memoriesFolder = new File(RemoteTM.getWorkFolder(), MEMORIES);
+        InternalDatabase db = new InternalDatabase(memory, memoriesFolder.getAbsolutePath());
+        Set<String> result = db.getAllProjects();
+        db.close();
+        return result;
+    }
+
+    public static Set<String> getAllSubjects(String memory) throws IOException, SQLException {
+        File memoriesFolder = new File(RemoteTM.getWorkFolder(), MEMORIES);
+        InternalDatabase db = new InternalDatabase(memory, memoriesFolder.getAbsolutePath());
+        Set<String> result = db.getAllSubjects();
+        db.close();
+        return result;
+    }
+
+    public static void storeTu(String memory, Element tu) throws SQLException, IOException {
+        File memoriesFolder = new File(RemoteTM.getWorkFolder(), MEMORIES);
+        InternalDatabase db = new InternalDatabase(memory, memoriesFolder.getAbsolutePath());
+        db.storeTu(tu);
+        db.close();
+    }
+
+    public static Element getTu(String memory, String tuid)
+            throws IOException, SQLException, SAXException, ParserConfigurationException {
+        File memoriesFolder = new File(RemoteTM.getWorkFolder(), MEMORIES);
+        InternalDatabase db = new InternalDatabase(memory, memoriesFolder.getAbsolutePath());
+        Element result = db.getTu(tuid);
+        db.close();
+        return result;
+    }
+
+    public static void removeTu(String memory, String tuid) throws IOException, SQLException {
+        File memoriesFolder = new File(RemoteTM.getWorkFolder(), MEMORIES);
+        InternalDatabase db = new InternalDatabase(memory, memoriesFolder.getAbsolutePath());
+        db.removeTu(tuid);
+        db.close();
+    }
+
     public static void commit(String memory) throws SQLException, IOException {
         if (!isOpen(memory)) {
             throw new IOException(CLOSED);
         }
         databases.get(memory).commit();
+    }
+
+    public static List<Match> searchTranslation(String memory, String searchStr, String srcLang, String tgtLang,
+            int similarity, boolean caseSensitive)
+            throws IOException, SAXException, ParserConfigurationException, SQLException {
+        File memoriesFolder = new File(RemoteTM.getWorkFolder(), MEMORIES);
+        InternalDatabase db = new InternalDatabase(memory, memoriesFolder.getAbsolutePath());
+        List<Match> result = db.searchTranslation(searchStr, srcLang, tgtLang, similarity, caseSensitive);
+        db.close();
+        return result;
+    }
+
+    public static List<Element> searchAll(String memory, String searchStr, String srcLang, int similarity,
+            boolean caseSensitive) throws IOException, SAXException, ParserConfigurationException, SQLException {
+        File memoriesFolder = new File(RemoteTM.getWorkFolder(), MEMORIES);
+        InternalDatabase db = new InternalDatabase(memory, memoriesFolder.getAbsolutePath());
+        List<Element> result = db.searchAll(searchStr, srcLang, similarity, caseSensitive);
+        db.close();
+        return result;
+    }
+
+    public static List<Element> concordanceSearch(String memory, String searchStr, String srcLang, int limit,
+            boolean isRegexp, boolean caseSensitive)
+            throws SQLException, SAXException, IOException, ParserConfigurationException {
+        File memoriesFolder = new File(RemoteTM.getWorkFolder(), MEMORIES);
+        InternalDatabase db = new InternalDatabase(memory, memoriesFolder.getAbsolutePath());
+        List<Element> result = db.concordanceSearch(searchStr, srcLang, limit, isRegexp, caseSensitive);
+        db.close();
+        return result;
     }
 }

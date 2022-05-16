@@ -62,7 +62,7 @@ public class DbManager {
             database.mkdirs();
         }
         DriverManager.registerDriver(new org.h2.Driver());
-        String url = "jdbc:h2:" + database.getAbsolutePath() + "/db";
+        String url = "jdbc:h2:" + database.getAbsolutePath() + "/db;DB_CLOSE_ON_EXIT=FALSE";
         conn = DriverManager.getConnection(url);
         conn.setAutoCommit(false);
         if (needsLoading) {

@@ -16,7 +16,6 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
-import java.nio.file.Files;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.Iterator;
@@ -41,7 +40,6 @@ import com.maxprograms.remotetm.models.User;
 import com.maxprograms.remotetm.utils.SendMail;
 import com.maxprograms.remotetm.utils.Utils;
 import com.maxprograms.swordfish.models.Memory;
-import com.maxprograms.swordfish.tm.InternalDatabase;
 import com.maxprograms.swordfish.tm.Match;
 import com.maxprograms.xml.Element;
 
@@ -102,80 +100,80 @@ public class MemoriesServlet extends HttpServlet {
                     JSONObject body = Utils.readJSON(request.getInputStream());
                     String command = body.getString("command");
                     switch (command) {
-                        case "addMemory":
-                            addMemory(session, body);
-                            break;
-                        case "importTMX":
-                            importTMX(session, body);
-                            break;
-                        case "getProjects":
-                            result.put("projects", getProperty(session, "project"));
-                            break;
-                        case "getSubjects":
-                            result.put("subjects", getProperty(session, "subject"));
-                            break;
-                        case "getClients":
-                            result.put("clients", getProperty(session, "client"));
-                            break;
-                        case "removeMemory":
-                            removeMemory(session, body);
-                            break;
-                        case "exportMemory":
-                            result.put("file", exportMemory(session, body));
-                            break;
-                        case "closeMemories":
-                            TmManager.closeMemories();
-                            break;
-                        case "openMemory":
-                            openMemory(session, body);
-                            break;
-                        case "closeMemory":
-                            closeMemory(session, body);
-                            break;
-                        case "memoryClients":
-                            result.put("clients", memoryClients(session, body));
-                            break;
-                        case "memoryLanguages":
-                            result.put("languages", memoryLanguages(session, body));
-                            break;
-                        case "memoryProjects":
-                            result.put("projects", memoryProjects(session, body));
-                            break;
-                        case "memorySubjects":
-                            result.put("subjects", memorySubjects(session, body));
-                            break;
-                        case "storeTu":
-                            storeTu(session, body);
-                            break;
-                        case "getTu":
-                            result.put("tu", getTu(session, body).toString());
-                            break;
-                        case "removeTu":
-                            removeTu(session, body);
-                            break;
-                        case "commit":
-                            commit(session, body);
-                            break;
-                        case "searchTranslation":
-                            result.put("matches", searchTranslation(session, body));
-                            break;
-                        case "searchAll":
-                            result.put("tus", searchAll(session, body));
-                            break;
-                        case "concordanceSearch":
-                            result.put("tus", concordanceSearch(session, body));
-                            break;
-                        case "batchTranslate":
-                            result.put("matches", batchTranslate(session, body));
-                            break;
-                        default:
-                            Utils.denyAccess(response);
-                            return;
+                    case "addMemory":
+                        addMemory(session, body);
+                        break;
+                    case "importTMX":
+                        importTMX(session, body);
+                        break;
+                    case "getProjects":
+                        result.put("projects", getProperty(session, "project"));
+                        break;
+                    case "getSubjects":
+                        result.put("subjects", getProperty(session, "subject"));
+                        break;
+                    case "getClients":
+                        result.put("clients", getProperty(session, "client"));
+                        break;
+                    case "removeMemory":
+                        removeMemory(session, body);
+                        break;
+                    case "exportMemory":
+                        result.put("file", exportMemory(session, body));
+                        break;
+                    case "closeMemories":
+                        TmManager.closeMemories();
+                        break;
+                    case "openMemory":
+                        openMemory(session, body);
+                        break;
+                    case "closeMemory":
+                        closeMemory(session, body);
+                        break;
+                    case "memoryClients":
+                        result.put("clients", memoryClients(session, body));
+                        break;
+                    case "memoryLanguages":
+                        result.put("languages", memoryLanguages(session, body));
+                        break;
+                    case "memoryProjects":
+                        result.put("projects", memoryProjects(session, body));
+                        break;
+                    case "memorySubjects":
+                        result.put("subjects", memorySubjects(session, body));
+                        break;
+                    case "storeTu":
+                        storeTu(session, body);
+                        break;
+                    case "getTu":
+                        result.put("tu", getTu(session, body).toString());
+                        break;
+                    case "removeTu":
+                        removeTu(session, body);
+                        break;
+                    case "commit":
+                        commit(session, body);
+                        break;
+                    case "searchTranslation":
+                        result.put("matches", searchTranslation(session, body));
+                        break;
+                    case "searchAll":
+                        result.put("tus", searchAll(session, body));
+                        break;
+                    case "concordanceSearch":
+                        result.put("tus", concordanceSearch(session, body));
+                        break;
+                    case "batchTranslate":
+                        result.put("matches", batchTranslate(session, body));
+                        break;
+                    default:
+                        Utils.denyAccess(response);
+                        return;
                     }
                     result.put(Constants.STATUS, Constants.OK);
                     Utils.writeResponse(result, response, 200);
-                } catch (SQLException | NoSuchAlgorithmException | JSONException | IOException | SAXException
-                        | ParserConfigurationException e) {
+                } catch (Exception e) {
+                    e.printStackTrace();
                     logger.log(Level.ERROR, e);
                     result.put(Constants.STATUS, Constants.ERROR);
                     result.put(Constants.REASON, e.getMessage());
@@ -184,7 +182,11 @@ public class MemoriesServlet extends HttpServlet {
                 return;
             }
             Utils.denyAccess(response);
-        } catch (IOException e) {
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.log(Level.ERROR, e);
+        } catch (Error e) {
+            e.printStackTrace();
             logger.log(Level.ERROR, e);
         }
     }
@@ -198,8 +200,6 @@ public class MemoriesServlet extends HttpServlet {
         if (who != null && who.isActive()) {
             Memory mem = manager.getMemory(memory);
             if (Constants.SYSTEM_ADMINISTRATOR.equals(who.getRole()) || who.getId().equals(owner)) {
-                File memoriesFolder = new File(RemoteTM.getWorkFolder(), TmManager.MEMORIES);
-                InternalDatabase engine = new InternalDatabase(memory, memoriesFolder.getAbsolutePath());
                 Set<String> languages = null;
                 if (params.has("languages")) {
                     languages = new TreeSet<>();
@@ -208,18 +208,13 @@ public class MemoriesServlet extends HttpServlet {
                         languages.add(langs.getString(i));
                     }
                 } else {
-                    languages = engine.getAllLanguages();
+                    languages = TmManager.getAllLanguages(memory);
                 }
-                File tempFolder = new File(RemoteTM.getWorkFolder(), "tmp");
-                File tmx = new File(tempFolder, mem.getName() + ".tmx");
-                if (tmx.exists()) {
-                    Files.delete(tmx.toPath());
-                }
-                engine.exportMemory(tmx.getAbsolutePath(), languages, params.getString("srcLang"));
+                String file = TmManager.exportMemory(memory, mem.getName(), languages, params.getString("srcLang"));
                 if (params.has("close") && params.getBoolean("close")) {
-                    engine.close();
+                    TmManager.close(memory);
                 }
-                return tmx.getName();
+                return file;
             }
         }
         throw new IOException(Constants.DENIED);
@@ -233,7 +228,7 @@ public class MemoriesServlet extends HttpServlet {
         if (who != null && who.isActive()) {
             Permission p = manager.getPermission(memory, who.getId());
             if (p.canRead() || p.canWrite() || p.canExport()) {
-                TmManager.setOpen(memory);
+                TmManager.openMemory(memory);
                 return;
             }
         }
@@ -280,11 +275,8 @@ public class MemoriesServlet extends HttpServlet {
         DbManager manager = DbManager.getInstance();
         User who = manager.getUser(AuthorizeServlet.getUser(session));
         if (who != null && who.isActive()) {
-            File memoriesFolder = new File(RemoteTM.getWorkFolder(), TmManager.MEMORIES);
-            InternalDatabase engine = new InternalDatabase(memory, memoriesFolder.getAbsolutePath());
             JSONArray array = new JSONArray();
-            Set<String> set = engine.getAllClients();
-            engine.close();
+            Set<String> set = TmManager.getAllClients(memory);
             Iterator<String> it = set.iterator();
             while (it.hasNext()) {
                 array.put(it.next());
@@ -300,11 +292,8 @@ public class MemoriesServlet extends HttpServlet {
         DbManager manager = DbManager.getInstance();
         User who = manager.getUser(AuthorizeServlet.getUser(session));
         if (who != null && who.isActive()) {
-            File memoriesFolder = new File(RemoteTM.getWorkFolder(), TmManager.MEMORIES);
-            InternalDatabase engine = new InternalDatabase(memory, memoriesFolder.getAbsolutePath());
             JSONArray array = new JSONArray();
-            Set<String> set = engine.getAllLanguages();
-            engine.close();
+            Set<String> set = TmManager.getAllLanguages(memory);
             Iterator<String> it = set.iterator();
             while (it.hasNext()) {
                 array.put(it.next());
@@ -322,10 +311,7 @@ public class MemoriesServlet extends HttpServlet {
             String memory = params.getString(MEMORY);
             Permission p = manager.getPermission(memory, who.getId());
             if (p.canRead()) {
-                File memoriesFolder = new File(RemoteTM.getWorkFolder(), TmManager.MEMORIES);
-                InternalDatabase engine = new InternalDatabase(memory, memoriesFolder.getAbsolutePath());
-                Element tu = engine.getTu(params.getString("tuid"));
-                engine.close();
+                Element tu = TmManager.getTu(memory, params.getString("tuid"));
                 if (tu != null) {
                     return tu;
                 }
@@ -341,11 +327,8 @@ public class MemoriesServlet extends HttpServlet {
         DbManager manager = DbManager.getInstance();
         User who = manager.getUser(AuthorizeServlet.getUser(session));
         if (who != null && who.isActive()) {
-            File memoriesFolder = new File(RemoteTM.getWorkFolder(), TmManager.MEMORIES);
-            InternalDatabase engine = new InternalDatabase(memory, memoriesFolder.getAbsolutePath());
             JSONArray array = new JSONArray();
-            Set<String> set = engine.getAllProjects();
-            engine.close();
+            Set<String> set = TmManager.getAllProjects(memory);
             Iterator<String> it = set.iterator();
             while (it.hasNext()) {
                 array.put(it.next());
@@ -361,11 +344,8 @@ public class MemoriesServlet extends HttpServlet {
         DbManager manager = DbManager.getInstance();
         User who = manager.getUser(AuthorizeServlet.getUser(session));
         if (who != null && who.isActive()) {
-            File memoriesFolder = new File(RemoteTM.getWorkFolder(), TmManager.MEMORIES);
-            InternalDatabase engine = new InternalDatabase(memory, memoriesFolder.getAbsolutePath());
             JSONArray array = new JSONArray();
-            Set<String> set = engine.getAllSubjects();
-            engine.close();
+            Set<String> set = TmManager.getAllSubjects(memory);
             Iterator<String> it = set.iterator();
             while (it.hasNext()) {
                 array.put(it.next());
@@ -399,10 +379,7 @@ public class MemoriesServlet extends HttpServlet {
             Permission p = manager.getPermission(memory, who.getId());
             if (p.canWrite()) {
                 Element tu = Utils.toElement(params.getString("tu"));
-                File memoriesFolder = new File(RemoteTM.getWorkFolder(), TmManager.MEMORIES);
-                InternalDatabase engine = new InternalDatabase(memory, memoriesFolder.getAbsolutePath());
-                engine.storeTu(tu);
-                engine.close();
+                TmManager.storeTu(memory, tu);
                 return;
             }
         }
@@ -417,10 +394,7 @@ public class MemoriesServlet extends HttpServlet {
             String memory = params.getString(MEMORY);
             Permission p = manager.getPermission(memory, who.getId());
             if (p.canWrite()) {
-                File memoriesFolder = new File(RemoteTM.getWorkFolder(), TmManager.MEMORIES);
-                InternalDatabase engine = new InternalDatabase(memory, memoriesFolder.getAbsolutePath());
-                engine.removeTu(params.getString("tuid"));
-                engine.close();
+                TmManager.removeTu(memory, params.getString("tuid"));
                 return;
             }
         }
@@ -435,12 +409,9 @@ public class MemoriesServlet extends HttpServlet {
             String memory = params.getString(MEMORY);
             Permission p = manager.getPermission(memory, who.getId());
             if (p.canRead()) {
-                File memoriesFolder = new File(RemoteTM.getWorkFolder(), TmManager.MEMORIES);
-                InternalDatabase engine = new InternalDatabase(memory, memoriesFolder.getAbsolutePath());
-                List<Match> matches = engine.searchTranslation(params.getString("searchStr"),
+                List<Match> matches = TmManager.searchTranslation(memory, params.getString("searchStr"),
                         params.getString("srcLang"), params.getString("tgtLang"), params.getInt("similarity"),
                         params.getBoolean("caseSensitive"));
-                engine.close();
                 JSONArray array = new JSONArray();
                 for (int i = 0; i < matches.size(); i++) {
                     array.put(matches.get(i).toJSON());
@@ -459,11 +430,8 @@ public class MemoriesServlet extends HttpServlet {
             String memory = params.getString(MEMORY);
             Permission p = manager.getPermission(memory, who.getId());
             if (p.canRead()) {
-                File memoriesFolder = new File(RemoteTM.getWorkFolder(), TmManager.MEMORIES);
-                InternalDatabase engine = new InternalDatabase(memory, memoriesFolder.getAbsolutePath());
-                List<Element> matches = engine.searchAll(params.getString("searchStr"),
+                List<Element> matches = TmManager.searchAll(memory, params.getString("searchStr"),
                         params.getString("srcLang"), params.getInt("similarity"), params.getBoolean("caseSensitive"));
-                engine.close();
                 JSONArray array = new JSONArray();
                 for (int i = 0; i < matches.size(); i++) {
                     array.put(matches.get(i).toString());
@@ -482,12 +450,9 @@ public class MemoriesServlet extends HttpServlet {
             String memory = params.getString(MEMORY);
             Permission p = manager.getPermission(memory, who.getId());
             if (p.canRead()) {
-                File memoriesFolder = new File(RemoteTM.getWorkFolder(), TmManager.MEMORIES);
-                InternalDatabase engine = new InternalDatabase(memory, memoriesFolder.getAbsolutePath());
-                List<Element> matches = engine.concordanceSearch(params.getString("searchStr"),
+                List<Element> matches = TmManager.concordanceSearch(memory, params.getString("searchStr"),
                         params.getString("srcLang"), params.getInt("limit"), params.getBoolean("isRegexp"),
                         params.getBoolean("caseSensitive"));
-                engine.close();
                 JSONArray array = new JSONArray();
                 for (int i = 0; i < matches.size(); i++) {
                     array.put(matches.get(i).toString());
@@ -512,27 +477,24 @@ public class MemoriesServlet extends HttpServlet {
         throw new IOException(Constants.DENIED);
     }
 
-    private void importTMX(String session, final JSONObject params)
+    private void importTMX(String session, JSONObject params)
             throws SQLException, NoSuchAlgorithmException, IOException {
         DbManager manager = DbManager.getInstance();
-        final User who = manager.getUser(AuthorizeServlet.getUser(session));
+        User who = manager.getUser(AuthorizeServlet.getUser(session));
         if (who != null && who.isActive()) {
-            final String memory = params.getString(MEMORY);
-            final Memory mem = manager.getMemory(memory);
+            String memory = params.getString(MEMORY);
+            Memory mem = manager.getMemory(memory);
             Permission p = manager.getPermission(memory, who.getId());
             if (p.canWrite()) {
                 Thread thread = new Thread() {
                     @Override
                     public void run() {
                         try {
-                            File memoriesFolder = new File(RemoteTM.getWorkFolder(), TmManager.MEMORIES);
-                            InternalDatabase engine = new InternalDatabase(memory, memoriesFolder.getAbsolutePath());
                             File tempDir = new File(RemoteTM.getWorkFolder(), "tmp");
                             File tmx = new File(tempDir, params.getString("file"));
-                            int imported = engine.storeTMX(tmx.getAbsolutePath(),
+                            int imported = TmManager.storeTMX(memory, tmx.getAbsolutePath(),
                                     params.getString("project"), params.getString("client"),
                                     params.getString("subject"));
-                            engine.close();
                             String text = "\nDear " + who.getName() + ",\n\nYour TMX file has been processed and "
                                     + imported + " entries were added to \"" + mem.getName()
                                     + "\".\n\nThanks for using RemoteTM.\n\n";
@@ -600,11 +562,10 @@ public class MemoriesServlet extends HttpServlet {
                 String srcLang = params.getString("srcLang");
                 String tgtLang = params.getString("tgtLang");
                 JSONArray segments = params.getJSONArray("segments");
-                File memoriesFolder = new File(RemoteTM.getWorkFolder(), TmManager.MEMORIES);
-                InternalDatabase engine = new InternalDatabase(memory, memoriesFolder.getAbsolutePath());
+                TmManager.openMemory(memory);
                 for (int i = 0; i < segments.length(); i++) {
                     JSONObject json = segments.getJSONObject(i);
-                    List<Match> matches = engine.searchTranslation(json.getString("pure"), srcLang, tgtLang,
+                    List<Match> matches = TmManager.searchTranslation(memory, json.getString("pure"), srcLang, tgtLang,
                             60, false);
                     JSONArray array = new JSONArray();
                     for (int j = 0; j < matches.size(); j++) {
@@ -613,7 +574,7 @@ public class MemoriesServlet extends HttpServlet {
                     json.put("matches", array);
                     result.put(json);
                 }
-                engine.close();
+                TmManager.close(memory);
                 return result;
             }
         }
