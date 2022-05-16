@@ -100,75 +100,75 @@ public class MemoriesServlet extends HttpServlet {
                     JSONObject body = Utils.readJSON(request.getInputStream());
                     String command = body.getString("command");
                     switch (command) {
-                    case "addMemory":
-                        addMemory(session, body);
-                        break;
-                    case "importTMX":
-                        importTMX(session, body);
-                        break;
-                    case "getProjects":
-                        result.put("projects", getProperty(session, "project"));
-                        break;
-                    case "getSubjects":
-                        result.put("subjects", getProperty(session, "subject"));
-                        break;
-                    case "getClients":
-                        result.put("clients", getProperty(session, "client"));
-                        break;
-                    case "removeMemory":
-                        removeMemory(session, body);
-                        break;
-                    case "exportMemory":
-                        result.put("file", exportMemory(session, body));
-                        break;
-                    case "closeMemories":
-                        TmManager.closeMemories();
-                        break;
-                    case "openMemory":
-                        openMemory(session, body);
-                        break;
-                    case "closeMemory":
-                        closeMemory(session, body);
-                        break;
-                    case "memoryClients":
-                        result.put("clients", memoryClients(session, body));
-                        break;
-                    case "memoryLanguages":
-                        result.put("languages", memoryLanguages(session, body));
-                        break;
-                    case "memoryProjects":
-                        result.put("projects", memoryProjects(session, body));
-                        break;
-                    case "memorySubjects":
-                        result.put("subjects", memorySubjects(session, body));
-                        break;
-                    case "storeTu":
-                        storeTu(session, body);
-                        break;
-                    case "getTu":
-                        result.put("tu", getTu(session, body).toString());
-                        break;
-                    case "removeTu":
-                        removeTu(session, body);
-                        break;
-                    case "commit":
-                        commit(session, body);
-                        break;
-                    case "searchTranslation":
-                        result.put("matches", searchTranslation(session, body));
-                        break;
-                    case "searchAll":
-                        result.put("tus", searchAll(session, body));
-                        break;
-                    case "concordanceSearch":
-                        result.put("tus", concordanceSearch(session, body));
-                        break;
-                    case "batchTranslate":
-                        result.put("matches", batchTranslate(session, body));
-                        break;
-                    default:
-                        Utils.denyAccess(response);
-                        return;
+                        case "addMemory":
+                            addMemory(session, body);
+                            break;
+                        case "importTMX":
+                            importTMX(session, body);
+                            break;
+                        case "getProjects":
+                            result.put("projects", getProperty(session, "project"));
+                            break;
+                        case "getSubjects":
+                            result.put("subjects", getProperty(session, "subject"));
+                            break;
+                        case "getClients":
+                            result.put("clients", getProperty(session, "client"));
+                            break;
+                        case "removeMemory":
+                            removeMemory(session, body);
+                            break;
+                        case "exportMemory":
+                            result.put("file", exportMemory(session, body));
+                            break;
+                        case "closeMemories":
+                            TmManager.closeMemories();
+                            break;
+                        case "openMemory":
+                            openMemory(session, body);
+                            break;
+                        case "closeMemory":
+                            closeMemory(session, body);
+                            break;
+                        case "memoryClients":
+                            result.put("clients", memoryClients(session, body));
+                            break;
+                        case "memoryLanguages":
+                            result.put("languages", memoryLanguages(session, body));
+                            break;
+                        case "memoryProjects":
+                            result.put("projects", memoryProjects(session, body));
+                            break;
+                        case "memorySubjects":
+                            result.put("subjects", memorySubjects(session, body));
+                            break;
+                        case "storeTu":
+                            storeTu(session, body);
+                            break;
+                        case "getTu":
+                            result.put("tu", getTu(session, body).toString());
+                            break;
+                        case "removeTu":
+                            removeTu(session, body);
+                            break;
+                        case "commit":
+                            commit(session, body);
+                            break;
+                        case "searchTranslation":
+                            result.put("matches", searchTranslation(session, body));
+                            break;
+                        case "searchAll":
+                            result.put("tus", searchAll(session, body));
+                            break;
+                        case "concordanceSearch":
+                            result.put("tus", concordanceSearch(session, body));
+                            break;
+                        case "batchTranslate":
+                            result.put("matches", batchTranslate(session, body));
+                            break;
+                        default:
+                            Utils.denyAccess(response);
+                            return;
                     }
                     result.put(Constants.STATUS, Constants.OK);
                     Utils.writeResponse(result, response, 200);
@@ -558,24 +558,7 @@ public class MemoriesServlet extends HttpServlet {
             String memory = params.getString(MEMORY);
             Permission p = manager.getPermission(memory, who.getId());
             if (p.canRead()) {
-                JSONArray result = new JSONArray();
-                String srcLang = params.getString("srcLang");
-                String tgtLang = params.getString("tgtLang");
-                JSONArray segments = params.getJSONArray("segments");
-                TmManager.openMemory(memory);
-                for (int i = 0; i < segments.length(); i++) {
-                    JSONObject json = segments.getJSONObject(i);
-                    List<Match> matches = TmManager.searchTranslation(memory, json.getString("pure"), srcLang, tgtLang,
-                            60, false);
-                    JSONArray array = new JSONArray();
-                    for (int j = 0; j < matches.size(); j++) {
-                        array.put(matches.get(j).toJSON());
-                    }
-                    json.put("matches", array);
-                    result.put(json);
-                }
-                TmManager.close(memory);
-                return result;
+                return TmManager.batchTranslate(memory, params);
             }
         }
         throw new IOException(Constants.DENIED);

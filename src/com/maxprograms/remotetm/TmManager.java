@@ -29,6 +29,8 @@ import com.maxprograms.swordfish.tm.InternalDatabase;
 import com.maxprograms.swordfish.tm.Match;
 import com.maxprograms.xml.Element;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.xml.sax.SAXException;
 
 public class TmManager {
@@ -231,4 +233,14 @@ public class TmManager {
         db.close();
         return result;
     }
+
+    public static JSONArray batchTranslate(String memory, JSONObject params)
+            throws IOException, SAXException, ParserConfigurationException, SQLException {
+        File memoriesFolder = new File(RemoteTM.getWorkFolder(), MEMORIES);
+        InternalDatabase db = new InternalDatabase(memory, memoriesFolder.getAbsolutePath());
+        JSONArray result = db.batchTranslate(params);
+        db.close();
+        return result;
+    }
+
 }
