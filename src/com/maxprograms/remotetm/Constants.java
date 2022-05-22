@@ -19,7 +19,7 @@ public class Constants {
     }
 
     public static final String VERSION = "5.3.0";
-    public static final String BUILD = "20220516_1652";
+    public static final String BUILD = "20220522_1809";
 
     public static final String STATUS = "status";
     public static final String OK = "OK";
