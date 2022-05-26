@@ -184,7 +184,7 @@ public class TmManager {
         return result;
     }
 
-    public static void removeTu(String memory, String tuid) throws IOException, SQLException {
+    public static void removeTu(String memory, String tuid) throws IOException, SQLException, SAXException, ParserConfigurationException {
         InternalDatabase db = openMemory(memory);
         db.removeTu(tuid);
         close(memory);

@@ -387,7 +387,8 @@ public class MemoriesServlet extends HttpServlet {
     }
 
     private void removeTu(String session, JSONObject params)
-            throws NoSuchAlgorithmException, IOException, SQLException {
+            throws NoSuchAlgorithmException, IOException, SQLException, JSONException, SAXException,
+            ParserConfigurationException {
         DbManager manager = DbManager.getInstance();
         User who = manager.getUser(AuthorizeServlet.getUser(session));
         if (who != null && who.isActive()) {
