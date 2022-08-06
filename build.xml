@@ -30,10 +30,11 @@
 	</target>
 
 	<target name="bundle">
-		<delete dir="build/release/" failonerror="false" />
-		<exec executable="npm">
-			<arg value="run-script" />
-			<arg value="bundle" />
+		<delete dir="WebContent/js" failonerror="false" />
+		<exec executable="./node_modules/.bin/esbuild">
+			<arg value="ts/remotetm.ts"/>
+			<arg value="--bundle"/>
+			<arg value="--outfile=WebContent/js/remotetm.js"/>
 		</exec>
 	</target>
 
@@ -41,9 +42,6 @@
 		<mkdir dir="war" />
 		<copy includeemptydirs="false" todir="war">
 			<fileset dir="WebContent" />
-		</copy>
-		<copy includeemptydirs="false" todir="war">
-			<fileset dir="build/release/" />
 		</copy>
 		<delete file="RemoteTM.war" failonerror="false" />
 		<war destfile="RemoteTM.war" basedir="war" excludes="*.xcf,*.java" />

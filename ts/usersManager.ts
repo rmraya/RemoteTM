@@ -13,7 +13,7 @@
 import { AddUser } from "./adduser";
 import { Dashboard } from "./dashboard";
 import { Dialog } from "./dialog";
-import { EditUser } from "./editUSer";
+import { EditUser } from "./editUser";
 import { Message } from "./message";
 import { RemoteTM } from "./remotetm";
 import { Role } from "./roles";
