@@ -49,10 +49,14 @@ public class DbManager {
     private static DbManager instance;
 
     public static DbManager getInstance() throws NoSuchAlgorithmException, IOException, SQLException {
-        if (instance == null) {
+        if (instance == null || instance.isClosed()) {
             instance = new DbManager();
         }
         return instance;
+    }
+
+    private boolean isClosed() throws SQLException {
+        return conn.isClosed();
     }
 
     private DbManager() throws IOException, SQLException, NoSuchAlgorithmException {
@@ -62,7 +66,7 @@ public class DbManager {
             database.mkdirs();
         }
         DriverManager.registerDriver(new org.h2.Driver());
-        String url = "jdbc:h2:" + database.getAbsolutePath() + "/db";
+        String url = "jdbc:h2:" + database.getAbsolutePath() + "/h2db;DB_CLOSE_ON_EXIT=FALSE";
         conn = DriverManager.getConnection(url);
         conn.setAutoCommit(false);
         if (needsLoading) {
@@ -74,8 +78,8 @@ public class DbManager {
         String users = "CREATE TABLE users (id VARCHAR(255) NOT NULL, name VARCHAR(255) NOT NULL, "
                 + "email VARCHAR(200) NOT NULL, role VARCHAR(10) NOT NULL, active CHAR(1) NOT NULL, "
                 + "updated CHAR(1) NOT NULL, password VARCHAR(200) NOT NULL,  PRIMARY KEY(id));";
-        String permissions = "CREATE TABLE permissions (user VARCHAR(255) NOT NULL, memory VARCHAR(255) NOT NULL, "
-                + "canread CHAR(1), canwrite CHAR(1), canexport CHAR(1), PRIMARY KEY(user, memory));";
+        String permissions = "CREATE TABLE permissions (userid VARCHAR(255) NOT NULL, memory VARCHAR(255) NOT NULL, "
+                + "canread CHAR(1), canwrite CHAR(1), canexport CHAR(1), PRIMARY KEY(userid, memory));";
         String memories = "CREATE TABLE memories (id VARCHAR(255) NOT NULL, name VARCHAR(255) NOT NULL, "
                 + "owner VARCHAR(255), project VARCHAR(255), subject VARCHAR(255), client VARCHAR(255), "
                 + "creationDate TIMESTAMP, PRIMARY KEY(id));";
@@ -118,7 +122,7 @@ public class DbManager {
             stmt.setTimestamp(7, new Timestamp(mem.getCreationDate().getTime()));
             stmt.execute();
         }
-        sql = "INSERT INTO permissions (user, memory, canread, canwrite, canexport) VALUES (?,?,'Y','Y','Y')";
+        sql = "INSERT INTO permissions (userid, memory, canread, canwrite, canexport) VALUES (?,?,'Y','Y','Y')";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, owner.getId());
             stmt.setString(2, mem.getId());
@@ -162,7 +166,7 @@ public class DbManager {
         if (hasMemories) {
             throw new SQLException("User owns memories");
         }
-        sql = "DELETE FROM permissions WHERE user=?";
+        sql = "DELETE FROM permissions WHERE userid=?";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, id);
             stmt.execute();
@@ -287,7 +291,7 @@ public class DbManager {
 
     public Permission getPermission(String memory, String user) throws SQLException {
         Permission p = new Permission(user, memory, false, false, false);
-        String sql = "SELECT canread, canwrite, canexport FROM permissions WHERE memory=? AND user=?";
+        String sql = "SELECT canread, canwrite, canexport FROM permissions WHERE memory=? AND userid=?";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, memory);
             stmt.setString(2, user);
@@ -308,7 +312,7 @@ public class DbManager {
             stmt.setString(1, memory);
             stmt.execute();
         }
-        sql = "INSERT INTO permissions (user, memory, canread, canwrite, canexport) VALUES (?,?,?,?,?)";
+        sql = "INSERT INTO permissions (userid, memory, canread, canwrite, canexport) VALUES (?,?,?,?,?)";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(2, memory);
             for (int i = 0; i < permissions.length(); i++) {
@@ -325,7 +329,7 @@ public class DbManager {
 
     public List<Permission> getPermissions(String memory) throws SQLException {
         Map<String, Permission> map = new TreeMap<>();
-        String sql = "SELECT user, canread, canwrite, canexport FROM permissions WHERE memory=?";
+        String sql = "SELECT userid, canread, canwrite, canexport FROM permissions WHERE memory=?";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, memory);
             try (ResultSet rs = stmt.executeQuery()) {

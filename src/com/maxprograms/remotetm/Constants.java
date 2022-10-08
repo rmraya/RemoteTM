@@ -18,8 +18,8 @@ public class Constants {
         // private for security
     }
 
-    public static final String VERSION = "5.3.0";
-    public static final String BUILD = "20220526_2003";
+    public static final String VERSION = "5.4.0";
+    public static final String BUILD = "20220914_2006";
 
     public static final String STATUS = "status";
     public static final String OK = "OK";
