@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008-2022 Maxprograms.
+ * Copyright (c) 2008-2023 Maxprograms.
  *
  * This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 1.0
@@ -34,7 +34,7 @@ public class SendMail {
     private EmailServer server;
 
     private static final String HEADER = "<table width='100%' style='border-collapse:collapse; margin-bottom:30px;'><tr><td style='background:#0073B5;color:white; text-align:left; font-family: sans-serif; font-size:2em; letter-spacing: 2px; font-weight: lighter; padding-left:20px; padding-top:10px; padding-bottom:10px; text-shadow: 2px 2px 7px #444444;'>RemoteTM</td></tr></table>";
-    private static final String FOOTER = "<table width='100%' style='border-collapse:collapse; margin-top:40px;'><tr><td style='background:#0073B5;color:#dddddd; text-align:center; font-family:sans-serif; font-size:0.8em; padding:20px;'>Copyright &copy; 2008 - 2022 <a style='color:#eeeeee; text-decoration:none' href='https://www.maxprograms.com/'>Maxprograms</a>. All rights reserved.</td></tr></table>";
+    private static final String FOOTER = "<table width='100%' style='border-collapse:collapse; margin-top:40px;'><tr><td style='background:#0073B5;color:#dddddd; text-align:center; font-family:sans-serif; font-size:0.8em; padding:20px;'>Copyright &copy; 2008 - 2023 <a style='color:#eeeeee; text-decoration:none' href='https://www.maxprograms.com/'>Maxprograms</a>. All rights reserved.</td></tr></table>";
 
     public SendMail(EmailServer server) {
         this.server = server;

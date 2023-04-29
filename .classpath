@@ -15,6 +15,7 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jsoup.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/mapdb.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/openxliff.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/xmljava.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/swordfish.jar"/>
 	<classpathentry kind="output" path="WebContent/WEB-INF/classes"/>
 </classpath>

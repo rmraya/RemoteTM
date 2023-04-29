@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008-2022 Maxprograms.
+ * Copyright (c) 2008-2023 Maxprograms.
  *
  * This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 1.0
@@ -113,6 +113,23 @@ export class LicensesDialog {
         openXliff.innerText = 'Eclipse Publice License 1.0';
         openXliff.addEventListener('click', () => { this.viewLicense('Eclipse Publice License 1.0', '/licenses/EclipsePublicLicense1.0.html') });
         right4.appendChild(openXliff);
+
+        let tr5: HTMLTableRowElement = document.createElement('tr');
+        table.appendChild(tr5);
+
+        let left5: HTMLTableCellElement = document.createElement('td');
+        left5.innerText = 'XMLJava';
+        left5.classList.add('noWrap');
+        tr5.appendChild(left5);
+
+        let right5: HTMLTableCellElement = document.createElement('td');
+        right5.classList.add('noWrap');
+        tr5.appendChild(right5);
+
+        let xmljava: HTMLAnchorElement = document.createElement('a');
+        xmljava.innerText = 'Eclipse Publice License 1.0';
+        xmljava.addEventListener('click', () => { this.viewLicense('Eclipse Publice License 1.0', '/licenses/EclipsePublicLicense1.0.html') });
+        right5.appendChild(xmljava);
 
         let tr6: HTMLTableRowElement = document.createElement('tr');
         table.appendChild(tr6);

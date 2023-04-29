@@ -8,6 +8,7 @@
 		<pathelement location="WebContent/WEB-INF/lib/javax.mail.jar" />
 		<pathelement location="WebContent/WEB-INF/lib/json.jar" />
 		<pathelement location="WebContent/WEB-INF/lib/openxliff.jar" />
+		<pathelement location="WebContent/WEB-INF/lib/xmljava.jar" />
 		<pathelement location="WebContent/WEB-INF/lib/swordfish.jar" />
 	</path>
 
