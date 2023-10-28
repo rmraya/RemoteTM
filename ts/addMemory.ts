@@ -13,7 +13,6 @@
 import { Dashboard } from "./dashboard";
 import { Dialog } from "./dialog";
 import { Input } from "./input";
-import { Message } from "./message";
 import { RemoteTM } from "./remotetm";
 
 export class AddMemory {
@@ -49,7 +48,7 @@ export class AddMemory {
     addMemory(): void {
         let name: string = this.nameInput.getValue();
         if (!name) {
-            new Message('Enter name');
+            RemoteTM.showMessage('Enter name');
             return;
         }
         let project: string = this.projectInput.getValue();
@@ -79,7 +78,7 @@ export class AddMemory {
                 this.dialog.close();
                 this.parent.loadMemories();
             } else {
-                new Message(json.reason);
+                RemoteTM.showMessage(json.reason);
             }
         }).catch((reason: any) => {
             this.parent.setStatus('');

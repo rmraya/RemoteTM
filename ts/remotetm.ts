@@ -13,7 +13,6 @@
 import { Dashboard } from "./dashboard";
 import { Dialog } from "./dialog";
 import { LoginForm } from "./loginForm";
-import { Message } from "./message";
 import { PasswordReset } from "./passwordReset";
 import { ResetPassworRequest } from "./resetPasswordRequest";
 import { Role } from "./roles";
@@ -98,7 +97,7 @@ export class RemoteTM {
                 RemoteTM.BUILD = json.build;
                 RemoteTM.UPDATES = json.updates;
             } else {
-                new Message(json.reason);
+                RemoteTM.showMessage(json.reason);
             }
         }).catch((reason: any) => {
             console.error('Error:', reason);
@@ -121,11 +120,11 @@ export class RemoteTM {
                 RemoteTM.showDashboard(json.role);
                 if (json.role === Role.SYSTEM_ADMINISTRATOR) {
                     if (RemoteTM.VERSION !== RemoteTM.UPDATES.version || RemoteTM.BUILD !== RemoteTM.UPDATES.build) {
-                        new Message('RemoteTM version ' + RemoteTM.UPDATES.version + '_' + RemoteTM.UPDATES.build + ' is available');
+                        RemoteTM.showMessage('RemoteTM version ' + RemoteTM.UPDATES.version + '_' + RemoteTM.UPDATES.build + ' is available');
                     }
                 }
             } else {
-                new Message(json.reason);
+                RemoteTM.showMessage(json.reason);
                 RemoteTM.showLogin();
             }
         }).catch((reason: any) => {
@@ -169,7 +168,7 @@ export class RemoteTM {
         }).then(async (response: Response) => {
             let json: any = await response.json();
             if (json.status !== 'OK') {
-                new Message(json.reason);
+                RemoteTM.showMessage(json.reason);
             }
             RemoteTM.showLogin();
         }).catch((reason: any) => {
@@ -215,6 +214,20 @@ export class RemoteTM {
         template.innerHTML = html;
         return template.content.firstChild;
     }
+
+    static showMessage(message: string) {
+        let container: HTMLDivElement = document.createElement('div');
+        container.classList.add('message');
+        container.innerText = message;
+        document.body.appendChild(container);
+        setTimeout(() => {
+            document.body.removeChild(container);
+        }, 3000);
+    }
 }
 
-new RemoteTM();
+try {
+    new RemoteTM();
+} catch (e) {
+    console.error(e);
+}

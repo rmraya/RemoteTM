@@ -12,7 +12,6 @@
 
 import { CheckBox } from "./checkBox";
 import { Dialog } from "./dialog";
-import { Message } from "./message";
 import { RemoteTM } from "./remotetm";
 
 class Permission {
@@ -64,7 +63,7 @@ export class AccessDialog {
             ]
         }).then(async (response: Response) => {
             let json: any = await response.json();
-            json.status === 'OK' ? this.addPermissions(json.permissions) : new Message(json.reason);
+            json.status === 'OK' ? this.addPermissions(json.permissions) : RemoteTM.showMessage(json.reason);
         }).catch((reason: any) => {
             console.error('Error:', reason);
         });
@@ -138,7 +137,7 @@ export class AccessDialog {
             body: JSON.stringify(params)
         }).then(async (response: Response) => {
             let json: any = await response.json();
-            json.status === 'OK' ? this.dialog.close() : new Message(json.reason);
+            json.status === 'OK' ? this.dialog.close() : RemoteTM.showMessage(json.reason);
         }).catch((reason: any) => {
             console.error('Error:', reason);
         });

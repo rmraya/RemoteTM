@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
 import java.security.NoSuchAlgorithmException;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.List;
@@ -30,6 +31,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.xml.sax.SAXException;
+
 import com.maxprograms.remotetm.Constants;
 import com.maxprograms.remotetm.DbManager;
 import com.maxprograms.remotetm.RemoteTM;
@@ -42,11 +48,6 @@ import com.maxprograms.remotetm.utils.Utils;
 import com.maxprograms.swordfish.models.Memory;
 import com.maxprograms.swordfish.tm.Match;
 import com.maxprograms.xml.Element;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.xml.sax.SAXException;
 
 public class MemoriesServlet extends HttpServlet {
 
@@ -64,6 +65,7 @@ public class MemoriesServlet extends HttpServlet {
             String session = request.getHeader("Session");
             if (AuthorizeServlet.sessionActive(session)) {
                 try {
+                    DriverManager.registerDriver(new org.h2.Driver());
                     DbManager manager = DbManager.getInstance();
                     JSONArray memories = manager.getMemories(AuthorizeServlet.getUser(session));
                     for (int i = 0; i < memories.length(); i++) {
@@ -97,6 +99,7 @@ public class MemoriesServlet extends HttpServlet {
             String session = request.getHeader("Session");
             if (AuthorizeServlet.sessionActive(session)) {
                 try {
+                    DriverManager.registerDriver(new org.h2.Driver());
                     JSONObject body = Utils.readJSON(request.getInputStream());
                     String command = body.getString("command");
                     switch (command) {
@@ -173,7 +176,6 @@ public class MemoriesServlet extends HttpServlet {
                     result.put(Constants.STATUS, Constants.OK);
                     Utils.writeResponse(result, response, 200);
                 } catch (Exception e) {
-                    e.printStackTrace();
                     logger.log(Level.ERROR, e);
                     result.put(Constants.STATUS, Constants.ERROR);
                     result.put(Constants.REASON, e.getMessage());
@@ -183,10 +185,8 @@ public class MemoriesServlet extends HttpServlet {
             }
             Utils.denyAccess(response);
         } catch (Exception e) {
-            e.printStackTrace();
             logger.log(Level.ERROR, e);
         } catch (Error e) {
-            e.printStackTrace();
             logger.log(Level.ERROR, e);
         }
     }

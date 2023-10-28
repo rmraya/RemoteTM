@@ -93,8 +93,7 @@ public class Permission implements Comparable<Permission> {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof Permission) {
-			Permission p = (Permission) obj;
+		if (obj instanceof Permission p) {
 			return user.equals(p.user) && memory.equals(p.memory) && access() == p.access();
 		}
 		return false;

@@ -14,8 +14,6 @@ package com.maxprograms.remotetm;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.System.Logger;
-import java.lang.System.Logger.Level;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -33,17 +31,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import com.maxprograms.remotetm.models.Permission;
 import com.maxprograms.remotetm.models.User;
 import com.maxprograms.remotetm.utils.Crypto;
 import com.maxprograms.swordfish.models.Memory;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 public class DbManager {
 
-    private static Logger logger = System.getLogger(DbManager.class.getName());
     private Connection conn;
 
     private static DbManager instance;
@@ -60,36 +57,58 @@ public class DbManager {
     }
 
     private DbManager() throws IOException, SQLException, NoSuchAlgorithmException {
-        File database = new File(RemoteTM.getWorkFolder(), "h2data");
-        boolean needsLoading = !database.exists();
-        if (!database.exists()) {
-            database.mkdirs();
+        File sqliteHome = new File(RemoteTM.getWorkFolder(), "sqlite");
+        if (!sqliteHome.exists()) {
+            sqliteHome.mkdirs();
         }
-        DriverManager.registerDriver(new org.h2.Driver());
-        String url = "jdbc:h2:" + database.getAbsolutePath() + "/h2db;DB_CLOSE_ON_EXIT=FALSE";
-        conn = DriverManager.getConnection(url);
+        File sqlite = new File(sqliteHome, "remotetm.db");
+        boolean sqliteNeedsCreation = !sqlite.exists();
+        DriverManager.registerDriver(new org.sqlite.JDBC());
+        conn = DriverManager.getConnection("jdbc:sqlite:" + sqlite.getAbsolutePath().replace('\\', '/'));
         conn.setAutoCommit(false);
-        if (needsLoading) {
+        if (sqliteNeedsCreation) {
             createTables();
         }
     }
 
     private void createTables() throws SQLException, NoSuchAlgorithmException {
-        String users = "CREATE TABLE users (id VARCHAR(255) NOT NULL, name VARCHAR(255) NOT NULL, "
-                + "email VARCHAR(200) NOT NULL, role VARCHAR(10) NOT NULL, active CHAR(1) NOT NULL, "
-                + "updated CHAR(1) NOT NULL, password VARCHAR(200) NOT NULL,  PRIMARY KEY(id));";
-        String permissions = "CREATE TABLE permissions (userid VARCHAR(255) NOT NULL, memory VARCHAR(255) NOT NULL, "
-                + "canread CHAR(1), canwrite CHAR(1), canexport CHAR(1), PRIMARY KEY(userid, memory));";
-        String memories = "CREATE TABLE memories (id VARCHAR(255) NOT NULL, name VARCHAR(255) NOT NULL, "
-                + "owner VARCHAR(255), project VARCHAR(255), subject VARCHAR(255), client VARCHAR(255), "
-                + "creationDate TIMESTAMP, PRIMARY KEY(id));";
+        String users = """
+                CREATE TABLE users (
+                    id VARCHAR(255) NOT NULL,
+                    name TEXT NOT NULL,
+                    email VARCHAR(200) NOT NULL,
+                    role VARCHAR(10) NOT NULL,
+                    active CHAR(1) NOT NULL,
+                    updated CHAR(1) NOT NULL,
+                    password TEXT NOT NULL,
+                    PRIMARY KEY(id)
+                    );""";
+        String permissions = """
+                CREATE TABLE permissions (
+                    userid VARCHAR(255) NOT NULL,
+                    memory VARCHAR(255) NOT NULL,
+                    canread CHAR(1),
+                    canwrite CHAR(1),
+                    canexport CHAR(1),
+                    PRIMARY KEY(userid, memory)
+                    );""";
+        String memories = """
+                CREATE TABLE memories (
+                id VARCHAR(255) NOT NULL,
+                name VARCHAR(255) NOT NULL,
+                    owner VARCHAR(255),
+                    project VARCHAR(255),
+                    subject VARCHAR(255),
+                    client VARCHAR(255),
+                    creationDate TIMESTAMP,
+                    PRIMARY KEY(id)
+                    );""";
         try (Statement create = conn.createStatement()) {
             create.execute(users);
             create.execute(permissions);
             create.execute(memories);
         }
         conn.commit();
-        logger.log(Level.INFO, "Users table created");
         User sysadmin = new User("sysadmin", "secData", "System Administrator", "sysadmin@localhost",
                 Constants.SYSTEM_ADMINISTRATOR, true, false);
         addUser(sysadmin);
@@ -100,7 +119,7 @@ public class DbManager {
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, user.getId());
             stmt.setString(2, Crypto.sha256(user.getPassword()));
-            stmt.setNString(3, user.getName());
+            stmt.setString(3, user.getName());
             stmt.setString(4, user.getEmail());
             stmt.setString(5, user.getRole());
             stmt.setString(6, user.isActive() ? "Y" : "N");
@@ -114,11 +133,11 @@ public class DbManager {
         String sql = "INSERT INTO memories (id, name, owner, project, subject, client, creationDate) VALUES (?,?,?,?,?,?,?)";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, mem.getId());
-            stmt.setNString(2, mem.getName());
+            stmt.setString(2, mem.getName());
             stmt.setString(3, owner.getId());
-            stmt.setNString(4, mem.getProject());
-            stmt.setNString(5, mem.getSubject());
-            stmt.setNString(6, mem.getClient());
+            stmt.setString(4, mem.getProject());
+            stmt.setString(5, mem.getSubject());
+            stmt.setString(6, mem.getClient());
             stmt.setTimestamp(7, new Timestamp(mem.getCreationDate().getTime()));
             stmt.execute();
         }
@@ -138,7 +157,7 @@ public class DbManager {
             stmt.setString(1, userId);
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
-                    String name = rs.getNString(1);
+                    String name = rs.getString(1);
                     String email = rs.getString(2);
                     String role = rs.getString(3);
                     boolean active = rs.getString(4).equals("Y");
@@ -186,7 +205,7 @@ public class DbManager {
             try (ResultSet rs = stmt.executeQuery(sql)) {
                 while (rs.next()) {
                     String id = rs.getString(1);
-                    String name = rs.getNString(2);
+                    String name = rs.getString(2);
                     String email = rs.getString(3);
                     String role = rs.getString(4);
                     boolean active = rs.getString(5).equals("Y");
@@ -202,7 +221,7 @@ public class DbManager {
     public void updateUser(User user) throws SQLException {
         String sql = "UPDATE users SET name=?, email=?, role=?, active=?, updated=? WHERE id=?";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setNString(1, user.getName());
+            stmt.setString(1, user.getName());
             stmt.setString(2, user.getEmail());
             stmt.setString(3, user.getRole());
             stmt.setString(4, user.isActive() ? "Y" : "N");
@@ -240,11 +259,11 @@ public class DbManager {
             try (ResultSet rs = stmt.executeQuery(sql)) {
                 while (rs.next()) {
                     String id = rs.getString(1);
-                    String name = rs.getNString(2);
+                    String name = rs.getString(2);
                     String owner = rs.getString(3);
-                    String project = rs.getNString(4);
-                    String subject = rs.getNString(5);
-                    String client = rs.getNString(6);
+                    String project = rs.getString(4);
+                    String subject = rs.getString(5);
+                    String client = rs.getString(6);
                     Timestamp creationDate = rs.getTimestamp(7);
                     JSONObject memory = new JSONObject();
                     memory.put("id", id);
@@ -277,12 +296,13 @@ public class DbManager {
             stmt.setString(1, id);
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
-                    String name = rs.getNString(1);
-                    String project = rs.getNString(2);
-                    String subject = rs.getNString(3);
-                    String client = rs.getNString(4);
+                    String name = rs.getString(1);
+                    String project = rs.getString(2);
+                    String subject = rs.getString(3);
+                    String client = rs.getString(4);
                     Timestamp creationDate = rs.getTimestamp(5);
-                    memory = new Memory(id, name, project, subject, client, new Date(creationDate.getTime()), Memory.LOCAL, "", "", "");
+                    memory = new Memory(id, name, project, subject, client, new Date(creationDate.getTime()),
+                            Memory.LOCAL, "", "", "");
                 }
             }
         }

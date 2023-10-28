@@ -11,7 +11,6 @@
  *******************************************************************************/
 
 import { Input } from "./input";
-import { Message } from "./message";
 import { RemoteTM } from "./remotetm";
 import { View } from "./view";
 
@@ -105,14 +104,14 @@ export class LoginForm implements View {
             return;
         }
         if (this.userName.getValue() === '') {
-            new Message('Enter user name');
+            RemoteTM.showMessage('Enter user name');
             return;
         }
         if (this.passwd.getValue() === '') {
-            new Message('Enter password');
+            RemoteTM.showMessage('Enter password');
             return;
         }
-        let auth = btoa(this.userName.getValue() + ':' + this.passwd.getValue());
+        let auth = window.btoa(this.userName.getValue() + ':' + this.passwd.getValue());
         this.close();
         RemoteTM.requestTicket(this.userName.getValue(), auth);
     }

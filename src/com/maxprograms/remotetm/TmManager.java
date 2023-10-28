@@ -86,7 +86,7 @@ public class TmManager {
         Utils.removeDir(new File(memoriesFolder, memory));
     }
 
-    public static synchronized void close(String memory) throws SQLException, IOException {
+    public static synchronized void close(String memory) throws SQLException {
         if (databases.containsKey(memory)) {
             int useCount = count.get(memory);
             if (useCount == 1) {
@@ -127,7 +127,7 @@ public class TmManager {
         return databases.get(memory);
     }
 
-    public static void closeMemories() throws SQLException, IOException {
+    public static void closeMemories() throws SQLException {
         if (databases == null) {
             databases = new Hashtable<>();
             count = new Hashtable<>();
@@ -184,7 +184,8 @@ public class TmManager {
         return result;
     }
 
-    public static void removeTu(String memory, String tuid) throws IOException, SQLException, SAXException, ParserConfigurationException {
+    public static void removeTu(String memory, String tuid)
+            throws IOException, SQLException, SAXException, ParserConfigurationException {
         InternalDatabase db = openMemory(memory);
         db.removeTu(tuid);
         close(memory);

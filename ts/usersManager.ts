@@ -14,7 +14,6 @@ import { AddUser } from "./adduser";
 import { Dashboard } from "./dashboard";
 import { Dialog } from "./dialog";
 import { EditUser } from "./editUser";
-import { Message } from "./message";
 import { RemoteTM } from "./remotetm";
 import { Role } from "./roles";
 
@@ -73,23 +72,23 @@ export class UsersManager {
         let headerRow: HTMLTableRowElement = document.createElement('tr');
         tableHeader.appendChild(headerRow);
 
-        let userIdTh: HTMLTableHeaderCellElement = document.createElement('th');
+        let userIdTh: HTMLTableCellElement = document.createElement('th');
         userIdTh.innerText = 'ID';
         headerRow.appendChild(userIdTh);
 
-        let nameTh: HTMLTableHeaderCellElement = document.createElement('th');
+        let nameTh: HTMLTableCellElement = document.createElement('th');
         nameTh.innerText = 'Name';
         headerRow.appendChild(nameTh);
 
-        let emailTh: HTMLTableHeaderCellElement = document.createElement('th');
+        let emailTh: HTMLTableCellElement = document.createElement('th');
         emailTh.innerText = 'Email';
         headerRow.appendChild(emailTh);
 
-        let roleTh: HTMLTableHeaderCellElement = document.createElement('th');
+        let roleTh: HTMLTableCellElement = document.createElement('th');
         roleTh.innerText = 'Role';
         headerRow.appendChild(roleTh);
 
-        let activeTh: HTMLTableHeaderCellElement = document.createElement('th');
+        let activeTh: HTMLTableCellElement = document.createElement('th');
         activeTh.innerText = 'Active';
         headerRow.appendChild(activeTh);
 
@@ -148,7 +147,7 @@ export class UsersManager {
                     tr.appendChild(td);
                 }
             } else {
-                new Message(json.reason);
+                RemoteTM.showMessage(json.reason);
             }
         }).catch((reason: any) => {
             console.error('Error:', reason);
@@ -176,7 +175,7 @@ export class UsersManager {
 
     editUser(): void {
         if (!this.selected) {
-            new Message('Select user');
+            RemoteTM.showMessage('Select user');
             return;
         }
         let editDialog: EditUser = new EditUser(this, this.selected);
@@ -185,7 +184,7 @@ export class UsersManager {
 
     removeUser(): void {
         if (!this.selected) {
-            new Message('Select user');
+            RemoteTM.showMessage('Select user');
             return;
         }
         let params: any = {
@@ -202,7 +201,7 @@ export class UsersManager {
             body: JSON.stringify(params)
         }).then(async (response: Response) => {
             let json: any = await response.json();
-            json.status === 'OK' ? this.loadUsers() : new Message(json.reason);
+            json.status === 'OK' ? this.loadUsers() : RemoteTM.showMessage(json.reason);
         }).catch((reason: any) => {
             console.error('Error:', reason);
         });
@@ -210,7 +209,7 @@ export class UsersManager {
 
     lockUser(): void {
         if (!this.selected) {
-            new Message('Select user');
+            RemoteTM.showMessage('Select user');
             return;
         }
         let params: any = {
@@ -227,7 +226,7 @@ export class UsersManager {
             body: JSON.stringify(params)
         }).then(async (response: Response) => {
             let json: any = await response.json();
-            json.status === 'OK' ? this.loadUsers() : new Message(json.reason);
+            json.status === 'OK' ? this.loadUsers() : RemoteTM.showMessage(json.reason);
         }).catch((reason: any) => {
             console.error('Error:', reason);
         });

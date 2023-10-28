@@ -12,7 +12,6 @@
 
 import { Dialog } from "./dialog";
 import { Input } from "./input";
-import { Message } from "./message";
 import { RemoteTM } from "./remotetm";
 import { Role } from "./roles";
 import { Select } from "./select";
@@ -51,22 +50,22 @@ export class AddUser {
     addUser(): void {
         let id: string = this.userIdInput.getValue();
         if (!id) {
-            new Message('Enter user ID');
+            RemoteTM.showMessage('Enter user ID');
             return;
         }
         let name: string = this.userNameInput.getValue();
         if (!name) {
-            new Message('Enter name');
+            RemoteTM.showMessage('Enter name');
             return;
         }
         let role: string = this.roleSelect.getValue();
         if (!role) {
-            new Message('Select role');
+            RemoteTM.showMessage('Select role');
             return;
         }
         let email: string = this.emailInput.getValue();
         if (!email) {
-            new Message('Enter email');
+            RemoteTM.showMessage('Enter email');
             return;
         }
         let params: any = {
@@ -92,7 +91,7 @@ export class AddUser {
                 this.parent.loadUsers();
                 this.dialog.close();
             } else {
-                new Message(json.reason);
+                RemoteTM.showMessage(json.reason);
             }
         }).catch((reason: any) => {
             this.parent.setStatus('');

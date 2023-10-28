@@ -13,7 +13,6 @@
 import { CheckBox } from "./checkBox";
 import { Dialog } from "./dialog";
 import { Input } from "./input";
-import { Message } from "./message";
 import { RemoteTM } from "./remotetm";
 
 export class EmailServerDialog {
@@ -70,7 +69,7 @@ export class EmailServerDialog {
             ]
         }).then(async (response: Response) => {
             let json: any = await response.json();
-            json.status === 'OK' ? this.populateFields(json) : new Message(json.reason);
+            json.status === 'OK' ? this.populateFields(json) : RemoteTM.showMessage(json.reason);
         }).catch((reason: any) => {
             console.error('Error:', reason);
         });
@@ -94,22 +93,22 @@ export class EmailServerDialog {
     save(): void {
         let server: string = this.serverInput.getValue();
         if (!server) {
-            new Message('Enter SMTP server');
+            RemoteTM.showMessage('Enter SMTP server');
             return;
         }
         let port: string = this.portInput.getValue();
         if (!port) {
-            new Message('Enter port');
+            RemoteTM.showMessage('Enter port');
             return;
         }
         let user: string = this.userInput.getValue();
         if (!user) {
-            new Message('Enter SMTP user');
+            RemoteTM.showMessage('Enter SMTP user');
             return;
         }
         let password: string = this.passwordInput.getValue();
         if (!password) {
-            new Message('Enter SMTP password');
+            RemoteTM.showMessage('Enter SMTP password');
             return;
         }
         let sendFrom: string = this.fromInput.getValue();
@@ -142,7 +141,7 @@ export class EmailServerDialog {
             body: JSON.stringify(params)
         }).then(async (response: Response) => {
             let json: any = await response.json();
-            json.status === 'OK' ? this.dialog.close() : new Message(json.reason);
+            json.status === 'OK' ? this.dialog.close() : RemoteTM.showMessage(json.reason);
         }).catch((reason: any) => {
             console.error('Error:', reason);
         });

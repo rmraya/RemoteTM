@@ -14,7 +14,6 @@ import { Dashboard } from "./dashboard";
 import { Dialog } from "./dialog";
 import { DropZone } from "./dropZone";
 import { Input } from "./input";
-import { Message } from "./message";
 import { RemoteTM } from "./remotetm";
 
 export class ImportTMX {
@@ -56,7 +55,7 @@ export class ImportTMX {
     importTMX(): void {
         let files: FileList = this.dropZone.getFiles();
         if (files.length === 0) {
-            new Message('Select file');
+            RemoteTM.showMessage('Select file');
             return;
         }
         let params: any = {
@@ -73,7 +72,7 @@ export class ImportTMX {
             body: JSON.stringify(params)
         }).then(async (response: Response) => {
             let json: any = await response.json();
-            json.status === 'OK' ? this.uploadFile(files[0]) : new Message(json.reason);
+            json.status === 'OK' ? this.uploadFile(files[0]) : RemoteTM.showMessage(json.reason);
         }).catch((reason: any) => {
             console.error('Error:', reason);
         });
@@ -94,7 +93,7 @@ export class ImportTMX {
         }).then(async (response: Response) => {
             let json: any = await response.json();
             this.parent.setStatus('');
-            json.status === 'OK' ? this.requestImport(json.file) : new Message(json.reason);
+            json.status === 'OK' ? this.requestImport(json.file) : RemoteTM.showMessage(json.reason);
         }).catch((reason: any) => {
             this.parent.setStatus('');
             console.error('Error:', reason);
@@ -124,10 +123,10 @@ export class ImportTMX {
             let json: any = await response.json();
             this.parent.setStatus('');
             if (json.status === 'OK') {
-                new Message('You will receive an email with import results');
+                RemoteTM.showMessage('You will receive an email with import results');
                 this.dialog.close();
             } else {
-                new Message(json.reason);
+                RemoteTM.showMessage(json.reason);
             }
         }).catch((reason: any) => {
             this.parent.setStatus('');
@@ -152,7 +151,7 @@ export class ImportTMX {
             if (json.status === 'OK') {
                 this.project.setList(json.projects);
             } else {
-                new Message(json.reason);
+                RemoteTM.showMessage(json.reason);
             }
         }).catch((reason: any) => {
             console.error('Error:', reason);
@@ -176,7 +175,7 @@ export class ImportTMX {
             if (json.status === 'OK') {
                 this.subject.setList(json.subjects);
             } else {
-                new Message(json.reason);
+                RemoteTM.showMessage(json.reason);
             }
         }).catch((reason: any) => {
             console.error('Error:', reason);
@@ -200,7 +199,7 @@ export class ImportTMX {
             if (json.status === 'OK') {
                 this.client.setList(json.clients);
             } else {
-                new Message(json.reason);
+                RemoteTM.showMessage(json.reason);
             }
         }).catch((reason: any) => {
             console.error('Error:', reason);

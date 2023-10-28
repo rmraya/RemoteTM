@@ -13,7 +13,6 @@
 import { Dashboard } from "./dashboard";
 import { Dialog } from "./dialog";
 import { Input } from "./input";
-import { Message } from "./message";
 import { PasswordReset } from "./passwordReset";
 import { RemoteTM } from "./remotetm";
 
@@ -48,25 +47,25 @@ export class ChangePasswordDialog {
     changePassword(): void {
         let current: string = this.currentInput.getValue();
         if (!current) {
-            new Message('Enter current password');
+            RemoteTM.showMessage('Enter current password');
             return;
         }
         let newPassword: string = this.newInput.getValue();
         if (!newPassword) {
-            new Message('Enter new password');
+            RemoteTM.showMessage('Enter new password');
             return;
         }
         let repeat: string = this.repeatInput.getValue();
         if (!repeat) {
-            new Message('Repeat new password');
+            RemoteTM.showMessage('Repeat new password');
             return;
         }
         if (newPassword !== repeat) {
-            new Message('Different passwords');
+            RemoteTM.showMessage('Different passwords');
             return;
         }
         if (PasswordReset.isWeak(newPassword)) {
-            new Message('Weak passwords');
+            RemoteTM.showMessage('Weak passwords');
             return;
         }
         let params: any = {
@@ -85,10 +84,10 @@ export class ChangePasswordDialog {
         }).then(async (response: Response) => {
             let json: any = await response.json();
             if (json.status === 'OK') {
-                new Message('Password changed');
+                RemoteTM.showMessage('Password changed');
                 this.parent.signOut();
             } else {
-                new Message(json.reason);
+                RemoteTM.showMessage(json.reason);
             }
         }).catch((reason: any) => {
             console.error('Error:', reason);

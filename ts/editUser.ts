@@ -13,7 +13,6 @@
 import { AddUser } from "./adduser";
 import { Dialog } from "./dialog";
 import { Input } from "./input";
-import { Message } from "./message";
 import { RemoteTM } from "./remotetm";
 import { Select } from "./select";
 import { UsersManager } from "./usersManager";
@@ -58,7 +57,7 @@ export class EditUser {
                this.roleSelect.setValue(user.role);
                this.emailInput.setValue(user.email);
             } else {
-                new Message(json.reason);
+                RemoteTM.showMessage(json.reason);
             }
         }).catch((reason: any) => {
             console.error('Error:', reason);
@@ -72,17 +71,17 @@ export class EditUser {
     addUser(): void {
         let name: string = this.userNameInput.getValue();
         if (!name) {
-            new Message('Enter name');
+            RemoteTM.showMessage('Enter name');
             return;
         }
         let role: string = this.roleSelect.getValue();
         if (!role) {
-            new Message('Select role');
+            RemoteTM.showMessage('Select role');
             return;
         }
         let email: string = this.emailInput.getValue();
         if (!email) {
-            new Message('Enter email');
+            RemoteTM.showMessage('Enter email');
             return;
         }
         let params: any = {
@@ -106,7 +105,7 @@ export class EditUser {
                 this.parent.loadUsers();
                 this.dialog.close();
             } else {
-                new Message(json.reason);
+                RemoteTM.showMessage(json.reason);
             }
         }).catch((reason: any) => {
             console.error('Error:', reason);

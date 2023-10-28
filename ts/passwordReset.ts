@@ -11,7 +11,6 @@
  *******************************************************************************/
 
 import { Input } from "./input";
-import { Message } from "./message";
 import { RemoteTM } from "./remotetm";
 import { View } from "./view";
 
@@ -93,7 +92,7 @@ export class PasswordReset implements View {
             if (json.status === 'OK') {
                 this.id = json.id;
             } else {
-                new Message(json.reason);
+                RemoteTM.showMessage(json.reason);
                 this.close();
                 RemoteTM.showLogin();
             }
@@ -111,27 +110,27 @@ export class PasswordReset implements View {
     resetPassword(): void {
         let userId: string = this.userName.getValue();
         if (this.id != userId) {
-            new Message('Incorrect user name');
+            RemoteTM.showMessage('Incorrect user name');
             this.close();
             RemoteTM.showLogin();
             return;
         }
         let password: string = this.passwd.getValue();
         if (password === '') {
-            new Message('Enter password');
+            RemoteTM.showMessage('Enter password');
             return;
         }
         let repeat: string = this.repeat.getValue();
         if (repeat === '') {
-            new Message('Repeat password');
+            RemoteTM.showMessage('Repeat password');
             return;
         }
         if (password !== repeat) {
-            new Message('Different passwords');
+            RemoteTM.showMessage('Different passwords');
             return;
         }
         if (PasswordReset.isWeak(password)) {
-            new Message('Weak passwords');
+            RemoteTM.showMessage('Weak passwords');
             return;
         }
 
@@ -150,7 +149,7 @@ export class PasswordReset implements View {
             body: JSON.stringify(params)
         }).then(async (response: Response) => {
             let json: any = await response.json();
-            json.status === 'OK' ? new Message('Password set') : new Message(json.reason);
+            json.status === 'OK' ? RemoteTM.showMessage('Password set') : RemoteTM.showMessage(json.reason);
             this.close();
             RemoteTM.showLogin();
         }).catch((reason: any) => {

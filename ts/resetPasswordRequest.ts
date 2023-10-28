@@ -11,7 +11,6 @@
  *******************************************************************************/
 
 import { Input } from "./input";
-import { Message } from "./message";
 import { RemoteTM } from "./remotetm";
 import { View } from "./view";
 
@@ -105,11 +104,11 @@ export class ResetPassworRequest implements View {
             return;
         }
         if (this.userName.getValue() === '') {
-            new Message('Enter user name');
+            RemoteTM.showMessage('Enter user name');
             return;
         }
         if (this.email.getValue() === '') {
-            new Message('Enter email address');
+            RemoteTM.showMessage('Enter email address');
             return;
         }
 
@@ -128,11 +127,11 @@ export class ResetPassworRequest implements View {
         }).then(async (response: Response) => {
             let json: any = await response.json();
             if (json.status === 'OK') {
-                new Message('If entered data matches our records, an email with password change information will be sent.');
+                RemoteTM.showMessage('If entered data matches our records, an email with password change information will be sent.');
                 this.close();
                 RemoteTM.showLogin();
             } else {
-                new Message(json.reason);
+                RemoteTM.showMessage(json.reason);
             }
         }).catch((reason: any) => {
             console.error('Error:', reason);

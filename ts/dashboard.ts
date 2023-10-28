@@ -18,7 +18,6 @@ import { DropDown } from './dropdown';
 import { EmailServerDialog } from './emailServerDialog';
 import { ImportTMX } from './importTMX';
 import { LicensesDialog } from './licenses';
-import { Message } from './message';
 import { RemoteTM } from './remotetm';
 import { Role } from './roles';
 import { UpdatesDialog } from './updatesDialog';
@@ -132,31 +131,31 @@ export class Dashboard implements View {
         let headerRow: HTMLTableRowElement = document.createElement('tr');
         tableHeader.appendChild(headerRow);
 
-        let memoryTh: HTMLTableHeaderCellElement = document.createElement('th');
+        let memoryTh: HTMLTableCellElement = document.createElement('th');
         memoryTh.innerText = 'Memory';
         headerRow.appendChild(memoryTh);
 
-        let ownerTh: HTMLTableHeaderCellElement = document.createElement('th');
+        let ownerTh: HTMLTableCellElement = document.createElement('th');
         ownerTh.innerText = 'Owner';
         headerRow.appendChild(ownerTh);
 
-        let creationTh: HTMLTableHeaderCellElement = document.createElement('th');
+        let creationTh: HTMLTableCellElement = document.createElement('th');
         creationTh.innerText = 'Creation Date';
         headerRow.appendChild(creationTh);
 
-        let openTh: HTMLTableHeaderCellElement = document.createElement('th');
+        let openTh: HTMLTableCellElement = document.createElement('th');
         openTh.innerText = 'Open';
         headerRow.appendChild(openTh);
 
-        let projectTh: HTMLTableHeaderCellElement = document.createElement('th');
+        let projectTh: HTMLTableCellElement = document.createElement('th');
         projectTh.innerText = 'Project';
         headerRow.appendChild(projectTh);
 
-        let subjectTh: HTMLTableHeaderCellElement = document.createElement('th');
+        let subjectTh: HTMLTableCellElement = document.createElement('th');
         subjectTh.innerText = 'Subject';
         headerRow.appendChild(subjectTh);
 
-        let ClientTh: HTMLTableHeaderCellElement = document.createElement('th');
+        let ClientTh: HTMLTableCellElement = document.createElement('th');
         ClientTh.innerText = 'Client';
         headerRow.appendChild(ClientTh);
 
@@ -274,7 +273,7 @@ export class Dashboard implements View {
 
     setAccess(): void {
         if (this.selected === '') {
-            new Message('Select memory');
+            RemoteTM.showMessage('Select memory');
             return;
         }
         let dialog: AccessDialog = new AccessDialog(this.selected);
@@ -301,7 +300,7 @@ export class Dashboard implements View {
             ]
         }).then(async (response: Response) => {
             let json: any = await response.json();
-            json.status === 'OK' ? this.displayMemories(json.memories) : new Message(json.reason);
+            json.status === 'OK' ? this.displayMemories(json.memories) : RemoteTM.showMessage(json.reason);
         }).catch((reason: any) => {
             console.error('Error:', reason);
         });
@@ -364,7 +363,7 @@ export class Dashboard implements View {
 
     importTMX(): void {
         if (this.selected === '') {
-            new Message('Select memory');
+            RemoteTM.showMessage('Select memory');
             return;
         }
         let importDialog: ImportTMX = new ImportTMX(this, this.selected);
@@ -374,11 +373,11 @@ export class Dashboard implements View {
     removeMemory(): void {
 
         if (this.selected === '') {
-            new Message('Select memory');
+            RemoteTM.showMessage('Select memory');
             return;
         }
         if (this.role === Role.TRANSLATOR) {
-            new Message('Access denied');
+            RemoteTM.showMessage('Access denied');
             return;
         }
         if (window.confirm('Remove selected memory?')) {
@@ -396,7 +395,7 @@ export class Dashboard implements View {
                 body: JSON.stringify(params)
             }).then(async (response: Response) => {
                 let json: any = await response.json();
-                json.status === 'OK' ? this.loadMemories() : new Message(json.reason);
+                json.status === 'OK' ? this.loadMemories() : RemoteTM.showMessage(json.reason);
             }).catch((reason: any) => {
                 console.error('Error:', reason);
             });
@@ -405,11 +404,11 @@ export class Dashboard implements View {
 
     exportTMX(): void {
         if (this.selected === '') {
-            new Message('Select memory');
+            RemoteTM.showMessage('Select memory');
             return;
         }
         if (this.role === Role.TRANSLATOR) {
-            new Message('Access denied');
+            RemoteTM.showMessage('Access denied');
             return;
         }
         let params: any = {
@@ -428,7 +427,7 @@ export class Dashboard implements View {
         }).then(async (response: Response) => {
             this.setStatus('');
             let json: any = await response.json();
-            json.status === 'OK' ? this.requestExport() : new Message(json.reason);
+            json.status === 'OK' ? this.requestExport() : RemoteTM.showMessage(json.reason);
         }).catch((reason: any) => {
             this.setStatus('');
             console.error('Error:', reason);
@@ -454,7 +453,7 @@ export class Dashboard implements View {
         }).then(async (response: Response) => {
             this.setStatus('');
             let json: any = await response.json();
-            json.status === 'OK' ? this.downloadMemory(json.file) : new Message(json.reason);
+            json.status === 'OK' ? this.downloadMemory(json.file) : RemoteTM.showMessage(json.reason);
         }).catch((reason: any) => {
             this.setStatus('');
             console.error('Error:', reason);
@@ -476,7 +475,7 @@ export class Dashboard implements View {
 
     closeMemories(): void {
         if (this.role !== Role.SYSTEM_ADMINISTRATOR) {
-            new Message('Access denied');
+            RemoteTM.showMessage('Access denied');
             return;
         }
         let params: any = {
@@ -494,7 +493,7 @@ export class Dashboard implements View {
         }).then(async (response: Response) => {
             this.setStatus('');
             let json: any = await response.json();
-            json.status === 'OK' ? this.loadMemories() : new Message(json.reason);
+            json.status === 'OK' ? this.loadMemories() : RemoteTM.showMessage(json.reason);
         }).catch((reason: any) => {
             this.setStatus('');
             console.error('Error:', reason);
