@@ -21,7 +21,7 @@
                     <ul>
                         <li><tt>application/zip</tt> to upload the TMX file zipped in request
                             body</li>
-                        <li><tt>multipart/form-data</tt>to upload the TMX file as HTML form
+                        <li><tt>multipart/form-data</tt> to upload the TMX file as HTML form
                             attachment</li>
                     </ul></stentry>
             </strow>

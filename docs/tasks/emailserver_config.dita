@@ -49,7 +49,7 @@
                         From</uicontrol> text input.</cmd>
             </step>
             <step>
-                <cmd>Id necessary, adjust the URL of the RemoteTM server in the <uicontrol>RemoteTM
+                <cmd>If necessary, adjust the URL of the RemoteTM server in the <uicontrol>RemoteTM
                         Server</uicontrol> text input. This field is automatically populated by
                     RemoteTM.</cmd>
             </step>
