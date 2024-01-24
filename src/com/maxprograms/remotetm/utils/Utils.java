@@ -19,6 +19,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -85,8 +87,8 @@ public class Utils {
         return sb.toString();
     }
 
-    public static boolean isSafe(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        URL url = new URL(request.getRequestURL().toString());
+    public static boolean isSafe(HttpServletRequest request, HttpServletResponse response) throws IOException, URISyntaxException {
+        URL url = new URI(request.getRequestURL().toString()).toURL();
         if (!Constants.HTTPS.equals(url.getProtocol())) {
             denyAccess(response);
             return false;

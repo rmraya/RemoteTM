@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
+import java.net.URISyntaxException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -84,7 +85,7 @@ public class MemoriesServlet extends HttpServlet {
                 return;
             }
             Utils.denyAccess(response);
-        } catch (IOException e) {
+        } catch (IOException | URISyntaxException e) {
             logger.log(Level.ERROR, e);
         }
     }

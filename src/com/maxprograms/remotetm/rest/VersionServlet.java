@@ -18,6 +18,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 
 import javax.servlet.http.HttpServlet;
@@ -44,7 +46,7 @@ public class VersionServlet extends HttpServlet {
             result.put(Constants.STATUS, Constants.OK);
             result.put("version", Constants.VERSION);
             result.put("build", Constants.BUILD);
-            URL home = new URL("https://maxprograms.com/remotetm.json");
+            URL home = new URI("https://maxprograms.com/remotetm.json").toURL();
             try (InputStream stream = home.openStream()) {
                 try (InputStreamReader reader = new InputStreamReader(stream)) {
                     StringBuilder builder = new StringBuilder();
@@ -58,7 +60,7 @@ public class VersionServlet extends HttpServlet {
                 }
             }
             Utils.writeResponse(result, response, 200);
-        } catch (IOException e) {
+        } catch (IOException | URISyntaxException e) {
             Logger logger = System.getLogger(VersionServlet.class.getName());
             logger.log(Level.ERROR, e);
         }

@@ -15,6 +15,7 @@ package com.maxprograms.remotetm.rest;
 import java.io.IOException;
 import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
+import java.net.URISyntaxException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.Base64;
@@ -75,7 +76,7 @@ public class AuthorizeServlet extends HttpServlet {
                 }
             }
             Utils.denyAccess(response);
-        } catch (IOException | SQLException | NoSuchAlgorithmException e) {
+        } catch (IOException | SQLException | NoSuchAlgorithmException | URISyntaxException e) {
             logger.log(Level.ERROR, e);
         }
     }

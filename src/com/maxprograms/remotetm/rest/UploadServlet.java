@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
+import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.zip.ZipEntry;
@@ -134,7 +135,7 @@ public class UploadServlet extends HttpServlet {
                 return;
             }
             Utils.denyAccess(response);
-        } catch (IOException e) {
+        } catch (IOException | URISyntaxException e) {
             logger.log(Level.ERROR, e);
         }
     }

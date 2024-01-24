@@ -17,7 +17,7 @@
         "build": "tsc"
     },
     "dependencies": {
-        "@types/node": "^18.16.3",
-        "esbuild": "^0.19.5"
+        "@types/node": "^20.11.5",
+        "esbuild": "^0.19.11"
     }
 }

@@ -18,6 +18,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
+import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
@@ -76,7 +77,7 @@ public class EmailServerServlet extends HttpServlet {
                 }
             }
             Utils.denyAccess(response);
-        } catch (IOException | SQLException | NoSuchAlgorithmException e) {
+        } catch (IOException | SQLException | NoSuchAlgorithmException | URISyntaxException e) {
             logger.log(Level.ERROR, e);
         }
     }
@@ -104,7 +105,7 @@ public class EmailServerServlet extends HttpServlet {
                 }
             }
             Utils.denyAccess(response);
-        } catch (IOException | SQLException | NoSuchAlgorithmException e) {
+        } catch (IOException | SQLException | NoSuchAlgorithmException | URISyntaxException e) {
             logger.log(Level.ERROR, e);
         }
     }

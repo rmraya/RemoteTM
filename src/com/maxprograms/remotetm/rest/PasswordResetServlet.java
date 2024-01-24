@@ -15,6 +15,7 @@ package com.maxprograms.remotetm.rest;
 import java.io.IOException;
 import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
+import java.net.URISyntaxException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.Iterator;
@@ -82,7 +83,7 @@ public class PasswordResetServlet extends HttpServlet {
                 return;
             }
             Utils.writeResponse(result, response, 200);
-        } catch (IOException e) {
+        } catch (IOException | URISyntaxException e) {
             Logger logger = System.getLogger(PasswordResetServlet.class.getName());
             logger.log(Level.ERROR, e);
         }

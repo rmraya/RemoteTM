@@ -23,6 +23,7 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.maxprograms.remotetm.Constants;
@@ -32,17 +33,24 @@ public class SecurityFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
+		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
 
+		res.addHeader("X-Frame-Options", "SAMEORIGIN");
+		res.addHeader("X-XSS-Protection", "1; mode=block");
 		res.addHeader("X-Content-Type-Options", "nosniff");
 		res.addHeader("Cache-Control", "no-cache");
+		res.addHeader("Pragma", "no-cache");
+		res.addHeader("Expires", "0");
 		res.addHeader("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
 		res.addHeader("X-Permitted-Cross-Domain-Policies", "master-only");
 		res.addHeader("Content-Security-Policy", "report-uri https://dev.maxprograms.com");
 		res.addHeader("Referrer-Policy", "no-referrer-when-downgrade");
-		res.addHeader("X-Frame-Options", "SAMEORIGIN");
-		res.addHeader("X-XSS-Protection", "1; mode=block");
-		res.addHeader("Permissions-Policy", "geolocation=(), camera=(), microphone=()");
+		res.addHeader("Permissions-Policy", "microphone=(), camera=()");
+		if ("/RemoteTM/".equals(req.getRequestURI())) {
+			res.setContentType("text/html");
+			res.addHeader("Content-type", "text/html");
+		}
 		res.setCharacterEncoding(StandardCharsets.UTF_8.name());
 		try {
 			chain.doFilter(request, response);

@@ -18,6 +18,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 
 import javax.servlet.ServletException;
@@ -68,7 +69,7 @@ public class DownloadServlet extends HttpServlet {
                 }
             }
             Utils.denyAccess(response);
-        } catch (IOException e) {
+        } catch (IOException | URISyntaxException e) {
             logger.log(Level.ERROR, e);
         }
     }

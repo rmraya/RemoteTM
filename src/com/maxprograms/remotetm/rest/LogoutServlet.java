@@ -15,6 +15,7 @@ package com.maxprograms.remotetm.rest;
 import java.io.IOException;
 import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
+import java.net.URISyntaxException;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -44,7 +45,7 @@ public class LogoutServlet extends HttpServlet {
             }
             result.put(Constants.STATUS, Constants.ERROR);
             Utils.writeResponse(result, response, 500);
-        } catch (IOException e) {
+        } catch (IOException | URISyntaxException e) {
             Logger logger = System.getLogger(LogoutServlet.class.getName());
             logger.log(Level.ERROR, e);
         }
