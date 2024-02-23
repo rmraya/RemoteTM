@@ -20,7 +20,7 @@
    </sthead>
    <strow>
     <stentry>Read</stentry>
-    <stentry>Use the translation memory in Swordfish IV for the following tasks: <ul>
+    <stentry>Use the translation memory in Swordfish for the following tasks: <ul>
       <li>TM matches retrieval</li>
       <li>Concordance searches</li>
       <li>Terms retrieval</li>
@@ -33,8 +33,8 @@
     <stentry>
      <ul>
       <li>Import TMX files using RemoteTM´s web interface.</li>
-      <li>Import TMX files using Swordfish IV.</li>
-      <li>Select the translation memory as write-enabled database in Swordfish IV for storing
+      <li>Import TMX files using Swordfish.</li>
+      <li>Select the translation memory as write-enabled database in Swordfish for storing
        segments at translation time.</li>
      </ul>
     </stentry>
@@ -44,7 +44,7 @@
     <stentry>
      <ul>
       <li>Export the translation memory as TMX using RemoteTM´s web interface.</li>
-      <li>Export the database as TMX using Swordfish IV.</li>
+      <li>Export the database as TMX using Swordfish.</li>
      </ul>
     </stentry>
    </strow>

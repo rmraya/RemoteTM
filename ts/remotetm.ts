@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008-2023 Maxprograms.
+ * Copyright (c) 2008-2024 Maxprograms.
  *
  * This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 1.0
@@ -215,7 +215,7 @@ export class RemoteTM {
         return template.content.firstChild;
     }
 
-    static showMessage(message: string) {
+    static showMessage(message: string): void {
         let container: HTMLDivElement = document.createElement('div');
         container.classList.add('message');
         container.innerText = message;

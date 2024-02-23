@@ -5,7 +5,6 @@
 		<pathelement location="lib/javax.servlet-api.jar" />
 		<pathelement location="WebContent/WEB-INF/lib/activation.jar" />
 		<pathelement location="WebContent/WEB-INF/lib/sqlite-jdbc-3.43.0.0.jar" />
-		<pathelement location="WebContent/WEB-INF/lib/h2-1.4.200.jar" />
 		<pathelement location="WebContent/WEB-INF/lib/javax.mail.jar" />
 		<pathelement location="WebContent/WEB-INF/lib/json.jar" />
 		<pathelement location="WebContent/WEB-INF/lib/openxliff.jar" />

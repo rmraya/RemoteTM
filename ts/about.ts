@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008-2023 Maxprograms.
+ * Copyright (c) 2008-2024 Maxprograms.
  *
  * This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 1.0
@@ -34,7 +34,7 @@ export class AboutDialog {
         container.appendChild(logo);
 
         let p: HTMLParagraphElement = document.createElement('p');
-        p.innerHTML = 'Copyright &copy; 2008-2023 Maxprograms';
+        p.innerHTML = 'Copyright &copy; 2008-2024 Maxprograms';
         container.appendChild(p);
 
         let licensesButton: HTMLButtonElement = document.createElement('button');

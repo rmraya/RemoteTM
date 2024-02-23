@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008-2023 Maxprograms.
+ * Copyright (c) 2008-2024 Maxprograms.
  *
  * This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 1.0
@@ -18,7 +18,6 @@ import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
 import java.net.URISyntaxException;
 import java.security.NoSuchAlgorithmException;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.List;
@@ -66,7 +65,6 @@ public class MemoriesServlet extends HttpServlet {
             String session = request.getHeader("Session");
             if (AuthorizeServlet.sessionActive(session)) {
                 try {
-                    DriverManager.registerDriver(new org.h2.Driver());
                     DbManager manager = DbManager.getInstance();
                     JSONArray memories = manager.getMemories(AuthorizeServlet.getUser(session));
                     for (int i = 0; i < memories.length(); i++) {
@@ -100,7 +98,6 @@ public class MemoriesServlet extends HttpServlet {
             String session = request.getHeader("Session");
             if (AuthorizeServlet.sessionActive(session)) {
                 try {
-                    DriverManager.registerDriver(new org.h2.Driver());
                     JSONObject body = Utils.readJSON(request.getInputStream());
                     String command = body.getString("command");
                     switch (command) {
@@ -193,7 +190,8 @@ public class MemoriesServlet extends HttpServlet {
     }
 
     private String exportMemory(String session, JSONObject params)
-            throws SQLException, NoSuchAlgorithmException, IOException {
+            throws SQLException, NoSuchAlgorithmException, IOException, URISyntaxException, JSONException, SAXException,
+            ParserConfigurationException {
         String memory = params.getString(MEMORY);
         DbManager manager = DbManager.getInstance();
         User who = manager.getUser(AuthorizeServlet.getUser(session));
@@ -237,7 +235,7 @@ public class MemoriesServlet extends HttpServlet {
     }
 
     private void closeMemory(String session, JSONObject params)
-            throws SQLException, NoSuchAlgorithmException, IOException {
+            throws SQLException, NoSuchAlgorithmException, IOException, URISyntaxException {
         String memory = params.getString(MEMORY);
         DbManager manager = DbManager.getInstance();
         User who = manager.getUser(AuthorizeServlet.getUser(session));
@@ -252,7 +250,7 @@ public class MemoriesServlet extends HttpServlet {
     }
 
     private void removeMemory(String session, JSONObject params)
-            throws SQLException, NoSuchAlgorithmException, IOException {
+            throws SQLException, NoSuchAlgorithmException, IOException, URISyntaxException {
         String memory = params.getString(MEMORY);
         DbManager manager = DbManager.getInstance();
         User who = manager.getUser(AuthorizeServlet.getUser(session));
@@ -271,7 +269,7 @@ public class MemoriesServlet extends HttpServlet {
     }
 
     private JSONArray memoryClients(String session, JSONObject params)
-            throws NoSuchAlgorithmException, IOException, SQLException {
+            throws NoSuchAlgorithmException, IOException, SQLException, URISyntaxException {
         String memory = params.getString(MEMORY);
         DbManager manager = DbManager.getInstance();
         User who = manager.getUser(AuthorizeServlet.getUser(session));
@@ -288,7 +286,7 @@ public class MemoriesServlet extends HttpServlet {
     }
 
     private JSONArray memoryLanguages(String session, JSONObject params)
-            throws NoSuchAlgorithmException, IOException, SQLException {
+            throws NoSuchAlgorithmException, IOException, SQLException, URISyntaxException {
         String memory = params.getString(MEMORY);
         DbManager manager = DbManager.getInstance();
         User who = manager.getUser(AuthorizeServlet.getUser(session));
@@ -305,7 +303,8 @@ public class MemoriesServlet extends HttpServlet {
     }
 
     private Element getTu(String session, JSONObject params)
-            throws IOException, NoSuchAlgorithmException, SQLException, SAXException, ParserConfigurationException {
+            throws IOException, NoSuchAlgorithmException, SQLException, SAXException, ParserConfigurationException,
+            JSONException, URISyntaxException {
         DbManager manager = DbManager.getInstance();
         User who = manager.getUser(AuthorizeServlet.getUser(session));
         if (who != null && who.isActive()) {
@@ -323,7 +322,7 @@ public class MemoriesServlet extends HttpServlet {
     }
 
     private JSONArray memoryProjects(String session, JSONObject params)
-            throws NoSuchAlgorithmException, IOException, SQLException {
+            throws NoSuchAlgorithmException, IOException, SQLException, URISyntaxException {
         String memory = params.getString(MEMORY);
         DbManager manager = DbManager.getInstance();
         User who = manager.getUser(AuthorizeServlet.getUser(session));
@@ -340,7 +339,7 @@ public class MemoriesServlet extends HttpServlet {
     }
 
     private JSONArray memorySubjects(String session, JSONObject params)
-            throws NoSuchAlgorithmException, IOException, SQLException {
+            throws NoSuchAlgorithmException, IOException, SQLException, URISyntaxException {
         String memory = params.getString(MEMORY);
         DbManager manager = DbManager.getInstance();
         User who = manager.getUser(AuthorizeServlet.getUser(session));
@@ -357,7 +356,7 @@ public class MemoriesServlet extends HttpServlet {
     }
 
     private void addMemory(String session, JSONObject params)
-            throws NoSuchAlgorithmException, IOException, SQLException {
+            throws NoSuchAlgorithmException, IOException, SQLException, URISyntaxException {
         DbManager manager = DbManager.getInstance();
         User who = manager.getUser(AuthorizeServlet.getUser(session));
         if (who != null && who.isActive() && !Constants.TRANSLATOR.equals(who.getRole())) {
@@ -372,7 +371,8 @@ public class MemoriesServlet extends HttpServlet {
     }
 
     private void storeTu(String session, JSONObject params)
-            throws NoSuchAlgorithmException, IOException, SQLException, SAXException, ParserConfigurationException {
+            throws NoSuchAlgorithmException, IOException, SQLException, SAXException, ParserConfigurationException,
+            URISyntaxException {
         DbManager manager = DbManager.getInstance();
         User who = manager.getUser(AuthorizeServlet.getUser(session));
         if (who != null && who.isActive()) {
@@ -389,7 +389,7 @@ public class MemoriesServlet extends HttpServlet {
 
     private void removeTu(String session, JSONObject params)
             throws NoSuchAlgorithmException, IOException, SQLException, JSONException, SAXException,
-            ParserConfigurationException {
+            ParserConfigurationException, URISyntaxException {
         DbManager manager = DbManager.getInstance();
         User who = manager.getUser(AuthorizeServlet.getUser(session));
         if (who != null && who.isActive()) {
@@ -404,7 +404,8 @@ public class MemoriesServlet extends HttpServlet {
     }
 
     private JSONArray searchTranslation(String session, JSONObject params)
-            throws IOException, SAXException, ParserConfigurationException, SQLException, NoSuchAlgorithmException {
+            throws IOException, SAXException, ParserConfigurationException, SQLException, NoSuchAlgorithmException,
+            JSONException, URISyntaxException {
         DbManager manager = DbManager.getInstance();
         User who = manager.getUser(AuthorizeServlet.getUser(session));
         if (who != null && who.isActive()) {
@@ -425,7 +426,8 @@ public class MemoriesServlet extends HttpServlet {
     }
 
     private JSONArray searchAll(String session, JSONObject params)
-            throws IOException, SAXException, ParserConfigurationException, SQLException, NoSuchAlgorithmException {
+            throws IOException, SAXException, ParserConfigurationException, SQLException, NoSuchAlgorithmException,
+            JSONException, URISyntaxException {
         DbManager manager = DbManager.getInstance();
         User who = manager.getUser(AuthorizeServlet.getUser(session));
         if (who != null && who.isActive()) {
@@ -445,7 +447,8 @@ public class MemoriesServlet extends HttpServlet {
     }
 
     private JSONArray concordanceSearch(String session, JSONObject params)
-            throws IOException, SAXException, ParserConfigurationException, SQLException, NoSuchAlgorithmException {
+            throws IOException, SAXException, ParserConfigurationException, SQLException, NoSuchAlgorithmException,
+            JSONException, URISyntaxException {
         DbManager manager = DbManager.getInstance();
         User who = manager.getUser(AuthorizeServlet.getUser(session));
         if (who != null && who.isActive()) {
@@ -465,7 +468,8 @@ public class MemoriesServlet extends HttpServlet {
         throw new IOException(Constants.DENIED);
     }
 
-    private void commit(String session, JSONObject params) throws NoSuchAlgorithmException, IOException, SQLException {
+    private void commit(String session, JSONObject params)
+            throws NoSuchAlgorithmException, IOException, SQLException, URISyntaxException {
         DbManager manager = DbManager.getInstance();
         User who = manager.getUser(AuthorizeServlet.getUser(session));
         if (who != null && who.isActive()) {
@@ -516,7 +520,7 @@ public class MemoriesServlet extends HttpServlet {
                                 TmManager.close(memory);
                             }
                         } catch (SQLException | JSONException | IOException | SAXException
-                                | ParserConfigurationException ex) {
+                                | ParserConfigurationException | URISyntaxException ex) {
                             logger.log(Level.ERROR, "Error importing TMX", ex);
                         }
                     }
@@ -553,7 +557,8 @@ public class MemoriesServlet extends HttpServlet {
     }
 
     private JSONArray batchTranslate(String session, JSONObject params)
-            throws NoSuchAlgorithmException, IOException, SQLException, SAXException, ParserConfigurationException {
+            throws NoSuchAlgorithmException, IOException, SQLException, SAXException, ParserConfigurationException,
+            URISyntaxException {
         DbManager manager = DbManager.getInstance();
         User who = manager.getUser(AuthorizeServlet.getUser(session));
         if (who != null && who.isActive()) {

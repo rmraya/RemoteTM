@@ -7,7 +7,7 @@
     <taskbody>
         <context>
             <p>RemoteTM translation memories can be populated with data from TMX files either using
-                    <xref keyref="swordfish">Swordfish IV</xref>, its <xref
+                    <xref keyref="swordfish">Swordfish</xref>, its <xref
                     href="../rest/restApi.dita">REST API</xref> or RemoteTM's own web interface.
                 Using RemoteTM's web interface is faster.</p>
         </context>

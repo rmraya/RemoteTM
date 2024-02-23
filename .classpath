@@ -10,7 +10,6 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/activation.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/dtd.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/sqlite-jdbc-3.43.0.0.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/h2-1.4.200.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/javax.mail.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/json.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jsoup.jar"/>

@@ -122,6 +122,10 @@ th {
 	text-align: center;
 }
 
+.left {
+	text-align: left;
+}
+
 input[type=number] {
 	height: 1.2rem;
 	font-size: 1rem;

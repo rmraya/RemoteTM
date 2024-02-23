@@ -23,9 +23,9 @@
                 </sthead>
                 <strow>
                     <stentry>Read</stentry>
-                    <stentry>Use the translation memory in <xref keyref="swordfish">Swordfish
-                            IV</xref> or RemoteTM's <xref href="../rest/restApi.dita">REST
-                            API</xref> for the following tasks: <ul>
+                    <stentry>Use the translation memory in <xref keyref="swordfish">Swordfish</xref>
+                        or RemoteTM's <xref href="../rest/restApi.dita">REST API</xref> for the
+                        following tasks: <ul>
                             <li>TM matches retrieval</li>
                             <li>Concordance searches</li>
                             <li>Terms retrieval</li>
@@ -38,11 +38,11 @@
                     <stentry>
                         <ul>
                             <li>Import TMX files using RemoteTM´s web interface.</li>
-                            <li>Import TMX files using <xref keyref="swordfish">Swordfish IV</xref>
+                            <li>Import TMX files using <xref keyref="swordfish">Swordfish</xref>
                                 or RemoteTM's <xref href="../rest/restApi.dita">REST
                                 API</xref>.</li>
                             <li>Select the translation memory as write-enabled database in <xref
-                                    keyref="swordfish">Swordfish IV</xref> or RemoteTM's <xref
+                                    keyref="swordfish">Swordfish</xref> or RemoteTM's <xref
                                     href="../rest/restApi.dita">REST API</xref> for storing segments
                                 at translation time.</li>
                         </ul>
@@ -54,9 +54,9 @@
                         <ul>
                             <li>Export the translation memory as TMX using RemoteTM´s web
                                 interface.</li>
-                            <li>Export the database as TMX using <xref keyref="swordfish">Swordfish
-                                    IV</xref> or RemoteTM's <xref href="../rest/restApi.dita">REST
-                                    API</xref>.</li>
+                            <li>Export the database as TMX using <xref keyref="swordfish"
+                                    >Swordfish</xref> or RemoteTM's <xref
+                                    href="../rest/restApi.dita">REST API</xref>.</li>
                         </ul>
                     </stentry>
                 </strow>

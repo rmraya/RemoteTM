@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008-2023 Maxprograms.
+ * Copyright (c) 2008-2024 Maxprograms.
  *
  * This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 1.0
@@ -131,16 +131,24 @@ export class Dashboard implements View {
         let headerRow: HTMLTableRowElement = document.createElement('tr');
         tableHeader.appendChild(headerRow);
 
+        let selectAllTh: HTMLTableCellElement = document.createElement('th');
+        selectAllTh.style.width = '20px';
+        selectAllTh.innerHTML = '&nbsp;';
+        headerRow.appendChild(selectAllTh);
+
         let memoryTh: HTMLTableCellElement = document.createElement('th');
         memoryTh.innerText = 'Memory';
+        memoryTh.classList.add('left');
         headerRow.appendChild(memoryTh);
 
         let ownerTh: HTMLTableCellElement = document.createElement('th');
         ownerTh.innerText = 'Owner';
+        ownerTh.classList.add('left');
         headerRow.appendChild(ownerTh);
 
         let creationTh: HTMLTableCellElement = document.createElement('th');
         creationTh.innerText = 'Creation Date';
+        creationTh.classList.add('noWrap');
         headerRow.appendChild(creationTh);
 
         let openTh: HTMLTableCellElement = document.createElement('th');
@@ -149,14 +157,20 @@ export class Dashboard implements View {
 
         let projectTh: HTMLTableCellElement = document.createElement('th');
         projectTh.innerText = 'Project';
+        projectTh.classList.add('left');
+        projectTh.classList.add('noWrap');
         headerRow.appendChild(projectTh);
 
         let subjectTh: HTMLTableCellElement = document.createElement('th');
         subjectTh.innerText = 'Subject';
+        subjectTh.classList.add('left');
+        subjectTh.classList.add('noWrap');
         headerRow.appendChild(subjectTh);
 
         let ClientTh: HTMLTableCellElement = document.createElement('th');
         ClientTh.innerText = 'Client';
+        ClientTh.classList.add('left');
+        ClientTh.classList.add('noWrap');
         headerRow.appendChild(ClientTh);
 
         this.tbody = document.createElement('tbody');
@@ -180,7 +194,7 @@ export class Dashboard implements View {
     }
 
     show(): void {
-        // TODO
+        // do nothing
     }
 
     close(): void {
@@ -194,7 +208,7 @@ export class Dashboard implements View {
     }
 
     resize(): void {
-        // TODO
+        // do nothing
     }
 
     createSettingsMenu(settingsMenu: DropDown): void {
@@ -313,9 +327,22 @@ export class Dashboard implements View {
             let memory: Database = memories[i];
             let tr: HTMLTableRowElement = document.createElement('tr');
             tr.id = memory.id;
-            tr.addEventListener('click', () => { this.setSelected(memory.id) });
-
+            tr.addEventListener('click', () => {
+                this.setSelected(memory.id)
+            });
             let td: HTMLTableCellElement = document.createElement('td');
+            td.style.width = '20px';
+            let check: HTMLInputElement = document.createElement('input');
+            check.addEventListener('click', (event: Event) => {
+                event.stopPropagation();
+                this.setSelected(memory.id);
+            });
+            check.type = 'checkbox';
+            check.id = 'check_' + memory.id;
+            check.style.marginTop = '0';
+            td.appendChild(check);
+            tr.appendChild(td);
+            td = document.createElement('td');
             td.innerText = memory.name;
             tr.appendChild(td);
             td = document.createElement('td');
@@ -343,16 +370,16 @@ export class Dashboard implements View {
     }
 
     setSelected(id: string): void {
-        let selectedRows: HTMLCollectionOf<Element> = this.tbody.getElementsByClassName('selected');
-        let length: number = selectedRows.length;
-        for (let i = 0; i < length; i++) {
-            selectedRows[i].classList.remove('selected');
+        if (this.selected) {
+            document.getElementById(this.selected).classList.remove('selected');
+            (document.getElementById('check_' + this.selected) as HTMLInputElement).checked = false;
         }
-        if (this.selected === id) {
+        if (id === this.selected) {
             this.selected = '';
             return;
         }
         document.getElementById(id).classList.add('selected');
+        (document.getElementById('check_' + id) as HTMLInputElement).checked = true;
         this.selected = id;
     }
 

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008-2023 Maxprograms.
+ * Copyright (c) 2008-2024 Maxprograms.
  *
  * This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 1.0
@@ -50,7 +50,7 @@ export class LicensesDialog {
         table.appendChild(tr1);
 
         let left1: HTMLTableCellElement = document.createElement('td');
-        left1.innerText = 'Swordfish IV';
+        left1.innerText = 'Swordfish';
         left1.classList.add('noWrap');
         tr1.appendChild(left1);
 
@@ -135,7 +135,7 @@ export class LicensesDialog {
         table.appendChild(tr6);
 
         let left6: HTMLTableCellElement = document.createElement('td');
-        left6.innerText = 'H2';
+        left6.innerText = 'SQLite';
         left6.classList.add('noWrap');
         tr6.appendChild(left6);
 
@@ -143,10 +143,9 @@ export class LicensesDialog {
         right6.classList.add('noWrap');
         tr6.appendChild(right6);
 
-        let h2: HTMLAnchorElement = document.createElement('a');
-        h2.innerText = 'Eclipse Publice License 1.0';
-        h2.addEventListener('click', () => { this.viewLicense('Eclipse Publice License 1.0', '/licenses/EclipsePublicLicense1.0.html') });
-        right6.appendChild(h2);
+        let sqlite: HTMLSpanElement = document.createElement('span');
+        sqlite.innerText = 'Public Domain';
+        right6.appendChild(sqlite);
 
         let tr7: HTMLTableRowElement = document.createElement('tr');
         table.appendChild(tr7);

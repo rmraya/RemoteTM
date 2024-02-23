@@ -55,11 +55,11 @@
         <p>The following tasks do not have restrictions based on user roles, restrictions are
             defined at translation memory level by setting <xref href="accessPermission.dita">Access Permissions</xref> instead:</p>
         <ul>
-            <li>Retrieve translations or perform searches using <xref keyref="swordfish">Swordfish
-                    IV</xref> or the <xref href="../rest/restApi.dita">REST API</xref>.</li>
+            <li>Retrieve translations or perform searches using <xref keyref="swordfish"
+                    >Swordfish</xref> or the <xref href="../rest/restApi.dita">REST API</xref>.</li>
             <li>Import TMX files</li>
-            <li>Write segments to the translation memory using <xref keyref="swordfish">Swordfish
-                    IV</xref> or the <xref href="../rest/restApi.dita">REST API</xref></li>
+            <li>Write segments to the translation memory using <xref keyref="swordfish"
+                    >Swordfish</xref> or the <xref href="../rest/restApi.dita">REST API</xref></li>
             <li>Export translation memory as TMX</li>
         </ul>
 
