@@ -54,6 +54,30 @@ export class RemoteTM {
             this.resize();
         });
 
+        document.documentElement.addEventListener("dragover", (event: DragEvent) => {
+            event.preventDefault();
+            if (event.dataTransfer) {
+                event.dataTransfer.dropEffect = "move";
+            }
+        });
+
+        document.documentElement.addEventListener("drop", (event: DragEvent) => {
+            event.preventDefault();
+            if (event.dataTransfer) {
+                let id: string = event.dataTransfer.getData("id");
+                if (id) {
+                    let element: HTMLElement | null = document.getElementById(id);
+                    if (element && element.classList.contains('dialog')) {
+                        const offset: any = JSON.parse(event.dataTransfer.getData("offset"));
+                        const xPos: number = event.clientX - parseInt(offset.x);
+                        const yPos: number = event.clientY - parseInt(offset.y);
+                        element.style.left = xPos + 'px';
+                        element.style.top = yPos + 'px';
+                    }
+                }
+            }
+        });
+
         if (code) {
             this.showReset(code);
             return;
