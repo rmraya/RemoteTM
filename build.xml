@@ -4,7 +4,8 @@
 	<path id="RemoteTM.classpath">
 		<pathelement location="lib/javax.servlet-api.jar" />
 		<pathelement location="WebContent/WEB-INF/lib/activation.jar" />
-		<pathelement location="WebContent/WEB-INF/lib/sqlite-jdbc-3.43.0.0.jar" />
+		<pathelement location="WebContent/WEB-INF/lib/bcp47j.jar" />
+		<pathelement location="WebContent/WEB-INF/lib/sqlite-jdbc-3.48.0.0.jar" />
 		<pathelement location="WebContent/WEB-INF/lib/javax.mail.jar" />
 		<pathelement location="WebContent/WEB-INF/lib/json.jar" />
 		<pathelement location="WebContent/WEB-INF/lib/openxliff.jar" />

@@ -8,6 +8,7 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="lib/javax.servlet-api.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/activation.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/bcp47j.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/dtd.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/javax.mail.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/json.jar"/>
@@ -16,6 +17,6 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/openxliff.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/xmljava.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/swordfish.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/sqlite-jdbc-3.45.3.0.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/sqlite-jdbc-3.48.0.0.jar"/>
 	<classpathentry kind="output" path="WebContent/WEB-INF/classes"/>
 </classpath>
